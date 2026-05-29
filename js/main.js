@@ -135,66 +135,6 @@ function initCanvasBorders() {
 }
 
 /* ─────────────────────────────────────────
-   PRELOADER
-───────────────────────────────────────── */
-function initPreloader() {
-  if (prefersReducedMotion.matches) {
-    document.getElementById('preloader').style.display = 'none';
-    document.getElementById('nav').style.visibility = 'visible';
-    initScrollAnimations();
-    return;
-  }
-
-  const tl = gsap.timeline({
-    onComplete() {
-      document.getElementById('preloader').style.display = 'none';
-      initScrollAnimations();
-    }
-  });
-
-  tl
-    // Logo fades + scales in
-    .to('.pre-logo', {
-      opacity: 1, scale: 1,
-      duration: 0.85, ease: 'expo.out',
-    })
-    // Beat pause then scale up
-    .to('.pre-logo', {
-      scale: 1.18,
-      duration: 0.5, ease: 'expo.inOut',
-      delay: 0.35,
-    })
-    // Black overlay wipes up (clips away)
-    .to('#preloader', {
-      clipPath: 'inset(0 0 100% 0)',
-      duration: 1.1, ease: 'expo.inOut',
-    })
-    // Nav slides down
-    .call(() => {
-      document.getElementById('nav').style.visibility = 'visible';
-    })
-    .from('.nav-inner', {
-      y: -20, opacity: 0,
-      duration: 0.7, ease: 'expo.out',
-    }, '<0.1')
-    // Hero words fly in from bottom
-    .from('.hero-word', {
-      yPercent: 110, opacity: 0,
-      stagger: 0.06,
-      duration: 1.0, ease: 'expo.out',
-    }, '-=0.5')
-    // Scroll hint fades in
-    .to('.hero-scroll-hint', {
-      opacity: 1,
-      duration: 0.6, ease: 'expo.out',
-    }, '-=0.4');
-
-  // Initial states
-  gsap.set('#preloader', { clipPath: 'inset(0 0 0% 0)' });
-  gsap.set('.pre-logo', { opacity: 0, scale: 0.5 });
-}
-
-/* ─────────────────────────────────────────
    NAV THEME SWITCH (dark/light on scroll)
 ───────────────────────────────────────── */
 function initNavTheme() {
@@ -568,7 +508,7 @@ if (heroVideo) {
 }
 
 initCanvasBorders();
-initPreloader();
+initScrollAnimations();
 initNavTheme();
 initWorkCta();
 initFAQ();

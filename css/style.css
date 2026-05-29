@@ -91,34 +91,6 @@ button:focus-visible {
 }
 
 /* ============================================================
-   PRELOADER
-   ============================================================ */
-#preloader {
-  position: fixed;
-  inset: 0;
-  background: var(--c-black);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.pre-logo {
-  width: 64px;
-  height: auto;
-  color: var(--c-white);
-  opacity: 0;
-  transform: scale(0.5);
-  position: relative;
-  z-index: 2;
-}
-.pre-overlay {
-  position: absolute;
-  inset: 0;
-  background: var(--c-black);
-  transform-origin: bottom;
-}
-
-/* ============================================================
    NAV — centered pill bar
    ============================================================ */
 #nav {
@@ -129,7 +101,6 @@ button:focus-visible {
   display: flex;
   justify-content: center;
   pointer-events: none;
-  visibility: hidden;
 }
 .nav-inner {
   display: flex;
