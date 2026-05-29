@@ -92,8 +92,8 @@ function initCanvasBorders() {
     function tick() {
       const w = el.offsetWidth;
       const h = el.offsetHeight;
-      const r = Math.min(w, h) / 2; // fully rounded pills, or 6px for cards
-      const radius = (el.classList.contains('nav-pill') || el.classList.contains('showreel-btn')) ? r : 8;
+      const r = Math.min(w, h) / 2;
+      const radius = el.classList.contains('nav-pill') ? 6 : (el.classList.contains('showreel-btn') ? r : 8);
 
       ctx.clearRect(0, 0, w, h);
 
