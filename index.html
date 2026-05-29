@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estrela Studio</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 48'><path d='M30 18C26 18 2 4 2 4C12 19 24 25 30 27C36 25 48 19 58 4C58 4 34 18 30 18Z' fill='%23020202'/><path d='M24 29L10 48L30 36L50 48L36 29L30 32L24 29Z' fill='%23020202'/></svg>">
+
+  <!-- Preload real PP fonts from their server -->
+  <link rel="preload" href="fonts/PPMigra-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="css/style.css?v=13">
+</head>
+<body>
+<div class="site">
+
+  <!-- ══════════════════════════════════════
+       PRELOADER
+  ══════════════════════════════════════ -->
+  <div id="preloader">
+    <div class="pre-logo">
+      <!-- Estrela bird mark SVG -->
+      <svg viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 18C26 18 2 4 2 4C12 19 24 25 30 27C36 25 48 19 58 4C58 4 34 18 30 18Z" fill="currentColor"/>
+        <path d="M24 29L10 48L30 36L50 48L36 29L30 32L24 29Z" fill="currentColor"/>
+        <ellipse cx="30" cy="20" rx="3.5" ry="4.5" fill="currentColor"/>
+      </svg>
+    </div>
+    <div class="pre-overlay"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       CUSTOM CURSOR
+  ══════════════════════════════════════ -->
+  <div id="cursor">
+    <svg viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 18C26 18 2 4 2 4C12 19 24 25 30 27C36 25 48 19 58 4C58 4 34 18 30 18Z" fill="currentColor"/>
+      <path d="M24 29L10 48L30 36L50 48L36 29L30 32L24 29Z" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════ -->
+  <nav id="nav" data-theme="dark">
+    <div class="nav-inner">
+      <a href="#top" class="nav-pill nav-logo" data-border>
+        <span class="logo-text">Estrela Studio</span><span class="tm">™</span>
+        <canvas class="border-canvas"></canvas>
+      </a>
+      <div class="nav-pill nav-links" data-border>
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+        <canvas class="border-canvas"></canvas>
+      </div>
+      <button class="nav-pill nav-menu" data-border aria-label="Menu">
+        <span>···</span>
+        <canvas class="border-canvas"></canvas>
+      </button>
+    </div>
+  </nav>
+
+  <main class="page">
+    <div class="page-bg"></div>
+    <div class="page-scroll">
+
+    <!-- ══════════════════════════════════════
+         HERO — black, full-screen, 3D video
+    ══════════════════════════════════════ -->
+    <section class="s-hero" id="top">
+      <!-- Full-bleed video background -->
+      <div class="hero-bg">
+        <video
+          class="hero-video"
+          autoplay muted loop playsinline
+          src="https://estrelastudio.cdn.prismic.io/estrelastudio/aK8JRWGNHVfTOXgT_estrela-hero.mp4">
+        </video>
+      </div>
+
+      <!-- Title: left + right -->
+      <h1 class="hero-title">
+        <span class="hero-title-left">
+          <span class="hero-word">A</span> <span class="hero-word">people</span> <span class="hero-word">first</span>
+        </span>
+        <span class="hero-title-right">
+          <span class="hero-word">digital</span> <span class="hero-word">studio</span>
+        </span>
+      </h1>
+
+      <!-- Center bird icon -->
+      <div class="hero-icon">
+        <svg viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 18C26 18 2 4 2 4C12 19 24 25 30 27C36 25 48 19 58 4C58 4 34 18 30 18Z" fill="currentColor"/>
+          <path d="M24 29L10 48L30 36L50 48L36 29L30 32L24 29Z" fill="currentColor"/>
+          <ellipse cx="30" cy="20" rx="3.5" ry="4.5" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="hero-scroll-hint">
+        <span>Scroll to discover our world</span>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         EXP — pinned section, experience images
+    ══════════════════════════════════════ -->
+    <section class="s-exp" id="showreel">
+      <!-- Showreel button top-left -->
+      <div class="exp-showreel">
+        <a href="#showreel" class="showreel-btn" data-border>
+          <svg viewBox="0 0 24 24" fill="none"><polygon points="8,5 20,12 8,19" fill="currentColor"/></svg>
+          <canvas class="border-canvas"></canvas>
+        </a>
+        <span class="showreel-label">Showreel</span>
+      </div>
+
+      <!-- Description top-right -->
+      <div class="exp-desc">
+        <p>Estrela Studio is a global branding and digital design agency rooted in Vienna and Cape Town. We live and breathe our craft, building brands, websites, and digital products that turn bold ideas into design that matters.</p>
+      </div>
+
+      <!-- Main centered heading -->
+      <div class="exp-heading-wrap">
+        <h2 class="exp-heading">
+          <div class="line"><span>Crafting competitive</span></div>
+          <div class="line"><span>digital <em>experiences</em></span></div>
+        </h2>
+        <p class="exp-eyebrow"><em>Inside Estrela Studio</em></p>
+      </div>
+
+      <!-- 8 floating experience images -->
+      <div class="exp-images">
+        <figure class="exp-img exp-img--1"><img src="https://images.prismic.io/estrelastudio/aN7NX55xUNkB1bRi_Experiences_01.jpg?w=600&h=810&auto=compress,format" alt="" loading="eager"></figure>
+        <figure class="exp-img exp-img--2"><img src="https://images.prismic.io/estrelastudio/aN7NX55xUNkB1bRj_Experiences_02.jpg?w=600&h=810&auto=compress,format" alt="" loading="eager"></figure>
+        <figure class="exp-img exp-img--3"><img src="https://images.prismic.io/estrelastudio/aN7NYZ5xUNkB1bRk_Experiences_03.jpg?w=600&h=810&auto=compress,format" alt="" loading="eager"></figure>
+        <figure class="exp-img exp-img--4"><img src="https://images.prismic.io/estrelastudio/aN7NY55xUNkB1bRl_Experiences_04.jpg?w=600&h=810&auto=compress,format" alt="" loading="lazy"></figure>
+        <figure class="exp-img exp-img--5"><img src="https://images.prismic.io/estrelastudio/aN7NY55xUNkB1bRm_Experiences_05.jpg?w=600&h=810&auto=compress,format" alt="" loading="lazy"></figure>
+        <figure class="exp-img exp-img--6"><img src="https://images.prismic.io/estrelastudio/aN7NZJ5xUNkB1bRn_Experiences_06.jpg?w=600&h=810&auto=compress,format" alt="" loading="lazy"></figure>
+        <figure class="exp-img exp-img--7"><img src="https://images.prismic.io/estrelastudio/aN7NZZ5xUNkB1bRo_Experiences_07.jpg?w=600&h=810&auto=compress,format" alt="" loading="lazy"></figure>
+        <figure class="exp-img exp-img--8"><img src="https://images.prismic.io/estrelastudio/aN7NZp5xUNkB1bRp_Experiences_08.jpg?w=600&h=810&auto=compress,format" alt="" loading="lazy"></figure>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         WORK — horizontal grid
+    ══════════════════════════════════════ -->
+    <section class="s-work" id="work">
+      <div class="work-grid">
+        <!-- Featured column (dark) — default active, fills purple on hover -->
+        <div class="work-featured">
+          <span class="work-featured-num" id="workCounter" hidden>0</span>
+          <div class="work-featured-body">
+            <h2 class="work-featured-title">
+              <span class="lmask"><span class="lmask-in">Featured</span></span>
+              <span class="lmask"><span class="lmask-in">Work</span></span>
+            </h2>
+            <p class="work-featured-desc">Design without compromise. Explore our blend of digital product design, website design, and branding.</p>
+          </div>
+          <a href="#work" class="work-all-link"><span class="wal-dot"></span><span class="wal-text">All Work</span></a>
+        </div>
+
+        <!-- Project 01 -->
+        <a href="#work" class="work-col work-item" data-num="01">
+          <figure class="work-col-img">
+            <img src="https://images.prismic.io/estrelastudio/aTFlu3NYClf9n0A7_pjn-app-thumbnail-1-.jpg?w=690&h=810&auto=compress,format" alt="PayJustNow" loading="eager">
+          </figure>
+          <div class="work-col-info">
+            <span class="work-col-num">01</span>
+            <p class="work-col-client">PayJustNow</p>
+            <p class="work-col-title">An App Redesign Built for Discovery</p>
+            <div class="work-col-tags"><span>UI Design</span><span>UX Design</span></div>
+          </div>
+          <span class="work-view-btn"><span class="wvb-dot"></span>View project</span>
+        </a>
+
+        <!-- Project 02 -->
+        <a href="#work" class="work-col work-item" data-num="02">
+          <figure class="work-col-img">
+            <img src="https://images.prismic.io/estrelastudio/aTFlTHNYClf9n0A2_yucca-thumbnail.jpg?w=690&h=810&auto=compress,format" alt="Yucca Packaging" loading="eager">
+          </figure>
+          <div class="work-col-info">
+            <span class="work-col-num">02</span>
+            <p class="work-col-client">Yucca Packaging</p>
+            <p class="work-col-title">A Packaging Website with Purpose</p>
+            <div class="work-col-tags"><span>UI Design</span><span>Brand Design</span></div>
+          </div>
+          <span class="work-view-btn"><span class="wvb-dot"></span>View project</span>
+        </a>
+
+        <!-- Project 03 -->
+        <a href="#work" class="work-col work-item" data-num="03">
+          <figure class="work-col-img">
+            <img src="https://images.prismic.io/estrelastudio/aTFtHHNYClf9n0Jw_hg-app-thumbnail-2.jpg?w=690&h=810&auto=compress,format" alt="Helpguide" loading="eager">
+          </figure>
+          <div class="work-col-info">
+            <span class="work-col-num">03</span>
+            <p class="work-col-client">Helpguide</p>
+            <p class="work-col-title">A Digital Revamp for Mental Wellbeing</p>
+            <div class="work-col-tags"><span>Brand Design</span><span>UI Design</span></div>
+          </div>
+          <span class="work-view-btn"><span class="wvb-dot"></span>View project</span>
+        </a>
+
+        <!-- Project 04 -->
+        <a href="#work" class="work-col work-item" data-num="04">
+          <figure class="work-col-img">
+            <img src="https://images.prismic.io/estrelastudio/aTFoeHNYClf9n0Ds_pjn-web-thumbnail.jpg?w=690&h=810&auto=compress,format" alt="PayJustNow Web" loading="eager">
+          </figure>
+          <div class="work-col-info">
+            <span class="work-col-num">04</span>
+            <p class="work-col-client">PayJustNow</p>
+            <p class="work-col-title">PayJustNow's Website Reimagined</p>
+            <div class="work-col-tags"><span>UI Design</span></div>
+          </div>
+          <span class="work-view-btn"><span class="wvb-dot"></span>View project</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         WHO WE ARE
+    ══════════════════════════════════════ -->
+    <section class="s-about" id="about">
+      <div class="about-inner">
+        <div class="about-left">
+          <h2 class="about-title">Who<br>we are</h2>
+        </div>
+        <div class="about-right">
+          <figure class="about-img">
+            <img src="https://images.prismic.io/estrelastudio/aN6PdJ5xUNkB1aq3_WhoweAre_01.jpg?w=1050&h=675&auto=compress,format" alt="Who we are" loading="lazy">
+          </figure>
+          <div class="about-body">
+            <p class="about-desc">Estrela Studio is a people-first design studio that cares as much about your business and product as you do. We're big on honesty, collaboration, and good coffee, the foundations of every great partnership. No project is too small for our A-game and we pour the same craft and care into every brief. Our promise is simple: to guide you with a steady, nurturing hand and turn your ideas, big or small, into brands, websites, and experiences that truly matter.</p>
+            <a href="#about" class="about-cta-link">Discover Our Spark <span>→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         WHAT WE DO
+    ══════════════════════════════════════ -->
+    <section class="s-services" id="services">
+      <h2 class="services-title">What we do</h2>
+
+      <div class="svc-item">
+        <figure class="svc-fig">
+          <img src="https://images.prismic.io/estrelastudio/aN5_a55xUNkB1acx_01.ProductStrat.jpg?w=1320&h=780&auto=compress,format" alt="" loading="lazy">
+        </figure>
+        <div class="svc-content">
+          <div class="svc-header">
+            <h3 class="svc-name">Product strategy and design</h3>
+            <span class="svc-num">01</span>
+          </div>
+          <p class="svc-desc">Great products don't just happen, they're shaped by insight. We dig into research, audits, and user testing to understand what people need, then translate those findings into smart, intuitive UX solutions where every decision has purpose.</p>
+        </div>
+      </div>
+
+      <div class="svc-item">
+        <figure class="svc-fig">
+          <img src="https://images.prismic.io/estrelastudio/aN5_bZ5xUNkB1acy_02.App%26Web.jpg?w=1320&h=780&auto=compress,format" alt="" loading="lazy">
+        </figure>
+        <div class="svc-content">
+          <div class="svc-header">
+            <h3 class="svc-name">App and website design</h3>
+            <span class="svc-num">02</span>
+          </div>
+          <p class="svc-desc">We think outside the box to make sure your product sets itself apart and sets the bar. We build beautiful, intuitive interfaces that are compelling and consistent, powered by scalable design systems.</p>
+        </div>
+      </div>
+
+      <div class="svc-item">
+        <figure class="svc-fig">
+          <img src="https://images.prismic.io/estrelastudio/aN5_b55xUNkB1acz_03.Brand.jpg?w=1320&h=780&auto=compress,format" alt="" loading="lazy">
+        </figure>
+        <div class="svc-content">
+          <div class="svc-header">
+            <h3 class="svc-name">Brand strategy and identity design</h3>
+            <span class="svc-num">03</span>
+          </div>
+          <p class="svc-desc">Why look like someone else when you want to stand out? Together, we craft unique brand identities across touchpoints with a digital-first mindset. We bring the spark by distilling your brand DNA and getting to the root of what your users actually want.</p>
+        </div>
+      </div>
+
+      <div class="svc-cta-row">
+        <p class="svc-cta-text">Discover our services and how we shape purpose-driven digital and branding experiences.</p>
+        <a href="#services" class="svc-pill-btn">What We Do <span class="svc-dot"></span></a>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         TESTIMONIALS
+    ══════════════════════════════════════ -->
+    <section class="s-testimonials">
+      <div class="testi-bg">
+        <img src="https://images.prismic.io/estrelastudio/aN7NZp5xUNkB1bRp_Experiences_08.jpg?auto=compress,format" alt="" loading="lazy">
+      </div>
+      <div class="testi-inner">
+        <span class="eyebrow reveal-up">Testimonials</span>
+        <h2 class="section-title">Some words from our valued clients</h2>
+        <div class="testi-track" id="testiTrack">
+          <div class="testi-card">
+            <p>"The team at Estrela have been amazing and critical to our UI/UX journey, they challenge our thoughts for the better."</p>
+            <footer><strong>Craig Newborn</strong> — Former CEO, PayJustNow</footer>
+          </div>
+          <div class="testi-card">
+            <p>"Working with Estrela Studio has been a genuinely outstanding experience. Their team brings a rare combination of creativity, technical expertise, and collaborative spirit."</p>
+            <footer><strong>Donna Blackwell-Kopotic</strong> — Sims Lifecycle Service (US)</footer>
+          </div>
+          <div class="testi-card">
+            <p>"The Estrela team have a grasp of branding and product design like I've never seen before."</p>
+            <footer><strong>Colleen Harrison</strong> — Former Head of Marketing, Payfast</footer>
+          </div>
+          <div class="testi-card">
+            <p>"Working with Natalia and the Estrela team is like working with a bomb squad. They know exactly which wires to cut."</p>
+            <footer><strong>Jason Bagley</strong> — Founder and CEO, Growth Experts (US)</footer>
+          </div>
+          <div class="testi-card">
+            <p>"Natalia and her team at Estrela are some of the best UX/UI designers we've had the privilege of working with."</p>
+            <footer><strong>Anton Van Diermen</strong> — Director and Co-Founder, Zulik</footer>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         FAQ
+    ══════════════════════════════════════ -->
+    <section class="s-faq">
+      <div class="faq-inner">
+        <h2 class="faq-heading">FAQs</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-q">What types of projects do you take on? <span class="faq-icon">(</span></button>
+            <div class="faq-a"><p>We specialise in branding and UX/UI design for websites and apps. Whether it's a full brand identity, a design system build, or ongoing design support, we adapt to fit your business goals.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Which industries do you work with? <span class="faq-icon">(</span></button>
+            <div class="faq-a"><p>Our core expertise is in fintech and e-commerce, but we've partnered with clients across hospitality, law, accounting, packaging, edtech and many more.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">How does your pricing work? <span class="faq-icon">(</span></button>
+            <div class="faq-a"><p>We offer both project-based pricing and ongoing retainers, billed at a flat hourly rate. Once we scope your project, you'll receive a clear estimate before we begin.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Do you handle development too? <span class="faq-icon">(</span></button>
+            <div class="faq-a"><p>We focus on what we do best: design. For development, we collaborate with trusted partners. If you already have a dev team, we'll work hand-in-hand with them.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">What is your design process like? <span class="faq-icon">(</span></button>
+            <div class="faq-a"><p>We follow a structured yet flexible process: discovery and research, concept development, design, iteration, and handoff. Every stage involves you so there are no surprises at the end.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">How long does a typical project take? <span class="faq-icon">(</span></button>
+            <div class="faq-a"><p>Branding projects take roughly 6–8 weeks, and websites or apps typically run 8–12 weeks from kickoff to development handover.</p></div>
+          </div>
+        </div>
+      </div>
+      <!-- Pre-footer image -->
+      <div class="faq-prefooter-img">
+        <img src="https://images.prismic.io/estrelastudio/aN6C555xUNkB1af4_Rectangle2381-1-min.jpg?w=1920&h=1080&auto=compress,format" alt="" loading="lazy">
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         FOOTER
+    ══════════════════════════════════════ -->
+    <footer class="s-footer" id="contact">
+      <div class="footer-top">
+        <div class="footer-left">
+          <div class="footer-col">
+            <h6>Site index</h6>
+            <a href="#top">Home</a>
+            <a href="#work">Work</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <div class="footer-col">
+            <h6>Social</h6>
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Awwwards</a>
+            <a href="#">Behance</a>
+          </div>
+        </div>
+        <div class="footer-right">
+          <a href="#contact" class="footer-cta-btn">Contact Us <span class="footer-dot"></span></a>
+          <div class="footer-contact">
+            <p>Tell us about your project.<br>Let's collaborate.</p>
+            <div class="footer-contact-links">
+              <p><span class="f-bullet">•</span> <a href="tel:+27780548476">+27 (0) 78 054 8476</a></p>
+              <p><span class="f-bullet">•</span> <a href="mailto:accounts@estrela.studio">Write Us</a></p>
+              <p><span class="f-bullet">•</span> <a href="#">Newsletter Signup</a></p>
+            </div>
+          </div>
+          <div class="footer-clock-row">
+            <span id="clock">00:00:00</span> <span class="footer-tz">(GMT+2)</span>
+          </div>
+        </div>
+        <div class="footer-bird">
+          <svg viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M30 18C26 18 2 4 2 4C12 19 24 25 30 27C36 25 48 19 58 4C58 4 34 18 30 18Z" fill="currentColor"/>
+            <path d="M24 29L10 48L30 36L50 48L36 29L30 32L24 29Z" fill="currentColor"/>
+            <ellipse cx="30" cy="20" rx="3.5" ry="4.5" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+      <div class="footer-wordmark">
+        <span>Estrela Studio</span>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 Estrela Studio. All rights reserved.</p>
+        <p>Vienna · Cape Town</p>
+      </div>
+    </footer>
+
+    </div><!-- /.page-scroll -->
+  </main>
+
+</div><!-- /.site -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="js/main.js?v=11"></script>
+</body>
+</html>
