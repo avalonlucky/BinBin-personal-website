@@ -147,29 +147,52 @@ button:focus-visible {
   height: 5.2rem;
   border-radius: .52rem;
   padding: 0 2.8rem;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(26px) saturate(1.85) brightness(1.16);
+  -webkit-backdrop-filter: blur(26px) saturate(1.85) brightness(1.16);
   overflow: hidden;
   white-space: nowrap;
   box-shadow:
-    inset 0 0 0 1px rgba(251,251,244,.14),
-    0 0 0 1px rgba(2,2,2,.28),
-    0 1.4rem 2.8rem rgba(0,0,0,.22);
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 0 0 1px rgba(251,251,244,.16),
+    inset 0 -1.4rem 2.6rem rgba(255,255,255,.035),
+    0 0 0 1px rgba(2,2,2,.18),
+    0 1.6rem 3.4rem rgba(0,0,0,.26);
+}
+.nav-pill::before,
+.nav-pill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.nav-pill::before {
+  background:
+    linear-gradient(105deg, rgba(255,255,255,.16), rgba(255,255,255,.03) 32%, rgba(255,255,255,0) 58%),
+    radial-gradient(circle at 72% 18%, rgba(255,255,255,.22), rgba(255,255,255,0) 34%);
+  mix-blend-mode: screen;
+  opacity: .75;
+}
+.nav-pill::after {
+  inset: 1px;
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,0) 42%, rgba(0,0,0,.08));
 }
 
 /* Dark theme (over black hero) */
 #nav[data-theme="dark"] .nav-pill {
-  background: rgba(26, 26, 26, 0.86);
+  background: rgba(18, 18, 18, 0.44);
   color: var(--c-white);
 }
 /* Light theme (over cream sections) */
 #nav[data-theme="light"] .nav-pill {
-  background: rgba(244, 244, 232, 0.9);
+  background: rgba(244, 244, 232, 0.56);
   color: var(--c-black);
   box-shadow:
-    inset 0 0 0 1px rgba(2,2,2,.12),
-    0 0 0 1px rgba(255,255,255,.32),
-    0 1.4rem 2.8rem rgba(0,0,0,.12);
+    inset 0 1px 0 rgba(255,255,255,.55),
+    inset 0 0 0 1px rgba(2,2,2,.1),
+    inset 0 -1.4rem 2.6rem rgba(255,255,255,.12),
+    0 0 0 1px rgba(255,255,255,.3),
+    0 1.6rem 3rem rgba(0,0,0,.12);
 }
 
 .nav-logo {
@@ -211,6 +234,8 @@ button:focus-visible {
   pointer-events: none;
 }
 .nav-links a {
+  position: relative;
+  z-index: 1;
   font-family: var(--f-body);
   font-size: 1.65rem;
   font-weight: 500;
@@ -222,12 +247,19 @@ button:focus-visible {
 .nav-links a:hover { opacity: 1; }
 
 .nav-menu {
+  position: relative;
   width: 7.2rem;
   padding: 0;
   font-size: 1.65rem;
   line-height: 1;
   letter-spacing: .28em;
   opacity: .86;
+}
+.nav-logo .logo-text,
+.nav-logo .tm,
+.nav-menu span {
+  position: relative;
+  z-index: 1;
 }
 .nav-menu:hover { opacity: 1; }
 
