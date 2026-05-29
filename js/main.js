@@ -148,7 +148,6 @@ function initPreloader() {
   const tl = gsap.timeline({
     onComplete() {
       document.getElementById('preloader').style.display = 'none';
-      document.getElementById('cursor').style.opacity = '1';
       initScrollAnimations();
     }
   });
@@ -193,32 +192,6 @@ function initPreloader() {
   // Initial states
   gsap.set('#preloader', { clipPath: 'inset(0 0 0% 0)' });
   gsap.set('.pre-logo', { opacity: 0, scale: 0.5 });
-}
-
-/* ─────────────────────────────────────────
-   CUSTOM CURSOR
-───────────────────────────────────────── */
-function initCursor() {
-  if (!pointerFine.matches || prefersReducedMotion.matches) return;
-
-  const cursor = document.getElementById('cursor');
-
-  document.addEventListener('mousemove', e => {
-    gsap.to(cursor, {
-      x: e.clientX, y: e.clientY,
-      duration: 0.55, ease: 'expo.out',
-      overwrite: 'auto',
-    });
-  });
-
-  document.addEventListener('mouseleave', () => gsap.to(cursor, { opacity: 0, duration: 0.3 }));
-  document.addEventListener('mouseenter', () => gsap.to(cursor, { opacity: 1, duration: 0.3 }));
-
-  // Scale on hover
-  document.querySelectorAll('a, button, .work-card, .faq-q, .testi-track').forEach(el => {
-    el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 1.7, duration: 0.3 }));
-    el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1,   duration: 0.3 }));
-  });
 }
 
 /* ─────────────────────────────────────────
@@ -596,7 +569,6 @@ if (heroVideo) {
 
 initCanvasBorders();
 initPreloader();
-initCursor();
 initNavTheme();
 initWorkCta();
 initFAQ();
