@@ -125,7 +125,7 @@ button:focus-visible {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  padding-top: 3.2rem;
+  padding-top: 2.2rem;
   display: flex;
   justify-content: center;
   pointer-events: none;
@@ -143,10 +143,10 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
-  height: 7.4rem;
-  border-radius: .42rem;
-  padding: 0 4rem;
+  gap: 1.5rem;
+  height: 5.2rem;
+  border-radius: .52rem;
+  padding: 0 2.8rem;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   overflow: hidden;
@@ -174,28 +174,28 @@ button:focus-visible {
 
 .nav-logo {
   gap: .45rem;
-  min-width: 25.6rem;
-  padding: 0 4rem;
+  min-width: 19.2rem;
+  padding: 0 2.8rem;
 }
 .logo-text {
   font-family: var(--f-body);
-  font-size: 2.5rem;
+  font-size: 1.65rem;
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0;
 }
 .tm {
   font-family: var(--f-body);
-  font-size: .72rem;
+  font-size: .58rem;
   opacity: .75;
   line-height: 1;
-  margin-top: -1.9rem;
+  margin-top: -1.2rem;
 }
 
 .nav-links {
-  gap: 5.8rem;
-  min-width: 61.6rem;
-  max-width: 61.6rem;
+  gap: 4.2rem;
+  min-width: 45.6rem;
+  max-width: 45.6rem;
   overflow: hidden;
   transition: opacity .45s var(--ease), transform .5s var(--ease),
               max-width .55s var(--ease), padding .45s var(--ease), margin .45s var(--ease);
@@ -212,7 +212,7 @@ button:focus-visible {
 }
 .nav-links a {
   font-family: var(--f-body);
-  font-size: 2.5rem;
+  font-size: 1.65rem;
   font-weight: 500;
   line-height: 1;
   padding: 0;
@@ -222,9 +222,9 @@ button:focus-visible {
 .nav-links a:hover { opacity: 1; }
 
 .nav-menu {
-  width: 12rem;
+  width: 7.2rem;
   padding: 0;
-  font-size: 2.6rem;
+  font-size: 1.65rem;
   line-height: 1;
   letter-spacing: .28em;
   opacity: .86;
