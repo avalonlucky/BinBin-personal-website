@@ -301,17 +301,18 @@ button:focus-visible {
 /* Scroll hint */
 .hero-scroll-hint {
   position: absolute;
-  bottom: 2.4rem;
+  bottom: 6.8rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
   text-align: center;
   font-family: var(--f-body);
-  font-size: .85rem;
-  color: rgba(251,251,244,.45);
-  letter-spacing: .04em;
+  font-size: clamp(1.8rem, 2.8vw, 3.2rem);
+  line-height: 1;
+  color: rgba(251,251,244,.96);
+  letter-spacing: 0;
   white-space: nowrap;
-  opacity: 0;
+  opacity: 1;
 }
 
 /* ============================================================
