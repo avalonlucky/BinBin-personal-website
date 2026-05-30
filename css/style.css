@@ -269,7 +269,7 @@ button:focus-visible {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  padding: 0 2rem 0 clamp(4.8rem, 4vw, 6.2rem);
   z-index: 1;
   pointer-events: none;
 }
