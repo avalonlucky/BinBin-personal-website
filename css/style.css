@@ -178,14 +178,6 @@ button:focus-visible {
   line-height: 1;
   letter-spacing: 0;
 }
-.tm {
-  font-family: var(--f-body);
-  font-size: .58rem;
-  opacity: .75;
-  line-height: 1;
-  margin-top: -1.2rem;
-}
-
 .nav-links {
   gap: 4.2rem;
   min-width: 45.6rem;
@@ -227,7 +219,6 @@ button:focus-visible {
   opacity: .86;
 }
 .nav-logo .logo-text,
-.nav-logo .tm,
 .nav-menu span {
   position: relative;
   z-index: 1;
@@ -1177,11 +1168,6 @@ main section:not(.s-hero):not(.s-testimonials):not(.s-faq) {
 
   .logo-text {
     font-size: 1.35rem;
-  }
-
-  .tm {
-    font-size: .55rem;
-    margin-top: -1rem;
   }
 
   .nav-menu {
