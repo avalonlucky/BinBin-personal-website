@@ -354,16 +354,16 @@ function initWorkCta() {
     const gridW = grid.getBoundingClientRect().width;
     const gap = parseFloat(getComputedStyle(grid).columnGap) || 0;
     const gapTotal = gap * (items.length - 1);
-    const large = Math.min(Math.max(rem(46), gridW * 0.3), gridW * 0.38);
+    const large = Math.min(Math.max(rem(49.25), gridW * 0.31), gridW * 0.4);
     const normal = Math.max((gridW - gapTotal - large) / (items.length - 1), rem(16));
     return {
       large,
       normal,
-      projectActiveH: Math.min(rem(49), window.innerWidth * 0.6, 720),
-      projectSubH: Math.min(rem(33.5), window.innerWidth * 0.42, 520),
-      projectRestH: Math.min(rem(28), window.innerWidth * 0.36, 460),
-      featuredH: Math.min(window.innerHeight * 0.78, 700),
-      featuredSubH: Math.min(rem(33.5), window.innerHeight * 0.64, 520),
+      projectActiveH: Math.min(rem(58.5), window.innerWidth * 0.7, 820),
+      projectSubH: Math.min(rem(43.4), window.innerWidth * 0.56, 620),
+      projectRestH: Math.min(rem(37), window.innerWidth * 0.5, 540),
+      featuredH: Math.min(rem(62.6), window.innerHeight * 0.94, 860),
+      featuredSubH: Math.min(rem(43.4), window.innerHeight * 0.72, 620),
     };
   }
 
