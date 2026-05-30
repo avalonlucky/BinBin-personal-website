@@ -177,16 +177,6 @@ button:focus-visible {
   transition: opacity .45s var(--ease), transform .5s var(--ease),
               max-width .55s var(--ease), padding .45s var(--ease), margin .45s var(--ease);
 }
-/* 离开 hero 顶部后，链接 pill 收起，只留 logo + ···（1:1 原站） */
-#nav.is-compact .nav-links {
-  max-width: 0;
-  opacity: 0;
-  transform: scale(.85);
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: -.6rem;          /* 吞掉 flex gap，让 logo 与 ··· 保持单一间距 */
-  pointer-events: none;
-}
 .nav-links a {
   position: relative;
   z-index: 1;

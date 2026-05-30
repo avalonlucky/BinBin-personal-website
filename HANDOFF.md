@@ -71,7 +71,7 @@ const radius = (el.classList.contains('nav-pill') || el.classList.contains('show
 
 ### 9. 对照原站录屏补的两处细节（2026-05-29）
 用户提供原站首页录屏，抽帧对比后补齐：
-- **导航收起**：原站离开 hero 顶部后，`Work/About/Services/Contact` 那颗 pill 收起，只留品牌名 + `···`，回到顶部再展开。实现：`#nav.is-compact .nav-links{max-width:0;opacity:0;…}` + 一个 ScrollTrigger（`trigger:'.s-hero', start:'top+=80 top'`，onEnter 加 `is-compact`、onLeaveBack 移除）。
+- **导航显示策略**：原站离开 hero 顶部后会收起 `Work/About/Services/Contact` 那颗 pill，只留品牌名 + `···`；本站按用户要求做了小改动，桌面端中间导航始终保留，不再添加 `is-compact`。
 - **"experiences" 渐变**：原站是橙→金渐变，不是纯橙。改为 `.exp-heading em` 用 `linear-gradient(100deg,#FF7A1A,#FF9A40,#E9B473)` + `background-clip:text`（保留 `color:var(--c-orange)` 作回退）。
 - 另确认：hero 视频本来就在播放（`autoplay muted loop`），`main.js` 里的 `currentTime=7.5` 只是设初始帧，不影响循环播放，无需改动。
 
@@ -119,8 +119,8 @@ initClock()           — Footer 实时时钟（开普敦时区）
 ```
 
 ### CSS 版本号
-- `style.css?v=17`（index.html `<head>`）
-- `main.js?v=11`（index.html 底部）
+- `style.css?v=18`（index.html `<head>`）
+- `main.js?v=12`（index.html 底部）
 
 下次改完记得把版本号 +1，否则浏览器会缓存旧文件。
 

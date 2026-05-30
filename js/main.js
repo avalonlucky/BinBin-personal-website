@@ -147,13 +147,6 @@ function initNavTheme() {
     onLeaveBack:() => nav.dataset.theme = 'dark',
   });
 
-  // 离开 hero 顶部即收起链接 pill（只留 logo + ···），回到顶部再展开
-  ScrollTrigger.create({
-    trigger: '.s-hero',
-    start: 'top+=80 top',
-    onEnter:    () => nav.classList.add('is-compact'),
-    onLeaveBack:() => nav.classList.remove('is-compact'),
-  });
 }
 
 /* ─────────────────────────────────────────
