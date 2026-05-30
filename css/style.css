@@ -335,28 +335,22 @@ main footer {
 .work-grid {
   display: flex;
   align-items: flex-start;        /* 顶对齐：激活卡可向下溢出长高 */
+  position: relative;
 }
 
-/* ── 展开交互（原站核心动效）：默认深色面板最宽，hover 哪列哪列展开+长高置顶、其余让位 ── */
+/* ── 展开交互（原站核心动效）：JS 用 GSAP 驱动 width/height，带阻尼感 ── */
 .work-featured, .work-col {
-  flex: 1 1 0;
+  flex: 0 0 auto;
+  width: var(--work-w, 20vw);
   min-width: 0;
-  transition: flex-grow .7s var(--ease), height .7s var(--ease), min-height .7s var(--ease);
+  will-change: width, height, transform;
 }
-.work-featured { flex-grow: 2.2; min-height: min(78vh, 700px); }   /* 默认 active（最宽） */
-.work-col      { flex-grow: 1;   height: min(51vw, 630px); }
-.work-col[data-num="01"] { height: min(58vw, 720px); }             /* 首卡略高（错落，原站如此） */
-
-/* 用 :has() 驱动整组状态（学自 demo，比 grid:hover 更干净、可联动面板） */
-.work-grid:has(.work-col:hover) .work-col      { flex-grow: .8; }   /* 其余让位收窄 */
-.work-grid:has(.work-col:hover) .work-featured { flex-grow: .85; min-height: min(61vh, 620px); }
-.work-grid:has(.work-col:hover) .work-featured .work-featured-desc { opacity: 0; }  /* 面板描述淡出让位 */
-.work-grid:has(.work-col:hover) .work-col:hover {                   /* 被 hover 的卡：展开+长高+置顶 */
-  flex-grow: 2.7;
-  height: min(66vw, 860px);
+.work-featured { height: min(78vh, 700px); }
+.work-col      { height: var(--work-h, min(51vw, 630px)); }
+.work-item.is-active {
   z-index: 2;
 }
-.work-grid:has(.work-featured:hover) .work-featured { flex-grow: 2.5; }  /* 面板自身 hover 也展开 */
+.work-grid.is-project-active .work-featured .work-featured-desc { opacity: 0; }
 
 /* Featured (dark) column */
 .work-featured {
@@ -368,6 +362,7 @@ main footer {
   flex-direction: column;
   justify-content: flex-start;   /* 标题置顶 */
   gap: 1.5rem;
+  color: var(--c-white);
 }
 /* 紫色填充层：hover 时从底部滑入（原站 All Work 变色） */
 .work-featured::before {
@@ -379,6 +374,7 @@ main footer {
   transition: transform .6s var(--ease);
   z-index: 0;
 }
+.work-featured.is-active::before,
 .work-featured:hover::before { transform: translateY(0); }
 .work-featured > * { position: relative; z-index: 1; }
 .work-featured-num { display: none; }
@@ -386,6 +382,7 @@ main footer {
   display: flex; flex-direction: column; gap: 1.5rem;
   transition: opacity .4s var(--ease);
 }
+.work-featured.is-active .work-featured-body,
 .work-featured:hover .work-featured-body { opacity: 0; }   /* 填充时标题/描述淡出 */
 .work-featured-title {
   font-family: var(--f-heading);
@@ -420,6 +417,7 @@ main footer {
               transform .55s var(--ease), background .4s var(--ease), color .4s var(--ease);
 }
 .wal-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-orange); flex: none; }
+.work-featured.is-active .work-all-link,
 .work-featured:hover .work-all-link {
   position: absolute;
   left: 50%; top: 50%; margin: 0;
@@ -449,9 +447,8 @@ main footer {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform .9s var(--ease);
+  will-change: transform;
 }
-.work-col:hover .work-col-img img { transform: scale(1.05); }
 /* hover 暗化罩，保证浮层文字可读 */
 .work-col::after {
   content: '';
@@ -463,6 +460,7 @@ main footer {
   transition: opacity .45s var(--ease);
   pointer-events: none;
 }
+.work-col.is-active::after,
 .work-col:hover::after { opacity: 1; }
 
 /* 项目信息浮层（左上，hover 显示） */
@@ -475,6 +473,7 @@ main footer {
   transition: opacity .45s var(--ease), transform .5s var(--ease);
   pointer-events: none;
 }
+.work-col.is-active .work-col-info,
 .work-col:hover .work-col-info { opacity: 1; transform: translateY(0); }
 .work-col-num { font-size: .72rem; letter-spacing: .05em; color: rgba(251,251,244,.7); margin-bottom: .2rem; }
 .work-col-client {
@@ -515,6 +514,7 @@ main footer {
   pointer-events: none;
 }
 .wvb-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-orange); }
+.work-col.is-active .work-view-btn,
 .work-col:hover .work-view-btn { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
 /* Generic text link */
@@ -1095,6 +1095,7 @@ main footer {
   .work-featured,
   .work-col,
   .work-col[data-num="01"] {
+    width: 100% !important;
     height: auto;
     min-height: 0;
     flex: none;
@@ -1104,6 +1105,7 @@ main footer {
     padding: 3rem 2rem;
   }
 
+  .work-featured.is-active .work-featured-body,
   .work-featured:hover .work-featured-body {
     opacity: 1;
   }
@@ -1117,6 +1119,7 @@ main footer {
     margin-top: 2rem;
   }
 
+  .work-featured.is-active .work-all-link,
   .work-featured:hover .work-all-link {
     position: static;
     transform: none;
@@ -1280,15 +1283,6 @@ main footer {
 
   .footer-left {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (hover: none) {
-  .work-grid:has(.work-col:hover) .work-col,
-  .work-grid:has(.work-col:hover) .work-featured,
-  .work-grid:has(.work-col:hover) .work-col:hover,
-  .work-grid:has(.work-featured:hover) .work-featured {
-    flex-grow: initial;
   }
 }
 

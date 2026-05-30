@@ -335,15 +335,135 @@ function initScrollAnimations() {
    WORK CARDS — "View project" 跟随鼠标
 ───────────────────────────────────────── */
 function initWorkCta() {
-  document.querySelectorAll('.work-col').forEach(card => {
+  if (!pointerFine.matches || prefersReducedMotion.matches) return;
+
+  const grid = document.querySelector('.work-grid');
+  const featured = document.querySelector('.work-featured');
+  const cards = gsap.utils.toArray('.work-col');
+  if (!grid || !featured || !cards.length) return;
+
+  const items = [featured, ...cards];
+  let activeIndex = -1;
+  let layoutTween;
+
+  function rem(value) {
+    return value * parseFloat(getComputedStyle(document.documentElement).fontSize);
+  }
+
+  function metrics() {
+    const gridW = grid.getBoundingClientRect().width;
+    const large = Math.min(Math.max(rem(46), gridW * 0.3), gridW * 0.42);
+    const normal = Math.max((gridW - large) / (items.length - 1), rem(16));
+    return {
+      large,
+      normal,
+      projectActiveH: Math.min(rem(56), window.innerWidth * 0.66, 860),
+      projectSubH: Math.min(rem(38), window.innerWidth * 0.5, 640),
+      projectRestH: Math.min(rem(32), window.innerWidth * 0.44, 560),
+      featuredH: Math.min(window.innerHeight * 0.78, 700),
+      featuredSubH: Math.min(rem(38), window.innerHeight * 0.7, 620),
+    };
+  }
+
+  function clearState() {
+    grid.classList.remove('is-project-active');
+    items.forEach(item => item.classList.remove('is-active', 'is-sub-active'));
+  }
+
+  function setActive(nextIndex, options = {}) {
+    if (nextIndex === activeIndex && !options.force) return;
+    activeIndex = nextIndex;
+    const m = metrics();
+
+    clearState();
+    if (nextIndex > 0) {
+      grid.classList.add('is-project-active');
+      items[nextIndex].classList.add('is-active');
+      items[nextIndex - 1]?.classList.add('is-sub-active');
+      items[nextIndex + 1]?.classList.add('is-sub-active');
+    } else if (options.hoverFeatured) {
+      featured.classList.add('is-active');
+    }
+
+    layoutTween?.kill();
+    layoutTween = gsap.timeline({
+      defaults: {
+        duration: options.fast ? 0.85 : 1.15,
+        ease: 'power4.out',
+        overwrite: 'auto',
+      },
+    });
+
+    items.forEach((item, index) => {
+      const isProject = index > 0;
+      const isActive = index === nextIndex;
+      const isNeighbor = Math.abs(index - nextIndex) === 1;
+      const width = isActive ? m.large : m.normal;
+      const height = !isProject
+        ? (nextIndex > 0 ? m.featuredSubH : m.featuredH)
+        : (isActive ? m.projectActiveH : (isNeighbor ? m.projectSubH : m.projectRestH));
+
+      layoutTween.to(item, { width, height }, 0);
+    });
+  }
+
+  cards.forEach(card => {
+    const button = card.querySelector('.work-view-btn');
+    const img = card.querySelector('.work-col-img img');
+    const xTo = button ? gsap.quickTo(button, 'left', { duration: 0.45, ease: 'power3.out', overwrite: 'auto' }) : null;
+    const yTo = button ? gsap.quickTo(button, 'top', { duration: 0.45, ease: 'power3.out', overwrite: 'auto' }) : null;
+
     card.addEventListener('pointermove', e => {
       const b = card.getBoundingClientRect();
-      const x = ((e.clientX - b.left) / b.width)  * 100;
-      const y = ((e.clientY - b.top)  / b.height) * 100;
-      card.style.setProperty('--cta-x', `${Math.min(82, Math.max(26, x))}%`);
-      card.style.setProperty('--cta-y', `${Math.min(72, Math.max(24, y))}%`);
+      const x = Math.min(b.width * 0.82, Math.max(b.width * 0.26, e.clientX - b.left));
+      const y = Math.min(b.height * 0.72, Math.max(b.height * 0.24, e.clientY - b.top));
+      xTo?.(x);
+      yTo?.(y);
+
+      if (img) {
+        const dx = (e.clientX - (b.left + b.width / 2)) / b.width;
+        const dy = (e.clientY - (b.top + b.height / 2)) / b.height;
+        gsap.to(img, {
+          xPercent: dx * 3,
+          yPercent: dy * 2,
+          scale: 1.065,
+          duration: 0.9,
+          ease: 'power3.out',
+          overwrite: 'auto',
+        });
+      }
+    });
+
+    card.addEventListener('pointerleave', () => {
+      if (!img) return;
+      gsap.to(img, {
+        xPercent: 0,
+        yPercent: 0,
+        scale: 1,
+        duration: 1.1,
+        ease: 'power4.out',
+        overwrite: 'auto',
+      });
     });
   });
+
+  grid.addEventListener('pointermove', e => {
+    const target = e.target.closest('.work-featured, .work-col');
+    if (!target || !grid.contains(target)) return;
+    const nextIndex = items.indexOf(target);
+    if (nextIndex === -1) return;
+    setActive(nextIndex, { hoverFeatured: target === featured });
+  });
+
+  grid.addEventListener('pointerleave', () => {
+    activeIndex = -1;
+    clearState();
+    setActive(0, { force: true });
+    activeIndex = -1;
+  });
+
+  setActive(0, { force: true, fast: true });
+  window.addEventListener('resize', () => setActive(Math.max(activeIndex, 0), { force: true, fast: true }));
 }
 
 /* ─────────────────────────────────────────

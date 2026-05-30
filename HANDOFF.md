@@ -76,20 +76,21 @@ function initScrollAnimations() {
 
 ### 10. Work 段真正的核心动效是 hover 交互（2026-05-29，纠正第10条方向）
 用户指出重点不是滚动进场，而是 **作品卡 hover/聚焦展开** + **All Work 变色**。抓原站 hover 状态确认机制：列是 flex 项，hover 哪列哪列 `active`（宽 460）、其余压缩（238），`transition:all` 平滑；激活卡显示 编号/客户/标题/标签 + 居中 `View project` 按钮；默认 active = 深色 featured 面板（最宽）；hover featured 时整个面板填充紫色 `#D08CF5`、标题描述淡出、All Work 变居中黑胶囊。
-- **实现（纯 CSS hover，无需 JS）：**
-  - 展开：`.work-featured,.work-col{flex:1 1 0; transition:flex-grow .65s}`；默认 `.work-featured{flex-grow:2.2}`；`.work-grid:hover .work-featured{flex-grow:.9}` + `.work-grid:hover .work-col{flex-grow:.82}`（让位）；`.work-grid:hover .work-col:hover{flex-grow:2.8}`（展开，注意特异性要靠源码顺序在后）。
+- **实现（已于 2026-05-30 改成 JS/GSAP 驱动）：**
+  - 展开：`initWorkCta()` 在 mousemove 时判断当前命中的 `.work-featured/.work-col`，用 GSAP timeline 动画每列 `width/height`，`duration:1.15`、`ease:"power4.out"`，贴近原站的阻尼感。
   - 信息浮层 `.work-col-info`（absolute 左上）+ `.work-view-btn`（absolute 居中）默认 `opacity:0`，`.work-col:hover` 显示；`.work-col::after` 渐变暗罩保证文字可读。
   - All Work 填充：`.work-featured::before{background:#D08CF5; transform:translateY(101%)}` → `:hover{translateY(0)}`；`.work-featured:hover .work-featured-body{opacity:0}`；`.work-all-link` hover 时 `position:absolute; left/top:50%; translate(-50%,-50%)` 变黑胶囊。
   - HTML：`.work-col` 改成 `<a>`，内含 `figure.work-col-img` + `.work-col-info`(num/client/title/tags) + `.work-view-btn`。
 - 第10条的「逐行遮罩 lmask」「列交错 cascade 进场」保留，作为进场动画与 hover 动效并存。
 
-### 11. Work hover 升级：吸收用户 demo 的更优手法（2026-05-29）
-用户做了独立 demo（`/Users/luban/Documents/乱七八糟/featured-work-effect-demo/`），交互更接近视频。移植了 4 个手法到正式站：
-- **`:has()` 驱动整组**：用 `.work-grid:has(.work-col:hover) .work-col{flex-grow:.8}` + `…:hover{flex-grow:2.7}` 取代 `.work-grid:hover` 链，更干净且能联动面板。
-- **激活卡长高 + 置顶溢出**（最关键，之前漏了）：`align-items:flex-start` + 卡片定高 `height:min(51vw,630px)`、首卡 `min(58vw,720px)`、激活 `min(66vw,860px)` + `z-index:2`；`.s-work` 加 `position:relative;z-index:2` 和 `padding-bottom` 给溢出留空间，避免被 about 段盖住。
-- **View project 跟随鼠标**：`.work-view-btn{left:var(--cta-x,50%);top:var(--cta-y,50%)}` + `initWorkCta()` 里 `pointermove` 写 `--cta-x/--cta-y`（clamp 26–82% / 24–72%）。
+### 11. Work hover 升级：对齐原站的 GSAP 动态布局（2026-05-30）
+用户指出原站交互更灵活，鼠标从不同角度移入时展开方向和按钮运动都有更明显的“力学感”。抓原站 JS 后确认其核心是 `Work` 类：mousemove 命中列、`setActive(index)`、GSAP timeline 同时动画列宽与卡片高度，按钮用 `gsap.quickTo` 跟随鼠标。
+- **JS 动态宽高**：`.work-featured/.work-col` 改成 `flex:0 0 auto`，宽度由 `initWorkCta()` 根据 grid 宽度计算：active≈46rem，其余均分；项目 active 高≈56rem，邻近≈38rem，其余≈32rem。
+- **快速切换不跳**：每次切换先 kill 旧 timeline，再用 `power4.out` 和 `overwrite:"auto"` 接管当前状态，因此来回划过时不会卡顿或突然重置。
+- **View project 磁吸**：每张卡内按钮使用 `gsap.quickTo(button,"left/top",{duration:.45,ease:"power3.out"})`，比直接写 CSS 变量更有跟随滞后感。
+- **图片微视差**：项目图根据鼠标相对卡片中心做轻微 `xPercent/yPercent/scale`，离开后回正，增强不同角度移入的方向感。
 - **meta 改半透明 chip**：`.work-col-client/.work-col-title{display:table;background:rgba(251,251,244,.16);padding:…}`。
-- 经验：纯 CSS `:has()` + flex-grow/height 过渡即可做到视频级展开，无需 JS（JS 仅用于 CTA 跟随鼠标）。
+- 移动端跳过这套 hover JS，仍保持单列静态卡片。
 
 ---
 
@@ -110,8 +111,8 @@ initClock()           — Footer 实时时钟（开普敦时区）
 ```
 
 ### CSS 版本号
-- `style.css?v=21`（index.html `<head>`）
-- `main.js?v=14`（index.html 底部）
+- `style.css?v=22`（index.html `<head>`）
+- `main.js?v=15`（index.html 底部）
 
 下次改完记得把版本号 +1，否则浏览器会缓存旧文件。
 
