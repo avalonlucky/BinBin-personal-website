@@ -1,4 +1,4 @@
-# AI 交接文档 — Estrela Studio 复刻
+# AI 交接文档 — Maridian Space 个人网站
 
 > 给下一个接手的 AI 看的。记录了做了什么、怎么做的、还差什么。
 
@@ -6,7 +6,7 @@
 
 ## 当前状态（约 98% 还原）
 
-该项目已正式上线，线上域名为 **https://chaoshanai.com**。  
+该项目已正式上线，线上域名为 **https://chaoshanai.com**。当前前台品牌名为 **Maridian Space**，视觉参考站为 Estrela Studio。  
 页面已完整实现，所有动画正常，视觉与原版高度一致。  
 浏览器截图验证通过：页面高度精确匹配原版 **12614px**（viewport 1913×1096）。
 
@@ -71,7 +71,7 @@ const radius = (el.classList.contains('nav-pill') || el.classList.contains('show
 
 ### 9. 对照原站录屏补的两处细节（2026-05-29）
 用户提供原站首页录屏，抽帧对比后补齐：
-- **导航收起**：原站离开 hero 顶部后，`Work/About/Services/Contact` 那颗 pill 收起，只留 `Estrela Studio` + `···`，回到顶部再展开。实现：`#nav.is-compact .nav-links{max-width:0;opacity:0;…}` + 一个 ScrollTrigger（`trigger:'.s-hero', start:'top+=80 top'`，onEnter 加 `is-compact`、onLeaveBack 移除）。
+- **导航收起**：原站离开 hero 顶部后，`Work/About/Services/Contact` 那颗 pill 收起，只留品牌名 + `···`，回到顶部再展开。实现：`#nav.is-compact .nav-links{max-width:0;opacity:0;…}` + 一个 ScrollTrigger（`trigger:'.s-hero', start:'top+=80 top'`，onEnter 加 `is-compact`、onLeaveBack 移除）。
 - **"experiences" 渐变**：原站是橙→金渐变，不是纯橙。改为 `.exp-heading em` 用 `linear-gradient(100deg,#FF7A1A,#FF9A40,#E9B473)` + `background-clip:text`（保留 `color:var(--c-orange)` 作回退）。
 - 另确认：hero 视频本来就在播放（`autoplay muted loop`），`main.js` 里的 `currentTime=7.5` 只是设初始帧，不影响循环播放，无需改动。
 

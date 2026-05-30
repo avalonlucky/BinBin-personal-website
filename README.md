@@ -1,7 +1,7 @@
-# Estrela Studio 网站复刻
+# Maridian Space 个人网站
 
 **正式网站：** https://chaoshanai.com  
-**原版网址：** https://estrela.studio  
+**视觉参考：** https://estrela.studio  
 **本地预览：** `python3 -m http.server 8765` 然后打开 http://localhost:8765  
 **复刻进度：约 98% 视觉还原**
 
