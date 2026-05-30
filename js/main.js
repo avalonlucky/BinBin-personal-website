@@ -359,7 +359,7 @@ function initWorkCta() {
     return {
       large,
       normal,
-      projectActiveH: Math.min(rem(58.5), window.innerWidth * 0.7, 820),
+      projectActiveH: Math.min(rem(72), window.innerWidth * 0.78, 980),
       projectSubH: Math.min(rem(43.4), window.innerWidth * 0.56, 620),
       projectRestH: Math.min(rem(37), window.innerWidth * 0.5, 540),
       featuredH: Math.min(rem(62.6), window.innerHeight * 0.94, 860),

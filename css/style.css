@@ -483,29 +483,29 @@ main footer {
   display: inline-flex;
   width: fit-content;
   max-width: 100%;
-  padding: .25rem .6rem;
-  background: rgba(251,251,244,.16);
+  padding: .34rem .75rem;
+  background: rgba(251,251,244,.24);
   backdrop-filter: blur(8px);
-  font-size: .62rem; text-transform: uppercase; letter-spacing: .1em;
+  font-size: .72rem; text-transform: uppercase; letter-spacing: .08em;
   color: #fff;
 }
 .work-col-title {
   display: inline-flex;
   width: fit-content;
   max-width: 100%;
-  padding: .3rem .65rem;
-  background: rgba(251,251,244,.16);
+  padding: .4rem .78rem;
+  background: rgba(251,251,244,.24);
   backdrop-filter: blur(8px);
   font-family: var(--f-heading);
-  font-size: clamp(.9rem, 1.2vw, 1.15rem);
+  font-size: clamp(1.15rem, 1.55vw, 1.65rem);
   font-weight: 400; letter-spacing: -.01em; line-height: 1.2;
   color: #fff;
 }
 .work-col-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .2rem; }
 .work-col-tags span {
-  font-size: .58rem; color: var(--c-white);
+  font-size: .72rem; color: var(--c-white);
   border: 1px solid rgba(251,251,244,.4);
-  border-radius: 10rem; padding: .18rem .65rem;
+  border-radius: 10rem; padding: .24rem .78rem;
 }
 
 /* View project 按钮（跟随鼠标，hover 出现 —— 学自 demo 的 pointermove） */

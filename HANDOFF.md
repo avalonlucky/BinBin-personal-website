@@ -111,8 +111,8 @@ initClock()           — Footer 实时时钟（开普敦时区）
 ```
 
 ### CSS 版本号
-- `style.css?v=24`（index.html `<head>`）
-- `main.js?v=17`（index.html 底部）
+- `style.css?v=25`（index.html `<head>`）
+- `main.js?v=18`（index.html 底部）
 
 下次改完记得把版本号 +1，否则浏览器会缓存旧文件。
 
