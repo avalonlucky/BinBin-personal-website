@@ -244,7 +244,7 @@ button:focus-visible {
 
 /* Title — full width flex, vertically centered */
 .hero-title {
-  position: absolute;
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
   left: 0;
@@ -264,6 +264,7 @@ button:focus-visible {
   color: var(--c-white);
   letter-spacing: 0;
   text-wrap: balance;
+  will-change: transform, opacity;
 }
 
 .hero-word {

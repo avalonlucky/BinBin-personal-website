@@ -201,6 +201,30 @@ function initScrollAnimations() {
     yPercent: 6,
   });
 
+  // ── Hero copy converges toward center and fades, matching the reference scroll feel ──
+  const heroCopyTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.s-hero',
+      start: 'top top',
+      end: 'bottom 35%',
+      scrub: 1.2,
+    },
+  });
+  heroCopyTl
+    .to('.hero-title-left', { xPercent: 38, ease: 'none', duration: 1 }, 0)
+    .to('.hero-title-right', { xPercent: -50, ease: 'none', duration: 1 }, 0)
+    .to('.hero-title-left, .hero-title-right', { autoAlpha: 0, ease: 'none', duration: 0.28 }, 0.72);
+  gsap.to('.hero-scroll-hint', {
+    autoAlpha: 0,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.s-hero',
+      start: 'top top',
+      end: 'top+=220 top',
+      scrub: true,
+    },
+  });
+
   // ── EXP heading lines (scrub-linked reveal) ──
   gsap.fromTo('.exp-heading .line span',
     { yPercent: 108 },
