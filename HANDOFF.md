@@ -41,27 +41,19 @@ function initScrollAnimations() {
 **问题：** JS 里写的是 `.svc-img img`，但 HTML 里的 class 是 `.svc-fig`。  
 **解法：** 改为 `'.svc-fig img, .about-img img'`。
 
-### 5. Showreel 按钮的 Canvas 边框不是圆形
-**问题：** Canvas 边框动画只对 `.nav-pill` 用全圆角，其他元素用 8px。  
-**解法：**
-```javascript
-const radius = (el.classList.contains('nav-pill') || el.classList.contains('showreel-btn')) ? r : 8;
-```
-
-### 6. 浏览器缓存旧版 JS/CSS
+### 5. 浏览器缓存旧版 JS/CSS
 **问题：** 改了 JS/CSS 但浏览器不更新。  
 **解法：** 用 `?v=N` 参数手动 busting，目前 CSS=v8，JS=v7。
 
-### 7. 动画体感与原站不一致（2026-05-29 重做）
+### 6. 动画体感与原站不一致（2026-05-29 重做）
 **问题：** 原站几乎所有揭示/视差都是 **scrub（绑定滚动位置）**，元素随滚轮连续来回运动且可逆；我的复刻原本大多是 `gsap.from()` + `start:'top 80%'` **进入视口播一次就停**，往回滚不倒放，体感"到点弹一下"而非"滚动即运动"。原站抓包：**27 个 `scrub:true`**，我原本只有 4 个。  
 **解法：**
 - Lenis 由 `duration:1.25` 改为 **`lerp:0.1`** 模式（跟手，贴近原站 39 处 lerp 用法），加 `syncTouch:true`。
-- 把所有揭示动画从 `gsap.from(...,{start:'top 80%'})` 改写为 **`gsap.fromTo(...,{scrollTrigger:{start, end, scrub:true}})`**，绑定滚动范围、可逆。改造后 ScrollTrigger 共 45 个，其中 **38 个 scrub**，2 个 pin。
-- EXP 浮动图：散入动画只动 `opacity/scale/x`，把 `y` 完全留给视差 drift，避免两个 tween 抢同一属性。
-- 验证：滚动中段 work-item op=1（已显现）、未进入范围 op=0（隐藏可逆），EXP/Services/Testimonials 各段截图无破绽。
+- 把所有揭示动画从 `gsap.from(...,{start:'top 80%'})` 改写为 **`gsap.fromTo(...,{scrollTrigger:{start, end, scrub:true}})`**，绑定滚动范围、可逆。
+- 验证：滚动中段 work-item op=1（已显现）、未进入范围 op=0（隐藏可逆），Services/Testimonials 各段截图无破绽。
 
-### 8. 滚动架构 1:1 还原原站（2026-05-29）
-**原站结构（抓包确认）：** `body(不滚) > div.site > main.page.lenis(滚动容器·黑底) > .page-bg + .page-scroll(装所有 section)`。Lenis 挂在 `main.page` 这个 `overflow:auto` 容器上做**原生滚动**（不是 transform 虚拟滚动，`.page-scroll` transform 恒为 none）。深色段（hero/testimonials/faq/footer）**背景透明**，露出 `main.page` 的持续黑底；浅色段（exp/work/about/services）实白盖在上面。  
+### 7. 滚动架构 1:1 还原原站（2026-05-29）
+**原站结构（抓包确认）：** `body(不滚) > div.site > main.page.lenis(滚动容器·黑底) > .page-bg + .page-scroll(装所有 section)`。Lenis 挂在 `main.page` 这个 `overflow:auto` 容器上做**原生滚动**（不是 transform 虚拟滚动，`.page-scroll` transform 恒为 none）。深色段（hero/testimonials/faq/footer）**背景透明**，露出 `main.page` 的持续黑底；浅色段（work/about/services）实白盖在上面。  
 **注意：此架构在桌面端无可见差异**（持续黑底 vs 每段各自黑底视觉相同，白/黑边界是硬切无圆角无渐变）。唯一实际好处是移动端避免地址栏伸缩跳动。是按用户要求做的 1:1 结构还原。  
 **实现要点：**
 - HTML：`<body><div class="site"> … <main class="page"><div class="page-bg"></div><div class="page-scroll"> …sections… </div></main></div></body>`（nav/cursor/preloader 作为 fixed 浮层放在 .site 内、main 外）。
@@ -69,13 +61,12 @@ const radius = (el.classList.contains('nav-pill') || el.classList.contains('show
 - JS：`const scroller=document.querySelector('.page')`；**`ScrollTrigger.defaults({scroller})` 必须在创建任何 trigger 之前**；Lenis 用 `new Lenis({wrapper:scroller, content:'.page-scroll', lerp:0.1, …})`。
 - **坑：** 换 scroller 后所有 ScrollTrigger（含 pin）的定位都基于 `.page`。若新增 trigger 忘了走 defaults 会错位。已验证 45 个 trigger（38 scrub+2 pin）`scroller===main` 全部正常。
 
-### 9. 对照原站录屏补的两处细节（2026-05-29）
+### 8. 对照原站录屏补的两处细节（2026-05-29）
 用户提供原站首页录屏，抽帧对比后补齐：
 - **导航显示策略**：原站离开 hero 顶部后会收起 `Work/About/Services/Contact` 那颗 pill，只留品牌名 + `···`；本站按用户要求做了小改动，桌面端中间导航始终保留，不再添加 `is-compact`。
-- **"experiences" 渐变**：原站是橙→金渐变，不是纯橙。改为 `.exp-heading em` 用 `linear-gradient(100deg,#FF7A1A,#FF9A40,#E9B473)` + `background-clip:text`（保留 `color:var(--c-orange)` 作回退）。
 - 另确认：hero 视频本来就在播放（`autoplay muted loop`），`main.js` 里的 `currentTime=7.5` 只是设初始帧，不影响循环播放，无需改动。
 
-### 10. Work「Featured Work」段对齐原站（2026-05-29）
+### 9. Work「Featured Work」段对齐原站（2026-05-29）
 抓原站 DOM + 录屏抽帧对比，原站这段是 `.work-grid > .work-col-featured(深色面板) + 4×.work-col-project(纯图列)`，文字用 `.line-mask` 逐行遮罩揭示。修正我方差异：
 - **面板标题置顶**：`.work-featured` 由 `justify-content:space-between` 改 `flex-start`；`.work-all-link` 加 `margin-top:auto` 推到底部；隐藏大编号（`.work-featured-num{display:none}`）。
 - **项目列纯图片**：隐藏列编号（`.work-col-num{display:none}`）和常驻 meta；`.work-col-meta` 默认 `opacity:0`，`.work-col:hover` 时淡入上移揭示 client/title/tags。
@@ -83,7 +74,7 @@ const radius = (el.classList.contains('nav-pill') || el.classList.contains('show
 - **项目列交错升起**：`fromTo('.work-col',{y:70,opacity:0},{…stagger:.13, scrub, trigger:'.s-work'})`，取代原先整列一起淡入的写法。
 - 注意：`#workCounter` 元素保留（仅 `display:none`），`animCounter()` 仍引用它，删元素会报错。
 
-### 11. Work 段真正的核心动效是 hover 交互（2026-05-29，纠正第10条方向）
+### 10. Work 段真正的核心动效是 hover 交互（2026-05-29，纠正第10条方向）
 用户指出重点不是滚动进场，而是 **作品卡 hover/聚焦展开** + **All Work 变色**。抓原站 hover 状态确认机制：列是 flex 项，hover 哪列哪列 `active`（宽 460）、其余压缩（238），`transition:all` 平滑；激活卡显示 编号/客户/标题/标签 + 居中 `View project` 按钮；默认 active = 深色 featured 面板（最宽）；hover featured 时整个面板填充紫色 `#D08CF5`、标题描述淡出、All Work 变居中黑胶囊。
 - **实现（纯 CSS hover，无需 JS）：**
   - 展开：`.work-featured,.work-col{flex:1 1 0; transition:flex-grow .65s}`；默认 `.work-featured{flex-grow:2.2}`；`.work-grid:hover .work-featured{flex-grow:.9}` + `.work-grid:hover .work-col{flex-grow:.82}`（让位）；`.work-grid:hover .work-col:hover{flex-grow:2.8}`（展开，注意特异性要靠源码顺序在后）。
@@ -92,7 +83,7 @@ const radius = (el.classList.contains('nav-pill') || el.classList.contains('show
   - HTML：`.work-col` 改成 `<a>`，内含 `figure.work-col-img` + `.work-col-info`(num/client/title/tags) + `.work-view-btn`。
 - 第10条的「逐行遮罩 lmask」「列交错 cascade 进场」保留，作为进场动画与 hover 动效并存。
 
-### 12. Work hover 升级：吸收用户 demo 的更优手法（2026-05-29）
+### 11. Work hover 升级：吸收用户 demo 的更优手法（2026-05-29）
 用户做了独立 demo（`/Users/luban/Documents/乱七八糟/featured-work-effect-demo/`），交互更接近视频。移植了 4 个手法到正式站：
 - **`:has()` 驱动整组**：用 `.work-grid:has(.work-col:hover) .work-col{flex-grow:.8}` + `…:hover{flex-grow:2.7}` 取代 `.work-grid:hover` 链，更干净且能联动面板。
 - **激活卡长高 + 置顶溢出**（最关键，之前漏了）：`align-items:flex-start` + 卡片定高 `height:min(51vw,630px)`、首卡 `min(58vw,720px)`、激活 `min(66vw,860px)` + `z-index:2`；`.s-work` 加 `position:relative;z-index:2` 和 `padding-bottom` 给溢出留空间，避免被 about 段盖住。
@@ -106,11 +97,11 @@ const radius = (el.classList.contains('nav-pill') || el.classList.contains('show
 
 ### main.js 函数列表
 ```
-initCanvasBorders()   — nav pill + showreel 按钮的 Canvas 动态边框
+initCanvasBorders()   — nav pill 的 Canvas 动态边框
 initPreloader()       — logo 弹入 → 页面揭开 → hero 标题飞入
 initCursor()          — 自定义鼠标（Estrela bird mark SVG）
-initNavTheme()        — 滚动到 .s-exp 时 nav 切换 dark/light 主题
-initScrollAnimations()— 所有 ScrollTrigger 动画（含两个 pin）
+initNavTheme()        — 滚动到 .s-work 时 nav 切换 dark/light 主题
+initScrollAnimations()— 所有 ScrollTrigger 动画（含 About pin）
 animCounter()         — work section 数字计数器动画
 initFAQ()             — FAQ 手风琴（GSAP height: auto）
 initDragScroll()      — Testimonials 拖拽横滑
@@ -119,8 +110,8 @@ initClock()           — Footer 实时时钟（开普敦时区）
 ```
 
 ### CSS 版本号
-- `style.css?v=20`（index.html `<head>`）
-- `main.js?v=13`（index.html 底部）
+- `style.css?v=21`（index.html `<head>`）
+- `main.js?v=14`（index.html 底部）
 
 下次改完记得把版本号 +1，否则浏览器会缓存旧文件。
 
@@ -128,15 +119,14 @@ initClock()           — Footer 实时时钟（开普敦时区）
 
 ## Pin 区块滚动机制
 
-两个 section 被钉住（GSAP pin）：
+一个 section 被钉住（GSAP pin）：
 
 | Section | trigger | end | 产生的额外滚动高度 |
 |---|---|---|---|
-| `.s-exp` | `top top` | `+=200%` | ~2192px（2×viewport高度） |
 | `.s-about` | `top top` | `+=200%` | ~2192px |
 
-**效果：** 用户在这两个区块会停留更久，背景浮动图片/内容慢慢移动。  
-**注意：** 这两个 pin spacer 需要 `.pin-spacer { background: var(--c-white) }` 否则显示黑色。
+**效果：** 用户在 About 区块会停留更久，内容慢慢移动。  
+**注意：** pin spacer 需要 `.pin-spacer { background: var(--c-white) }` 否则显示黑色。
 
 ---
 
@@ -161,7 +151,7 @@ if (heroVideo) {
 
 本地 woff2 文件位于 `fonts/` 目录：
 - `PPMigra-Regular.woff2` — 标题（serif，用于 h1/h2 等）
-- `PPMigra-Italic.woff2` — 标题斜体（用于 exp 区块"experiences"橙色字）
+- `PPMigra-Italic.woff2` — 标题斜体
 - `PPNeueMontreal-Regular.woff2` — 正文（sans-serif，500 weight）
 
 **没有 Bold 字重**，footer wordmark 用的是 `font-weight: 700` + faux-bold（浏览器模拟），视觉上影响不大。  
@@ -175,7 +165,6 @@ if (heroVideo) {
 2. **添加多页面** — Work、About、Services、Contact 页面目前是空链接
 3. **响应式适配** — 目前 `@media` 规则存在但未完整测试移动端
 4. **PP Neue Montreal Bold** — 如果能找到字体文件，footer wordmark 会更精准
-5. **Showreel 视频弹窗** — 点击 showreel 按钮目前跳 `#showreel` 锚点，实际应该弹出视频
 
 ---
 
@@ -187,8 +176,7 @@ if (heroVideo) {
 | 字体 | ✅ PP Migra + PP Neue Montreal |
 | 配色 | ✅ --c-black / --c-white / --c-orange |
 | Hero 视频帧 | ✅ t=7.5s 构图与原版接近 |
-| EXP 浮动图片 | ✅ 8 张图，位置近似 |
-| Pin 效果 | ✅ EXP + About 两处 pin |
+| Pin 效果 | ✅ About pin |
 | 动画 | ✅ 全部实现 |
 | 导航 Canvas 边框 | ✅ 动态光效 |
 

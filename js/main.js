@@ -93,7 +93,7 @@ function initCanvasBorders() {
       const w = el.offsetWidth;
       const h = el.offsetHeight;
       const r = Math.min(w, h) / 2;
-      const radius = el.classList.contains('nav-pill') ? 6 : (el.classList.contains('showreel-btn') ? r : 8);
+      const radius = el.classList.contains('nav-pill') ? 6 : 8;
 
       ctx.clearRect(0, 0, w, h);
 
@@ -141,7 +141,7 @@ function initNavTheme() {
   const nav = document.getElementById('nav');
 
   ScrollTrigger.create({
-    trigger: '.s-exp',
+    trigger: '.s-work',
     start: 'top 60px',
     onEnter:    () => nav.dataset.theme = 'light',
     onLeaveBack:() => nav.dataset.theme = 'dark',
@@ -158,35 +158,11 @@ function initScrollAnimations() {
   _scrollAnimsDone = true;
 
   if (prefersReducedMotion.matches) {
-    gsap.set('.reveal-up, .exp-desc, .exp-eyebrow, .work-col, .work-featured-desc, .work-all-link, .testi-card, .faq-item', {
+    gsap.set('.reveal-up, .work-col, .work-featured-desc, .work-all-link, .testi-card, .faq-item', {
       clearProps: 'all',
       opacity: 1,
     });
     return;
-  }
-
-  // ── EXP section — pin while images drift (matches original 3×vh scroll) ──
-  if (desktopMotion()) {
-    ScrollTrigger.create({
-      trigger: '.s-exp',
-      start: 'top top',
-      end: '+=200%',
-      pin: true,
-      pinSpacing: true,
-    });
-    gsap.utils.toArray('.exp-img').forEach((img, i) => {
-      const yDist = [-120, 90, -60, 80, -100, 70, -50, 110][i] ?? 60;
-      gsap.to(img, {
-        y: yDist,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.s-exp',
-          start: 'top top',
-          end: '+=200%',
-          scrub: 1.5,
-        },
-      });
-    });
   }
 
   // ── Hero video parallax while pinned on scroll ──
@@ -223,43 +199,6 @@ function initScrollAnimations() {
       end: 'top+=220 top',
       scrub: true,
     },
-  });
-
-  // ── EXP heading lines (scrub-linked reveal) ──
-  gsap.fromTo('.exp-heading .line span',
-    { yPercent: 108 },
-    {
-      yPercent: 0, ease: 'expo.out', stagger: 0.08,
-      scrollTrigger: { trigger: '.s-exp', start: 'top 92%', end: 'top 45%', scrub: true },
-    });
-  gsap.fromTo('.exp-showreel',
-    { opacity: 0, y: 30 },
-    {
-      opacity: 1, y: 0, ease: 'expo.out',
-      scrollTrigger: { trigger: '.s-exp', start: 'top 88%', end: 'top 55%', scrub: true },
-    });
-  gsap.fromTo('.exp-eyebrow',
-    { opacity: 0, y: 28 },
-    {
-      opacity: 1, y: 0, ease: 'expo.out',
-      scrollTrigger: { trigger: '.s-exp', start: 'top 80%', end: 'top 48%', scrub: true },
-    });
-  gsap.fromTo('.exp-desc',
-    { opacity: 0, y: 28 },
-    {
-      opacity: 1, y: 0, ease: 'expo.out',
-      scrollTrigger: { trigger: '.s-exp', start: 'top 75%', end: 'top 42%', scrub: true },
-    });
-
-  // ── EXP images scatter in (scrub-linked; y reserved for parallax drift) ──
-  gsap.utils.toArray('.exp-img').forEach((img, i) => {
-    const dir = i % 2 === 0 ? -1 : 1;
-    gsap.fromTo(img,
-      { x: 60 * dir, opacity: 0, scale: 0.9 },
-      {
-        x: 0, opacity: 1, scale: 1, ease: 'expo.out',
-        scrollTrigger: { trigger: '.s-exp', start: `top ${92 - i * 2}%`, end: `top ${55 - i * 2}%`, scrub: true },
-      });
   });
 
   // ── Section headings (scrub-linked) ──

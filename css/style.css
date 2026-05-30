@@ -320,129 +320,6 @@ main footer {
 }
 
 /* ============================================================
-   EXP — "Crafting competitive…" + floating images
-   ============================================================ */
-.s-exp {
-  background: var(--c-white);
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-  color: var(--c-black);
-}
-
-/* Showreel button — top left */
-.exp-showreel {
-  position: absolute;
-  top: 4rem;
-  left: var(--gutter);
-  display: flex;
-  align-items: center;
-  gap: 1.2rem;
-  z-index: 2;
-}
-.showreel-btn {
-  width: 3.6rem;
-  height: 3.6rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  background: rgba(2,2,2,.06);
-  transition: transform .5s var(--ease);
-  flex-shrink: 0;
-}
-.showreel-btn svg { width: 1rem; height: 1rem; color: var(--c-black); }
-.showreel-btn:hover { transform: scale(1.08); }
-.showreel-label {
-  font-family: var(--f-heading);
-  font-style: italic;
-  font-size: .9rem;
-  color: rgba(2,2,2,.5);
-}
-
-/* Description — top right */
-.exp-desc {
-  position: absolute;
-  top: 4rem;
-  right: var(--gutter);
-  width: min(26rem, 22vw);
-  font-size: .88rem;
-  line-height: 1.8;
-  color: rgba(2,2,2,.6);
-  z-index: 2;
-  opacity: 0;
-}
-
-/* Main centered heading */
-.exp-heading-wrap {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 2;
-  width: 90%;
-}
-.exp-heading {
-  font-family: var(--f-heading);
-  font-size: clamp(4.5rem, 10.5vw, 13rem);
-  font-weight: 400;
-  line-height: .9;
-  letter-spacing: -.02em;
-  color: var(--c-black);
-}
-.exp-heading .line { overflow: hidden; padding-bottom: .04em; }
-.exp-heading .line span { display: block; }
-.exp-heading em {
-  font-style: italic;
-  color: var(--c-orange);                 /* 回退色 */
-  background: linear-gradient(100deg, #FF7A1A 0%, #FF9A40 42%, #E9B473 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.exp-eyebrow {
-  font-family: var(--f-heading);
-  font-style: italic;
-  font-size: .9rem;
-  color: rgba(2,2,2,.45);
-  margin-top: 1.8rem;
-  opacity: 0;
-}
-
-/* 8 floating experience images */
-.exp-images {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.exp-img {
-  position: absolute;
-  overflow: hidden;
-  border-radius: .4rem;
-  box-shadow: 0 8px 40px rgba(2,2,2,.12);
-}
-.exp-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Scattered positions matching the original's layout */
-.exp-img--1 { width: 14vw; aspect-ratio: 400/540; left: 2%;  top: 12%; transform: rotate(-3deg); }
-.exp-img--2 { width: 13vw; aspect-ratio: 400/540; left: 14%; top: 55%; transform: rotate(2deg);  }
-.exp-img--3 { width: 12vw; aspect-ratio: 400/540; left: 5%;  top: 65%; transform: rotate(-1deg); }
-.exp-img--4 { width: 14vw; aspect-ratio: 400/540; right: 3%; top: 8%;  transform: rotate(4deg);  }
-.exp-img--5 { width: 13vw; aspect-ratio: 400/540; right: 2%; top: 48%; transform: rotate(-2deg); }
-.exp-img--6 { width: 12vw; aspect-ratio: 400/540; right: 16%;top: 62%; transform: rotate(1deg);  }
-.exp-img--7 { width: 11vw; aspect-ratio: 400/540; left: 30%; top: 6%;  transform: rotate(-4deg); }
-.exp-img--8 { width: 12vw; aspect-ratio: 400/540; right: 30%;top: 70%; transform: rotate(3deg);  }
-
-/* ============================================================
    WORK
    ============================================================ */
 /* ============================================================
@@ -1127,10 +1004,6 @@ main footer {
 @media (max-width: 1024px) {
   :root { --gutter: 2.5rem; }
 
-  .exp-desc {
-    width: min(22rem, 34vw);
-  }
-
   .about-inner {
     grid-template-columns: .85fr 1fr;
     gap: 3rem;
@@ -1209,48 +1082,6 @@ main footer {
   .hero-scroll-hint {
     display: none;
   }
-
-  .s-exp {
-    min-height: 100dvh;
-  }
-
-  .exp-showreel {
-    top: 6.7rem;
-    left: 1.8rem;
-  }
-
-  .showreel-label {
-    display: none;
-  }
-
-  .exp-desc {
-    top: 6.5rem;
-    right: 1.8rem;
-    width: 11rem;
-    font-size: .82rem;
-    line-height: 1.75;
-  }
-
-  .exp-heading-wrap {
-    width: calc(100% - 3rem);
-  }
-
-  .exp-heading {
-    font-size: clamp(4.5rem, 18vw, 7rem);
-  }
-
-  .exp-img {
-    border-radius: .55rem;
-  }
-
-  .exp-img--1 { width: 24vw; left: 4%; top: 15%; }
-  .exp-img--2 { width: 22vw; left: 15%; top: 67%; }
-  .exp-img--3 { width: 20vw; left: 6%; top: 76%; }
-  .exp-img--4 { width: 24vw; right: 5%; top: 12%; }
-  .exp-img--5 { width: 22vw; right: 8%; top: 52%; }
-  .exp-img--6 { width: 21vw; right: 18%; top: 78%; }
-  .exp-img--7 { width: 20vw; left: 30%; top: 10%; }
-  .exp-img--8 { width: 21vw; right: 32%; top: 72%; }
 
   .s-work {
     padding: 0;
@@ -1441,10 +1272,6 @@ main footer {
     max-width: 10.5rem;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-
-  .exp-desc {
-    width: 10.2rem;
   }
 
   .work-col {
