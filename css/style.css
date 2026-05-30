@@ -543,6 +543,174 @@ main footer {
 .about-cta-link:hover { border-color: var(--c-black); }
 
 /* ============================================================
+   DESIGN VIEW — expandable rows
+   ============================================================ */
+.s-design-view {
+  background: var(--c-white);
+  border-top: 1px solid var(--border-c-dark);
+  padding: clamp(5.5rem, 10vw, 9rem) var(--gutter) clamp(6rem, 11vw, 10rem);
+  overflow: hidden;
+}
+.design-view-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(18rem, .95fr);
+  gap: clamp(2rem, 7vw, 9rem);
+  align-items: end;
+  margin-bottom: clamp(3.5rem, 7vw, 6.5rem);
+}
+.design-view-heading h2 {
+  font-family: var(--f-cjk);
+  font-size: clamp(3.8rem, 7vw, 8.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--c-black);
+  margin: 0;
+}
+.design-view-heading p {
+  font-family: var(--f-cjk);
+  font-size: clamp(1.05rem, 1.8vw, 2rem);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: rgba(0,0,0,.64);
+  margin: 0 0 .3rem;
+}
+.design-rows {
+  border-top: 1px solid rgba(2,2,2,.08);
+}
+.design-row {
+  display: grid;
+  grid-template-columns: minmax(18rem, .48fr) minmax(0, .52fr);
+  min-height: clamp(8rem, 11vw, 12rem);
+  height: clamp(8rem, 11vw, 12rem);
+  border-bottom: 1px solid rgba(2,2,2,.08);
+  background: rgba(2,2,2,.025);
+  overflow: hidden;
+  transition:
+    height 1.05s cubic-bezier(.16, 1, .3, 1),
+    background-color .75s cubic-bezier(.16, 1, .3, 1);
+}
+.design-row:nth-child(even) { background: rgba(2,2,2,.055); }
+.design-row.is-active,
+.design-row:hover {
+  height: clamp(22rem, 31vw, 36rem);
+  background: rgba(2,2,2,.018);
+}
+.design-row-fig {
+  position: relative;
+  overflow: hidden;
+  background: rgba(2,2,2,.08);
+  margin: 0;
+}
+.design-row-fig img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.04);
+  filter: saturate(.95);
+  transition:
+    transform 1.2s cubic-bezier(.16, 1, .3, 1),
+    filter .8s cubic-bezier(.16, 1, .3, 1);
+}
+.design-row.is-active .design-row-fig img,
+.design-row:hover .design-row-fig img {
+  transform: scale(1);
+  filter: saturate(1.05);
+}
+.design-row-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: clamp(2rem, 3.4vw, 4rem) 0 clamp(2rem, 3.4vw, 4rem) clamp(2.5rem, 6vw, 7rem);
+}
+.design-row-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 2rem;
+}
+.design-row-header h3 {
+  font-family: var(--f-heading);
+  font-size: clamp(2.2rem, 3.2vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: 1.05;
+  color: var(--c-black);
+  margin: 0;
+}
+.design-row-header span {
+  font-family: var(--f-heading);
+  font-size: clamp(2rem, 3vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--c-black);
+}
+.design-row-content p {
+  max-width: 42rem;
+  font-size: clamp(1rem, 1.35vw, 1.35rem);
+  line-height: 1.45;
+  color: rgba(2,2,2,.55);
+  margin: clamp(1.6rem, 3vw, 3.5rem) 0 0;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity .7s cubic-bezier(.16, 1, .3, 1),
+    transform .7s cubic-bezier(.16, 1, .3, 1);
+}
+.design-row.is-active .design-row-content p,
+.design-row:hover .design-row-content p {
+  opacity: 1;
+  transform: translateY(0);
+}
+.design-row-cta {
+  display: grid;
+  grid-template-columns: minmax(18rem, .48fr) minmax(0, .52fr);
+  min-height: clamp(16rem, 24vw, 28rem);
+  background: rgba(2,2,2,.1);
+  border-bottom: 1px solid rgba(2,2,2,.08);
+}
+.design-row-cta p {
+  grid-column: 2;
+  align-self: center;
+  max-width: 46rem;
+  font-family: var(--f-heading);
+  font-size: clamp(2.1rem, 3.3vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: 1.12;
+  color: var(--c-black);
+  margin: 0;
+  padding: clamp(3rem, 5vw, 6rem) 0 clamp(6rem, 7vw, 8rem) clamp(2.5rem, 6vw, 7rem);
+}
+.design-row-cta a {
+  grid-column: 2;
+  justify-self: start;
+  align-self: end;
+  transform: translateY(50%);
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  background: var(--c-white);
+  color: var(--c-black);
+  border-radius: 10rem;
+  padding: .9rem 1.6rem;
+  font-size: .9rem;
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1), background .3s ease;
+  margin-left: clamp(2.5rem, 6vw, 7rem);
+}
+.design-row-cta a:hover {
+  transform: translateY(50%) scale(1.04);
+}
+.design-row-cta a span {
+  width: .42rem;
+  height: .42rem;
+  border-radius: 50%;
+  background: var(--c-orange);
+}
+
+/* ============================================================
    SERVICES — stacked rows (image + text per service)
    ============================================================ */
 .s-services {
@@ -1121,6 +1289,79 @@ main footer {
 
   .about-img {
     aspect-ratio: 4 / 3;
+  }
+
+  .s-design-view {
+    padding: 5rem 2rem 6rem;
+  }
+
+  .design-view-heading {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .design-view-heading h2 {
+    font-size: clamp(3.1rem, 16vw, 5rem);
+  }
+
+  .design-view-heading p {
+    font-size: clamp(1rem, 4.4vw, 1.25rem);
+    margin: 0;
+  }
+
+  .design-row,
+  .design-row.is-active,
+  .design-row:hover {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 0;
+  }
+
+  .design-row-fig {
+    aspect-ratio: 16 / 10;
+  }
+
+  .design-row-content {
+    padding: 2rem 0 2.4rem;
+  }
+
+  .design-row-header h3 {
+    font-size: clamp(2rem, 9vw, 3.4rem);
+  }
+
+  .design-row-header span {
+    font-size: clamp(1.8rem, 8vw, 3rem);
+  }
+
+  .design-row-content p {
+    opacity: 1;
+    transform: none;
+    font-size: .95rem;
+    line-height: 1.7;
+    margin-top: 1.4rem;
+  }
+
+  .design-row-cta {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 3rem 0 0;
+  }
+
+  .design-row-cta p {
+    padding: 0 0 3rem;
+    font-size: clamp(2rem, 9vw, 3.4rem);
+  }
+
+  .design-row-cta a {
+    transform: none;
+    margin-left: 0;
+  }
+
+  .design-row-cta a:hover {
+    transform: scale(1.04);
   }
 
   .about-desc,

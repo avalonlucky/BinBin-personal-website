@@ -221,7 +221,7 @@ function initScrollAnimations() {
       });
   });
 
-  gsap.fromTo('.work-section-title',
+  gsap.fromTo('.work-section-heading',
     { y: 44, opacity: 0 },
     {
       y: 0, opacity: 1, ease: 'expo.out',
@@ -268,6 +268,23 @@ function initScrollAnimations() {
       });
   });
 
+  gsap.fromTo('.design-view-heading',
+    { y: 44, opacity: 0 },
+    {
+      y: 0, opacity: 1, ease: 'expo.out',
+      scrollTrigger: { trigger: '.s-design-view', start: 'top 82%', end: 'top 55%', scrub: true },
+    });
+
+  gsap.utils.toArray('.design-row').forEach((row, i) => {
+    gsap.fromTo(row,
+      { y: 44, opacity: 0 },
+      {
+        y: 0, opacity: 1, ease: 'expo.out',
+        scrollTrigger: { trigger: row, start: 'top 92%', end: 'top 62%', scrub: true },
+        delay: i * 0.04,
+      });
+  });
+
   // ── Testimonial cards (scrub-linked, staggered) ──
   gsap.fromTo('.testi-card',
     { x: 50, opacity: 0 },
@@ -296,7 +313,7 @@ function initScrollAnimations() {
   });
 
   // ── Image parallax on scroll ──
-  gsap.utils.toArray('.svc-fig img, .about-img img').forEach(img => {
+  gsap.utils.toArray('.svc-fig img, .about-img img, .design-row-fig img').forEach(img => {
     gsap.fromTo(img,
       { yPercent: -6 },
       {
@@ -310,6 +327,57 @@ function initScrollAnimations() {
         },
       }
     );
+  });
+}
+
+/* ─────────────────────────────────────────
+   DESIGN VIEW ROWS — reference-style elastic hover
+───────────────────────────────────────── */
+function initDesignRows() {
+  const rows = gsap.utils.toArray('.design-row');
+  if (!rows.length) return;
+
+  let active = rows.find(row => row.classList.contains('is-active')) || rows[0];
+
+  function setActive(row) {
+    if (!row || row === active) return;
+    active?.classList.remove('is-active');
+    row.classList.add('is-active');
+    active = row;
+  }
+
+  rows.forEach(row => {
+    const img = row.querySelector('.design-row-fig img');
+
+    row.addEventListener('pointerenter', () => setActive(row));
+    row.addEventListener('focusin', () => setActive(row));
+
+    if (!desktopMotion() || !img) return;
+
+    row.addEventListener('pointermove', e => {
+      const box = row.getBoundingClientRect();
+      const dx = (e.clientX - (box.left + box.width / 2)) / box.width;
+      const dy = (e.clientY - (box.top + box.height / 2)) / box.height;
+      gsap.to(img, {
+        xPercent: dx * 2.2,
+        yPercent: dy * 1.8,
+        scale: 1.025,
+        duration: 0.9,
+        ease: 'power3.out',
+        overwrite: 'auto',
+      });
+    });
+
+    row.addEventListener('pointerleave', () => {
+      gsap.to(img, {
+        xPercent: 0,
+        yPercent: 0,
+        scale: 1,
+        duration: 1.15,
+        ease: 'power4.out',
+        overwrite: 'auto',
+      });
+    });
   });
 }
 
@@ -568,6 +636,7 @@ initCanvasBorders();
 initScrollAnimations();
 initNavTheme();
 initWorkCta();
+initDesignRows();
 initFAQ();
 initDragScroll();
 initHeroTilt();
