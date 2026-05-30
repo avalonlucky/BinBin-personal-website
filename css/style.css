@@ -327,10 +327,19 @@ main footer {
    ============================================================ */
 .s-work {
   background: var(--c-white);
-  padding: 0 0 clamp(60px, 12vw, 200px);   /* 给激活卡向下长高留空间 */
-  border-top: 1px solid var(--border-c-dark);
+  padding: clamp(11rem, 23vh, 18rem) 0 clamp(60px, 12vw, 200px);
   position: relative;
   z-index: 2;                              /* 溢出的激活卡压在后续区块之上 */
+}
+.work-section-title {
+  font-family: var(--f-cjk);
+  font-size: clamp(4.8rem, 10vw, 13rem);
+  font-weight: 600;
+  line-height: .95;
+  letter-spacing: 0;
+  color: var(--c-black);
+  padding: 0 var(--gutter);
+  margin: 0 0 clamp(4rem, 9vh, 8rem);
 }
 .work-grid {
   display: flex;
@@ -340,91 +349,15 @@ main footer {
 }
 
 /* ── 展开交互（原站核心动效）：JS 用 GSAP 驱动 width/height，带阻尼感 ── */
-.work-featured, .work-col {
+.work-col {
   flex: 0 0 auto;
   width: var(--work-w, 20vw);
   min-width: 0;
   will-change: width, height, transform;
 }
-.work-featured { height: min(78vh, 700px); }
 .work-col      { height: var(--work-h, min(51vw, 630px)); }
 .work-item.is-active {
   z-index: 2;
-}
-.work-grid.is-project-active .work-featured .work-featured-desc { opacity: 0; }
-
-/* Featured (dark) column */
-.work-featured {
-  position: relative;
-  overflow: hidden;
-  background: var(--c-black);
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;   /* 标题置顶 */
-  gap: 1.5rem;
-  color: var(--c-white);
-}
-/* 紫色填充层：hover 时从底部滑入（原站 All Work 变色） */
-.work-featured::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: #D08CF5;
-  transform: translateY(101%);
-  transition: transform .6s var(--ease);
-  z-index: 0;
-}
-.work-featured.is-active::before,
-.work-featured:hover::before { transform: translateY(0); }
-.work-featured > * { position: relative; z-index: 1; }
-.work-featured-num { display: none; }
-.work-featured-body {
-  display: flex; flex-direction: column; gap: 1.5rem;
-  transition: opacity .4s var(--ease);
-}
-.work-featured.is-active .work-featured-body,
-.work-featured:hover .work-featured-body { opacity: 0; }   /* 填充时标题/描述淡出 */
-.work-featured-title {
-  font-family: var(--f-heading);
-  font-size: clamp(2rem, 4vw, 5rem);
-  font-weight: 400;
-  letter-spacing: -.02em;
-  line-height: .95;
-  color: var(--c-white);
-}
-/* 逐行遮罩揭示 */
-.work-featured-title .lmask { display: block; overflow: hidden; padding-bottom: .06em; }
-.work-featured-title .lmask-in { display: block; }
-.work-featured-desc {
-  font-size: .85rem;
-  line-height: 1.7;
-  color: rgba(251,251,244,.45);
-  max-width: 24rem;
-  transition: opacity .4s var(--ease);
-}
-/* All Work：默认面板左下，hover 时变居中黑胶囊 */
-.work-all-link {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  margin-top: auto;
-  width: fit-content;
-  font-size: .85rem;
-  color: rgba(251,251,244,.7);
-  padding: .55rem 1.1rem;
-  border-radius: 10rem;
-  transition: top .55s var(--ease), left .55s var(--ease),
-              transform .55s var(--ease), background .4s var(--ease), color .4s var(--ease);
-}
-.wal-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-orange); flex: none; }
-.work-featured.is-active .work-all-link,
-.work-featured:hover .work-all-link {
-  position: absolute;
-  left: 50%; top: 50%; margin: 0;
-  transform: translate(-50%, -50%);
-  background: var(--c-black);
-  color: var(--c-white);
 }
 
 /* ── Project columns ── */
@@ -1093,7 +1026,13 @@ main footer {
   }
 
   .s-work {
-    padding: 0;
+    padding: 8rem 0 0;
+  }
+
+  .work-section-title {
+    font-size: clamp(3.4rem, 18vw, 5.6rem);
+    padding: 0 2rem;
+    margin-bottom: 3.5rem;
   }
 
   .work-grid {
@@ -1102,7 +1041,6 @@ main footer {
     gap: 0;
   }
 
-  .work-featured,
   .work-col,
   .work-col[data-num="01"] {
     width: 100% !important;
@@ -1111,30 +1049,8 @@ main footer {
     flex: none;
   }
 
-  .work-featured {
-    padding: 3rem 2rem;
-  }
-
-  .work-featured.is-active .work-featured-body,
-  .work-featured:hover .work-featured-body {
-    opacity: 1;
-  }
-
-  .work-featured::before,
   .work-view-btn {
     display: none;
-  }
-
-  .work-all-link {
-    margin-top: 2rem;
-  }
-
-  .work-featured.is-active .work-all-link,
-  .work-featured:hover .work-all-link {
-    position: static;
-    transform: none;
-    background: transparent;
-    color: rgba(251,251,244,.7);
   }
 
   .work-col {

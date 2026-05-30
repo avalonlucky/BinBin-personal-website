@@ -66,7 +66,7 @@ function initScrollAnimations() {
 - **导航显示策略**：原站离开 hero 顶部后会收起 `Work/About/Services/Contact` 那颗 pill，只留品牌名 + `···`；本站按用户要求做了小改动，桌面端中间导航始终保留，不再添加 `is-compact`。
 - 另确认：hero 视频本来就在播放（`autoplay muted loop`），`main.js` 里的 `currentTime=7.5` 只是设初始帧，不影响循环播放，无需改动。
 
-### 9. Work「Featured Work」段对齐原站（2026-05-29）
+### 9. Work「Featured Work」段对齐原站（历史记录）
 抓原站 DOM + 录屏抽帧对比，原站这段是 `.work-grid > .work-col-featured(深色面板) + 4×.work-col-project(纯图列)`，文字用 `.line-mask` 逐行遮罩揭示。修正我方差异：
 - **面板标题置顶**：`.work-featured` 由 `justify-content:space-between` 改 `flex-start`；`.work-all-link` 加 `margin-top:auto` 推到底部；隐藏大编号（`.work-featured-num{display:none}`）。
 - **项目列纯图片**：隐藏列编号（`.work-col-num{display:none}`）和常驻 meta；`.work-col-meta` 默认 `opacity:0`，`.work-col:hover` 时淡入上移揭示 client/title/tags。
@@ -92,6 +92,9 @@ function initScrollAnimations() {
 - **meta 改半透明 chip**：`.work-col-client/.work-col-title{display:table;background:rgba(251,251,244,.16);padding:…}`。
 - 移动端跳过这套 hover JS，仍保持单列静态卡片。
 
+### 12. Work 区块改为「我的作品」+ 五张项目卡（2026-05-30）
+用户认为左侧黑色 Featured 面板和上方 hero 黑底连在一起太突兀，因此已删除 `.work-featured`。现在 `.s-work` 先留出一段米白空白并显示大标题「我的作品」，下方是 5 张 `.work-col` 项目卡（第 5 张暂时复制占位，后期替换素材）。`initWorkCta()` 不再依赖 featured 面板，默认 5 张等宽竖向矩形，hover 时当前卡变宽变高、相邻卡保持中等高度。
+
 ---
 
 ## 关键代码结构
@@ -111,8 +114,8 @@ initClock()           — Footer 实时时钟（开普敦时区）
 ```
 
 ### CSS 版本号
-- `style.css?v=25`（index.html `<head>`）
-- `main.js?v=18`（index.html 底部）
+- `style.css?v=26`（index.html `<head>`）
+- `main.js?v=19`（index.html 底部）
 
 下次改完记得把版本号 +1，否则浏览器会缓存旧文件。
 

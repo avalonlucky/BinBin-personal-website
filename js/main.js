@@ -158,7 +158,7 @@ function initScrollAnimations() {
   _scrollAnimsDone = true;
 
   if (prefersReducedMotion.matches) {
-    gsap.set('.reveal-up, .work-col, .work-featured-desc, .work-all-link, .testi-card, .faq-item', {
+    gsap.set('.reveal-up, .work-col, .work-section-title, .testi-card, .faq-item', {
       clearProps: 'all',
       opacity: 1,
     });
@@ -221,18 +221,11 @@ function initScrollAnimations() {
       });
   });
 
-  // ── Featured 面板：逐行遮罩揭示 + 描述/链接上升（原站签名动画） ──
-  gsap.fromTo('.work-featured-title .lmask-in',
-    { yPercent: 110 },
+  gsap.fromTo('.work-section-title',
+    { y: 44, opacity: 0 },
     {
-      yPercent: 0, ease: 'expo.out', stagger: 0.12,
-      scrollTrigger: { trigger: '.s-work', start: 'top 85%', end: 'top 45%', scrub: true },
-    });
-  gsap.fromTo('.work-featured-desc, .work-all-link',
-    { y: 28, opacity: 0 },
-    {
-      y: 0, opacity: 1, ease: 'expo.out', stagger: 0.12,
-      scrollTrigger: { trigger: '.s-work', start: 'top 78%', end: 'top 42%', scrub: true },
+      y: 0, opacity: 1, ease: 'expo.out',
+      scrollTrigger: { trigger: '.s-work', start: 'top 85%', end: 'top 55%', scrub: true },
     });
 
   // ── 项目列：交错升起（cascade，不再整列一起） ──
@@ -242,17 +235,6 @@ function initScrollAnimations() {
       y: 0, opacity: 1, ease: 'expo.out', stagger: 0.13,
       scrollTrigger: { trigger: '.s-work', start: 'top 82%', end: 'top 38%', scrub: true },
     });
-
-  // ── Work counter follows scroll ──
-  const counter = document.getElementById('workCounter');
-  document.querySelectorAll('.work-item').forEach((item, i) => {
-    ScrollTrigger.create({
-      trigger: item,
-      start: 'top 52%',
-      onEnter:    () => animCounter(counter, i + 1),
-      onLeaveBack:() => animCounter(counter, i),
-    });
-  });
 
   // ── ABOUT section — pin (matches original ~3836px scroll height) ──
   if (desktopMotion()) {
@@ -335,14 +317,13 @@ function initScrollAnimations() {
    WORK CARDS — "View project" 跟随鼠标
 ───────────────────────────────────────── */
 function initWorkCta() {
-  if (!pointerFine.matches || prefersReducedMotion.matches) return;
+  if (!desktopMotion()) return;
 
   const grid = document.querySelector('.work-grid');
-  const featured = document.querySelector('.work-featured');
   const cards = gsap.utils.toArray('.work-col');
-  if (!grid || !featured || !cards.length) return;
+  if (!grid || !cards.length) return;
 
-  const items = [featured, ...cards];
+  const items = cards;
   let activeIndex = -1;
   let layoutTween;
 
@@ -356,14 +337,15 @@ function initWorkCta() {
     const gapTotal = gap * (items.length - 1);
     const large = Math.min(Math.max(rem(49.25), gridW * 0.31), gridW * 0.4);
     const normal = Math.max((gridW - gapTotal - large) / (items.length - 1), rem(16));
+    const base = Math.max((gridW - gapTotal) / items.length, rem(14));
     return {
+      base,
       large,
       normal,
       projectActiveH: Math.min(rem(72), window.innerWidth * 0.78, 980),
       projectSubH: Math.min(rem(43.4), window.innerWidth * 0.56, 620),
       projectRestH: Math.min(rem(37), window.innerWidth * 0.5, 540),
-      featuredH: Math.min(rem(62.6), window.innerHeight * 0.94, 860),
-      featuredSubH: Math.min(rem(43.4), window.innerHeight * 0.72, 620),
+      projectBaseH: Math.min(rem(43.4), window.innerWidth * 0.56, 620),
     };
   }
 
@@ -378,13 +360,11 @@ function initWorkCta() {
     const m = metrics();
 
     clearState();
-    if (nextIndex > 0) {
+    if (nextIndex >= 0) {
       grid.classList.add('is-project-active');
       items[nextIndex].classList.add('is-active');
       items[nextIndex - 1]?.classList.add('is-sub-active');
       items[nextIndex + 1]?.classList.add('is-sub-active');
-    } else if (options.hoverFeatured) {
-      featured.classList.add('is-active');
     }
 
     layoutTween?.kill();
@@ -397,13 +377,12 @@ function initWorkCta() {
     });
 
     items.forEach((item, index) => {
-      const isProject = index > 0;
       const isActive = index === nextIndex;
       const isNeighbor = Math.abs(index - nextIndex) === 1;
-      const width = isActive ? m.large : m.normal;
-      const height = !isProject
-        ? (nextIndex > 0 ? m.featuredSubH : m.featuredH)
-        : (isActive ? m.projectActiveH : (isNeighbor ? m.projectSubH : m.projectRestH));
+      const width = nextIndex >= 0 ? (isActive ? m.large : m.normal) : m.base;
+      const height = nextIndex >= 0
+        ? (isActive ? m.projectActiveH : (isNeighbor ? m.projectSubH : m.projectRestH))
+        : m.projectBaseH;
 
       layoutTween.to(item, { width, height }, 0);
     });
@@ -450,22 +429,22 @@ function initWorkCta() {
   });
 
   grid.addEventListener('pointermove', e => {
-    const target = e.target.closest('.work-featured, .work-col');
+    const target = e.target.closest('.work-col');
     if (!target || !grid.contains(target)) return;
     const nextIndex = items.indexOf(target);
     if (nextIndex === -1) return;
-    setActive(nextIndex, { hoverFeatured: target === featured });
+    setActive(nextIndex);
   });
 
   grid.addEventListener('pointerleave', () => {
     activeIndex = -1;
     clearState();
-    setActive(0, { force: true, reset: true });
+    setActive(-1, { force: true, reset: true });
     activeIndex = -1;
   });
 
-  setActive(0, { force: true, fast: true });
-  window.addEventListener('resize', () => setActive(Math.max(activeIndex, 0), { force: true, fast: true }));
+  setActive(-1, { force: true, fast: true });
+  window.addEventListener('resize', () => setActive(activeIndex, { force: true, fast: true }));
 }
 
 /* ─────────────────────────────────────────
