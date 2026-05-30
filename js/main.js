@@ -352,16 +352,18 @@ function initWorkCta() {
 
   function metrics() {
     const gridW = grid.getBoundingClientRect().width;
-    const large = Math.min(Math.max(rem(46), gridW * 0.3), gridW * 0.42);
-    const normal = Math.max((gridW - large) / (items.length - 1), rem(16));
+    const gap = parseFloat(getComputedStyle(grid).columnGap) || 0;
+    const gapTotal = gap * (items.length - 1);
+    const large = Math.min(Math.max(rem(46), gridW * 0.3), gridW * 0.38);
+    const normal = Math.max((gridW - gapTotal - large) / (items.length - 1), rem(16));
     return {
       large,
       normal,
-      projectActiveH: Math.min(rem(56), window.innerWidth * 0.66, 860),
-      projectSubH: Math.min(rem(38), window.innerWidth * 0.5, 640),
-      projectRestH: Math.min(rem(32), window.innerWidth * 0.44, 560),
+      projectActiveH: Math.min(rem(49), window.innerWidth * 0.6, 720),
+      projectSubH: Math.min(rem(33.5), window.innerWidth * 0.42, 520),
+      projectRestH: Math.min(rem(28), window.innerWidth * 0.36, 460),
       featuredH: Math.min(window.innerHeight * 0.78, 700),
-      featuredSubH: Math.min(rem(38), window.innerHeight * 0.7, 620),
+      featuredSubH: Math.min(rem(33.5), window.innerHeight * 0.64, 520),
     };
   }
 
@@ -388,8 +390,8 @@ function initWorkCta() {
     layoutTween?.kill();
     layoutTween = gsap.timeline({
       defaults: {
-        duration: options.fast ? 0.85 : 1.15,
-        ease: 'power4.out',
+        duration: options.fast ? 0.8 : (options.reset ? 1.25 : 1.18),
+        ease: options.reset ? 'expo.out' : 'power4.out',
         overwrite: 'auto',
       },
     });
@@ -458,7 +460,7 @@ function initWorkCta() {
   grid.addEventListener('pointerleave', () => {
     activeIndex = -1;
     clearState();
-    setActive(0, { force: true });
+    setActive(0, { force: true, reset: true });
     activeIndex = -1;
   });
 

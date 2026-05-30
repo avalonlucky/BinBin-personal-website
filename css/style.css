@@ -336,6 +336,7 @@ main footer {
   display: flex;
   align-items: flex-start;        /* 顶对齐：激活卡可向下溢出长高 */
   position: relative;
+  gap: clamp(10px, .7vw, 16px);
 }
 
 /* ── 展开交互（原站核心动效）：JS 用 GSAP 驱动 width/height，带阻尼感 ── */
@@ -430,10 +431,10 @@ main footer {
 .work-col {
   position: relative;
   overflow: hidden;
-  border-left: 1px solid rgba(2,2,2,.08);
   display: flex;
   cursor: pointer;
   color: var(--c-black);
+  border-radius: .25rem;
 }
 .work-col-img {
   flex: 1 1 auto;
@@ -441,6 +442,7 @@ main footer {
   height: 100%;
   overflow: hidden;
   background: rgba(2,2,2,.05);
+  border-radius: .25rem;
 }
 .work-col-img img {
   width: 100%;
@@ -466,9 +468,10 @@ main footer {
 /* 项目信息浮层（左上，hover 显示） */
 .work-col-info {
   position: absolute;
-  top: 1.6rem; left: 1.6rem; right: 1.6rem;
+  top: 1.6rem; left: 1.6rem;
+  max-width: min(70%, 28rem);
   z-index: 2;
-  display: flex; flex-direction: column; gap: .4rem;
+  display: flex; flex-direction: column; align-items: flex-start; gap: .4rem;
   opacity: 0; transform: translateY(10px);
   transition: opacity .45s var(--ease), transform .5s var(--ease);
   pointer-events: none;
@@ -477,16 +480,22 @@ main footer {
 .work-col:hover .work-col-info { opacity: 1; transform: translateY(0); }
 .work-col-num { font-size: .72rem; letter-spacing: .05em; color: rgba(251,251,244,.7); margin-bottom: .2rem; }
 .work-col-client {
-  display: table;
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
   padding: .25rem .6rem;
   background: rgba(251,251,244,.16);
+  backdrop-filter: blur(8px);
   font-size: .62rem; text-transform: uppercase; letter-spacing: .1em;
   color: #fff;
 }
 .work-col-title {
-  display: table;
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
   padding: .3rem .65rem;
   background: rgba(251,251,244,.16);
+  backdrop-filter: blur(8px);
   font-family: var(--f-heading);
   font-size: clamp(.9rem, 1.2vw, 1.15rem);
   font-weight: 400; letter-spacing: -.01em; line-height: 1.2;
@@ -1090,6 +1099,7 @@ main footer {
   .work-grid {
     display: grid;
     grid-template-columns: 1fr;
+    gap: 0;
   }
 
   .work-featured,
@@ -1144,6 +1154,7 @@ main footer {
     bottom: 1.4rem;
     left: 1.4rem;
     right: 1.4rem;
+    max-width: none;
     opacity: 1;
     transform: none;
   }
