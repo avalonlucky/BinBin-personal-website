@@ -579,8 +579,8 @@ main footer {
   margin: 0 1.4vw;
 }
 .design-row {
-  display: grid;
-  grid-template-columns: minmax(18rem, 1fr) minmax(0, 1fr);
+  display: flex;
+  flex-direction: row;
   min-height: clamp(8rem, 11vw, 12rem);
   height: clamp(8rem, 11vw, 12rem);
   border-bottom: 1px solid rgba(2,2,2,.08);
@@ -597,12 +597,10 @@ main footer {
   height: clamp(368px, 29.65vw, 607px);
 }
 .design-row-fig {
-  position: relative;
+  flex: 0 0 31%;
   overflow: hidden;
   background: rgba(2,2,2,.08);
-  width: 100%;
   height: 100%;
-  align-self: stretch;
   margin: 0;
 }
 .design-row-fig img {
@@ -622,6 +620,8 @@ main footer {
   filter: saturate(1.05);
 }
 .design-row-content {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -673,15 +673,15 @@ main footer {
   transform: translateY(0);
 }
 .design-row-cta {
-  display: grid;
-  grid-template-columns: minmax(18rem, .48fr) minmax(0, .52fr);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   min-height: clamp(16rem, 24vw, 28rem);
   background: rgb(210, 208, 196);
   border-bottom: 1px solid rgba(2,2,2,.08);
+  padding: clamp(3rem, 4.5vw, 5.5rem) clamp(2.5rem, 4vw, 5rem);
 }
 .design-row-cta p {
-  grid-column: 2;
-  align-self: center;
   max-width: 46rem;
   font-family: var(--f-heading);
   font-size: clamp(2.1rem, 3.3vw, 5rem);
@@ -689,29 +689,24 @@ main footer {
   letter-spacing: -.02em;
   line-height: 1.12;
   color: var(--c-black);
-  margin: 0;
-  padding: clamp(3rem, 5vw, 6rem) 0 clamp(6rem, 7vw, 8rem) clamp(2.5rem, 6vw, 7rem);
+  margin: 0 0 clamp(2rem, 3vw, 3.5rem);
 }
 .design-row-cta a {
-  grid-column: 2;
-  justify-self: start;
-  align-self: start;
   display: inline-flex;
   align-items: center;
+  align-self: flex-start;
   gap: .7rem;
-  background: var(--c-white);
+  background: rgba(247, 247, 247, 0.2);
   color: var(--c-black);
-  border-radius: 10rem;
-  padding: .9rem 1.6rem;
+  border-radius: .5rem;
+  padding: .9rem 1.8rem;
   font-size: .9rem;
   overflow: hidden;
   transition: transform .55s cubic-bezier(.16, 1, .3, 1), background .3s ease;
-  margin-left: clamp(2.5rem, 6vw, 7rem);
-  margin-top: 0;
 }
 .design-row-cta a:hover {
   transform: translateY(-2px) scale(1.035);
-  background: rgb(247, 246, 240);
+  background: rgba(247, 247, 247, 0.4);
 }
 .design-cta-label {
   display: inline-block;
@@ -1382,13 +1377,12 @@ main footer {
   }
 
   .design-row-cta p {
-    padding: 0 0 3rem;
+    margin-bottom: 2.5rem;
     font-size: clamp(2rem, 9vw, 3.4rem);
   }
 
   .design-row-cta a {
     transform: none;
-    margin-left: 0;
     margin-top: 0;
   }
 
