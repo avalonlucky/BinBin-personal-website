@@ -576,11 +576,11 @@ main footer {
 }
 .design-rows {
   border-top: 1px solid rgba(2,2,2,.08);
-  margin: 0 clamp(1.25rem, 1.4vw, 1.25rem);
+  margin: 0 1.4vw;
 }
 .design-row {
   display: grid;
-  grid-template-columns: minmax(18rem, .48fr) minmax(0, .52fr);
+  grid-template-columns: minmax(18rem, 1fr) minmax(0, 1fr);
   min-height: clamp(8rem, 11vw, 12rem);
   height: clamp(8rem, 11vw, 12rem);
   border-bottom: 1px solid rgba(2,2,2,.08);
@@ -594,13 +594,13 @@ main footer {
 .design-row:nth-child(3) { background: rgb(221, 220, 208); }
 .design-row.is-active,
 .design-row:hover {
-  height: clamp(368px, 29.65vw, 427px);
+  height: clamp(368px, 29.65vw, 607px);
 }
 .design-row-fig {
   position: relative;
   overflow: hidden;
   background: rgba(2,2,2,.08);
-  width: min(30.56vw, 440px);
+  width: min(30.56vw, 626px);
   aspect-ratio: 1320 / 780;
   align-self: start;
   margin: clamp(1.1rem, 1.4vw, 1.25rem) 0 0 clamp(1.1rem, 1.4vw, 1.25rem);
@@ -652,7 +652,7 @@ main footer {
 }
 .design-row-content p {
   max-width: 46rem;
-  font-size: .94rem;
+  font-size: clamp(15px, 1.0417vw, 21.33px);
   line-height: 1.4;
   color: rgba(2,2,2,.55);
   margin: clamp(2.2rem, 3.4vw, 4rem) 0 0;
