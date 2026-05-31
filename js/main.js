@@ -313,7 +313,7 @@ function initScrollAnimations() {
   });
 
   // ── Image parallax on scroll ──
-  gsap.utils.toArray('.svc-fig img, .about-img img, .design-row-fig img').forEach(img => {
+  gsap.utils.toArray('.svc-fig img, .about-img img').forEach(img => {
     gsap.fromTo(img,
       { yPercent: -6 },
       {
@@ -339,12 +339,40 @@ function initDesignRows() {
 
   let active = rows.find(row => row.classList.contains('is-active')) || rows[0];
 
+  function revealText(row, immediate = false) {
+    const lines = row.querySelectorAll('.design-row-desc span');
+    if (!lines.length) return;
+
+    gsap.killTweensOf(lines);
+    if (immediate || prefersReducedMotion.matches) {
+      gsap.set(lines, { yPercent: 0 });
+      return;
+    }
+
+    gsap.fromTo(lines,
+      { yPercent: 120 },
+      {
+        yPercent: 0,
+        duration: 0.85,
+        ease: 'power4.out',
+        stagger: 0.08,
+        overwrite: 'auto',
+      });
+  }
+
   function setActive(row) {
     if (!row || row === active) return;
     active?.classList.remove('is-active');
     row.classList.add('is-active');
     active = row;
+    revealText(row);
   }
+
+  rows.forEach(row => {
+    const lines = row.querySelectorAll('.design-row-desc span');
+    if (lines.length) gsap.set(lines, { yPercent: row === active ? 0 : 120 });
+  });
+  if (active) revealText(active, true);
 
   rows.forEach(row => {
     const img = row.querySelector('.design-row-fig img');
