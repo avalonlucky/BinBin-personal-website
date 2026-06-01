@@ -581,8 +581,8 @@ main footer {
 .design-row {
   display: flex;
   flex-direction: row;
-  min-height: clamp(8rem, 11vw, 12rem);
-  height: clamp(8rem, 11vw, 12rem);
+  min-height: clamp(92px, 7.35vw, 150px);
+  height: clamp(92px, 7.35vw, 150px);
   border-bottom: 1px solid rgba(2,2,2,.08);
   background: rgb(247, 246, 240);
   overflow: hidden;
@@ -594,10 +594,10 @@ main footer {
 .design-row:nth-child(3) { background: rgb(221, 220, 208); }
 .design-row.is-active,
 .design-row:hover {
-  height: clamp(368px, 29.65vw, 607px);
+  height: clamp(340px, 22.75vw, 466px);
 }
 .design-row-fig {
-  flex: 0 0 31%;
+  flex: 0 0 36.5%;
   overflow: hidden;
   background: rgba(2,2,2,.08);
   height: 100%;
