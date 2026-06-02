@@ -150,6 +150,34 @@ function initNavTheme() {
 }
 
 /* ─────────────────────────────────────────
+   AI TOOLS — marquee / grid view switch
+───────────────────────────────────────── */
+function initAiToolsView() {
+  const section = document.querySelector('.s-ai-tools');
+  const toggle = section?.querySelector('.ai-view-toggle');
+  const grid = section?.querySelector('.ai-tools-grid');
+  if (!section || !toggle || !grid) return;
+
+  const sourceTools = section.querySelectorAll('.ai-marquee-group:not([aria-hidden]) .ai-tool');
+  sourceTools.forEach(tool => {
+    const card = document.createElement('div');
+    card.className = 'ai-grid-card';
+    card.innerHTML = tool.innerHTML;
+    grid.appendChild(card);
+  });
+
+  const setView = gridActive => {
+    section.classList.toggle('is-grid', gridActive);
+    toggle.setAttribute('aria-pressed', String(gridActive));
+    section.querySelector('[data-ai-view-label="marquee"]')?.classList.toggle('is-active', !gridActive);
+    section.querySelector('[data-ai-view-label="grid"]')?.classList.toggle('is-active', gridActive);
+    ScrollTrigger.refresh();
+  };
+
+  toggle.addEventListener('click', () => setView(!section.classList.contains('is-grid')));
+}
+
+/* ─────────────────────────────────────────
    SCROLL ANIMATIONS
 ───────────────────────────────────────── */
 let _scrollAnimsDone = false;
@@ -753,6 +781,7 @@ if (heroVideo) {
 initCanvasBorders();
 initScrollAnimations();
 initNavTheme();
+initAiToolsView();
 initWorkCta();
 initDesignRows();
 initFAQ();

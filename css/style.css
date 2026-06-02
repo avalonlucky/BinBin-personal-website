@@ -324,7 +324,7 @@ main footer {
    ============================================================ */
 .s-ai-tools {
   overflow: hidden;
-  padding: clamp(8rem, 16vh, 13rem) 0 clamp(7rem, 14vh, 11rem);
+  padding: clamp(8rem, 16vh, 13rem) 0 clamp(3.5rem, 6vh, 5rem);
   background: var(--c-white);
 }
 .ai-tools-heading {
@@ -349,9 +349,58 @@ main footer {
   line-height: 1.45;
   color: rgba(0,0,0,.64);
 }
+.ai-view-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+  margin: 0 0 clamp(2.3rem, 4vh, 3.4rem);
+  color: rgba(2,2,2,.55);
+  font-family: var(--f-body);
+  font-size: clamp(.92rem, 1vw, 1.1rem);
+  font-weight: 500;
+}
+.ai-view-label {
+  min-width: 3rem;
+  transition: color .35s var(--ease);
+}
+.ai-view-label:first-child {
+  text-align: right;
+}
+.ai-view-label.is-active {
+  color: var(--c-black);
+}
+.ai-view-toggle {
+  position: relative;
+  width: 4.2rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid rgba(2,2,2,.32);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color .35s var(--ease), background .35s var(--ease);
+}
+.ai-view-toggle:hover {
+  border-color: rgba(2,2,2,.72);
+}
+.ai-view-toggle span {
+  position: absolute;
+  top: .25rem;
+  left: .25rem;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  background: var(--c-black);
+  transition: transform .45s var(--ease), background .35s var(--ease);
+}
+.s-ai-tools.is-grid .ai-view-toggle span {
+  transform: translateX(1.95rem);
+}
 .ai-marquee {
   display: grid;
   gap: clamp(.85rem, 1.2vw, 1.35rem);
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
 }
 .ai-marquee-row {
   display: flex;
@@ -416,12 +465,52 @@ main footer {
   font-weight: 600;
   letter-spacing: -.06em;
 }
+.ai-tools-grid {
+  display: none;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(.9rem, 1.15vw, 1.3rem);
+  padding: 0 var(--gutter);
+}
+.ai-grid-card {
+  display: flex;
+  min-height: clamp(9rem, 11vw, 13rem);
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(2,2,2,.18);
+  border-radius: .35rem;
+  color: var(--c-black);
+  font-family: var(--f-body);
+  font-size: clamp(1.05rem, 1.15vw, 1.3rem);
+  transition: border-color .35s var(--ease), background .35s var(--ease), transform .35s var(--ease);
+}
+.ai-grid-card:hover {
+  border-color: rgba(2,2,2,.7);
+  background: rgba(255,255,255,.48);
+  transform: translateY(-.25rem);
+}
+.ai-grid-card .ai-tool-logo {
+  width: clamp(2.4rem, 3vw, 3.6rem);
+  height: clamp(2.4rem, 3vw, 3.6rem);
+}
+.s-ai-tools.is-grid .ai-marquee {
+  display: none;
+}
+.s-ai-tools.is-grid .ai-tools-grid {
+  display: grid;
+  animation: ai-grid-reveal .45s var(--ease) both;
+}
 @keyframes ai-marquee-left {
   to { transform: translateX(-50%); }
 }
 @keyframes ai-marquee-right {
   from { transform: translateX(-50%); }
   to { transform: translateX(0); }
+}
+@keyframes ai-grid-reveal {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================================
@@ -432,7 +521,7 @@ main footer {
    ============================================================ */
 .s-work {
   background: var(--c-white);
-  padding: clamp(11rem, 23vh, 18rem) 0 clamp(60px, 12vw, 200px);
+  padding: clamp(3.5rem, 7vh, 5.5rem) 0 clamp(60px, 12vw, 200px);
   position: relative;
   z-index: 2;                              /* 溢出的激活卡压在后续区块之上 */
 }
@@ -1363,11 +1452,11 @@ main footer {
   }
 
   .s-work {
-    padding: 8rem 0 0;
+    padding: 4rem 0 0;
   }
 
   .s-ai-tools {
-    padding: 7rem 0 6rem;
+    padding: 7rem 0 3rem;
   }
 
   .ai-tools-heading {
@@ -1389,6 +1478,10 @@ main footer {
 
   .ai-marquee {
     gap: .8rem;
+  }
+
+  .ai-view-switch {
+    margin-bottom: 2.5rem;
   }
 
   .ai-marquee-track {
@@ -1413,6 +1506,21 @@ main footer {
   .ai-tool-logo {
     width: 1.9rem;
     height: 1.9rem;
+  }
+
+  .ai-tools-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .75rem;
+    padding: 0 2rem;
+  }
+
+  .ai-grid-card {
+    min-height: 8.8rem;
+    flex-direction: column;
+    gap: .7rem;
+    padding: 1rem .7rem;
+    font-size: .95rem;
+    text-align: center;
   }
 
   .work-section-heading {
