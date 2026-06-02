@@ -607,7 +607,7 @@ function initDragScroll() {
       card.style.setProperty('--testi-x', desktop() ? `${slot * 56.6667}vw` : `${slot * 100}%`);
       card.style.setProperty('--testi-scale', slot === 0 ? '1' : (neighbor ? '.7' : '.56'));
       card.style.setProperty('--testi-rotate', neighbor ? `${slot * .1}deg` : '0deg');
-      card.style.opacity = slot === 0 ? '1' : (neighbor ? '.12' : '0');
+      card.style.opacity = slot === 0 || neighbor ? '1' : '0';
       card.style.zIndex = slot === 0 ? '3' : (neighbor ? '2' : '1');
     });
   }
