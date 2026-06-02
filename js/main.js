@@ -147,6 +147,13 @@ function initNavTheme() {
     onLeaveBack:() => nav.dataset.theme = 'dark',
   });
 
+  ScrollTrigger.create({
+    trigger: '.s-testimonials',
+    start: 'top 60px',
+    onEnter:    () => nav.dataset.theme = 'dark',
+    onLeaveBack:() => nav.dataset.theme = 'light',
+  });
+
 }
 
 /* ─────────────────────────────────────────
