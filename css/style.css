@@ -856,6 +856,117 @@ main footer {
 }
 
 /* ============================================================
+   VALUES — dark principle cards
+   ============================================================ */
+.s-values {
+  position: relative;
+  padding: clamp(7rem, 10vw, 12rem) var(--gutter) clamp(8rem, 11vw, 14rem);
+  overflow: hidden;
+  background: var(--c-black) !important;
+  color: var(--c-white);
+}
+.values-heading {
+  max-width: 100rem;
+  margin: 0 0 clamp(3.5rem, 6vw, 6rem);
+}
+.values-heading h2 {
+  margin: 0;
+  font-family: var(--f-cjk);
+  font-size: clamp(3.8rem, 7vw, 8.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--c-white);
+}
+.values-heading p {
+  margin: clamp(.9rem, 1.8vw, 1.6rem) 0 0;
+  font-family: var(--f-cjk);
+  font-size: clamp(1.05rem, 1.8vw, 2rem);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: var(--c-white);
+}
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.4rem, 1.7vw, 2.2rem);
+}
+.value-card {
+  position: relative;
+  display: flex;
+  min-height: clamp(23rem, 23.5vw, 34rem);
+  flex-direction: column;
+  overflow: hidden;
+  padding: clamp(3rem, 4vw, 5.2rem);
+  border: 1px solid rgba(251,251,244,.16);
+  border-radius: 1.8rem;
+  background:
+    radial-gradient(circle at 22% 10%, rgba(255,255,255,.035), transparent 42%),
+    linear-gradient(135deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+  transition: border-color .65s var(--ease), transform .65s var(--ease), background .65s var(--ease);
+}
+.value-card:hover {
+  border-color: rgba(72, 223, 217, .42);
+  background:
+    radial-gradient(circle at 22% 10%, rgba(72,223,217,.07), transparent 42%),
+    linear-gradient(135deg, rgba(255,255,255,.045), rgba(255,255,255,.014));
+  transform: translateY(-.45rem);
+}
+.value-card-index {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(.95rem, 1vw, 1.2rem);
+  font-weight: 500;
+  letter-spacing: .12em;
+  color: rgba(251,251,244,.92);
+}
+.value-card-bg-num {
+  position: absolute;
+  top: clamp(-1rem, -1vw, -.5rem);
+  right: clamp(1.5rem, 3.2vw, 4rem);
+  font-size: clamp(10rem, 15vw, 22rem);
+  font-weight: 700;
+  line-height: .9;
+  letter-spacing: -.12em;
+  color: rgba(251,251,244,.035);
+  pointer-events: none;
+}
+.value-card h3 {
+  position: relative;
+  z-index: 1;
+  max-width: 43rem;
+  margin: clamp(2.4rem, 3.2vw, 4.2rem) 0 auto;
+  font-family: var(--f-cjk);
+  font-size: clamp(2.1rem, 2.65vw, 3.8rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: 0;
+  color: var(--c-white);
+}
+.value-card p {
+  position: relative;
+  z-index: 1;
+  max-width: 48rem;
+  margin: clamp(2rem, 2.8vw, 3.4rem) 0 0;
+  font-family: var(--f-cjk);
+  font-size: clamp(1rem, 1.16vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.75;
+  color: rgba(251,251,244,.86);
+}
+.value-card-line {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 3.4rem;
+  height: 2px;
+  margin-top: clamp(2rem, 2.8vw, 3.3rem);
+  background: rgba(37, 201, 198, .8);
+}
+
+/* ============================================================
    FAQ — dark background
    ============================================================ */
 .s-faq {
@@ -1341,6 +1452,30 @@ main footer {
   .testi-zone,
   .testi-arrow {
     display: none;
+  }
+
+  .s-values {
+    padding: 7rem 2rem 8rem;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+
+  .value-card {
+    min-height: 23rem;
+    padding: 3rem 2.6rem;
+    border-radius: 1.4rem;
+  }
+
+  .value-card h3 {
+    margin-top: 2.4rem;
+    font-size: clamp(2.15rem, 9vw, 3.4rem);
+  }
+
+  .value-card p {
+    font-size: 1rem;
   }
 
   .faq-inner {

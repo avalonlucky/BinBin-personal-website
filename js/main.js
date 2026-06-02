@@ -158,7 +158,7 @@ function initScrollAnimations() {
   _scrollAnimsDone = true;
 
   if (prefersReducedMotion.matches) {
-    gsap.set('.reveal-up, .work-col, .work-section-title, .testi-card, .faq-item', {
+    gsap.set('.reveal-up, .work-col, .work-section-title, .testi-card, .values-heading, .value-card, .faq-item', {
       clearProps: 'all',
       opacity: 1,
     });
@@ -278,6 +278,20 @@ function initScrollAnimations() {
     {
       y: 0, opacity: 1, ease: 'expo.out',
       scrollTrigger: { trigger: '.testi-carousel', start: 'top 90%', end: 'top 55%', scrub: true },
+    });
+
+  gsap.fromTo('.values-heading',
+    { y: 44, opacity: 0 },
+    {
+      y: 0, opacity: 1, ease: 'expo.out',
+      scrollTrigger: { trigger: '.s-values', start: 'top 88%', end: 'top 62%', scrub: true },
+    });
+
+  gsap.fromTo('.value-card',
+    { y: 44, opacity: 0 },
+    {
+      y: 0, opacity: 1, ease: 'expo.out', stagger: 0.08,
+      scrollTrigger: { trigger: '.values-grid', start: 'top 90%', end: 'top 58%', scrub: true },
     });
 
   // ── FAQ items (scrub-linked, staggered) ──
