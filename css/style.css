@@ -741,7 +741,6 @@ main footer {
    ============================================================ */
 .s-design-view {
   background: var(--c-white);
-  border-top: 1px solid var(--border-c-dark);
   padding: clamp(5.5rem, 10vw, 9rem) 0 clamp(6rem, 11vw, 10rem);
   overflow: hidden;
 }
@@ -769,7 +768,6 @@ main footer {
   margin: clamp(.9rem, 1.8vw, 1.6rem) 0 0;
 }
 .design-rows {
-  border-top: 1px solid rgba(2,2,2,.08);
   margin: 0 1.4vw;
 }
 .design-row {
@@ -777,7 +775,6 @@ main footer {
   flex-direction: row;
   min-height: clamp(92px, 7.35vw, 150px);
   height: clamp(92px, 7.35vw, 150px);
-  border-bottom: 1px solid rgba(2,2,2,.08);
   background: rgb(247, 246, 240);
   overflow: hidden;
   transition:
@@ -865,6 +862,82 @@ main footer {
 .design-row:hover .design-row-content p {
   opacity: 1;
   transform: translateY(0);
+}
+.design-row-cta {
+  display: flex;
+  min-height: clamp(16rem, 24vw, 28rem);
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(3rem, 4.5vw, 5.5rem) clamp(2.5rem, 4vw, 5rem);
+  background: rgb(210, 208, 196);
+}
+.design-row-cta p {
+  max-width: 52rem;
+  margin: 0 0 clamp(2rem, 3vw, 3.5rem);
+  color: var(--c-black);
+  font-family: var(--f-cjk);
+  font-size: clamp(2.1rem, 3.3vw, 5rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.18;
+}
+.design-row-cta a {
+  position: relative;
+  display: inline-grid;
+  width: clamp(16.5rem, 13vw, 18rem);
+  height: clamp(4.25rem, 3.55vw, 4.75rem);
+  align-self: flex-start;
+  place-items: center;
+  overflow: hidden;
+  padding: 0 clamp(1.35rem, 1.5vw, 1.9rem);
+  border-radius: .5rem;
+  background: rgba(247,247,247,.32);
+  color: var(--c-black);
+  font-family: var(--f-cjk);
+  font-size: clamp(1.05rem, 1vw, 1.25rem);
+  line-height: 1;
+  transition: color .35s ease;
+}
+.design-row-cta a::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: var(--c-black);
+  content: '';
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .72s cubic-bezier(.19, 1, .22, 1);
+}
+.design-row-cta a:hover {
+  color: var(--c-white);
+}
+.design-cta-label {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  transition: transform .65s cubic-bezier(.19, 1, .22, 1);
+}
+.design-row-cta a:hover::before {
+  transform: scaleY(1);
+}
+.design-row-cta a:hover .design-cta-label {
+  transform: translateX(.55rem);
+}
+.design-cta-dot {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: calc(100% - clamp(1.35rem, 1.35vw, 1.75rem) - .48rem);
+  display: inline-block;
+  width: .48rem;
+  height: .48rem;
+  border-radius: 50%;
+  background: #f4ff6f;
+  transform: translateY(-50%);
+  transition: left .72s cubic-bezier(.19, 1, .22, 1);
+}
+.design-row-cta a:hover .design-cta-dot {
+  left: clamp(1.35rem, 1.35vw, 1.75rem);
 }
 /* ============================================================
    TESTIMONIALS
@@ -1664,6 +1737,22 @@ main footer {
     font-size: .95rem;
     line-height: 1.7;
     margin-top: 1.4rem;
+  }
+
+  .design-row-cta {
+    min-height: 0;
+    padding: 3rem 2rem;
+  }
+
+  .design-row-cta p {
+    margin-bottom: 2.5rem;
+    font-size: clamp(2rem, 9vw, 3.4rem);
+  }
+
+  .design-row-cta a {
+    width: 14.8rem;
+    height: 3.75rem;
+    font-size: 1rem;
   }
 
   .about-desc {
