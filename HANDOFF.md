@@ -1,189 +1,105 @@
-# AI 交接文档 — Maridian Space 个人网站
+# Maridian Space 网站交接说明
 
-> 给下一个接手的 AI 看的。记录了做了什么、怎么做的、还差什么。
+更新时间：2026-06-02
 
----
+## 项目信息
 
-## 当前状态（约 98% 还原）
+- 本地目录：`/Users/luban/Desktop/设计师网站`
+- GitHub：`https://github.com/avalonlucky/BinBin-personal-website`
+- 正式站：`https://chaoshanai.com`
+- Cloudflare Pages 项目：`binbin-personal-website`
+- 参考网站：`https://estrela.studio`
 
-该项目已正式上线，线上域名为 **https://chaoshanai.com**。当前前台品牌名为 **Maridian Space**，视觉参考站为 Estrela Studio。  
-页面已完整实现，所有动画正常，视觉与原版高度一致。  
-浏览器截图验证通过：页面高度精确匹配原版 **12614px**（viewport 1913×1096）。
+## 当前状态
 
----
+- 当前本地工作分支：`claude-dev`
+- 正式发布分支：GitHub 远端 `main`
+- 当前正式站代码提交：`1ec65e7 Match reference CTA hover animation`
+- 正式站当前资源版本：
+  - `css/style.css?v=35`
+  - `js/main.js?v=24`
 
-## 已完成的关键问题 & 解决方案
+## 已完成的主要修改
 
-### 1. Pin 区块之间出现黑色空白
-**问题：** GSAP ScrollTrigger pin 会创建 `.pin-spacer` 占位 div，背景透明，导致页面滚动时出现黑色间隔。  
-**解法：** 在 `style.css` 加：
-```css
-.pin-spacer { background: var(--c-white) !important; }
+- 品牌名称已从 `Estrela Studio` 改为 `Maridian Space`。
+- 已移除品牌名称旁的 `TM` 标记。
+- 浏览器标签页图标已替换为 `M`。
+- 首屏左右文案已替换为中文主标题和副标题。
+- 顶部导航已调整为磨砂玻璃效果，去除不符合参考站的黑色阴影和描边。
+- 导航中间菜单在滚动时保持显示。
+- 首屏文字滚动效果已按参考站方向进行调整。
+- 已移除用户认为不重要的中间展示板块。
+- “精选作品”区域已改为五个横向作品矩形，并补充标题和副标题。
+- “我怎么看设计”区域已按参考站结构制作，包括三行设计服务和底部 CTA 区域。
+- 设计服务行已经调整比例：
+  - 展开行高度约 `466px`
+  - 左图约 `727 x 465px`
+  - 右侧内容约 `1264px` 宽
+  - 收起行高度约 `150px`
+  - 图片底部与容器基本贴合，不应再出现明显留白
+- CTA 按钮已按参考截图制作：
+  - 默认状态为浅色半透明按钮，黄色圆点位于右侧
+  - hover 时黑色从顶部向下填满，文字变白
+  - hover 时黄色圆点滑到左侧
+  - 鼠标移开后动画反向恢复
+  - 2048px 宽视口下按钮约 `239 x 63px`
+
+## 用户的视觉要求
+
+视觉修改不能只靠 CSS 猜测。每次都需要：
+
+1. 仔细对照参考网站和用户截图。
+2. 检查字号、间距、比例、颜色、边界、hover 状态和滚动状态。
+3. 修改后使用浏览器实际渲染检查。
+4. 同时检查默认状态、hover 状态、鼠标移开状态。
+5. 发布后再去 `https://chaoshanai.com` 验证正式站，不要只验证本地。
+
+后续所有板块的标题和副标题，优先采用左对齐、上下排版。
+
+## 发布流程
+
+提交并推送到正式分支：
+
+```bash
+cd /Users/luban/Desktop/设计师网站
+git add <files>
+git commit -m "<message>"
+git push origin HEAD:main
 ```
 
-### 2. GSAP `from()` 动画让元素在触发前消失
-**问题：** GSAP 默认 `immediateRender: true`，导致所有 `from()` 动画的元素在页面加载时被隐藏。  
-**解法：** 所有 ScrollTrigger + `from()` 动画都加 `immediateRender: false`。
+部署 Cloudflare Pages：
 
-### 3. 双重 init 导致 Pin 不生效
-**问题：** `initScrollAnimations()` 被调用两次，第二次 ScrollTrigger 重复注册失败。  
-**解法：** 加了 guard：
-```javascript
-let _scrollAnimsDone = false;
-function initScrollAnimations() {
-  if (_scrollAnimsDone) return;
-  _scrollAnimsDone = true;
-  // ...
-}
+```bash
+rm -rf /tmp/binbin-pages-deploy
+mkdir -p /tmp/binbin-pages-deploy
+rsync -a --exclude='.git' --exclude='.learnings' --exclude='.DS_Store' ./ /tmp/binbin-pages-deploy/
+env -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY -u http_proxy -u https_proxy -u all_proxy \
+  npx wrangler pages deploy /tmp/binbin-pages-deploy \
+  --project-name binbin-personal-website \
+  --branch main \
+  --commit-hash "$(git rev-parse HEAD)" \
+  --commit-message "<message>"
 ```
 
-### 4. 服务区块图片视差选择器错误
-**问题：** JS 里写的是 `.svc-img img`，但 HTML 里的 class 是 `.svc-fig`。  
-**解法：** 改为 `'.svc-fig img, .about-img img'`。
+注意：本机代理可能导致 Wrangler 刷新 Cloudflare token 时出现 `ECONNRESET`。部署时应使用上面的 `env -u ...` 方式绕开代理。
 
-### 5. 浏览器缓存旧版 JS/CSS
-**问题：** 改了 JS/CSS 但浏览器不更新。  
-**解法：** 用 `?v=N` 参数手动 busting，目前 CSS=v8，JS=v7。
+## 发布后验证
 
-### 6. 动画体感与原站不一致（2026-05-29 重做）
-**问题：** 原站几乎所有揭示/视差都是 **scrub（绑定滚动位置）**，元素随滚轮连续来回运动且可逆；我的复刻原本大多是 `gsap.from()` + `start:'top 80%'` **进入视口播一次就停**，往回滚不倒放，体感"到点弹一下"而非"滚动即运动"。原站抓包：**27 个 `scrub:true`**，我原本只有 4 个。  
-**解法：**
-- Lenis 由 `duration:1.25` 改为 **`lerp:0.1`** 模式（跟手，贴近原站 39 处 lerp 用法），加 `syncTouch:true`。
-- 把所有揭示动画从 `gsap.from(...,{start:'top 80%'})` 改写为 **`gsap.fromTo(...,{scrollTrigger:{start, end, scrub:true}})`**，绑定滚动范围、可逆。
-- 验证：滚动中段 work-item op=1（已显现）、未进入范围 op=0（隐藏可逆），Services/Testimonials 各段截图无破绽。
+检查正式站资源版本：
 
-### 7. 滚动架构 1:1 还原原站（2026-05-29）
-**原站结构（抓包确认）：** `body(不滚) > div.site > main.page.lenis(滚动容器·黑底) > .page-bg + .page-scroll(装所有 section)`。Lenis 挂在 `main.page` 这个 `overflow:auto` 容器上做**原生滚动**（不是 transform 虚拟滚动，`.page-scroll` transform 恒为 none）。深色段（hero/testimonials/faq/footer）**背景透明**，露出 `main.page` 的持续黑底；浅色段（work/about/services）实白盖在上面。  
-**注意：此架构在桌面端无可见差异**（持续黑底 vs 每段各自黑底视觉相同，白/黑边界是硬切无圆角无渐变）。唯一实际好处是移动端避免地址栏伸缩跳动。是按用户要求做的 1:1 结构还原。  
-**实现要点：**
-- HTML：`<body><div class="site"> … <main class="page"><div class="page-bg"></div><div class="page-scroll"> …sections… </div></main></div></body>`（nav/cursor/preloader 作为 fixed 浮层放在 .site 内、main 外）。
-- CSS：`html,body{height:100%;overflow:hidden}`；`main.page{position:fixed;inset:0;height:100vh;overflow-y:auto;background:var(--c-black)}`；深色 section 改 `background:transparent`。
-- JS：`const scroller=document.querySelector('.page')`；**`ScrollTrigger.defaults({scroller})` 必须在创建任何 trigger 之前**；Lenis 用 `new Lenis({wrapper:scroller, content:'.page-scroll', lerp:0.1, …})`。
-- **坑：** 换 scroller 后所有 ScrollTrigger（含 pin）的定位都基于 `.page`。若新增 trigger 忘了走 defaults 会错位。已验证 45 个 trigger（38 scrub+2 pin）`scroller===main` 全部正常。
-
-### 8. 对照原站录屏补的两处细节（2026-05-29）
-用户提供原站首页录屏，抽帧对比后补齐：
-- **导航显示策略**：原站离开 hero 顶部后会收起 `Work/About/Services/Contact` 那颗 pill，只留品牌名 + `···`；本站按用户要求做了小改动，桌面端中间导航始终保留，不再添加 `is-compact`。
-- 另确认：hero 视频本来就在播放（`autoplay muted loop`），`main.js` 里的 `currentTime=7.5` 只是设初始帧，不影响循环播放，无需改动。
-
-### 9. Work「Featured Work」段对齐原站（历史记录）
-抓原站 DOM + 录屏抽帧对比，原站这段是 `.work-grid > .work-col-featured(深色面板) + 4×.work-col-project(纯图列)`，文字用 `.line-mask` 逐行遮罩揭示。修正我方差异：
-- **面板标题置顶**：`.work-featured` 由 `justify-content:space-between` 改 `flex-start`；`.work-all-link` 加 `margin-top:auto` 推到底部；隐藏大编号（`.work-featured-num{display:none}`）。
-- **项目列纯图片**：隐藏列编号（`.work-col-num{display:none}`）和常驻 meta；`.work-col-meta` 默认 `opacity:0`，`.work-col:hover` 时淡入上移揭示 client/title/tags。
-- **逐行遮罩揭示动画**：标题 HTML 改成 `<span class="lmask"><span class="lmask-in">Featured</span></span>`（两行），CSS `.lmask{overflow:hidden}`，JS `fromTo(.lmask-in, {yPercent:110},{yPercent:0, stagger:.12, scrub})`。描述+链接 scrub 上升。
-- **项目列交错升起**：`fromTo('.work-col',{y:70,opacity:0},{…stagger:.13, scrub, trigger:'.s-work'})`，取代原先整列一起淡入的写法。
-- 注意：`#workCounter` 元素保留（仅 `display:none`），`animCounter()` 仍引用它，删元素会报错。
-
-### 10. Work 段真正的核心动效是 hover 交互（2026-05-29，纠正第10条方向）
-用户指出重点不是滚动进场，而是 **作品卡 hover/聚焦展开** + **All Work 变色**。抓原站 hover 状态确认机制：列是 flex 项，hover 哪列哪列 `active`（宽 460）、其余压缩（238），`transition:all` 平滑；激活卡显示 编号/客户/标题/标签 + 居中 `View project` 按钮；默认 active = 深色 featured 面板（最宽）；hover featured 时整个面板填充紫色 `#D08CF5`、标题描述淡出、All Work 变居中黑胶囊。
-- **实现（已于 2026-05-30 改成 JS/GSAP 驱动）：**
-  - 展开：`initWorkCta()` 在 mousemove 时判断当前命中的 `.work-featured/.work-col`，用 GSAP timeline 动画每列 `width/height`，`duration:1.15`、`ease:"power4.out"`，贴近原站的阻尼感。
-  - 信息浮层 `.work-col-info`（absolute 左上）+ `.work-view-btn`（absolute 居中）默认 `opacity:0`，`.work-col:hover` 显示；`.work-col::after` 渐变暗罩保证文字可读。
-  - All Work 填充：`.work-featured::before{background:#D08CF5; transform:translateY(101%)}` → `:hover{translateY(0)}`；`.work-featured:hover .work-featured-body{opacity:0}`；`.work-all-link` hover 时 `position:absolute; left/top:50%; translate(-50%,-50%)` 变黑胶囊。
-  - HTML：`.work-col` 改成 `<a>`，内含 `figure.work-col-img` + `.work-col-info`(num/client/title/tags) + `.work-view-btn`。
-- 第10条的「逐行遮罩 lmask」「列交错 cascade 进场」保留，作为进场动画与 hover 动效并存。
-
-### 11. Work hover 升级：对齐原站的 GSAP 动态布局（2026-05-30）
-用户指出原站交互更灵活，鼠标从不同角度移入时展开方向和按钮运动都有更明显的“力学感”。抓原站 JS 后确认其核心是 `Work` 类：mousemove 命中列、`setActive(index)`、GSAP timeline 同时动画列宽与卡片高度，按钮用 `gsap.quickTo` 跟随鼠标。
-- **JS 动态宽高**：`.work-featured/.work-col` 改成 `flex:0 0 auto`，宽度由 `initWorkCta()` 根据 grid 宽度计算：active≈46rem，其余均分；项目 active 高≈56rem，邻近≈38rem，其余≈32rem。
-- **快速切换不跳**：每次切换先 kill 旧 timeline，再用 `power4.out` 和 `overwrite:"auto"` 接管当前状态，因此来回划过时不会卡顿或突然重置。
-- **View project 磁吸**：每张卡内按钮使用 `gsap.quickTo(button,"left/top",{duration:.45,ease:"power3.out"})`，比直接写 CSS 变量更有跟随滞后感。
-- **图片微视差**：项目图根据鼠标相对卡片中心做轻微 `xPercent/yPercent/scale`，离开后回正，增强不同角度移入的方向感。
-- **meta 改半透明 chip**：`.work-col-client/.work-col-title{display:table;background:rgba(251,251,244,.16);padding:…}`。
-- 移动端跳过这套 hover JS，仍保持单列静态卡片。
-
-### 12. Work 区块改为「我的作品」+ 五张项目卡（2026-05-30）
-用户认为左侧黑色 Featured 面板和上方 hero 黑底连在一起太突兀，因此已删除 `.work-featured`。现在 `.s-work` 先留出一段米白空白并显示大标题「我的作品」，下方是 5 张 `.work-col` 项目卡（第 5 张暂时复制占位，后期替换素材）。`initWorkCta()` 不再依赖 featured 面板，默认 5 张等宽竖向矩形，hover 时当前卡变宽变高、相邻卡保持中等高度。
-
----
-
-## 关键代码结构
-
-### main.js 函数列表
-```
-initCanvasBorders()   — nav pill 的 Canvas 动态边框
-initPreloader()       — logo 弹入 → 页面揭开 → hero 标题飞入
-initCursor()          — 自定义鼠标（Estrela bird mark SVG）
-initNavTheme()        — 滚动到 .s-work 时 nav 切换 dark/light 主题
-initScrollAnimations()— 所有 ScrollTrigger 动画（含 About pin）
-animCounter()         — work section 数字计数器动画
-initFAQ()             — FAQ 手风琴（GSAP height: auto）
-initDragScroll()      — Testimonials 拖拽横滑
-initHeroTilt()        — Hero 鼠标视差倾斜
-initClock()           — Footer 实时时钟（开普敦时区）
+```bash
+curl -L -s https://chaoshanai.com | rg -n "style\\.css\\?v=|main\\.js\\?v="
 ```
 
-### CSS 版本号
-- `style.css?v=26`（index.html `<head>`）
-- `main.js?v=19`（index.html 底部）
+如修改了 CSS，请同步增加 `index.html` 中的 CSS 查询参数版本，避免浏览器缓存旧样式。
 
-下次改完记得把版本号 +1，否则浏览器会缓存旧文件。
+## 最近提交
 
----
-
-## Pin 区块滚动机制
-
-一个 section 被钉住（GSAP pin）：
-
-| Section | trigger | end | 产生的额外滚动高度 |
-|---|---|---|---|
-| `.s-about` | `top top` | `+=200%` | ~2192px |
-
-**效果：** 用户在 About 区块会停留更久，内容慢慢移动。  
-**注意：** pin spacer 需要 `.pin-spacer { background: var(--c-white) }` 否则显示黑色。
-
----
-
-## 英雄区视频
-
-视频文件来自 Prismic CDN，无法替换（外部链接）。  
-当前在 JS 里设置了 `currentTime = 7.5` 来固定一帧最好看的画面（三根粉橙色水晶柱）。  
-后期替换成自己的视频后可以删掉这行。
-
-```javascript
-// main.js 底部 INIT 区
-const heroVideo = document.querySelector('.hero-video');
-if (heroVideo) {
-  const seek = () => { heroVideo.currentTime = 7.5; };
-  heroVideo.readyState >= 1 ? seek() : heroVideo.addEventListener('loadedmetadata', seek, { once: true });
-}
+```text
+1ec65e7 Match reference CTA hover animation
+44c04c1 Adjust design row proportions
+9066e1e Fix s-design-view to match estrela.studio reference measurements
+47524bc Fill design row media column
+8bb3d14 Scale design rows responsively
+82b35d5 Match design row media sizing
 ```
-
----
-
-## 字体说明
-
-本地 woff2 文件位于 `fonts/` 目录：
-- `PPMigra-Regular.woff2` — 标题（serif，用于 h1/h2 等）
-- `PPMigra-Italic.woff2` — 标题斜体
-- `PPNeueMontreal-Regular.woff2` — 正文（sans-serif，500 weight）
-
-**没有 Bold 字重**，footer wordmark 用的是 `font-weight: 700` + faux-bold（浏览器模拟），视觉上影响不大。  
-如果要完美还原，需要找到 `PPNeueMontreal-Bold.woff2`。
-
----
-
-## 待改进（可选）
-
-1. **替换所有 Prismic 图片/视频** — 改成自己的素材
-2. **添加多页面** — Work、About、Services、Contact 页面目前是空链接
-3. **响应式适配** — 目前 `@media` 规则存在但未完整测试移动端
-4. **PP Neue Montreal Bold** — 如果能找到字体文件，footer wordmark 会更精准
-
----
-
-## 对比原版截图的结论
-
-| 对比项 | 结果 |
-|---|---|
-| 页面总高度 | ✅ 12614px 完全一致 |
-| 字体 | ✅ PP Migra + PP Neue Montreal |
-| 配色 | ✅ --c-black / --c-white / --c-orange |
-| Hero 视频帧 | ✅ t=7.5s 构图与原版接近 |
-| Pin 效果 | ✅ About pin |
-| 动画 | ✅ 全部实现 |
-| 导航 Canvas 边框 | ✅ 动态光效 |
-
----
-
-*本文档由 Claude Sonnet 4.6 生成，2026-05-28*
