@@ -582,7 +582,25 @@ function initDragScroll() {
   const track = document.getElementById('testiTrack');
   if (!track) return;
 
+  const cards = [...track.querySelectorAll('.testi-card')];
   let down = false, startX, scrollLeft;
+
+  function updateCurrentCard() {
+    const trackCenter = track.getBoundingClientRect().left + track.clientWidth / 2;
+    let closest = cards[0];
+    let closestDistance = Infinity;
+
+    cards.forEach(card => {
+      const box = card.getBoundingClientRect();
+      const distance = Math.abs(box.left + box.width / 2 - trackCenter);
+      if (distance < closestDistance) {
+        closest = card;
+        closestDistance = distance;
+      }
+    });
+
+    cards.forEach(card => card.classList.toggle('is-current', card === closest));
+  }
 
   track.addEventListener('mousedown', e => {
     down = true; track.classList.add('is-dragging');
@@ -596,6 +614,8 @@ function initDragScroll() {
     e.preventDefault();
     track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX) * 1.6;
   });
+  track.addEventListener('scroll', updateCurrentCard, { passive: true });
+  updateCurrentCard();
 }
 
 /* ─────────────────────────────────────────
