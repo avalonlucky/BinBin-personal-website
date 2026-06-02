@@ -177,6 +177,34 @@ function initAiToolsView() {
   toggle.addEventListener('click', () => setView(!section.classList.contains('is-grid')));
 }
 
+function initAiMarqueeLoops() {
+  const rows = document.querySelectorAll('.ai-marquee-row');
+  if (!rows.length) return;
+
+  const fillRows = () => {
+    rows.forEach(row => {
+      const [source, duplicate] = row.querySelectorAll('.ai-marquee-group');
+      if (!source || !duplicate) return;
+
+      const originalTools = [...source.children].filter(tool => !tool.dataset.loopCopy);
+      if (!originalTools.length) return;
+
+      while (source.scrollWidth < row.clientWidth * 1.15) {
+        originalTools.forEach(tool => {
+          const copy = tool.cloneNode(true);
+          copy.dataset.loopCopy = 'true';
+          source.appendChild(copy);
+        });
+      }
+
+      duplicate.replaceChildren(...[...source.children].map(tool => tool.cloneNode(true)));
+    });
+  };
+
+  fillRows();
+  window.addEventListener('resize', fillRows);
+}
+
 /* ─────────────────────────────────────────
    SCROLL ANIMATIONS
 ───────────────────────────────────────── */
@@ -782,6 +810,7 @@ initCanvasBorders();
 initScrollAnimations();
 initNavTheme();
 initAiToolsView();
+initAiMarqueeLoops();
 initWorkCta();
 initDesignRows();
 initFAQ();
