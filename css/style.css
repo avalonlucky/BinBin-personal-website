@@ -320,6 +320,111 @@ main footer {
 }
 
 /* ============================================================
+   AI TOOLS — scrolling logo wall
+   ============================================================ */
+.s-ai-tools {
+  overflow: hidden;
+  padding: clamp(8rem, 16vh, 13rem) 0 clamp(7rem, 14vh, 11rem);
+  background: var(--c-white);
+}
+.ai-tools-heading {
+  padding: 0 var(--gutter);
+  margin-bottom: clamp(4rem, 7vh, 6.5rem);
+}
+.ai-tools-heading h2 {
+  max-width: 14ch;
+  margin: 0;
+  font-family: var(--f-cjk);
+  font-size: clamp(3.8rem, 7vw, 8.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: 0;
+  color: var(--c-black);
+}
+.ai-tools-heading p {
+  margin: clamp(.9rem, 1.8vw, 1.6rem) 0 0;
+  font-family: var(--f-cjk);
+  font-size: clamp(1.05rem, 1.8vw, 2rem);
+  font-weight: 400;
+  line-height: 1.45;
+  color: rgba(0,0,0,.64);
+}
+.ai-marquee {
+  display: grid;
+  gap: clamp(.85rem, 1.2vw, 1.35rem);
+}
+.ai-marquee-row {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.ai-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: ai-marquee-left 36s linear infinite;
+}
+.ai-marquee-row-reverse .ai-marquee-track {
+  animation-name: ai-marquee-right;
+  animation-duration: 40s;
+}
+.ai-marquee-group {
+  display: flex;
+  flex-shrink: 0;
+  gap: clamp(.85rem, 1.2vw, 1.35rem);
+  padding-right: clamp(.85rem, 1.2vw, 1.35rem);
+}
+.ai-tool {
+  display: flex;
+  min-width: max-content;
+  align-items: center;
+  gap: 1rem;
+  padding: clamp(1.05rem, 1.35vw, 1.5rem) clamp(1.35rem, 1.8vw, 2.1rem);
+  border: 1px solid rgba(2,2,2,.13);
+  border-radius: 999px;
+  background: rgba(255,255,255,.34);
+  color: var(--c-black);
+  font-family: var(--f-body);
+  font-size: clamp(1.05rem, 1.25vw, 1.45rem);
+  line-height: 1;
+  transition: border-color .35s var(--ease), background .35s var(--ease), transform .35s var(--ease);
+}
+.ai-tool:hover {
+  border-color: rgba(2,2,2,.48);
+  background: rgba(255,255,255,.78);
+  transform: translateY(-.2rem);
+}
+.ai-tool-logo {
+  display: grid;
+  width: clamp(2rem, 2.35vw, 2.75rem);
+  height: clamp(2rem, 2.35vw, 2.75rem);
+  flex: 0 0 auto;
+  place-items: center;
+}
+.ai-tool-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.ai-tool-logo-text {
+  border-radius: 50%;
+  background: var(--c-black);
+  color: var(--c-white);
+  font-size: clamp(.7rem, .82vw, .9rem);
+  font-weight: 600;
+  letter-spacing: -.06em;
+}
+@keyframes ai-marquee-left {
+  to { transform: translateX(-50%); }
+}
+@keyframes ai-marquee-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+/* ============================================================
    WORK
    ============================================================ */
 /* ============================================================
@@ -1259,6 +1364,55 @@ main footer {
 
   .s-work {
     padding: 8rem 0 0;
+  }
+
+  .s-ai-tools {
+    padding: 7rem 0 6rem;
+  }
+
+  .ai-tools-heading {
+    padding: 0 2rem;
+    margin-bottom: 3.2rem;
+  }
+
+  .ai-tools-heading h2 {
+    max-width: 8ch;
+    font-size: clamp(3.1rem, 15vw, 5rem);
+    line-height: 1.08;
+  }
+
+  .ai-tools-heading p {
+    max-width: 20rem;
+    margin-top: .8rem;
+    font-size: clamp(1rem, 4.4vw, 1.25rem);
+  }
+
+  .ai-marquee {
+    gap: .8rem;
+  }
+
+  .ai-marquee-track {
+    animation-duration: 27s;
+  }
+
+  .ai-marquee-row-reverse .ai-marquee-track {
+    animation-duration: 31s;
+  }
+
+  .ai-marquee-group {
+    gap: .8rem;
+    padding-right: .8rem;
+  }
+
+  .ai-tool {
+    gap: .75rem;
+    padding: .9rem 1.2rem;
+    font-size: 1rem;
+  }
+
+  .ai-tool-logo {
+    width: 1.9rem;
+    height: 1.9rem;
   }
 
   .work-section-heading {

@@ -141,7 +141,7 @@ function initNavTheme() {
   const nav = document.getElementById('nav');
 
   ScrollTrigger.create({
-    trigger: '.s-work',
+    trigger: '.s-ai-tools',
     start: 'top 60px',
     onEnter:    () => nav.dataset.theme = 'light',
     onLeaveBack:() => nav.dataset.theme = 'dark',
@@ -158,7 +158,7 @@ function initScrollAnimations() {
   _scrollAnimsDone = true;
 
   if (prefersReducedMotion.matches) {
-    gsap.set('.reveal-up, .work-col, .work-section-title, .testi-card, .values-heading, .value-card, .faq-item', {
+    gsap.set('.reveal-up, .ai-tools-heading, .work-col, .work-section-title, .testi-card, .values-heading, .value-card, .faq-item', {
       clearProps: 'all',
       opacity: 1,
     });
@@ -226,6 +226,20 @@ function initScrollAnimations() {
     {
       y: 0, opacity: 1, ease: 'expo.out',
       scrollTrigger: { trigger: '.s-work', start: 'top 85%', end: 'top 55%', scrub: true },
+    });
+
+  gsap.fromTo('.ai-tools-heading',
+    { y: 44, opacity: 0 },
+    {
+      y: 0, opacity: 1, ease: 'expo.out',
+      scrollTrigger: { trigger: '.s-ai-tools', start: 'top 88%', end: 'top 58%', scrub: true },
+    });
+
+  gsap.fromTo('.ai-marquee',
+    { y: 32, opacity: 0 },
+    {
+      y: 0, opacity: 1, ease: 'expo.out',
+      scrollTrigger: { trigger: '.ai-marquee', start: 'top 92%', end: 'top 66%', scrub: true },
     });
 
   // ── 项目列：交错升起（cascade，不再整列一起） ──
