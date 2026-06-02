@@ -272,12 +272,12 @@ function initScrollAnimations() {
       });
   });
 
-  // ── Testimonial cards (scrub-linked, staggered) ──
-  gsap.fromTo('.testi-card',
-    { x: 50, opacity: 0 },
+  // ── Testimonial carousel (scrub-linked) ──
+  gsap.fromTo('.testi-carousel',
+    { y: 50, opacity: 0 },
     {
-      x: 0, opacity: 1, ease: 'expo.out', stagger: 0.06,
-      scrollTrigger: { trigger: '.testi-track', start: 'top 90%', end: 'top 55%', scrub: true },
+      y: 0, opacity: 1, ease: 'expo.out',
+      scrollTrigger: { trigger: '.testi-carousel', start: 'top 90%', end: 'top 55%', scrub: true },
     });
 
   // ── FAQ items (scrub-linked, staggered) ──
@@ -576,46 +576,101 @@ function initFAQ() {
 }
 
 /* ─────────────────────────────────────────
-   TESTIMONIAL DRAG SCROLL
+   TESTIMONIAL CAROUSEL
 ───────────────────────────────────────── */
 function initDragScroll() {
-  const track = document.getElementById('testiTrack');
-  if (!track) return;
+  const carousel = document.getElementById('testiCarousel');
+  if (!carousel) return;
 
-  const cards = [...track.querySelectorAll('.testi-card')];
-  let down = false, startX, scrollLeft;
+  const cards = [...carousel.querySelectorAll('.testi-card')];
+  const prev = carousel.querySelector('.testi-zone-prev');
+  const next = carousel.querySelector('.testi-zone-next');
+  const arrow = carousel.querySelector('.testi-arrow');
+  const desktop = () => window.matchMedia('(min-width: 769px)').matches;
+  let activeIndex = 0;
+  let pointerTarget = null;
+  let touchStartX = null;
 
-  function updateCurrentCard() {
-    const trackCenter = track.getBoundingClientRect().left + track.clientWidth / 2;
-    let closest = cards[0];
-    let closestDistance = Infinity;
-
-    cards.forEach(card => {
-      const box = card.getBoundingClientRect();
-      const distance = Math.abs(box.left + box.width / 2 - trackCenter);
-      if (distance < closestDistance) {
-        closest = card;
-        closestDistance = distance;
-      }
-    });
-
-    cards.forEach(card => card.classList.toggle('is-current', card === closest));
+  function relativeSlot(index) {
+    let slot = index - activeIndex;
+    const half = Math.floor(cards.length / 2);
+    if (slot > half) slot -= cards.length;
+    if (slot < -half) slot += cards.length;
+    return slot;
   }
 
-  track.addEventListener('mousedown', e => {
-    down = true; track.classList.add('is-dragging');
-    startX = e.pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
+  function layout() {
+    cards.forEach((card, index) => {
+      const slot = relativeSlot(index);
+      const neighbor = Math.abs(slot) === 1;
+      card.classList.toggle('is-current', slot === 0);
+      card.style.setProperty('--testi-x', desktop() ? `${slot * 56.6667}vw` : `${slot * 100}%`);
+      card.style.setProperty('--testi-scale', slot === 0 ? '1' : (neighbor ? '.7' : '.56'));
+      card.style.setProperty('--testi-rotate', neighbor ? `${slot * .1}deg` : '0deg');
+      card.style.opacity = slot === 0 ? '1' : (neighbor ? '.12' : '0');
+      card.style.zIndex = slot === 0 ? '3' : (neighbor ? '2' : '1');
+    });
+  }
+
+  function cycle(direction) {
+    activeIndex = (activeIndex + direction + cards.length) % cards.length;
+    layout();
+  }
+
+  function clearPointerTarget() {
+    pointerTarget?.classList.remove('is-pointer-target');
+    pointerTarget = null;
+  }
+
+  function updatePointer(e) {
+    if (!desktop()) return;
+    const box = carousel.getBoundingClientRect();
+    const isPrev = e.clientX < box.left + box.width / 2;
+    carousel.classList.toggle('is-prev', isPrev);
+    carousel.classList.add('is-pointer-active');
+    arrow.style.left = `${e.clientX - box.left}px`;
+    arrow.style.top = `${e.clientY - box.top}px`;
+
+    const target = cards
+      .filter(card => Number(card.style.opacity) > 0)
+      .find(card => {
+        const cardBox = card.getBoundingClientRect();
+        return e.clientX >= cardBox.left && e.clientX <= cardBox.right &&
+          e.clientY >= cardBox.top && e.clientY <= cardBox.bottom;
+      });
+
+    if (target !== pointerTarget) {
+      clearPointerTarget();
+      pointerTarget = target || null;
+      pointerTarget?.classList.add('is-pointer-target');
+    }
+
+    if (pointerTarget) {
+      const cardBox = pointerTarget.getBoundingClientRect();
+      pointerTarget.style.setProperty('--testi-glow-x', `${e.clientX - cardBox.left}px`);
+      pointerTarget.style.setProperty('--testi-glow-y', `${e.clientY - cardBox.top}px`);
+    }
+  }
+
+  prev?.addEventListener('click', () => cycle(-1));
+  next?.addEventListener('click', () => cycle(1));
+  carousel.addEventListener('pointermove', updatePointer);
+  carousel.addEventListener('pointerleave', () => {
+    carousel.classList.remove('is-pointer-active');
+    clearPointerTarget();
   });
-  track.addEventListener('mouseleave', () => { down = false; track.classList.remove('is-dragging'); });
-  track.addEventListener('mouseup',    () => { down = false; track.classList.remove('is-dragging'); });
-  track.addEventListener('mousemove', e => {
-    if (!down) return;
-    e.preventDefault();
-    track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX) * 1.6;
-  });
-  track.addEventListener('scroll', updateCurrentCard, { passive: true });
-  updateCurrentCard();
+  carousel.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0]?.clientX ?? null;
+  }, { passive: true });
+  carousel.addEventListener('touchend', e => {
+    if (touchStartX === null) return;
+    const endX = e.changedTouches[0]?.clientX ?? touchStartX;
+    const delta = endX - touchStartX;
+    if (Math.abs(delta) > 35) cycle(delta < 0 ? 1 : -1);
+    touchStartX = null;
+  }, { passive: true });
+  window.addEventListener('resize', layout);
+  layout();
 }
 
 /* ─────────────────────────────────────────

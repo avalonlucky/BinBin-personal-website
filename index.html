@@ -11,7 +11,7 @@
   <link rel="preload" href="fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/style.css?v=37">
+  <link rel="stylesheet" href="css/style.css?v=38">
 </head>
 <body>
 <div class="site">
@@ -226,7 +226,8 @@
       <div class="testi-inner">
         <h2 class="section-title">设计之外</h2>
         <p class="testi-subtitle reveal-up">设计师的核心能力是解决问题，而问题，从来不止在视觉领域。</p>
-        <div class="testi-track" id="testiTrack">
+        <div class="testi-carousel" id="testiCarousel">
+          <div class="testi-track" id="testiTrack">
           <div class="testi-card is-current">
             <p>"The work here brings together a sharp eye for design and a calm, thoughtful approach to digital experience."</p>
             <footer><strong>Craig Newborn</strong> — Former CEO, PayJustNow</footer>
@@ -247,6 +248,14 @@
             <p>"A thoughtful personal space with a distinctive point of view across design, AI, and creative practice."</p>
             <footer><strong>Anton Van Diermen</strong> — Director and Co-Founder, Zulik</footer>
           </div>
+          </div>
+          <button class="testi-zone testi-zone-prev" type="button" aria-label="Previous card"></button>
+          <button class="testi-zone testi-zone-next" type="button" aria-label="Next card"></button>
+          <span class="testi-arrow" aria-hidden="true">
+            <svg viewBox="0 0 37 22" fill="none">
+              <path d="M18.36.324 18.414 0 36.99 10.854v.162L18.414 21.87l-.054-.27 11.88-10.044L0 12.366v-2.7l30.294.81L18.36.324Z" fill="currentColor"/>
+            </svg>
+          </span>
         </div>
       </div>
     </section>
@@ -351,6 +360,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/main.js?v=26"></script>
+  <script src="js/main.js?v=27"></script>
 </body>
 </html>
