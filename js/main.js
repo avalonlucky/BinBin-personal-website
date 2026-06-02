@@ -255,19 +255,6 @@ function initScrollAnimations() {
       scrollTrigger: { trigger: '.s-about', start: 'top 88%', end: 'top 55%', scrub: true },
     });
 
-  // ── Services image from alternating sides (scrub-linked) ──
-  gsap.utils.toArray('.svc-item').forEach((item, i) => {
-    const fig = item.querySelector('.svc-fig');
-    if (!fig) return;
-    const dir = i % 2 === 0 ? -1 : 1;
-    gsap.fromTo(fig,
-      { x: 40 * dir, opacity: 0 },
-      {
-        x: 0, opacity: 1, ease: 'expo.out',
-        scrollTrigger: { trigger: item, start: 'top 88%', end: 'top 58%', scrub: true },
-      });
-  });
-
   gsap.fromTo('.design-view-heading',
     { y: 44, opacity: 0 },
     {
@@ -313,7 +300,7 @@ function initScrollAnimations() {
   });
 
   // ── Image parallax on scroll ──
-  gsap.utils.toArray('.svc-fig img, .about-img img').forEach(img => {
+  gsap.utils.toArray('.about-img img').forEach(img => {
     gsap.fromTo(img,
       { yPercent: -6 },
       {

@@ -58,7 +58,6 @@
 | Hero | 黑 | 全屏视频 + 标题飞入动画 |
 | Work | 米白 | 横向网格：暗色特色列 + 4 个项目列，计数器动画 |
 | About | 米白 | **GSAP Pin**（+=200%）+ 超大"who we are"标题 |
-| Services | 米白 | 3 行服务，图片 + 文字，图片入场动画 |
 | Testimonials | 黑 | 背景去饱和图片 + 可拖动横向卡片 |
 | FAQ | 黑 | 手风琴展开/折叠，GSAP 高度动画 |
 | Footer | 黑 | 实时时钟（开普敦 GMT+2），大字 wordmark 视差 |
