@@ -922,17 +922,6 @@ main footer {
   letter-spacing: .12em;
   color: rgba(251,251,244,.92);
 }
-.value-card-bg-num {
-  position: absolute;
-  top: clamp(-1rem, -1vw, -.5rem);
-  right: clamp(1.5rem, 3.2vw, 4rem);
-  font-size: clamp(10rem, 15vw, 22rem);
-  font-weight: 700;
-  line-height: .9;
-  letter-spacing: -.12em;
-  color: rgba(251,251,244,.035);
-  pointer-events: none;
-}
 .value-card h3 {
   position: relative;
   z-index: 1;
@@ -956,16 +945,6 @@ main footer {
   line-height: 1.75;
   color: rgba(251,251,244,.86);
 }
-.value-card-line {
-  position: relative;
-  z-index: 1;
-  display: block;
-  width: 3.4rem;
-  height: 2px;
-  margin-top: clamp(2rem, 2.8vw, 3.3rem);
-  background: rgba(37, 201, 198, .8);
-}
-
 /* ============================================================
    FAQ — dark background
    ============================================================ */
