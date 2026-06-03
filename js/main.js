@@ -681,6 +681,8 @@ function initDragScroll() {
   let activeIndex = 0;
   let pointerTarget = null;
   let touchStartX = null;
+  let pointerFrame = 0;
+  let pendingPointer = null;
 
   function relativeSlot(index) {
     let slot = index - activeIndex;
@@ -713,40 +715,44 @@ function initDragScroll() {
     pointerTarget = null;
   }
 
-  function updatePointer(e) {
-    if (!desktop()) return;
+  function applyPointer(e) {
     const box = carousel.getBoundingClientRect();
     const isPrev = e.clientX < box.left + box.width / 2;
     carousel.classList.toggle('is-prev', isPrev);
     carousel.classList.add('is-pointer-active');
-    arrow.style.left = `${e.clientX - box.left}px`;
-    arrow.style.top = `${e.clientY - box.top}px`;
+    arrow.style.setProperty('--testi-arrow-x', `${e.clientX - box.left}px`);
+    arrow.style.setProperty('--testi-arrow-y', `${e.clientY - box.top}px`);
 
-    const target = cards
-      .filter(card => Number(card.style.opacity) > 0)
-      .find(card => {
-        const cardBox = card.getBoundingClientRect();
-        return e.clientX >= cardBox.left && e.clientX <= cardBox.right &&
-          e.clientY >= cardBox.top && e.clientY <= cardBox.bottom;
-      });
+    const target = document.elementFromPoint(e.clientX, e.clientY)?.closest('.testi-card');
+    const visibleTarget = target && carousel.contains(target) && Number(target.style.opacity) > 0
+      ? target
+      : null;
 
-    if (target !== pointerTarget) {
+    if (visibleTarget !== pointerTarget) {
       clearPointerTarget();
-      pointerTarget = target || null;
+      pointerTarget = visibleTarget;
       pointerTarget?.classList.add('is-pointer-target');
     }
+  }
 
-    if (pointerTarget) {
-      const cardBox = pointerTarget.getBoundingClientRect();
-      pointerTarget.style.setProperty('--testi-glow-x', `${e.clientX - cardBox.left}px`);
-      pointerTarget.style.setProperty('--testi-glow-y', `${e.clientY - cardBox.top}px`);
-    }
+  function updatePointer(e) {
+    if (!desktop()) return;
+    pendingPointer = { clientX: e.clientX, clientY: e.clientY };
+    if (pointerFrame) return;
+    pointerFrame = requestAnimationFrame(() => {
+      pointerFrame = 0;
+      if (pendingPointer) applyPointer(pendingPointer);
+      pendingPointer = null;
+    });
   }
 
   prev?.addEventListener('click', () => cycle(-1));
   next?.addEventListener('click', () => cycle(1));
   carousel.addEventListener('pointermove', updatePointer);
   carousel.addEventListener('pointerleave', () => {
+    if (pointerFrame) cancelAnimationFrame(pointerFrame);
+    pointerFrame = 0;
+    pendingPointer = null;
     carousel.classList.remove('is-pointer-active');
     clearPointerTarget();
   });
