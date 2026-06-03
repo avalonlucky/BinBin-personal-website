@@ -1183,12 +1183,13 @@ main footer {
 .values-carousel {
   position: relative;
   z-index: 1;
+  padding-right: clamp(2.5rem, 5.2vw, 6.5rem);
 }
 .values-track {
   display: flex;
-  gap: clamp(1.2rem, 1.45vw, 1.8rem);
+  gap: clamp(1.2rem, 1.25vw, 1.7rem);
   overflow-x: auto;
-  padding: 0 var(--gutter) 1rem;
+  padding: 0 0 1rem var(--gutter);
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
@@ -1199,9 +1200,9 @@ main footer {
 .value-card {
   position: relative;
   display: flex;
-  min-width: clamp(23rem, 23vw, 31rem);
+  min-width: clamp(25rem, 29vw, 40.5rem);
   min-height: clamp(24rem, 27vw, 36rem);
-  flex: 0 0 clamp(23rem, 23vw, 31rem);
+  flex: 0 0 clamp(25rem, 29vw, 40.5rem);
   flex-direction: column;
   overflow: hidden;
   padding: clamp(3rem, 4vw, 5.2rem);
@@ -1258,9 +1259,14 @@ main footer {
 }
 .values-controls {
   display: flex;
+  position: absolute;
+  top: 50%;
+  right: var(--gutter);
+  z-index: 3;
   justify-content: flex-end;
   gap: .7rem;
-  padding: clamp(1.5rem, 2vw, 2.4rem) var(--gutter) 0;
+  padding: 0;
+  transform: translateY(-50%);
 }
 .values-arrow {
   display: grid;
@@ -1275,8 +1281,10 @@ main footer {
   line-height: 1;
   backdrop-filter: blur(1rem);
   -webkit-backdrop-filter: blur(1rem);
+  box-shadow: 0 1.2rem 3.5rem rgba(0,0,0,.35);
   transition: background .35s var(--ease), border-color .35s var(--ease), transform .35s var(--ease);
 }
+.values-arrow-prev { display: none; }
 .values-arrow:hover {
   border-color: rgba(251,251,244,.45);
   background: rgba(251,251,244,.16);
@@ -1862,6 +1870,10 @@ main footer {
     margin-inline: 2rem;
   }
 
+  .values-carousel {
+    padding-right: 0;
+  }
+
   .values-track {
     gap: 1.2rem;
     padding: 0 2rem 1rem;
@@ -1885,7 +1897,13 @@ main footer {
   }
 
   .values-controls {
+    position: static;
     padding: 1.5rem 2rem 0;
+    transform: none;
+  }
+
+  .values-arrow-prev {
+    display: grid;
   }
 
   .faq-inner {
