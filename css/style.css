@@ -1005,11 +1005,6 @@ main footer {
   text-align: left;
 }
 
-@property --testi-glow-angle {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
 .testi-carousel {
   position: relative;
   height: 34.7222vw;
@@ -1027,7 +1022,6 @@ main footer {
   --testi-rotate: 0deg;
   --testi-glow-x: 50%;
   --testi-glow-y: 50%;
-  --testi-glow-angle: 0deg;
   position: absolute;
   top: 0;
   left: 50%;
@@ -1053,21 +1047,19 @@ main footer {
   inset: -1px;
   padding: 1.5px;
   border-radius: inherit;
-  background: conic-gradient(from var(--testi-glow-angle), transparent 0 66%, rgba(179, 84, 255, .18) 73%, rgba(220, 150, 255, .82) 78%, rgba(166, 77, 255, .14) 84%, transparent 91%);
+  background:
+    radial-gradient(14rem 14rem at var(--testi-glow-x) var(--testi-glow-y), rgba(223, 150, 255, .95) 0, rgba(178, 83, 255, .62) 22%, rgba(149, 69, 255, .18) 46%, transparent 72%);
   opacity: 0;
   pointer-events: none;
-  filter: drop-shadow(0 0 .55rem rgba(194, 103, 255, .72));
+  filter: drop-shadow(0 0 .55rem rgba(194, 103, 255, .66));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  transition: opacity .5s ease;
+  transition: opacity .28s ease;
+  will-change: background, opacity;
 }
 .testi-card.is-pointer-target::before {
   opacity: 1;
-  animation: testi-border-orbit 2.8s linear infinite;
-}
-@keyframes testi-border-orbit {
-  to { --testi-glow-angle: 360deg; }
 }
 .testi-card.is-current {
   opacity: 1;
@@ -1114,30 +1106,12 @@ main footer {
   transition: opacity .35s ease;
   will-change: transform, opacity;
 }
-.testi-arrow::before {
-  position: absolute;
-  inset: -2.4rem -3.2rem;
-  z-index: -1;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle at 52% 50%, rgba(221, 145, 255, .7) 0, rgba(169, 76, 255, .36) 28%, rgba(133, 54, 255, .14) 52%, transparent 72%);
-  content: '';
-  filter: blur(.7rem);
-  opacity: .85;
-  transform: scale(.86);
-  transition: opacity .35s ease, transform .45s var(--ease);
-}
-.testi-carousel.is-pointer-active .testi-arrow::before {
-  opacity: 1;
-  transform: scale(1);
-}
 .testi-carousel.is-pointer-active .testi-arrow { opacity: 1; }
 .testi-carousel.is-prev .testi-arrow svg { transform: rotateY(180deg); }
 .testi-arrow svg {
   display: block;
   position: relative;
   width: 100%;
-  filter: drop-shadow(0 0 .55rem rgba(224, 156, 255, .42));
   transition: transform .6s var(--ease);
 }
 

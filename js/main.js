@@ -723,15 +723,24 @@ function initDragScroll() {
     arrow.style.setProperty('--testi-arrow-x', `${e.clientX - box.left}px`);
     arrow.style.setProperty('--testi-arrow-y', `${e.clientY - box.top}px`);
 
-    const target = document.elementFromPoint(e.clientX, e.clientY)?.closest('.testi-card');
-    const visibleTarget = target && carousel.contains(target) && Number(target.style.opacity) > 0
-      ? target
-      : null;
+    const visibleTarget = cards
+      .filter(card => Number(card.style.opacity) > 0)
+      .find(card => {
+        const cardBox = card.getBoundingClientRect();
+        return e.clientX >= cardBox.left && e.clientX <= cardBox.right &&
+          e.clientY >= cardBox.top && e.clientY <= cardBox.bottom;
+      }) || null;
 
     if (visibleTarget !== pointerTarget) {
       clearPointerTarget();
       pointerTarget = visibleTarget;
       pointerTarget?.classList.add('is-pointer-target');
+    }
+
+    if (pointerTarget) {
+      const cardBox = pointerTarget.getBoundingClientRect();
+      pointerTarget.style.setProperty('--testi-glow-x', `${e.clientX - cardBox.left}px`);
+      pointerTarget.style.setProperty('--testi-glow-y', `${e.clientY - cardBox.top}px`);
     }
   }
 
