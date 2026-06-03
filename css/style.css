@@ -478,15 +478,14 @@ main footer {
   justify-content: center;
   gap: .75rem;
   padding: 1rem .8rem;
-  border: 1px solid rgba(2,2,2,.18);
+  border: 0;
   border-radius: .35rem;
   color: var(--c-black);
   font-family: var(--f-body);
   font-size: clamp(.92rem, .9vw, 1.08rem);
-  transition: border-color .35s var(--ease), background .35s var(--ease), transform .35s var(--ease);
+  transition: background .35s var(--ease), transform .35s var(--ease);
 }
 .ai-grid-card:hover {
-  border-color: rgba(2,2,2,.7);
   background: rgba(255,255,255,.48);
   transform: translateY(-.25rem);
 }
