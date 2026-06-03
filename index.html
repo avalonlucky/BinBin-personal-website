@@ -11,7 +11,7 @@
   <link rel="preload" href="fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/style.css?v=50">
+  <link rel="stylesheet" href="css/style.css?v=51">
 </head>
 <body>
 <div class="site">
@@ -340,35 +340,44 @@
          VALUES
     ══════════════════════════════════════ -->
     <section class="s-values">
+      <div class="values-bg" aria-hidden="true">
+        <img src="assets/values-portrait.png" alt="" loading="lazy">
+      </div>
       <div class="values-heading" lang="zh-CN">
         <h2>我的价值观</h2>
         <p>我反复遵循的原则，塑造了我的思考方式、设计和协作方式</p>
       </div>
 
-      <div class="values-grid" lang="zh-CN">
-        <article class="value-card">
-          <span class="value-card-index">01</span>
-          <h3>少即是多</h3>
-          <p>剔除不必要的元素，只留下真正重要的部分。每个元素都因其用途而非装饰而获得存在的意义。</p>
-        </article>
+      <div class="values-carousel" lang="zh-CN">
+        <div class="values-track">
+          <article class="value-card">
+            <span class="value-card-index">01</span>
+            <h3>少即是多</h3>
+            <p>剔除不必要的元素，只留下真正重要的部分。每个元素都因其用途而非装饰而获得存在的意义。</p>
+          </article>
 
-        <article class="value-card">
-          <span class="value-card-index">02</span>
-          <h3>用户至上</h3>
-          <p>一切都源于真实的人和真实的问题。同理心不是一时兴起，而是基石。</p>
-        </article>
+          <article class="value-card">
+            <span class="value-card-index">02</span>
+            <h3>用户至上</h3>
+            <p>一切都源于真实的人和真实的问题。同理心不是一时兴起，而是基石。</p>
+          </article>
 
-        <article class="value-card">
-          <span class="value-card-index">03</span>
-          <h3>更聪明地工作，<br>而不是更努力地工作</h3>
-          <p>可扩展的系统、可复用的模式以及关键领域的自动化。效率不是懒惰，而是尊重每个人的时间。</p>
-        </article>
+          <article class="value-card">
+            <span class="value-card-index">03</span>
+            <h3>更聪明地工作，<br>而不是更努力地工作</h3>
+            <p>可扩展的系统、可复用的模式以及关键领域的自动化。效率不是懒惰，而是尊重每个人的时间。</p>
+          </article>
 
-        <article class="value-card">
-          <span class="value-card-index">04</span>
-          <h3>良好的沟通</h3>
-          <p>如果无法解释其背后的原因，再好的设计也毫无意义。清晰的沟通与清晰的屏幕显示同样重要。</p>
-        </article>
+          <article class="value-card">
+            <span class="value-card-index">04</span>
+            <h3>良好的沟通</h3>
+            <p>如果无法解释其背后的原因，再好的设计也毫无意义。清晰的沟通与清晰的屏幕显示同样重要。</p>
+          </article>
+        </div>
+        <div class="values-controls" aria-label="价值观卡片滚动控制">
+          <button class="values-arrow values-arrow-prev" type="button" aria-label="向左滚动">←</button>
+          <button class="values-arrow values-arrow-next" type="button" aria-label="向右滚动">→</button>
+        </div>
       </div>
     </section>
 
@@ -472,6 +481,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/main.js?v=34"></script>
+  <script src="js/main.js?v=35"></script>
 </body>
 </html>

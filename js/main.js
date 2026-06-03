@@ -368,7 +368,7 @@ function initScrollAnimations() {
     { y: 44, opacity: 0 },
     {
       y: 0, opacity: 1, ease: 'expo.out', stagger: 0.08,
-      scrollTrigger: { trigger: '.values-grid', start: 'top 90%', end: 'top 58%', scrub: true },
+      scrollTrigger: { trigger: '.values-track', start: 'top 90%', end: 'top 58%', scrub: true },
     });
 
   // ── FAQ items (scrub-linked, staggered) ──
@@ -785,6 +785,23 @@ function initHeroTilt() {
   });
 }
 
+function initValuesCarousel() {
+  const track = document.querySelector('.values-track');
+  const prev = document.querySelector('.values-arrow-prev');
+  const next = document.querySelector('.values-arrow-next');
+  if (!track || !prev || !next) return;
+
+  const scrollByCard = direction => {
+    const card = track.querySelector('.value-card');
+    const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 0;
+    const distance = card ? card.getBoundingClientRect().width + gap : track.clientWidth * .85;
+    track.scrollBy({ left: direction * distance, behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' });
+  };
+
+  prev.addEventListener('click', () => scrollByCard(-1));
+  next.addEventListener('click', () => scrollByCard(1));
+}
+
 /* ─────────────────────────────────────────
    REAL-TIME CLOCK (Cape Town GMT+2)
 ───────────────────────────────────────── */
@@ -823,6 +840,7 @@ initDesignRows();
 initFAQ();
 initDragScroll();
 initHeroTilt();
+initValuesCarousel();
 initClock();
 
 window.addEventListener('resize', () => ScrollTrigger.refresh());

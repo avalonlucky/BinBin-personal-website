@@ -1127,14 +1127,37 @@ main footer {
    ============================================================ */
 .s-values {
   position: relative;
-  padding: clamp(7rem, 10vw, 12rem) var(--gutter) clamp(8rem, 11vw, 14rem);
+  padding: clamp(7rem, 10vw, 12rem) 0 clamp(8rem, 11vw, 14rem);
   overflow: hidden;
   background: var(--c-black) !important;
   color: var(--c-white);
 }
+.values-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.values-bg::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(2,2,2,.78), rgba(2,2,2,.38) 42%, rgba(2,2,2,.78)),
+    linear-gradient(180deg, rgba(2,2,2,.55), rgba(2,2,2,.2) 38%, rgba(2,2,2,.72));
+  content: '';
+}
+.values-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 54% center;
+  filter: grayscale(1) contrast(1.08);
+  opacity: .9;
+}
 .values-heading {
+  position: relative;
+  z-index: 1;
   max-width: 100rem;
-  margin: 0 0 clamp(3.5rem, 6vw, 6rem);
+  margin: 0 var(--gutter) clamp(3.5rem, 6vw, 6rem);
 }
 .values-heading h2 {
   margin: 0;
@@ -1154,31 +1177,49 @@ main footer {
   letter-spacing: 0;
   color: var(--c-white);
 }
-.values-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.4rem, 1.7vw, 2.2rem);
+.values-carousel {
+  position: relative;
+  z-index: 1;
+}
+.values-track {
+  display: flex;
+  gap: clamp(1.2rem, 1.45vw, 1.8rem);
+  overflow-x: auto;
+  padding: 0 var(--gutter) 1rem;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.values-track::-webkit-scrollbar {
+  display: none;
 }
 .value-card {
   position: relative;
   display: flex;
-  min-height: clamp(23rem, 23.5vw, 34rem);
+  min-width: clamp(23rem, 23vw, 31rem);
+  min-height: clamp(24rem, 27vw, 36rem);
+  flex: 0 0 clamp(23rem, 23vw, 31rem);
   flex-direction: column;
   overflow: hidden;
   padding: clamp(3rem, 4vw, 5.2rem);
-  border: 1px solid rgba(251,251,244,.16);
+  scroll-snap-align: start;
+  border: 1px solid rgba(251,251,244,.2);
   border-radius: 1.8rem;
   background:
-    radial-gradient(circle at 22% 10%, rgba(255,255,255,.035), transparent 42%),
-    linear-gradient(135deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+    radial-gradient(circle at 22% 10%, rgba(255,255,255,.16), transparent 46%),
+    linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.055));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.14),
+    0 2rem 5rem rgba(0,0,0,.18);
+  backdrop-filter: blur(1.35rem) saturate(1.18);
+  -webkit-backdrop-filter: blur(1.35rem) saturate(1.18);
   transition: border-color .65s var(--ease), transform .65s var(--ease), background .65s var(--ease);
 }
 .value-card:hover {
-  border-color: rgba(72, 223, 217, .42);
+  border-color: rgba(251,251,244,.34);
   background:
-    radial-gradient(circle at 22% 10%, rgba(72,223,217,.07), transparent 42%),
-    linear-gradient(135deg, rgba(255,255,255,.045), rgba(255,255,255,.014));
+    radial-gradient(circle at 22% 10%, rgba(255,255,255,.2), transparent 46%),
+    linear-gradient(135deg, rgba(255,255,255,.2), rgba(255,255,255,.07));
   transform: translateY(-.45rem);
 }
 .value-card-index {
@@ -1211,6 +1252,32 @@ main footer {
   font-weight: 500;
   line-height: 1.75;
   color: rgba(251,251,244,.86);
+}
+.values-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: .7rem;
+  padding: clamp(1.5rem, 2vw, 2.4rem) var(--gutter) 0;
+}
+.values-arrow {
+  display: grid;
+  width: clamp(3.8rem, 4vw, 5rem);
+  height: clamp(3.8rem, 4vw, 5rem);
+  place-items: center;
+  border: 1px solid rgba(251,251,244,.22);
+  border-radius: 50%;
+  background: rgba(251,251,244,.09);
+  color: var(--c-white);
+  font-size: clamp(1.5rem, 2vw, 2.2rem);
+  line-height: 1;
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
+  transition: background .35s var(--ease), border-color .35s var(--ease), transform .35s var(--ease);
+}
+.values-arrow:hover {
+  border-color: rgba(251,251,244,.45);
+  background: rgba(251,251,244,.16);
+  transform: translateY(-.15rem);
 }
 /* ============================================================
    FAQ — dark background
@@ -1785,16 +1852,22 @@ main footer {
   }
 
   .s-values {
-    padding: 7rem 2rem 8rem;
+    padding: 7rem 0 8rem;
   }
 
-  .values-grid {
-    grid-template-columns: 1fr;
-    gap: 1.4rem;
+  .values-heading {
+    margin-inline: 2rem;
+  }
+
+  .values-track {
+    gap: 1.2rem;
+    padding: 0 2rem 1rem;
   }
 
   .value-card {
+    min-width: calc(100vw - 6rem);
     min-height: 23rem;
+    flex-basis: calc(100vw - 6rem);
     padding: 3rem 2.6rem;
     border-radius: 1.4rem;
   }
@@ -1806,6 +1879,10 @@ main footer {
 
   .value-card p {
     font-size: 1rem;
+  }
+
+  .values-controls {
+    padding: 1.5rem 2rem 0;
   }
 
   .faq-inner {
