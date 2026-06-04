@@ -480,13 +480,20 @@ main footer {
   padding: 1rem .8rem;
   border: 0;
   border-radius: .35rem;
+  background: rgba(2,2,2,.025);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.32),
+    0 .6rem 1.8rem rgba(2,2,2,.025);
   color: var(--c-black);
   font-family: var(--f-body);
   font-size: clamp(.92rem, .9vw, 1.08rem);
-  transition: background .35s var(--ease), transform .35s var(--ease);
+  transition: background .35s var(--ease), box-shadow .35s var(--ease), transform .35s var(--ease);
 }
 .ai-grid-card:hover {
-  background: rgba(255,255,255,.48);
+  background: rgba(255,255,255,.42);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.46),
+    0 .8rem 2rem rgba(2,2,2,.035);
   transform: translateY(-.25rem);
 }
 .ai-grid-card .ai-tool-logo {
@@ -767,7 +774,7 @@ main footer {
   margin: clamp(.9rem, 1.8vw, 1.6rem) 0 0;
 }
 .design-rows {
-  margin: 0 1.4vw;
+  margin: 0;
 }
 .design-row {
   display: flex;
@@ -871,11 +878,11 @@ main footer {
   background: rgb(210, 208, 196);
 }
 .design-row-cta p {
-  max-width: 52rem;
+  max-width: min(92rem, 72vw);
   margin: 0 0 clamp(2rem, 3vw, 3.5rem);
   color: var(--c-black);
   font-family: var(--f-cjk);
-  font-size: clamp(2.1rem, 3.3vw, 5rem);
+  font-size: clamp(2rem, 2.75vw, 4.2rem);
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1.18;
@@ -1048,10 +1055,10 @@ main footer {
   padding: 1.5px;
   border-radius: inherit;
   background:
-    radial-gradient(14rem 14rem at var(--testi-glow-x) var(--testi-glow-y), rgba(223, 150, 255, .95) 0, rgba(178, 83, 255, .62) 22%, rgba(149, 69, 255, .18) 46%, transparent 72%);
+    radial-gradient(22rem 22rem at var(--testi-glow-x) var(--testi-glow-y), rgba(229, 160, 255, .98) 0, rgba(188, 90, 255, .66) 18%, rgba(153, 72, 255, .26) 43%, transparent 72%);
   opacity: 0;
   pointer-events: none;
-  filter: drop-shadow(0 0 .55rem rgba(194, 103, 255, .66));
+  filter: drop-shadow(0 0 .7rem rgba(194, 103, 255, .62));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -1196,6 +1203,7 @@ main footer {
   min-height: clamp(24rem, 27vw, 36rem);
   flex: 0 0 clamp(25rem, 29vw, 40.5rem);
   flex-direction: column;
+  justify-content: center;
   overflow: hidden;
   padding: clamp(3rem, 4vw, 5.2rem);
   scroll-snap-align: start;
@@ -1219,20 +1227,15 @@ main footer {
   transform: translateY(-.45rem);
 }
 .value-card-index {
-  position: relative;
-  z-index: 1;
-  font-size: clamp(.95rem, 1vw, 1.2rem);
-  font-weight: 500;
-  letter-spacing: .12em;
-  color: rgba(251,251,244,.92);
+  display: none;
 }
 .value-card h3 {
   position: relative;
   z-index: 1;
   max-width: 43rem;
-  margin: clamp(2.4rem, 3.2vw, 4.2rem) 0 auto;
+  margin: 0 0 clamp(2.3rem, 3.3vw, 4rem);
   font-family: var(--f-cjk);
-  font-size: clamp(2.1rem, 2.65vw, 3.8rem);
+  font-size: clamp(1.9rem, 2.35vw, 3.25rem);
   font-weight: 600;
   line-height: 1.12;
   letter-spacing: 0;
@@ -1242,7 +1245,7 @@ main footer {
   position: relative;
   z-index: 1;
   max-width: 48rem;
-  margin: clamp(2rem, 2.8vw, 3.4rem) 0 0;
+  margin: 0;
   font-family: var(--f-cjk);
   font-size: clamp(1rem, 1.16vw, 1.35rem);
   font-weight: 500;
@@ -1880,8 +1883,8 @@ main footer {
   }
 
   .value-card h3 {
-    margin-top: 2.4rem;
-    font-size: clamp(2.15rem, 9vw, 3.4rem);
+    margin: 0 0 2rem;
+    font-size: clamp(1.95rem, 8vw, 3rem);
   }
 
   .value-card p {

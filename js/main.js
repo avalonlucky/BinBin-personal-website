@@ -739,8 +739,13 @@ function initDragScroll() {
 
     if (pointerTarget) {
       const cardBox = pointerTarget.getBoundingClientRect();
-      pointerTarget.style.setProperty('--testi-glow-x', `${e.clientX - cardBox.left}px`);
-      pointerTarget.style.setProperty('--testi-glow-y', `${e.clientY - cardBox.top}px`);
+      const x = e.clientX - cardBox.left;
+      const y = e.clientY - cardBox.top;
+      const edge = Math.min(x, cardBox.width - x, y, cardBox.height - y);
+      const glowX = edge === x ? 0 : (edge === cardBox.width - x ? cardBox.width : x);
+      const glowY = edge === y ? 0 : (edge === cardBox.height - y ? cardBox.height : y);
+      pointerTarget.style.setProperty('--testi-glow-x', `${glowX}px`);
+      pointerTarget.style.setProperty('--testi-glow-y', `${glowY}px`);
     }
   }
 
