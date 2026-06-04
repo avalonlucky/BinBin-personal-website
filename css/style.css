@@ -1257,7 +1257,7 @@ main footer {
   top: clamp(-4.8rem, -3.1vw, -2.6rem);
   right: clamp(2.2rem, 4vw, 5rem);
   z-index: 3;
-  color: rgba(251,251,244,.42);
+  color: rgba(251,251,244,.62);
   font-family: var(--f-body);
   font-size: clamp(2.6rem, 4.1vw, 5.4rem);
   font-weight: 300;
@@ -1265,16 +1265,15 @@ main footer {
   opacity: 0;
   pointer-events: none;
   transform: translateX(0);
-  text-shadow: 0 0 1.4rem rgba(251,251,244,.12);
+  text-shadow: 0 0 1.6rem rgba(251,251,244,.18);
 }
 .values-carousel.is-hinting .values-swipe-hint {
-  animation: values-swipe-hint 2.2s ease-in-out forwards;
+  animation: values-swipe-hint 5s ease-in-out forwards;
 }
 @keyframes values-swipe-hint {
   0%, 100% { opacity: 0; transform: translateX(0); }
-  9%, 23%, 43% { opacity: .38; transform: translateX(.55rem); }
-  16%, 34%, 54% { opacity: .08; transform: translateX(0); }
-  68% { opacity: 0; transform: translateX(0); }
+  8%, 28%, 48%, 68%, 88% { opacity: .62; transform: translateX(.65rem); }
+  18%, 38%, 58%, 78% { opacity: .18; transform: translateX(0); }
 }
 /* ============================================================
    FAQ — dark background
