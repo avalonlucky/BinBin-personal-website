@@ -807,19 +807,32 @@ function initHeroTilt() {
 
 function initValuesCarousel() {
   const track = document.querySelector('.values-track');
-  const prev = document.querySelector('.values-arrow-prev');
-  const next = document.querySelector('.values-arrow-next');
-  if (!track || !prev || !next) return;
+  const carousel = document.querySelector('.values-carousel');
+  const hint = document.querySelector('.values-swipe-hint');
+  if (!track || !carousel || !hint || prefersReducedMotion.matches) return;
 
-  const scrollByCard = direction => {
-    const card = track.querySelector('.value-card');
-    const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 0;
-    const distance = card ? card.getBoundingClientRect().width + gap : track.clientWidth * .85;
-    track.scrollBy({ left: direction * distance, behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' });
+  let hintPlayed = false;
+  const playHint = () => {
+    if (hintPlayed) return;
+    hintPlayed = true;
+    carousel.classList.remove('is-hinting');
+    void hint.offsetWidth;
+    carousel.classList.add('is-hinting');
+    hint.addEventListener('animationend', () => carousel.classList.remove('is-hinting'), { once: true });
   };
 
-  prev.addEventListener('click', () => scrollByCard(-1));
-  next.addEventListener('click', () => scrollByCard(1));
+  const observer = new IntersectionObserver(entries => {
+    if (entries.some(entry => entry.isIntersecting)) {
+      playHint();
+      observer.disconnect();
+    }
+  }, {
+    root: scroller,
+    threshold: 0.42,
+    rootMargin: '-12% 0px -18% 0px',
+  });
+
+  observer.observe(carousel);
 }
 
 /* ─────────────────────────────────────────
