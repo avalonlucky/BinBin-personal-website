@@ -1465,6 +1465,268 @@ main footer {
 }
 
 /* ============================================================
+   ABOUT PAGE — rotating reading orbit
+   ============================================================ */
+.about-page {
+  background: var(--c-black);
+  color: var(--c-white);
+}
+
+.about-page main.page {
+  background:
+    radial-gradient(circle at 22% 18%, rgba(255,133,45,.16), transparent 28rem),
+    radial-gradient(circle at 82% 22%, rgba(251,251,244,.11), transparent 34rem),
+    var(--c-black);
+}
+
+.about-page .page-bg {
+  background:
+    linear-gradient(180deg, rgba(2,2,2,.35), rgba(2,2,2,.82)),
+    var(--c-black);
+}
+
+.about-page main section:not(.s-hero):not(.s-testimonials):not(.s-faq) {
+  background: transparent;
+}
+
+.about-page .nav-pill {
+  color: var(--c-white);
+  background: rgba(251,251,244,.08);
+}
+
+.s-about-reading {
+  position: relative;
+  min-height: 100vh;
+  padding: 8.5rem var(--gutter) 5.5rem;
+  overflow: hidden;
+  display: grid;
+  align-items: center;
+  isolation: isolate;
+}
+
+.about-reading-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,133,45,.18), transparent 22rem),
+    radial-gradient(circle at 46% 62%, rgba(231,230,220,.12), transparent 30rem),
+    linear-gradient(180deg, rgba(2,2,2,0) 0%, rgba(2,2,2,.9) 100%);
+}
+
+.reading-orbit {
+  position: relative;
+  width: min(100%, 118rem);
+  height: clamp(43rem, 74vh, 64rem);
+  margin: 0 auto;
+}
+
+.reading-center {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  z-index: 120;
+  width: min(58rem, 64vw);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.about-eyebrow {
+  margin-bottom: 1.25rem;
+  color: rgba(251,251,244,.45);
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.reading-center h1 {
+  font-family: var(--f-cjk);
+  font-size: clamp(4.4rem, 7.3vw, 8.6rem);
+  font-weight: 800;
+  letter-spacing: -.08em;
+  line-height: .95;
+  color: var(--c-white);
+}
+
+.reading-center p:not(.about-eyebrow) {
+  width: min(40rem, 100%);
+  margin: 1.6rem auto 0;
+  color: rgba(251,251,244,.58);
+  font-family: var(--f-cjk);
+  font-size: clamp(1.05rem, 1.45vw, 1.45rem);
+  line-height: 1.7;
+}
+
+.reading-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .85rem;
+  margin-top: 2.2rem;
+  padding: .82rem 1.28rem .82rem 1.45rem;
+  border-radius: 10rem;
+  background: var(--c-orange);
+  color: var(--c-white);
+  font-family: var(--f-cjk);
+  font-size: .92rem;
+  transition: transform .35s var(--ease), background .35s var(--ease);
+}
+
+.reading-cta span {
+  width: .38rem;
+  height: .38rem;
+  border-radius: 50%;
+  background: var(--c-white);
+}
+
+.reading-cta:hover {
+  transform: translateY(-2px);
+  background: #ff9a4f;
+}
+
+.reading-orbit-track {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+}
+
+.book-orbit-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(8.8rem, 10.5vw, 13.2rem);
+  aspect-ratio: 3 / 4;
+  will-change: transform, opacity;
+  transform: translate(-50%, -50%);
+}
+
+.book-cover {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border-radius: 1.4rem;
+  padding: 1.15rem;
+  border: 1px solid rgba(251,251,244,.16);
+  box-shadow: 0 2rem 5rem rgba(0,0,0,.28);
+  color: var(--c-white);
+}
+
+.book-cover::before,
+.book-cover::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.book-cover::before {
+  inset: -30%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(251,251,244,.22), transparent 24%),
+    radial-gradient(circle at 75% 78%, rgba(255,133,45,.26), transparent 32%);
+  opacity: .78;
+}
+
+.book-cover::after {
+  inset: 0;
+  background: linear-gradient(145deg, rgba(251,251,244,.14), transparent 40%, rgba(2,2,2,.32));
+}
+
+.book-cover span,
+.book-cover strong,
+.book-cover small {
+  position: relative;
+  z-index: 2;
+}
+
+.book-cover span {
+  font-size: .62rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(251,251,244,.62);
+}
+
+.book-cover strong {
+  max-width: 92%;
+  font-family: var(--f-cjk);
+  font-size: clamp(1.25rem, 1.7vw, 2rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -.05em;
+}
+
+.book-cover small {
+  color: rgba(251,251,244,.56);
+  font-size: .76rem;
+  line-height: 1.35;
+}
+
+.book-cover-orange { background: linear-gradient(145deg, #ff852d, #5e2106 58%, #080503); }
+.book-cover-cream { background: linear-gradient(145deg, #fbfbf4, #e7e6dc 44%, #39372f); color: var(--c-black); }
+.book-cover-cream span,
+.book-cover-cream small { color: rgba(2,2,2,.58); }
+.book-cover-dark { background: linear-gradient(145deg, #171717, #020202 48%, #3a2114); }
+.book-cover-muted { background: linear-gradient(145deg, #4d4a40, #1b1a17 50%, #020202); }
+
+.about-reading-notes {
+  padding: 4rem var(--gutter) 8rem;
+}
+
+.about-notes-heading {
+  width: min(64rem, 100%);
+  margin-bottom: 3.5rem;
+}
+
+.about-notes-heading h2 {
+  font-family: var(--f-cjk);
+  font-size: clamp(3.2rem, 6vw, 7rem);
+  font-weight: 800;
+  letter-spacing: -.075em;
+  line-height: 1;
+  color: var(--c-white);
+}
+
+.about-note-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.about-note-grid article {
+  min-height: 18rem;
+  padding: 2rem;
+  border-radius: 1.2rem;
+  background: rgba(251,251,244,.06);
+  border: 1px solid rgba(251,251,244,.09);
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
+}
+
+.about-note-grid span {
+  display: block;
+  margin-bottom: 3rem;
+  color: rgba(251,251,244,.4);
+  font-size: .82rem;
+}
+
+.about-note-grid h3 {
+  margin-bottom: 1rem;
+  font-family: var(--f-cjk);
+  font-size: clamp(1.5rem, 2.3vw, 2.4rem);
+  line-height: 1.12;
+  letter-spacing: -.045em;
+}
+
+.about-note-grid p {
+  color: rgba(251,251,244,.58);
+  font-family: var(--f-cjk);
+  font-size: .98rem;
+  line-height: 1.75;
+}
+
+/* ============================================================
    CANVAS BORDER — animated shimmer on pills & cards
    ============================================================ */
 [data-border] { position: relative; }
@@ -1838,6 +2100,55 @@ main footer {
     padding: 7rem 0 8rem;
   }
 
+  .s-about-reading {
+    min-height: auto;
+    padding: 8rem 2rem 5rem;
+  }
+
+  .reading-orbit {
+    display: grid;
+    height: auto;
+    gap: 2rem;
+  }
+
+  .reading-center {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    transform: none;
+    text-align: left;
+  }
+
+  .reading-center p:not(.about-eyebrow) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .reading-orbit-track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .book-orbit-card {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .about-reading-notes {
+    padding: 2rem 2rem 6rem;
+  }
+
+  .about-note-grid {
+    grid-template-columns: 1fr;
+  }
+
   .values-heading {
     margin-inline: 2rem;
   }
@@ -1915,6 +2226,10 @@ main footer {
 @media (max-width: 480px) {
   .hero-title {
     bottom: 18vh;
+  }
+
+  .reading-orbit-track {
+    grid-template-columns: 1fr;
   }
 
   .logo-text {

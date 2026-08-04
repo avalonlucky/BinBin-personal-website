@@ -4,7 +4,7 @@
 
 ## 项目信息
 
-- 本地目录：`/Users/luban/Desktop/设计师网站`
+- 本地目录：`/Users/luban/Documents/个人网站`
 - GitHub：`https://github.com/avalonlucky/BinBin-personal-website`
 - 正式站：`https://chaoshanai.com`
 - Cloudflare Pages 项目：`binbin-personal-website`
@@ -16,8 +16,9 @@
 - 正式发布分支：GitHub 远端 `main`
 - 当前正式站代码提交：以 GitHub 远端 `main` 最新提交为准
 - 正式站当前资源版本：
-  - `css/style.css?v=60`
+  - `css/style.css?v=61`
   - `js/main.js?v=39`
+  - `js/about.js?v=1`
 
 ## 已完成的主要修改
 
@@ -53,6 +54,7 @@
 - “AI 是我的第二支笔”网格模式已恢复低对比小方块背景但无描边；“我怎么看设计”服务行改为全宽；“我的价值观”卡片去掉序号并调整标题/正文垂直居中；testimonial 紫色描边改为投射到最近边缘，减少缺口感。
 - “我的价值观”右侧圆形滚动按钮已替换为低透明度滑动提示箭头；每次页面刷新后首次滚到该区域时闪烁三次后消失。
 - “我的价值观”滑动提示箭头动画已调整为约 5 秒、每秒一次的较慢闪烁，并提升了可见度。
+- 已新增独立 About 页面，用持续旋转的环形书籍卡片展示最近阅读内容；当前书籍以可替换文字封面呈现，色彩使用网站黑、米白、橙色体系。
 - 设计服务行已经调整比例：
   - 展开行高度约 `466px`
   - 左图约 `727 x 465px`
@@ -76,7 +78,7 @@
 提交并推送到正式分支：
 
 ```bash
-cd /Users/luban/Desktop/设计师网站
+cd /Users/luban/Documents/个人网站
 git add <files>
 git commit -m "<message>"
 git push origin HEAD:main
