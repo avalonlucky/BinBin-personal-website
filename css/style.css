@@ -1473,21 +1473,44 @@ main footer {
 }
 .footer-col h6 {
   margin-bottom: clamp(1.45rem, 1.67vw, 2.56rem);
-  color: var(--c-white);
-  font-family: var(--f-heading);
+  color: rgba(251,251,244,.36);
+  font-family: var(--f-body);
   font-size: var(--footer-copy-size);
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.4;
 }
 .footer-col a {
   display: block;
   margin-bottom: clamp(.49rem, .56vw, .86rem);
-  color: rgba(251,251,244,.5);
+  color: rgba(251,251,244,.58);
   font-size: var(--footer-copy-size);
+  font-weight: 450;
   line-height: 1.4;
   transition: color .3s ease;
 }
 .footer-col a:hover { color: var(--c-white); }
+.footer-col .footer-social-link {
+  display: flex;
+  align-items: center;
+  gap: .75em;
+  width: fit-content;
+}
+.footer-social-icon {
+  width: 1.45em;
+  height: 1.45em;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: rgba(251,251,244,.72);
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke .3s ease;
+}
+.footer-social-icon .icon-fill {
+  fill: rgba(251,251,244,.72);
+  stroke: none;
+}
+.footer-social-link:hover .footer-social-icon { stroke: var(--c-white); }
 
 .footer-right {
   display: flex;

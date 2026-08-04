@@ -16,7 +16,7 @@
 - 正式发布分支：GitHub 远端 `main`
 - 当前正式站代码提交：以 GitHub 远端 `main` 最新提交为准
 - 正式站当前资源版本：
-  - `css/style.css?v=71`
+  - `css/style.css?v=72`
   - `js/main.js?v=41`
   - `js/about.js?v=4`
 
@@ -63,6 +63,7 @@
 - FAQ 每一整行均可点击展开或收起，包括问题标题、答案与行内空白区域；右侧括号按钮和键盘操作继续保留。
 - 页脚文字层级已按原站浏览器计算值校正：桌面端主要文字约 21px，移动端约 15px；栏目标题使用 PP Migra，导航、按钮和联系方式使用 PP Neue Montreal。
 - 页脚已移除右侧装饰符号和左下角版权文字；联系电话更新为中国大陆与香港号码，并保持可点击拨号。
+- 页脚 Navigation / Social 标题改为略粗的灰色无衬线字体；社交列表更新为 LinkedIn、Instagram、Twitter、Facebook、TikTok，并配套统一的线性品牌图标。
 - 设计服务行已经调整比例：
   - 展开行高度约 `466px`
   - 左图约 `727 x 465px`
