@@ -37,19 +37,19 @@
     }
 
     const rect = orbit.getBoundingClientRect();
-    const rx = rect.width * 0.43;
-    const ry = rect.height * 0.38;
+    const radius = Math.min(rect.width * 0.42, rect.height * 0.64);
+    const centerYOffset = radius + rect.height * 0.1 - rect.height / 2;
     const elapsed = (now - startTime) / 1000;
-    const spin = elapsed * 0.135;
+    const spin = elapsed * 0.115;
 
     cards.forEach((card, index) => {
       const baseAngle = (index / cards.length) * Math.PI * 2 - Math.PI / 2;
       const angle = baseAngle + spin;
-      const x = Math.cos(angle) * rx;
-      const y = Math.sin(angle) * ry;
+      const x = Math.cos(angle) * radius;
+      const y = centerYOffset + Math.sin(angle) * radius;
       const depth = (Math.sin(angle) + 1) / 2;
-      const scale = 0.78 + depth * 0.24;
-      const opacity = 0.42 + depth * 0.58;
+      const scale = 0.97 + depth * 0.04;
+      const opacity = 0.9 + depth * 0.1;
       const rotate = angle * 180 / Math.PI + 90;
 
       card.style.transform = `translate(-50%, -50%) translate3d(${x}px, ${y}px, 0) rotate(${rotate}deg) scale(${scale})`;

@@ -1468,40 +1468,45 @@ main footer {
    ABOUT PAGE — rotating reading orbit
    ============================================================ */
 .about-page {
-  background: var(--c-black);
-  color: var(--c-white);
+  background: var(--c-n-6);
+  color: var(--c-black);
 }
 
 .about-page main.page {
   background:
-    radial-gradient(circle at 22% 18%, rgba(255,133,45,.16), transparent 28rem),
-    radial-gradient(circle at 82% 22%, rgba(251,251,244,.11), transparent 34rem),
-    var(--c-black);
+    radial-gradient(circle at 50% 58%, rgba(255,133,45,.18), transparent 32rem),
+    radial-gradient(circle at 22% 18%, rgba(231,230,220,.75), transparent 30rem),
+    var(--c-n-6);
 }
 
 .about-page .page-bg {
-  background:
-    linear-gradient(180deg, rgba(2,2,2,.35), rgba(2,2,2,.82)),
-    var(--c-black);
+  background: var(--c-n-6);
 }
 
 .about-page main section:not(.s-hero):not(.s-testimonials):not(.s-faq) {
   background: transparent;
 }
 
-.about-page .nav-pill {
-  color: var(--c-white);
-  background: rgba(251,251,244,.08);
-}
-
 .s-about-reading {
   position: relative;
   min-height: 100vh;
-  padding: 8.5rem var(--gutter) 5.5rem;
+  padding: 8.5rem var(--gutter) 0;
   overflow: hidden;
   display: grid;
   align-items: center;
   isolation: isolate;
+}
+
+.s-about-reading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 80;
+  height: 43%;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(244,244,232,0), rgba(244,244,232,.82) 52%, var(--c-n-6) 100%);
 }
 
 .about-reading-glow {
@@ -1510,22 +1515,21 @@ main footer {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 45%, rgba(255,133,45,.18), transparent 22rem),
-    radial-gradient(circle at 46% 62%, rgba(231,230,220,.12), transparent 30rem),
-    linear-gradient(180deg, rgba(2,2,2,0) 0%, rgba(2,2,2,.9) 100%);
+    radial-gradient(circle at 50% 48%, rgba(255,133,45,.22), transparent 28rem),
+    radial-gradient(circle at 50% 74%, rgba(2,2,2,.07), transparent 40rem);
 }
 
 .reading-orbit {
   position: relative;
   width: min(100%, 118rem);
-  height: clamp(43rem, 74vh, 64rem);
+  height: clamp(46rem, 79vh, 66rem);
   margin: 0 auto;
 }
 
 .reading-center {
   position: absolute;
   left: 50%;
-  top: 55%;
+  top: 62%;
   z-index: 120;
   width: min(58rem, 64vw);
   transform: translate(-50%, -50%);
@@ -1534,7 +1538,7 @@ main footer {
 
 .about-eyebrow {
   margin-bottom: 1.25rem;
-  color: rgba(251,251,244,.45);
+  color: rgba(2,2,2,.42);
   font-size: .72rem;
   letter-spacing: .18em;
   text-transform: uppercase;
@@ -1546,13 +1550,13 @@ main footer {
   font-weight: 800;
   letter-spacing: -.08em;
   line-height: .95;
-  color: var(--c-white);
+  color: var(--c-black);
 }
 
 .reading-center p:not(.about-eyebrow) {
   width: min(40rem, 100%);
   margin: 1.6rem auto 0;
-  color: rgba(251,251,244,.58);
+  color: rgba(2,2,2,.58);
   font-family: var(--f-cjk);
   font-size: clamp(1.05rem, 1.45vw, 1.45rem);
   line-height: 1.7;
@@ -1588,13 +1592,15 @@ main footer {
   position: absolute;
   inset: 0;
   z-index: 20;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 58%, rgba(0,0,0,.72) 71%, rgba(0,0,0,.18) 84%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 58%, rgba(0,0,0,.72) 71%, rgba(0,0,0,.18) 84%, transparent 100%);
 }
 
 .book-orbit-card {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: clamp(8.8rem, 10.5vw, 13.2rem);
+  width: clamp(12rem, 14vw, 17rem);
   aspect-ratio: 3 / 4;
   will-change: transform, opacity;
   transform: translate(-50%, -50%);
@@ -1610,7 +1616,7 @@ main footer {
   border-radius: 1.4rem;
   padding: 1.15rem;
   border: 1px solid rgba(251,251,244,.16);
-  box-shadow: 0 2rem 5rem rgba(0,0,0,.28);
+  box-shadow: 0 2.4rem 5.5rem rgba(2,2,2,.22);
   color: var(--c-white);
 }
 
@@ -1672,6 +1678,7 @@ main footer {
 
 .about-reading-notes {
   padding: 4rem var(--gutter) 8rem;
+  background: var(--c-n-6) !important;
 }
 
 .about-notes-heading {
@@ -1685,7 +1692,7 @@ main footer {
   font-weight: 800;
   letter-spacing: -.075em;
   line-height: 1;
-  color: var(--c-white);
+  color: var(--c-black);
 }
 
 .about-note-grid {
@@ -1698,8 +1705,8 @@ main footer {
   min-height: 18rem;
   padding: 2rem;
   border-radius: 1.2rem;
-  background: rgba(251,251,244,.06);
-  border: 1px solid rgba(251,251,244,.09);
+  background: rgba(2,2,2,.045);
+  border: 1px solid rgba(2,2,2,.06);
   backdrop-filter: blur(1rem);
   -webkit-backdrop-filter: blur(1rem);
 }
@@ -1707,7 +1714,7 @@ main footer {
 .about-note-grid span {
   display: block;
   margin-bottom: 3rem;
-  color: rgba(251,251,244,.4);
+  color: rgba(2,2,2,.4);
   font-size: .82rem;
 }
 
@@ -1720,10 +1727,14 @@ main footer {
 }
 
 .about-note-grid p {
-  color: rgba(251,251,244,.58);
+  color: rgba(2,2,2,.58);
   font-family: var(--f-cjk);
   font-size: .98rem;
   line-height: 1.75;
+}
+
+.about-page .s-footer {
+  background: var(--c-black) !important;
 }
 
 /* ============================================================
