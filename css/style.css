@@ -1533,15 +1533,6 @@ main footer {
 }
 .footer-tz { color: inherit; margin-left: .2rem; }
 
-.footer-bird {
-  width: 3.5rem;
-  height: 3.5rem;
-  color: rgba(251,251,244,.5);
-  justify-self: center;
-  align-self: center;
-}
-.footer-bird svg { width: 100%; height: 100%; }
-
 .footer-wordmark {
   padding: 3rem 0 0;
   overflow: hidden;
@@ -1559,7 +1550,7 @@ main footer {
 }
 .footer-bottom {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 1.5rem 0 2rem;
   border-top: 1px solid rgba(251,251,244,.06);
@@ -2378,16 +2369,12 @@ main footer {
     gap: 2rem;
   }
 
-  .footer-bird {
-    justify-self: start;
-  }
-
   .footer-wordmark span {
     font-size: clamp(4rem, 19vw, 7rem);
   }
 
   .footer-bottom {
-    align-items: flex-start;
+    align-items: flex-end;
     flex-direction: column;
     gap: .6rem;
   }
