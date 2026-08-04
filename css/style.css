@@ -1283,12 +1283,13 @@ main footer {
   padding: 8rem 0;
 }
 .faq-heading {
+  width: max-content;
   font-family: var(--f-heading);
   font-size: 5.4rem;
   line-height: 1;
   font-weight: 400;
   color: var(--c-white);
-  margin: 0 0 5rem 72.5rem;
+  margin: 0 auto 5rem;
 }
 .faq-list {
   padding: 0 13.7rem;
@@ -1421,7 +1422,7 @@ main footer {
 @media (max-width: 1099px) {
   .s-faq { padding: 8rem 0; }
   .faq-heading {
-    margin: 0 0 4.2rem 3rem;
+    margin: 0 auto 4.2rem;
     font-size: 3.8rem;
   }
   .faq-list { padding: 0 2rem; }
