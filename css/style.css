@@ -1489,11 +1489,10 @@ main footer {
 
 .s-about-reading {
   position: relative;
-  min-height: 100vh;
-  padding: 6.5rem var(--gutter) 0;
+  height: 1000px;
+  min-height: 1000px;
+  padding: 0;
   overflow: hidden;
-  display: grid;
-  align-items: center;
   isolation: isolate;
 }
 
@@ -1504,9 +1503,9 @@ main footer {
   right: 0;
   bottom: 0;
   z-index: 80;
-  height: 43%;
+  height: 50%;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(244,244,232,0), rgba(244,244,232,.82) 52%, var(--c-n-6) 100%);
+  background: linear-gradient(180deg, rgba(244,244,232,0) 0%, var(--c-n-6) 100%);
 }
 
 .about-reading-glow {
@@ -1521,15 +1520,15 @@ main footer {
 
 .reading-orbit {
   position: relative;
-  width: min(100%, 118rem);
-  height: clamp(50rem, 84vh, 70rem);
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
 }
 
 .reading-center {
   position: absolute;
   left: 50%;
-  top: 62%;
+  top: 68%;
   z-index: 120;
   width: min(58rem, 64vw);
   transform: translate(-50%, -50%);
@@ -1590,20 +1589,57 @@ main footer {
 
 .reading-orbit-track {
   position: absolute;
-  inset: 0;
+  top: 60px;
+  left: 50%;
   z-index: 20;
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 58%, rgba(0,0,0,.72) 71%, rgba(0,0,0,.18) 84%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, #000 58%, rgba(0,0,0,.72) 71%, rgba(0,0,0,.18) 84%, transparent 100%);
+  width: min(1738px, calc(100vw - 32px));
+  aspect-ratio: 1738 / 1668;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.reading-orbit-wheel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 95.512%;
+  height: 96.763%;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  animation: reading-wheel-spin 60s linear infinite;
+  will-change: transform;
+}
+
+.book-orbit-spoke {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12.59%;
+  height: 100%;
+  transform: translate(-50%, -50%) rotate(var(--spoke-angle));
+  transform-origin: 50% 50%;
 }
 
 .book-orbit-card {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: clamp(12rem, 14vw, 17rem);
-  aspect-ratio: 3 / 4;
-  will-change: transform, opacity;
-  transform: translate(-50%, -50%);
+  left: 0;
+  width: 100%;
+  height: 15.552%;
+}
+
+.book-orbit-card-start {
+  top: 0;
+}
+
+.book-orbit-card-end {
+  bottom: 0;
+  transform: rotate(180deg);
+}
+
+@keyframes reading-wheel-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 .book-cover {
@@ -2114,6 +2150,7 @@ main footer {
   .s-about-reading {
     min-height: auto;
     padding: 8rem 2rem 5rem;
+    height: auto;
   }
 
   .reading-orbit {
@@ -2138,18 +2175,44 @@ main footer {
 
   .reading-orbit-track {
     position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    aspect-ratio: auto;
+    transform: none;
+  }
+
+  .reading-orbit-wheel {
+    position: relative;
+    left: auto;
+    top: auto;
     display: grid;
+    width: 100%;
+    height: auto;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
+    transform: none;
+    animation: none;
+  }
+
+  .book-orbit-spoke {
+    display: contents;
   }
 
   .book-orbit-card {
     position: relative;
     left: auto;
     top: auto;
+    bottom: auto;
     width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
     transform: none !important;
     opacity: 1 !important;
+  }
+
+  .is-orbit-duplicate {
+    display: none;
   }
 
   .about-reading-notes {
@@ -2239,7 +2302,7 @@ main footer {
     bottom: 18vh;
   }
 
-  .reading-orbit-track {
+  .reading-orbit-wheel {
     grid-template-columns: 1fr;
   }
 
