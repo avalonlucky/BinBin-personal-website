@@ -221,7 +221,7 @@ function initScrollAnimations() {
   _scrollAnimsDone = true;
 
   if (prefersReducedMotion.matches) {
-    gsap.set('.reveal-up, .ai-tools-heading, .work-col, .work-section-title, .testi-card, .values-heading, .value-card, .faq-item', {
+    gsap.set('.reveal-up, .ai-tools-heading, .work-col, .work-section-title, .testi-card, .values-heading, .value-card', {
       clearProps: 'all',
       opacity: 1,
     });
@@ -369,14 +369,6 @@ function initScrollAnimations() {
     {
       y: 0, opacity: 1, ease: 'expo.out', stagger: 0.08,
       scrollTrigger: { trigger: '.values-track', start: 'top 90%', end: 'top 58%', scrub: true },
-    });
-
-  // ── FAQ items (scrub-linked, staggered) ──
-  gsap.fromTo('.faq-item',
-    { y: 24, opacity: 0 },
-    {
-      y: 0, opacity: 1, ease: 'expo.out', stagger: 0.05,
-      scrollTrigger: { trigger: '.faq-list', start: 'top 88%', end: 'top 55%', scrub: true },
     });
 
   // ── Footer wordmark parallax ──
@@ -636,32 +628,122 @@ function animCounter(el, val) {
    FAQ ACCORDION
 ───────────────────────────────────────── */
 function initFAQ() {
-  document.querySelectorAll('.faq-q').forEach((btn, i) => {
-    const item = btn.closest('.faq-item');
-    const ans  = item.querySelector('.faq-a');
-    const answerId = `faq-answer-${i + 1}`;
-    ans.id = answerId;
-    btn.setAttribute('aria-controls', answerId);
-    btn.setAttribute('aria-expanded', 'false');
-    gsap.set(ans, { height: 0, overflow: 'hidden' });
+  const items = [...document.querySelectorAll('.faq-item')];
+  if (!items.length) return;
 
-    btn.addEventListener('click', () => {
-      const isOpen = item.classList.contains('open');
+  function splitAnswerLines(answer) {
+    const text = answer.dataset.text || answer.textContent.trim();
+    answer.dataset.text = text;
+    answer.replaceChildren();
 
-      // Close all
-      document.querySelectorAll('.faq-item.open').forEach(open => {
-        open.classList.remove('open');
-        open.querySelector('.faq-q')?.setAttribute('aria-expanded', 'false');
-        gsap.to(open.querySelector('.faq-a'), {
-          height: 0, duration: 0.4, ease: 'expo.inOut',
-        });
+    const words = text.split(/\s+/);
+    const measures = words.map((word, index) => {
+      const span = document.createElement('span');
+      span.textContent = word + (index === words.length - 1 ? '' : ' ');
+      span.style.whiteSpace = 'pre';
+      answer.appendChild(span);
+      return span;
+    });
+
+    const rows = [];
+    measures.forEach((word) => {
+      const top = word.offsetTop;
+      const row = rows.at(-1);
+      if (!row || Math.abs(row.top - top) > 1) rows.push({ top, words: [word.textContent] });
+      else row.words.push(word.textContent);
+    });
+
+    answer.replaceChildren();
+    return rows.map((row) => {
+      const line = document.createElement('span');
+      const inner = document.createElement('span');
+      line.className = 'faq-answer-line';
+      inner.className = 'faq-answer-line-inner';
+      inner.textContent = row.words.join('').trim();
+      line.appendChild(inner);
+      answer.appendChild(line);
+      return inner;
+    });
+  }
+
+  function refreshScroll() {
+    lenis.resize();
+    ScrollTrigger.refresh();
+  }
+
+  function addBorderFollow(item) {
+    if (!pointerFine.matches || prefersReducedMotion.matches) return;
+    const border = item.querySelector('.faq-border');
+    let current = 50;
+    let target = 50;
+    let active = false;
+    let frame = 0;
+
+    const render = () => {
+      current += (target - current) * 0.14;
+      border.style.setProperty('--faq-glow-x', `${current}%`);
+      if (active || Math.abs(target - current) > 0.05) frame = requestAnimationFrame(render);
+      else frame = 0;
+    };
+
+    item.addEventListener('pointerenter', () => {
+      active = true;
+      border.style.setProperty('--faq-glow-opacity', '1');
+      if (!frame) frame = requestAnimationFrame(render);
+    });
+    item.addEventListener('pointermove', (event) => {
+      const bounds = item.getBoundingClientRect();
+      target = ((event.clientX - bounds.left) / bounds.width) * 100;
+      if (!frame) frame = requestAnimationFrame(render);
+    });
+    item.addEventListener('pointerleave', () => {
+      active = false;
+      border.style.setProperty('--faq-glow-opacity', '0');
+    });
+  }
+
+  document.fonts.ready.then(() => {
+    const mobile = window.matchMedia('(max-width: 1099px)').matches;
+
+    items.forEach((item, index) => {
+      const inner = item.querySelector('.faq-item-inner');
+      const answerWrapper = item.querySelector('.faq-answer-wrapper');
+      const answer = item.querySelector('.faq-answer');
+      const toggle = item.querySelector('.faq-toggle');
+      const lines = splitAnswerLines(answer);
+      const collapsible = mobile ? answerWrapper : inner;
+      const closedHeight = mobile ? 0 : '7.5rem';
+      const answerId = `faq-answer-${index + 1}`;
+
+      answerWrapper.id = answerId;
+      toggle.setAttribute('aria-controls', answerId);
+      toggle.setAttribute('aria-expanded', 'false');
+      gsap.set(collapsible, { height: closedHeight, overflow: 'hidden' });
+      gsap.set(answer, { yPercent: 10 });
+      gsap.set(lines, { yPercent: 110 });
+
+      const accordionTimeline = gsap.timeline({
+        paused: true,
+        defaults: { overwrite: 'auto' },
+        onComplete: refreshScroll,
+        onReverseComplete: refreshScroll,
+      });
+      accordionTimeline.to(collapsible, { height: 'auto', duration: 0.8, ease: 'power3.out' }, 0);
+      accordionTimeline.to(answer, { yPercent: 0, duration: 1.4, ease: 'power3.out' }, 0.1);
+      accordionTimeline.to(lines, { yPercent: 0, duration: 1.4, ease: 'power3.out', stagger: 0.05 }, 0.1);
+
+      toggle.addEventListener('click', () => {
+        const opening = !item.classList.contains('open');
+        item.classList.toggle('open', opening);
+        toggle.setAttribute('aria-expanded', String(opening));
+        if (opening) {
+          accordionTimeline.invalidate().play();
+        } else {
+          accordionTimeline.reverse();
+        }
       });
 
-      if (!isOpen) {
-        item.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-        gsap.to(ans, { height: 'auto', duration: 0.5, ease: 'expo.out' });
-      }
+      addBorderFollow(item);
     });
   });
 }
