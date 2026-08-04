@@ -37,8 +37,10 @@
     }
 
     const rect = orbit.getBoundingClientRect();
-    const radius = Math.min(rect.width * 0.42, rect.height * 0.64);
-    const centerYOffset = radius + rect.height * 0.1 - rect.height / 2;
+    const cardHeight = cards[0]?.offsetHeight || 0;
+    const topClearance = cardHeight / 2 + Math.max(16, rect.height * 0.018);
+    const radius = Math.min(rect.width * 0.45, rect.height * 0.66);
+    const centerYOffset = radius + topClearance - rect.height / 2;
     const elapsed = (now - startTime) / 1000;
     const spin = elapsed * 0.115;
 

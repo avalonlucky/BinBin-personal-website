@@ -16,9 +16,9 @@
 - 正式发布分支：GitHub 远端 `main`
 - 当前正式站代码提交：以 GitHub 远端 `main` 最新提交为准
 - 正式站当前资源版本：
-  - `css/style.css?v=62`
+  - `css/style.css?v=63`
   - `js/main.js?v=39`
-  - `js/about.js?v=2`
+  - `js/about.js?v=3`
 
 ## 已完成的主要修改
 

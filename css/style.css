@@ -1490,7 +1490,7 @@ main footer {
 .s-about-reading {
   position: relative;
   min-height: 100vh;
-  padding: 8.5rem var(--gutter) 0;
+  padding: 6.5rem var(--gutter) 0;
   overflow: hidden;
   display: grid;
   align-items: center;
@@ -1522,7 +1522,7 @@ main footer {
 .reading-orbit {
   position: relative;
   width: min(100%, 118rem);
-  height: clamp(46rem, 79vh, 66rem);
+  height: clamp(50rem, 84vh, 70rem);
   margin: 0 auto;
 }
 
