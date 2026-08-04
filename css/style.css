@@ -1589,7 +1589,7 @@ main footer {
 
 .reading-orbit-track {
   position: absolute;
-  top: 60px;
+  top: 120px;
   left: 50%;
   z-index: 20;
   width: min(1738px, calc(100vw - 32px));
