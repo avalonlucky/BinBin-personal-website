@@ -1347,19 +1347,6 @@ main footer {
   max-width: 56rem;
 }
 
-.faq-prefooter-img {
-  width: 100%;
-  overflow: hidden;
-  max-height: 55vh;
-}
-.faq-prefooter-img img {
-  width: 100%;
-  display: block;
-  object-fit: cover;
-  max-height: 55vh;
-  opacity: .7;
-}
-
 /* ============================================================
    FOOTER — full dark, no cream wrapper
    ============================================================ */
@@ -1894,10 +1881,6 @@ main footer {
   .faq-q {
     align-items: flex-start;
     line-height: 1.25;
-  }
-
-  .faq-prefooter-img {
-    max-height: 36vh;
   }
 
   .s-footer {
