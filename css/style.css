@@ -1299,6 +1299,7 @@ main footer {
 .faq-item {
   position: relative;
   color: var(--c-white);
+  cursor: pointer;
 }
 .faq-item-inner {
   display: flex;

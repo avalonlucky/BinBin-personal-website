@@ -732,7 +732,7 @@ function initFAQ() {
       accordionTimeline.to(answer, { yPercent: 0, duration: 1.4, ease: 'power3.out' }, 0.1);
       accordionTimeline.to(lines, { yPercent: 0, duration: 1.4, ease: 'power3.out', stagger: 0.05 }, 0.1);
 
-      toggle.addEventListener('click', () => {
+      const toggleItem = () => {
         const opening = !item.classList.contains('open');
         item.classList.toggle('open', opening);
         toggle.setAttribute('aria-expanded', String(opening));
@@ -741,7 +741,9 @@ function initFAQ() {
         } else {
           accordionTimeline.reverse();
         }
-      });
+      };
+
+      item.addEventListener('click', toggleItem);
 
       addBorderFollow(item);
     });
