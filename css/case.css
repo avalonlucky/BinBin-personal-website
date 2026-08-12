@@ -1514,11 +1514,12 @@
   font-style: normal;
 }
 
-/* 上一个 / 下一个作品 */
+/* 上一个 / 下一个作品 —— 详情页不带页脚，这里就是页面结尾，
+   底部多留一些空间，收得不至于太突然 */
 .cs-nav {
   background: var(--cs-ink);
   border-top: 1px solid var(--cs-hair-dark);
-  padding: clamp(30px, 4vw, 50px) var(--gutter);
+  padding: clamp(30px, 4vw, 50px) var(--gutter) clamp(56px, 7vw, 96px);
 }
 .cs-nav-inner {
   max-width: var(--cs-max);
