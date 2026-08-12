@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=73">
-  <link rel="stylesheet" href="../css/case.css?v=3">
+  <link rel="stylesheet" href="../css/case.css?v=6">
 </head>
 <body class="case-page">
 <div class="site">
@@ -102,8 +102,8 @@
             <p class="cs-metric-l">产品单页<br>覆盖全产品线</p>
           </div>
           <div>
-            <div class="cs-metric-n"><span data-count="23">23</span><small>人</small></div>
-            <p class="cs-metric-l">跨部门评审小组<br>四大部门协同</p>
+            <div class="cs-metric-n"><span data-count="12">12</span><small>人</small></div>
+            <p class="cs-metric-l">制度列名评审成员<br>横跨四大部门</p>
           </div>
           <div>
             <div class="cs-metric-n"><span data-count="6">6</span><small>个月</small></div>
@@ -194,7 +194,9 @@
           <blockquote class="cs-quote-dark">我一直认为，<em>设计师介入得越早，能做的事就越多</em>。这个项目从定位框架的建立、文案策略的制定，到跨部门的协调推进——设计师的价值远不止于交付一张好看的图。</blockquote>
 
           <h3 class="cs-sub">跨部门协作工具的设计</h3>
-          <p class="cs-lede">技术部门不熟悉设计软件，无法在设计稿里直接协作。我把设计稿的版面约束翻译成一份 PPT 区块模板，让每个人在自己熟悉的工具里、在预设字数内填空。</p>
+          <p class="cs-lede">文案由不同的产品经理和解决方案部门撰写，但他们不知道该写多少字、版面能放多少内容，也没法把文字交到我的设计软件里。所以我把设计稿的版面<strong>等比例搬进 PPT</strong>，每个区块规定好字数区间——他们在自己熟悉的工具里把空填满，我就能直接进设计软件排版。</p>
+          <p class="cs-question" style="font-size:clamp(15px,1.6vw,19px)">PPT 中的文字大小和设计中是一样的，所以不能更改文字大小，按照目前的这个模板中的文字直接修改即可。</p>
+          <p class="cs-redacted">模板底部的这句话是整个协作方法的关键：字号即约束。文案一旦在模板内成立，排版就不会再返工。</p>
 
           <div class="cs-compare">
             <div class="cs-compare-col">
@@ -233,15 +235,20 @@
             </div>
           </div>
 
-          <div class="cs-docs">
-            <button class="cs-doc" type="button" data-doc-slot>
-              <div class="cs-doc-fig">
-                <div class="cs-doc-empty">
-                  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="5" width="28" height="24" rx="2"/><path d="M8 12h18M8 17h12M8 22h15"/></svg>
-                  待补：PPT 区块模板截图<br><code>assets/work/ankki/doc/ppt-template.png</code>
-                </div>
-              </div>
-              <div class="cs-doc-cap"><b>PPT 区块协作模板</b>各部门在预设字数区块内直接填写</div>
+          <div class="cs-figure-pair">
+            <button class="cs-figure" type="button"
+                    data-zoom="../assets/work/ankki/doc/ppt-front.webp"
+                    data-zoom-title="PPT 区块协作模板 · 正面"
+                    data-zoom-note="粉色块为待填区域，红字为我给填写人的批注">
+              <img src="../assets/work/ankki/doc/ppt-front.webp" alt="PPT 区块协作模板正面，粉色区块标出待填写区域" loading="lazy" decoding="async">
+              <span class="cs-figure-cap"><span><b>模板 · 正面</b>标题 / 副标题 / 核心描述 / 主视觉 / 卖点栏</span><i>点击放大</i></span>
+            </button>
+            <button class="cs-figure" type="button"
+                    data-zoom="../assets/work/ankki/doc/ppt-back.webp"
+                    data-zoom-title="PPT 区块协作模板 · 反面"
+                    data-zoom-note="核心功能逐条填写，客户实践与公司荣誉区标注了「有就写、没有留空」">
+              <img src="../assets/work/ankki/doc/ppt-back.webp" alt="PPT 区块协作模板反面，核心功能与客户实践区块" loading="lazy" decoding="async">
+              <span class="cs-figure-cap"><span><b>模板 · 反面</b>核心功能及优势 / 客户实践 / 公司荣誉</span><i>点击放大</i></span>
             </button>
           </div>
         </section>
@@ -250,7 +257,8 @@
         <section class="cs-section">
           <p class="cs-num">03 — 制度先行</p>
           <h2 class="cs-title">先建立<em>彩页评审小组</em>工作制度</h2>
-          <p class="cs-lede">13 款产品要在半年内全部落地，靠催稿是不可能的。我推动把它变成一套有组织、有节点、有考核的公司级制度——这是整个项目真正跑起来的原因。</p>
+          <p class="cs-lede">公司此前没有做过产品彩页这类体系化的营销物料，而它偏偏要横跨销售、技术服务、研发、设计四个部门，职责分配天然不均；加上评审流程不透明，谁在等谁说不清，执行周期被拖得很长。要把这么多部门同时聚到一件事上，靠沟通是不够的。</p>
+          <p class="cs-lede">所以我做的第一件事不是设计，是<strong>把制度写出来</strong>——把相关人员、各自职责、每个阶段的时限和审批路径全部明确写进文件，并加盖公司公章正式发布。有了这份文件，大家执行起来才有依据。</p>
 
           <div class="cs-inst">
             <div class="cs-inst-head">
@@ -266,7 +274,7 @@
               <span class="cs-member"><i>研</i>研发部</span>
               <span class="cs-member is-me"><i>设</i>李斌斌 · 设计</span>
             </div>
-            <p class="cs-card-text">共 23 名成员，横跨销售、技术服务、研发、设计四大部门。</p>
+            <p class="cs-card-text">制度中列名 12 位成员，横跨销售、技术服务、研发、设计四大部门；配套的协作群共 17 人。</p>
 
             <div class="cs-stages">
               <div class="cs-stage">
@@ -303,39 +311,41 @@
           </div>
 
           <div class="cs-docs">
-            <button class="cs-doc" type="button" data-doc-slot>
-              <div class="cs-doc-fig">
-                <div class="cs-doc-empty">
-                  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1"><rect x="6" y="3" width="22" height="28" rx="2"/><path d="M11 11h12M11 16h12M11 21h7"/><circle cx="23" cy="24" r="4"/></svg>
-                  待补：制度文件截图（正文建议打码）<br><code>assets/work/ankki/doc/policy.png</code>
-                </div>
-              </div>
-              <div class="cs-doc-cap"><b>制度文件</b>公司盖章发布，明确节点与考核</div>
+            <button class="cs-doc" type="button"
+                    data-zoom="../assets/work/ankki/doc/policy-notice.webp"
+                    data-zoom-title="彩页评审小组任命通知"
+                    data-zoom-note="2025 年 6 月 23 日公司盖章发布 · 成员名单已脱敏">
+              <div class="cs-doc-fig"><img src="../assets/work/ankki/doc/policy-notice.webp" alt="彩页评审小组任命通知，成员名单已脱敏" loading="lazy" decoding="async"></div>
+              <div class="cs-doc-cap"><b>一、任命通知</b>明确组长、副组长与四个部门的成员构成</div>
             </button>
-            <button class="cs-doc" type="button" data-doc-slot>
-              <div class="cs-doc-fig">
-                <div class="cs-doc-empty">
-                  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="6" width="28" height="18" rx="3"/><path d="M11 28l4-4M23 28l-4-4M9 13h16M9 18h10"/></svg>
-                  待补：钉钉群公告截图（姓名建议打码）<br><code>assets/work/ankki/doc/dingtalk.png</code>
-                </div>
-              </div>
-              <div class="cs-doc-cap"><b>群公告与会议召集</b>23 人协作群，进度每周同步</div>
+            <button class="cs-doc" type="button"
+                    data-zoom="../assets/work/ankki/doc/policy-rules.webp"
+                    data-zoom-title="彩页评审小组工作制度"
+                    data-zoom-note="三阶段流程、双轨制审批、进度公开与绩效绑定">
+              <div class="cs-doc-fig"><img src="../assets/work/ankki/doc/policy-rules.webp" alt="彩页评审小组工作制度，含三阶段流程与考核条款" loading="lazy" decoding="async"></div>
+              <div class="cs-doc-cap"><b>二、工作制度</b>三阶段流程、时限、双轨制审批与考核条款</div>
             </button>
-            <button class="cs-doc" type="button" data-doc-slot>
-              <div class="cs-doc-fig">
-                <div class="cs-doc-empty">
-                  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1"><rect x="5" y="4" width="24" height="26" rx="2"/><path d="M10 11h14M10 16h14M10 21h9"/></svg>
-                  待补：评审纪要文档截图<br><code>assets/work/ankki/doc/minutes.png</code>
-                </div>
-              </div>
-              <div class="cs-doc-cap"><b>评审纪要</b>逐条记录意见并明确责任人</div>
+            <button class="cs-doc" type="button"
+                    data-zoom="../assets/work/ankki/doc/wecom-meeting.webp"
+                    data-zoom-title="企业微信 · 评审会议召集"
+                    data-zoom-note="我作为发起人组织评审会议 · 群成员名单与会议号已脱敏">
+              <div class="cs-doc-fig"><img src="../assets/work/ankki/doc/wecom-meeting.webp" alt="企业微信群内的评审会议召集通知，成员名单已脱敏" loading="lazy" decoding="async"></div>
+              <div class="cs-doc-cap"><b>会议召集与群公告</b>由我发起并组织，进度表每周五更新</div>
+            </button>
+            <button class="cs-doc" type="button"
+                    data-zoom="../assets/work/ankki/doc/minutes.webp"
+                    data-zoom-title="10 月 21 日彩页评审纪要"
+                    data-zoom-note="划线项为已完成 · 参会人与责任人姓名已脱敏">
+              <div class="cs-doc-fig"><img src="../assets/work/ankki/doc/minutes.webp" alt="10月21日彩页评审纪要，参会人姓名已脱敏" loading="lazy" decoding="async"></div>
+              <div class="cs-doc-cap"><b>评审纪要</b>单款产品逐条记录 17 项修改意见，划线即已完成</div>
             </button>
           </div>
+          <p class="cs-redacted">以上文件截图中，同事姓名、内部会议号与文件链接已做脱敏处理。</p>
 
           <div class="cs-minutes">
             <div class="cs-minutes-head">
               10 月 21 日 彩页评审纪要（节选）
-              <span>参会 10 人 · 10 款产品同步推进</span>
+              <span>参会 11 人 · 10 款产品同步推进</span>
             </div>
             <div class="cs-minutes-body">
               <div class="cs-minutes-prod">
@@ -586,79 +596,17 @@
         <section class="cs-section">
           <p class="cs-num">09 — 里程碑与进度追踪</p>
           <h2 class="cs-title">制定 Deadline，追踪每一个<em>节点</em></h2>
-          <p class="cs-lede">13 款产品、23 名成员、四个部门并行推进。我维护一张月度进度表，每周更新状态、标出卡点，让「谁在等谁」永远是明确的。</p>
+          <p class="cs-lede">13 款产品、四个部门并行推进。我维护一张《月度营销资料设计情况》进度表，每周更新状态、标出卡点，并在周会上向公司上级汇报，让「谁在等谁」永远是明确的。</p>
 
-          <div class="cs-gantt-scroll">
-            <div class="cs-gantt">
-              <div class="cs-gantt-head">
-                <div>产品（节选 5 款）</div>
-                <div>7 月</div><div>8 月</div><div>9 月</div><div>10 月</div><div>11 月</div><div>12 月</div>
-              </div>
+          <button class="cs-figure" type="button"
+                  data-zoom="../assets/work/ankki/doc/gantt.webp"
+                  data-zoom-title="月度营销资料设计情况 · 进度表"
+                  data-zoom-note="14 项任务 × 5 个月 · 每周更新 · 负责人列与人事备注已脱敏">
+            <img src="../assets/work/ankki/doc/gantt.webp" alt="月度营销资料设计情况进度表，14 项任务按月推进，负责人列已脱敏" loading="lazy" decoding="async">
+            <span class="cs-figure-cap"><span><b>《月度营销资料设计情况》</b>14 项任务 × 5 个月，每周五更新状态，周会同步汇报</span><i>点击放大</i></span>
+          </button>
+          <p class="cs-redacted">负责人姓名与人事相关备注已脱敏；任务、月份与状态保持原样。</p>
 
-              <div class="cs-gantt-row">
-                <div class="cs-gantt-name">数据库审计系统</div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar done">设计完成</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar review">评审</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar pub">已发布</div></div>
-                <div class="cs-gantt-cell"></div><div class="cs-gantt-cell"></div><div class="cs-gantt-cell"></div>
-              </div>
-              <div class="cs-gantt-row">
-                <div class="cs-gantt-name">数据安全分类分级</div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar done">初审完成</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar wip">文案修改中</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar review">线下评审</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar done">设计 100%</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar pub">已发布</div></div>
-                <div class="cs-gantt-cell"></div>
-              </div>
-              <div class="cs-gantt-row">
-                <div class="cs-gantt-name">数据静态水印溯源</div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar done">初审完成</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar wip">文案修改</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar review">线下评审</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar done">设计 100%</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar pub">已发布</div></div>
-                <div class="cs-gantt-cell"></div>
-              </div>
-              <div class="cs-gantt-row">
-                <div class="cs-gantt-name">数据静态脱敏系统</div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar wip">文案初稿</div></div>
-                <div class="cs-gantt-cell"></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar review">评审 + 设计 50%</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar done">设计 100%</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar pub">已发布</div></div>
-                <div class="cs-gantt-cell"></div>
-              </div>
-              <div class="cs-gantt-row">
-                <div class="cs-gantt-name">应用 / API 动态水印</div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar done">初审完成</div></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar wip">文案修改中</div></div>
-                <div class="cs-gantt-cell"></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar review">文案评审</div></div>
-                <div class="cs-gantt-cell"></div>
-                <div class="cs-gantt-cell"><div class="cs-gantt-bar pub">提交发布</div></div>
-              </div>
-
-              <div class="cs-gantt-legend">
-                <span><i style="background:#3A3733"></i>设计完成</span>
-                <span><i style="background:#FF852D"></i>评审阶段</span>
-                <span><i style="background:#2D6B4A"></i>已发布</span>
-                <span><i style="background:#B07D2A"></i>进行中</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="cs-docs">
-            <button class="cs-doc" type="button" data-doc-slot>
-              <div class="cs-doc-fig">
-                <div class="cs-doc-empty">
-                  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="6" width="28" height="22" rx="2"/><path d="M8 13h8M12 18h12M8 23h6"/></svg>
-                  待补：月度营销资料设计情况甘特图原图<br><code>assets/work/ankki/doc/gantt.png</code>
-                </div>
-              </div>
-              <div class="cs-doc-cap"><b>原始进度表</b>每周更新，全员可见</div>
-            </button>
-          </div>
 
           <h3 class="cs-sub">关键里程碑</h3>
           <div class="cs-timeline">
@@ -668,7 +616,7 @@
               <div class="cs-ms-dot">01</div>
               <div class="cs-ms-body">
                 <h4>彩页评审小组成立 &amp; 制度发布</h4>
-                <p>2025 年 6 月 23 日 · 公司正式盖章 · 23 人跨部门小组组建完成，建立双轨制审批制度与绩效考核绑定</p>
+                <p>2025 年 6 月 23 日 · 公司正式盖章 · 12 人跨部门小组组建完成，建立三阶段流程、双轨制审批与绩效考核绑定</p>
               </div>
             </div>
             <div class="cs-ms is-done">
@@ -724,8 +672,8 @@
               <p class="cs-deliver-l">个成品版面<br>正反双面设计</p>
             </div>
             <div class="cs-deliver">
-              <div class="cs-deliver-n"><span data-count="23">23</span></div>
-              <p class="cs-deliver-l">人跨部门团队<br>协同完成</p>
+              <div class="cs-deliver-n"><span data-count="4">4</span></div>
+              <p class="cs-deliver-l">个部门协同<br>销售 / 技术服务 / 研发 / 设计</p>
             </div>
             <div class="cs-deliver">
               <div class="cs-deliver-n"><span data-count="3">3</span></div>
@@ -737,13 +685,36 @@
           <p class="cs-lede">点击任意一款可放大查看，并切换正反面。</p>
           <div class="cs-grid13" data-grid13></div>
 
-          <div class="cs-scene">
-            <div class="cs-scene-slot">
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="7" width="34" height="24" rx="2"/><path d="M3 26h34M14 31v4M26 31v4"/></svg>
-              待补：展会现场场景图<br><code>assets/work/ankki/scene/booth.jpg</code>
-            </div>
+          <h3 class="cs-sub">正式发布</h3>
+          <p class="cs-lede">定稿后通过 DING 通知、全员群、全员邮件三个渠道同步发布，并同步上线电子单页书架，销售在对客沟通中可以随时调用和转发。下面这封全员邮件一次发布了 6 款产品单页。</p>
+
+          <button class="cs-figure" type="button"
+                  data-zoom="../assets/work/ankki/doc/email-release.webp"
+                  data-zoom-title="全员邮件 · 正式发布公告"
+                  data-zoom-note="2025 年 11 月 6 日 · 一次发布 6 款产品单页 · 内部文件链接已脱敏">
+            <img src="../assets/work/ankki/doc/email-release.webp" alt="全员邮件正式发布公告，一次发布六款产品单页，内部链接已脱敏" loading="lazy" decoding="async">
+            <span class="cs-figure-cap"><span><b>全员邮件发布公告</b>由我撰写并发出，收件覆盖总经办、销售、技术服务、研发、运营、财务与 IT 七个部门</span><i>点击放大</i></span>
+          </button>
+          <p class="cs-redacted">邮件中的内部云盘链接与电子书架地址已脱敏。</p>
+
+          <h3 class="cs-sub">落地现场</h3>
+          <div class="cs-figure-pair is-media">
+            <button class="cs-figure" type="button"
+                    data-zoom="../assets/work/ankki/scene/booth-real.webp"
+                    data-zoom-title="第二十届深圳国际金融博览会 · 展台现场"
+                    data-zoom-note="全系列单页陈列于展台前台，供来访客户取阅">
+              <img src="../assets/work/ankki/scene/booth-real.webp" alt="深圳国际金融博览会展台现场，全系列产品单页陈列在前台供客户取阅" loading="lazy" decoding="async">
+              <span class="cs-figure-cap"><span><b>展会现场</b>第二十届深圳国际金融博览会</span><i>实拍</i></span>
+            </button>
+            <button class="cs-figure" type="button"
+                    data-zoom="../assets/work/ankki/scene/booth-render.webp"
+                    data-zoom-title="展位陈列效果图（AI 生成）"
+                    data-zoom-note="用于内部沟通陈列方案的示意图，非实拍">
+              <img src="../assets/work/ankki/scene/booth-render.webp" alt="展位陈列效果图，12 款产品单页在展台上整体陈列" loading="lazy" decoding="async">
+              <span class="cs-figure-cap"><span><b>陈列效果图</b>用于沟通整体陈列方案</span><i>AI 生成</i></span>
+            </button>
           </div>
-          <p class="cs-cap">全系列投入展会及销售拜访使用</p>
+          <p class="cs-cap">全系列成为公司展会与销售拜访的核心物料</p>
         </section>
 
       </div><!-- /.cs-body -->
@@ -860,6 +831,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="../js/case.js?v=2"></script>
+<script src="../js/case.js?v=3"></script>
 </body>
 </html>

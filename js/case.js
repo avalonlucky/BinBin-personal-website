@@ -384,16 +384,34 @@ function initNavTheme() {
 let lbIndex = 0;
 let lbSide = 'front';
 
+function showLightbox(lb) {
+  lb.classList.add('is-open');
+  lb.setAttribute('aria-hidden', 'false');
+  lenis.stop();
+  lb.querySelector('.cs-lb-close')?.focus();
+}
+
 function openLightbox(i) {
   const lb = document.querySelector('.cs-lb');
   if (!lb) return;
   lbIndex = i;
   lbSide = 'front';
+  lb.classList.remove('is-single');
   renderLightbox();
-  lb.classList.add('is-open');
-  lb.setAttribute('aria-hidden', 'false');
-  lenis.stop();
-  lb.querySelector('.cs-lb-close')?.focus();
+  showLightbox(lb);
+}
+
+/* 单图模式：文件凭证、场景图等与产品数组无关的图 */
+function openZoom(src, title, note) {
+  const lb = document.querySelector('.cs-lb');
+  if (!lb) return;
+  lb.classList.add('is-single');
+  const img = lb.querySelector('[data-lb-img]');
+  img.src = src;
+  img.alt = title || '';
+  lb.querySelector('[data-lb-name]').textContent = title || '';
+  lb.querySelector('[data-lb-meta]').textContent = note || '';
+  showLightbox(lb);
 }
 
 function closeLightbox() {
@@ -424,7 +442,10 @@ function initLightbox() {
 
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-lb]');
-    if (t) { e.preventDefault(); openLightbox(Number(t.dataset.lb)); }
+    if (t) { e.preventDefault(); openLightbox(Number(t.dataset.lb)); return; }
+
+    const z = e.target.closest('[data-zoom]');
+    if (z) { e.preventDefault(); openZoom(z.dataset.zoom, z.dataset.zoomTitle, z.dataset.zoomNote); }
   });
 
   lb.querySelector('.cs-lb-close').addEventListener('click', closeLightbox);
@@ -438,7 +459,8 @@ function initLightbox() {
 
   document.addEventListener('keydown', e => {
     if (!lb.classList.contains('is-open')) return;
-    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'Escape') { closeLightbox(); return; }
+    if (lb.classList.contains('is-single')) return;   // 单图模式没有前后与翻面
     if (e.key === 'ArrowLeft')  step(-1);
     if (e.key === 'ArrowRight') step(1);
     if (e.key === ' ') { e.preventDefault(); lbSide = lbSide === 'front' ? 'back' : 'front'; renderLightbox(); }
