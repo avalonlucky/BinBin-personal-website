@@ -17,10 +17,10 @@
 - 当前正式站代码提交：以 GitHub 远端 `main` 最新提交为准
 - 正式站当前资源版本：
   - `css/style.css?v=73`
-  - `css/case.css?v=19`
+  - `css/case.css?v=20`
   - `js/main.js?v=41`
   - `js/about.js?v=4`
-  - `js/case.js?v=10`
+  - `js/case.js?v=11`
 
 ## 作品详情页（Case Study）体系
 
@@ -79,13 +79,18 @@ assets/work/<slug>/   该作品的图片资源
    网格 / lightbox 全部由它驱动，改一处即可。
 9. 页尾行动区的联系方式、AI 提示词与目标站点都写在 `case.js` 顶部的
    `CONTACT` / `ASK_PROMPT` / `AI_TARGETS` 里，改一处即可。
-   只保留 **ChatGPT 与 DeepSeek**——实测这两家的 `?q=` 能自动填入，
-   豆包 / 混元 / Kimi 不识别该参数，点进去是空对话框，反而更差。
-   点击时仍会先把提示词写进剪贴板做兜底。
+   共四个入口：**ChatGPT / DeepSeek**（`?q=`）、**Gemini**（走 Google AI 模式
+   `search?udm=50&q=`，本身即 Gemini 驱动）、**Grok**（`x.com/i/grok?text=`，
+   参数名是 `text` 不是 `q`）。豆包 / 混元 / Kimi 不识别查询参数，
+   点进去是空对话框，反而更差，所以不放。点击时仍会先把提示词写进剪贴板做兜底。
    AI 图标必须用 `mask` + `currentColor` 上色——外部 SVG 里的 `currentColor`
    在 `<img>` 中不会继承父级颜色，会渲染成黑色。
    总结面板是**贴着按钮向上弹的 popover**，不是全屏弹窗；高度上限由 JS 按
    「按钮上沿到固定导航下沿」的可用空间算出，否则会钻到导航下面挡住关闭按钮。
+   面板必须以 `.cs-summary-anchor`（尺寸贴合按钮）为定位参照——若以整列为参照，
+   `calc(100% + 14px)` 会按整列高度计算，面板会飘到很高的位置。
+   行动区中间列用 `minmax(0, 560px)` 定宽，不能用 `auto`：`auto` 轨会随卡内
+   文字长度（邮箱 / 电话不一样长）改变宽度，切换时右侧「问问 AI」会左右跳动。
 10. 左侧页内目录无需手写：`initToc()` 会扫描 `.cs-body` 下的
    `.cs-section`，从各段 `.cs-num`（「01 — 项目背景」）解析序号与标题，
    缺 id 的自动补 `sec-01`。标题过长时在 section 上加 `data-toc="短标题"`
@@ -203,7 +208,8 @@ assets/work/<slug>/   该作品的图片资源
 - 页尾已整体改为浅底：删掉深色 `cs-closing`，B 端设计观那句引言移入「11 学习与总结」末尾。
 - 页尾行动区按 murynmukha.com 的形制重做：大圆角浅色 CTA 卡、药丸控件、
   分层柔和阴影 + 顶部内高光；主色沿用本站橙色（参考站的蓝配暖白纸底会显得外来）。
-- AI 入口收敛为 ChatGPT + DeepSeek 两家。
+- AI 入口共四个：ChatGPT / DeepSeek / Gemini / Grok（均能把提问带过去）。
+- 总结 popover 改为紧贴按钮弹出；行动区中间列定宽，切换邮箱/电话不再引起右侧跳动。
 - 详情页新增页尾行动区（参考 murynmukha.com）：左侧「项目总结」弹层供快速通读，
   中间联系卡支持邮箱↔电话切换与一键复制，右侧五个国内外模型入口可带提示词直接提问。
 - 收尾引言已按用户要求删掉第二句，只保留「B 端产品不应该用 B 端的方式设计」那一段。

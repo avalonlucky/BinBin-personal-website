@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=73">
-  <link rel="stylesheet" href="../css/case.css?v=19">
+  <link rel="stylesheet" href="../css/case.css?v=20">
 </head>
 <body class="case-page">
 <div class="site">
@@ -760,6 +760,9 @@
         <div class="cs-outro-inner">
 
           <div class="cs-outro-left">
+            <!-- 这层是面板的定位参照，必须紧贴按钮尺寸：
+                 若以整列为参照，calc(100% + 12px) 会按整列高度算，面板会飘很高 -->
+            <div class="cs-summary-anchor">
             <button class="cs-summary-btn" type="button" data-summary-open aria-expanded="false">项目总结</button>
 
             <!-- 总结面板：贴着按钮向上弹出，不做全屏弹窗 -->
@@ -772,6 +775,7 @@
                 <p>三个关键动作：把版面约束<strong>等比例翻译成 PPT 区块模板</strong>，让产品经理在预设字数内填空，从源头消除返工；建立<strong>「价值主张副标题」体系</strong>，为每款产品提炼一句比喻而非功能描述；用<strong>一套骨架 + 13 种主色</strong>，让展会现场不看字也能分辨产品线。</p>
                 <p>结果：<strong>26 个正反版面全部落地</strong>，约 20 人跨部门协同，三渠道同步发布并上线电子书架，成为公司展会与销售拜访的核心物料。AI 介入后，插画周期从 7–14 天压到 1–2 天。</p>
               </div>
+            </div>
             </div>
           </div>
 
@@ -845,6 +849,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="../js/case.js?v=10"></script>
+<script src="../js/case.js?v=11"></script>
 </body>
 </html>

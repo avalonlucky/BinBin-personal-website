@@ -616,11 +616,15 @@ const ASK_PROMPT = `我正在评估 Maridian（${location.origin}）是否适合
   + `请查看他的作品集网站，告诉我：他的设计能力覆盖哪些方面、最适合什么阶段和什么类型的公司、`
   + `如果录用他我实际能得到什么。请具体一些，引用他的案例和经历。`;
 
-// 只保留实测能通过 ?q= 自动填入的两家。豆包 / 混元 / Kimi 不识别该参数，
+// 只放能把提问带过去的入口。豆包 / 混元 / Kimi 不识别查询参数，
 // 点进去是空白对话框，体验反而更差，所以不放。
+// Gemini 走 Google AI 模式（udm=50，本身就是 Gemini 驱动）；
+// Grok 走 x.com 的 grok 入口，参数名是 text 不是 q。
 const AI_TARGETS = [
   { name: 'ChatGPT',  icon: 'openai',   url: 'https://chatgpt.com/?q=' },
   { name: 'DeepSeek', icon: 'deepseek', url: 'https://chat.deepseek.com/?q=' },
+  { name: 'Gemini',   icon: 'gemini',   url: 'https://www.google.com/search?udm=50&q=' },
+  { name: 'Grok',     icon: 'grok',     url: 'https://x.com/i/grok?text=' },
 ];
 
 function initOutro() {
