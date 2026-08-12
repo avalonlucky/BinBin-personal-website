@@ -1338,6 +1338,47 @@
 }
 
 /* ────────────────────────────────────────
+   学习与总结 — 大序号 + 完整阅读宽度的长文
+──────────────────────────────────────── */
+.cs-lessons {
+  list-style: none;
+  margin: 34px 0 0;
+  padding: 0;
+}
+.cs-lesson {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: clamp(14px, 2.6vw, 36px);
+  padding: clamp(26px, 3vw, 38px) 0;
+  border-top: 1px solid var(--cs-hair);
+}
+.cs-lesson:first-child { border-top: none; padding-top: 6px; }
+.cs-lesson-n {
+  font-family: var(--f-heading);
+  font-size: clamp(40px, 4.4vw, 62px);
+  line-height: 0.86;
+  color: rgba(255, 133, 45, 0.32);
+}
+.cs-lesson h3 {
+  font-family: var(--f-cjk);
+  font-size: clamp(18.5px, 2.1vw, 25px);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--cs-ink);
+  margin: 0 0 14px;
+  max-width: 26em;
+}
+.cs-lesson p {
+  font-family: var(--f-cjk);
+  font-size: clamp(16.5px, 1.3vw, 18.5px);
+  line-height: 1.9;
+  color: var(--cs-ink-2);
+  margin: 0;
+  max-width: 44em;
+}
+.cs-lesson strong { font-weight: 600; color: var(--cs-ink); }
+
+/* ────────────────────────────────────────
    可放大的整幅图（原始文件凭证）
 ──────────────────────────────────────── */
 .cs-figure {
@@ -1621,6 +1662,8 @@
   .cs-hub-core { position: static; transform: none; width: 100%; height: auto; padding: 18px; border-radius: 6px; margin-top: 12px; }
   .cs-grid13 { grid-template-columns: repeat(2, 1fr); }
   .cs-figure-pair { grid-template-columns: 1fr; }
+  .cs-lesson { grid-template-columns: 1fr; gap: 10px; }
+  .cs-lesson-n { font-size: 38px; }
   .cs-lb { padding: 60px 16px 24px; }
   .cs-lb-prev { left: 6px; }
   .cs-lb-next { right: 6px; }
