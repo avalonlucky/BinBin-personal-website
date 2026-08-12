@@ -402,6 +402,23 @@ function initToc() {
   nav.appendChild(ol);
   document.querySelector('.site').appendChild(nav);
 
+  // 标题常显 or 仅序号：按「目录右边缘」与「正文左边缘」的实际空隙判定。
+  // 正文容器宽度以后再调，这里会自动跟着变，不需要维护断点。
+  const fitToc = () => {
+    if (window.innerWidth < 1024) return;
+    nav.classList.add('is-wide');                       // 先按完整宽度量一次
+    const sec = sections[0];
+    const contentLeft = sec.getBoundingClientRect().left
+                      + parseFloat(getComputedStyle(sec).paddingLeft);
+    if (nav.getBoundingClientRect().right + 16 > contentLeft) {
+      nav.classList.remove('is-wide');
+    }
+  };
+  fitToc();
+  window.addEventListener('resize', fitToc);
+  window.addEventListener('load', fitToc);
+  document.fonts?.ready.then(fitToc);
+
   const setActive = idx => items.forEach(({ li, a }, i) => {
     const on = i === idx;
     li.classList.toggle('is-active', on);

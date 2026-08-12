@@ -15,7 +15,7 @@
   --cs-accent:    #FF852D;
   --cs-hair:      rgba(2, 2, 2, 0.11);
   --cs-hair-dark: rgba(251, 251, 244, 0.14);
-  --cs-max:       1180px;
+  --cs-max:       1240px;
 }
 
 /* 全局 img 规则是 cover + 100% 高，详情页的图需要按原比例显示 */
@@ -27,12 +27,12 @@
 /* ────────────────────────────────────────
    页内导航（左侧固定目录）
    由 case.js 依据正文板块自动生成，只在正文区间显示。
-   宽度受限于「1180 容器居中后剩下的左侧空白」，
-   所以窄屏退化为只显示序号、hover 再展开标题。
+   可用宽度取决于「正文容器居中后剩下的左侧空白」，
+   空间不够时退化为只显示序号、hover 再展开标题。
 ──────────────────────────────────────── */
 .cs-toc {
   position: fixed;
-  left: 28px;
+  left: 20px;
   top: 132px;               /* 顶部锚定：留出固定导航的高度 */
   z-index: 60;
   display: none;
@@ -81,13 +81,10 @@
 }
 .cs-toc li.is-active a i { color: var(--cs-accent); }
 
-/* 宽屏：标题常显 */
-@media (min-width: 1420px) {
-  .cs-toc { display: block; width: 138px; }
-}
-
-/* 中等宽度：只留序号，hover 展开成浮层 */
-@media (min-width: 1024px) and (max-width: 1419px) {
+/* ≥1024 才出现。默认只显示序号、hover 展开为浮层；
+   空间够时由 JS 加上 .is-wide 让标题常显——用实测空隙判定，
+   而不是写死断点，这样正文容器宽度再调也不用回来改这里。 */
+@media (min-width: 1024px) {
   .cs-toc {
     display: block;
     padding: 8px;
@@ -103,6 +100,11 @@
   }
   .cs-toc:hover a span,
   .cs-toc:focus-within a span { display: inline; white-space: nowrap; }
+
+  .cs-toc.is-wide { padding: 0; width: 122px; }
+  .cs-toc.is-wide a span { display: inline; }
+  .cs-toc.is-wide:hover,
+  .cs-toc.is-wide:focus-within { background: none; box-shadow: none; }
 }
 
 /* ────────────────────────────────────────
@@ -143,7 +145,6 @@
   font-size: clamp(17.5px, 1.3vw, 19px);
   line-height: 1.85;
   color: var(--cs-ink-2);
-  max-width: 46em;
   margin: 18px 0 0;
 }
 .cs-sub {
@@ -196,7 +197,6 @@
   letter-spacing: -0.02em;
   color: var(--cs-paper);
   margin: 0 0 22px;
-  max-width: 17em;
 }
 .cs-hero-title em {
   font-style: normal;
@@ -207,7 +207,6 @@
   font-size: clamp(17.5px, 1.4vw, 20px);
   line-height: 1.85;
   color: rgba(251,251,244,0.66);
-  max-width: 34em;
   margin: 0 0 30px;
 }
 .cs-tags { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -1374,7 +1373,6 @@
   line-height: 1.9;
   color: var(--cs-ink-2);
   margin: 0;
-  max-width: 44em;
 }
 .cs-lesson strong { font-weight: 600; color: var(--cs-ink); }
 
@@ -1502,7 +1500,7 @@
   border-left: 2px solid var(--cs-accent);
   padding-left: clamp(22px, 3vw, 38px);
   margin: 0;
-  max-width: 24em;
+  max-width: 30em;
 }
 .cs-closing blockquote em { font-style: normal; color: var(--cs-accent); }
 .cs-closing cite {
