@@ -37,7 +37,7 @@
 
 .cs-num {
   font-family: var(--f-body);
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--cs-ink-3);
@@ -45,7 +45,7 @@
 }
 .cs-title {
   font-family: var(--f-cjk);
-  font-size: clamp(26px, 3.4vw, 42px);
+  font-size: clamp(27.5px, 3.4vw, 44px);
   font-weight: 600;
   line-height: 1.28;
   letter-spacing: -0.01em;
@@ -59,7 +59,7 @@
 }
 .cs-lede {
   font-family: var(--f-cjk);
-  font-size: clamp(15px, 1.3vw, 17px);
+  font-size: clamp(17.5px, 1.3vw, 19px);
   line-height: 1.85;
   color: var(--cs-ink-2);
   max-width: 46em;
@@ -67,7 +67,7 @@
 }
 .cs-sub {
   font-family: var(--f-cjk);
-  font-size: 15px;
+  font-size: 17.5px;
   font-weight: 600;
   color: var(--cs-ink);
   margin: 40px 0 16px;
@@ -101,7 +101,7 @@
 }
 .cs-eyebrow {
   font-family: var(--f-body);
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--cs-accent);
@@ -109,7 +109,7 @@
 }
 .cs-hero-title {
   font-family: var(--f-cjk);
-  font-size: clamp(32px, 5.4vw, 68px);
+  font-size: clamp(33.5px, 5.4vw, 68px);
   font-weight: 600;
   line-height: 1.18;
   letter-spacing: -0.02em;
@@ -123,7 +123,7 @@
 }
 .cs-hero-sub {
   font-family: var(--f-cjk);
-  font-size: clamp(15px, 1.4vw, 18px);
+  font-size: clamp(17.5px, 1.4vw, 20px);
   line-height: 1.85;
   color: rgba(251,251,244,0.66);
   max-width: 34em;
@@ -132,7 +132,7 @@
 .cs-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .cs-tag {
   font-family: var(--f-cjk);
-  font-size: 12px;
+  font-size: 14px;
   padding: 6px 14px;
   border: 1px solid var(--cs-hair-dark);
   border-radius: 100px;
@@ -150,7 +150,7 @@
 }
 .cs-hero-meta dt {
   font-family: var(--f-body);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(251,251,244,0.38);
@@ -158,7 +158,7 @@
 }
 .cs-hero-meta dd {
   font-family: var(--f-cjk);
-  font-size: 14px;
+  font-size: 16px;
   color: rgba(251,251,244,0.82);
   margin: 0;
   line-height: 1.5;
@@ -218,7 +218,7 @@
   padding: 22px 10px 9px;
   background: linear-gradient(to top, rgba(2,2,2,0.9), transparent);
   font-family: var(--f-cjk);
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.35;
   color: #fff;
   opacity: 0;
@@ -231,7 +231,7 @@
   display: block;
   margin-top: 2px;
   color: rgba(255,255,255,0.62);
-  font-size: 10px;
+  font-size: 12px;
 }
 /* 产品主色细条，坐实“色彩编码” */
 .cs-sheet::after {
@@ -259,7 +259,7 @@
 }
 .cs-metric-n {
   font-family: var(--f-heading);
-  font-size: clamp(38px, 4.6vw, 62px);
+  font-size: clamp(40px, 4.6vw, 62px);
   line-height: 1;
   color: var(--cs-accent);
 }
@@ -272,7 +272,7 @@
 }
 .cs-metric-l {
   font-family: var(--f-cjk);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.55;
   color: rgba(251,251,244,0.55);
   margin-top: 9px;
@@ -289,7 +289,7 @@
 }
 .cs-stat-n {
   font-family: var(--f-heading);
-  font-size: clamp(34px, 4vw, 52px);
+  font-size: clamp(35.5px, 4vw, 52px);
   line-height: 1;
   color: var(--cs-ink);
 }
@@ -301,7 +301,7 @@
 }
 .cs-stat-l {
   font-family: var(--f-cjk);
-  font-size: 13px;
+  font-size: 15px;
   color: var(--cs-ink-3);
   margin-top: 8px;
   line-height: 1.55;
@@ -322,7 +322,7 @@
 .cs-card-label {
   display: block;
   font-family: var(--f-body);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--cs-accent);
@@ -330,7 +330,7 @@
 }
 .cs-card-text {
   font-family: var(--f-cjk);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
   color: var(--cs-ink-2);
   margin: 0;
@@ -342,7 +342,7 @@
   background: var(--cs-paper-2);
   border-radius: 0 6px 6px 0;
   font-family: var(--f-cjk);
-  font-size: clamp(17px, 2vw, 23px);
+  font-size: clamp(19px, 2vw, 26px);
   font-weight: 600;
   line-height: 1.6;
   color: var(--cs-ink);
@@ -355,7 +355,7 @@
   color: var(--cs-paper);
   border-radius: 6px;
   font-family: var(--f-cjk);
-  font-size: clamp(15px, 1.5vw, 18px);
+  font-size: clamp(17.5px, 1.5vw, 20px);
   line-height: 1.85;
   margin: 32px 0 0;
 }
@@ -395,14 +395,14 @@
 }
 .cs-hub-node h4 {
   font-family: var(--f-cjk);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   margin: 0 0 6px;
   color: var(--cs-ink);
 }
 .cs-hub-node p {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   line-height: 1.6;
   color: var(--cs-ink-3);
   margin: 0;
@@ -425,12 +425,12 @@
 }
 .cs-hub-core b {
   font-family: var(--f-cjk);
-  font-size: 15px;
+  font-size: 17.5px;
   font-weight: 600;
 }
 .cs-hub-core span {
   font-family: var(--f-body);
-  font-size: 9.5px;
+  font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--cs-accent);
@@ -452,7 +452,7 @@
 .cs-compare-head {
   padding: 14px 22px;
   font-family: var(--f-cjk);
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.06em;
   border-bottom: 1px solid var(--cs-hair);
   background: var(--cs-paper-2);
@@ -469,7 +469,7 @@
 .cs-compare-row:last-child { border-bottom: none; }
 .cs-compare-k {
   font-family: var(--f-body);
-  font-size: 10.5px;
+  font-size: 12.5px;
   letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--cs-ink-3);
@@ -477,7 +477,7 @@
 }
 .cs-compare-v {
   font-family: var(--f-cjk);
-  font-size: 13.5px;
+  font-size: 15.5px;
   line-height: 1.7;
   color: var(--cs-ink-2);
 }
@@ -490,7 +490,7 @@
   background: rgba(255,133,45,0.12);
   color: #B0521A;
   font-family: var(--f-cjk);
-  font-size: 11.5px;
+  font-size: 13.5px;
 }
 
 /* ────────────────────────────────────────
@@ -509,14 +509,14 @@
 }
 .cs-block-k {
   font-family: var(--f-cjk);
-  font-size: 10.5px;
+  font-size: 12.5px;
   letter-spacing: 0.06em;
   color: var(--cs-accent);
   margin-bottom: 4px;
 }
 .cs-block-v {
   font-family: var(--f-cjk);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.65;
   color: var(--cs-ink-2);
 }
@@ -541,7 +541,7 @@
 }
 .cs-inst-title {
   font-family: var(--f-cjk);
-  font-size: clamp(16px, 1.8vw, 20px);
+  font-size: clamp(18.5px, 1.8vw, 22.5px);
   font-weight: 600;
   margin: 0;
   color: var(--cs-ink);
@@ -552,7 +552,7 @@
   color: var(--cs-paper);
   border-radius: 100px;
   font-family: var(--f-cjk);
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 .cs-members { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
@@ -565,7 +565,7 @@
   border: 1px solid var(--cs-hair);
   border-radius: 100px;
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   color: var(--cs-ink-2);
 }
 .cs-member i {
@@ -574,7 +574,7 @@
   background: var(--cs-ink-3);
   color: #fff;
   font-style: normal;
-  font-size: 10.5px;
+  font-size: 12.5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -596,14 +596,14 @@
 .cs-stage + .cs-stage { border-left: 1px solid var(--cs-hair); }
 .cs-stage-n {
   font-family: var(--f-cjk);
-  font-size: 10.5px;
+  font-size: 12.5px;
   letter-spacing: 0.14em;
   color: var(--cs-accent);
   margin-bottom: 8px;
 }
 .cs-stage h4 {
   font-family: var(--f-cjk);
-  font-size: 13.5px;
+  font-size: 15.5px;
   font-weight: 600;
   margin: 0 0 10px;
   color: var(--cs-ink);
@@ -611,7 +611,7 @@
 .cs-stage ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
 .cs-stage li {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   line-height: 1.6;
   color: var(--cs-ink-3);
   padding-left: 13px;
@@ -631,7 +631,7 @@
   border-left: 2px solid var(--cs-accent);
   border-radius: 0 5px 5px 0;
   font-family: var(--f-cjk);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.75;
   color: var(--cs-ink-2);
   margin: 20px 0 0;
@@ -670,7 +670,7 @@
 .cs-doc-fig img { width: 100%; height: 100%; object-fit: cover; }
 .cs-doc-empty {
   font-family: var(--f-cjk);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--cs-ink-3);
   text-align: center;
   padding: 20px;
@@ -680,7 +680,7 @@
 .cs-doc-cap {
   padding: 13px 16px;
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   line-height: 1.6;
   color: var(--cs-ink-2);
   border-top: 1px solid var(--cs-hair);
@@ -704,13 +704,13 @@
   flex-wrap: wrap;
   gap: 8px;
   font-family: var(--f-cjk);
-  font-size: 13.5px;
+  font-size: 15.5px;
 }
-.cs-minutes-head span { color: rgba(251,251,244,0.5); font-size: 12px; }
+.cs-minutes-head span { color: rgba(251,251,244,0.5); font-size: 14px; }
 .cs-minutes-body { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
 .cs-minutes-prod h5 {
   font-family: var(--f-cjk);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--cs-accent);
   margin: 0 0 8px;
@@ -718,7 +718,7 @@
 .cs-minutes-prod ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 5px; }
 .cs-minutes-prod li {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   line-height: 1.65;
   color: var(--cs-ink-2);
   padding-left: 26px;
@@ -729,7 +729,7 @@
   position: absolute;
   left: 0;
   font-family: var(--f-body);
-  font-size: 10.5px;
+  font-size: 12.5px;
   color: var(--cs-ink-3);
 }
 
@@ -778,7 +778,7 @@
 .cs-flip-copy { position: relative; }
 .cs-flip-side-k {
   font-family: var(--f-body);
-  font-size: 10.5px;
+  font-size: 12.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--cs-accent);
@@ -786,7 +786,7 @@
 }
 .cs-flip-copy h4 {
   font-family: var(--f-cjk);
-  font-size: clamp(19px, 2.2vw, 26px);
+  font-size: clamp(21.5px, 2.2vw, 27.5px);
   font-weight: 600;
   line-height: 1.4;
   margin: 0 0 14px;
@@ -794,14 +794,14 @@
 }
 .cs-flip-copy p {
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 17px;
   line-height: 1.85;
   color: var(--cs-ink-2);
   margin: 0;
 }
 .cs-flip-hint {
   font-family: var(--f-cjk);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--cs-ink-3);
   margin-top: 22px;
   display: flex;
@@ -840,7 +840,7 @@
 .cs-layout-k {
   padding: 8px 12px;
   font-family: var(--f-cjk);
-  font-size: 11px;
+  font-size: 13px;
   background: var(--cs-paper-2);
   color: var(--cs-ink-3);
 }
@@ -861,7 +861,7 @@
   padding: 7px 16px;
   border-radius: 100px;
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   color: #fff;
   background: var(--pill-c, var(--cs-ink));
   white-space: nowrap;
@@ -888,7 +888,7 @@
 .cs-flow-step span {
   display: block;
   font-family: var(--f-body);
-  font-size: 9.5px;
+  font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--cs-accent);
@@ -896,7 +896,7 @@
 }
 .cs-flow-step b {
   font-family: var(--f-cjk);
-  font-size: 13.5px;
+  font-size: 15.5px;
   font-weight: 600;
   color: var(--cs-ink);
 }
@@ -906,14 +906,14 @@
 ──────────────────────────────────────── */
 .cs-palette {
   display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: clamp(24px, 3.5vw, 48px);
+  grid-template-columns: minmax(0, 1fr) 278px;
+  gap: clamp(24px, 3vw, 40px);
   margin: 34px 0 0;
   align-items: start;
 }
 .cs-swatches {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(176px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
   gap: 8px;
 }
 .cs-swatch {
@@ -944,14 +944,14 @@
 .cs-swatch-t b {
   display: block;
   font-family: var(--f-cjk);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.4;
   color: var(--cs-ink);
 }
 .cs-swatch-t small {
   font-family: var(--f-body);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.06em;
   color: var(--cs-ink-3);
 }
@@ -975,13 +975,13 @@
 .cs-palette-meta b {
   display: block;
   font-family: var(--f-cjk);
-  font-size: 13.5px;
+  font-size: 15.5px;
   font-weight: 600;
   color: var(--cs-ink);
 }
 .cs-palette-meta p {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   color: var(--cs-ink-2);
   margin: 4px 0 0;
   line-height: 1.6;
@@ -990,7 +990,7 @@
   display: block;
   margin-top: 8px;
   font-family: var(--f-body);
-  font-size: 10.5px;
+  font-size: 12.5px;
   letter-spacing: 0.1em;
   color: var(--cs-ink-3);
 }
@@ -1010,22 +1010,22 @@
 }
 .cs-spec h4 {
   font-family: var(--f-cjk);
-  font-size: 13.5px;
+  font-size: 15.5px;
   font-weight: 600;
   margin: 0 0 12px;
   color: var(--cs-ink);
 }
 .cs-spec p {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   line-height: 1.65;
   color: var(--cs-ink-3);
   margin: 12px 0 0;
 }
 .cs-spec-type div { line-height: 1.35; }
-.cs-spec-type .t1 { font-family: var(--f-cjk); font-size: 16px; font-weight: 600; color: var(--cs-ink); }
-.cs-spec-type .t2 { font-family: var(--f-cjk); font-size: 13px; color: var(--cs-ink-2); }
-.cs-spec-type .t3 { font-family: var(--f-cjk); font-size: 11px; color: var(--cs-ink-3); }
+.cs-spec-type .t1 { font-family: var(--f-cjk); font-size: 18.5px; font-weight: 600; color: var(--cs-ink); }
+.cs-spec-type .t2 { font-family: var(--f-cjk); font-size: 15px; color: var(--cs-ink-2); }
+.cs-spec-type .t3 { font-family: var(--f-cjk); font-size: 13px; color: var(--cs-ink-3); }
 .cs-spec-bars { display: flex; flex-direction: column; gap: 5px; }
 .cs-spec-bars i { height: 8px; border-radius: 2px; background: var(--cs-paper-3); display: block; }
 .cs-spec-bars i:first-child { background: rgba(255,133,45,0.6); }
@@ -1054,7 +1054,7 @@
 .cs-phase.is-dark .cs-phase-n { color: rgba(251,251,244,0.14); }
 .cs-phase-k {
   font-family: var(--f-body);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--cs-accent);
@@ -1062,7 +1062,7 @@
 }
 .cs-phase h4 {
   font-family: var(--f-cjk);
-  font-size: 15px;
+  font-size: 17.5px;
   font-weight: 600;
   margin: 0 0 10px;
   color: var(--cs-ink);
@@ -1070,7 +1070,7 @@
 .cs-phase.is-dark h4 { color: var(--cs-paper); }
 .cs-phase > p {
   font-family: var(--f-cjk);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.75;
   color: var(--cs-ink-2);
   margin: 0;
@@ -1079,7 +1079,7 @@
 .cs-phase ul { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .cs-phase li {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   padding: 7px 11px;
   background: var(--cs-paper-2);
   border-radius: 4px;
@@ -1109,7 +1109,7 @@
 }
 .cs-gantt-head > div {
   font-family: var(--f-body);
-  font-size: 10.5px;
+  font-size: 12.5px;
   letter-spacing: 0.1em;
   color: var(--cs-ink-3);
   text-align: center;
@@ -1119,7 +1119,7 @@
 .cs-gantt-row { align-items: center; margin-bottom: 5px; }
 .cs-gantt-row > .cs-gantt-name {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   color: var(--cs-ink-2);
   padding-right: 12px;
   white-space: nowrap;
@@ -1134,7 +1134,7 @@
   align-items: center;
   padding: 0 8px;
   font-family: var(--f-cjk);
-  font-size: 10.5px;
+  font-size: 12.5px;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
@@ -1150,7 +1150,7 @@
   align-items: center;
   gap: 6px;
   font-family: var(--f-cjk);
-  font-size: 11.5px;
+  font-size: 13.5px;
   color: var(--cs-ink-3);
 }
 .cs-gantt-legend i { width: 10px; height: 10px; border-radius: 2px; display: block; }
@@ -1188,7 +1188,7 @@
   align-items: center;
   justify-content: center;
   font-family: var(--f-body);
-  font-size: 10.5px;
+  font-size: 12.5px;
   flex-shrink: 0;
   z-index: 1;
 }
@@ -1196,14 +1196,14 @@
 .cs-ms-body { padding-top: 5px; }
 .cs-ms-body h4 {
   font-family: var(--f-cjk);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   margin: 0 0 5px;
   color: var(--cs-ink);
 }
 .cs-ms-body p {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   line-height: 1.7;
   color: var(--cs-ink-3);
   margin: 0;
@@ -1226,13 +1226,13 @@
 }
 .cs-deliver-n {
   font-family: var(--f-heading);
-  font-size: clamp(30px, 3.4vw, 42px);
+  font-size: clamp(31.5px, 3.4vw, 44px);
   line-height: 1;
   color: var(--cs-accent);
 }
 .cs-deliver-l {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   line-height: 1.65;
   color: var(--cs-ink-3);
   margin-top: 9px;
@@ -1279,7 +1279,7 @@
   padding: 13px 18px;
   border-top: 1px solid var(--cs-hair);
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   line-height: 1.6;
   color: var(--cs-ink-3);
   display: flex;
@@ -1292,7 +1292,7 @@
 .cs-figure-cap i {
   font-style: normal;
   font-family: var(--f-body);
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.06em;
   color: var(--cs-accent);
   white-space: nowrap;
@@ -1315,7 +1315,7 @@
 /* 脱敏说明 */
 .cs-redacted {
   font-family: var(--f-cjk);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--cs-ink-3);
   margin: 14px 0 0;
   padding-left: 13px;
@@ -1340,7 +1340,7 @@
   justify-content: center;
   gap: 10px;
   font-family: var(--f-cjk);
-  font-size: 13px;
+  font-size: 15px;
   color: var(--cs-ink-3);
   text-align: center;
   padding: 24px;
@@ -1349,7 +1349,7 @@
 .cs-scene-slot svg { opacity: 0.3; }
 .cs-scene-slot code {
   font-family: var(--f-body);
-  font-size: 11.5px;
+  font-size: 13.5px;
   background: var(--cs-paper-3);
   padding: 3px 8px;
   border-radius: 3px;
@@ -1357,7 +1357,7 @@
 }
 .cs-cap {
   font-family: var(--f-cjk);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--cs-ink-3);
   margin: 10px 0 0;
   text-align: center;
@@ -1373,7 +1373,7 @@
 .cs-closing-inner { max-width: var(--cs-max); margin: 0 auto; }
 .cs-closing blockquote {
   font-family: var(--f-cjk);
-  font-size: clamp(19px, 2.6vw, 33px);
+  font-size: clamp(21.5px, 2.6vw, 34.5px);
   font-weight: 600;
   line-height: 1.55;
   color: var(--cs-paper);
@@ -1388,7 +1388,7 @@
   margin-top: 22px;
   padding-left: clamp(22px, 3vw, 38px);
   font-family: var(--f-body);
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.1em;
   color: rgba(251,251,244,0.4);
   font-style: normal;
@@ -1411,7 +1411,7 @@
 }
 .cs-nav a {
   font-family: var(--f-cjk);
-  font-size: 14px;
+  font-size: 16px;
   color: rgba(251,251,244,0.62);
   display: inline-flex;
   align-items: center;
@@ -1456,7 +1456,7 @@
 }
 .cs-lb-meta {
   font-family: var(--f-cjk);
-  font-size: 13px;
+  font-size: 15px;
   color: rgba(251,251,244,0.72);
   text-align: center;
 }
@@ -1464,7 +1464,7 @@
   display: block;
   margin-top: 4px;
   font-family: var(--f-body);
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.1em;
   color: rgba(251,251,244,0.4);
 }
@@ -1487,7 +1487,7 @@
 .cs-lb-close { top: 18px; right: 18px; transform: none; position: absolute; }
 .cs-lb-flip {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14.5px;
   padding: 8px 18px;
   border: 1px solid var(--cs-hair-dark);
   border-radius: 100px;
