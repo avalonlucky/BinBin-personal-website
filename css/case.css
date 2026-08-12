@@ -1516,164 +1516,268 @@
 
 /* ────────────────────────────────────────
    页尾行动区：项目总结 / 联系方式 / 问问 AI
+   形制参考 murynmukha.com：浅底、大圆角、药丸控件、
+   分层柔和阴影 + 顶部内高光。主色沿用本站橙色，
+   参考站的蓝配暖白纸底会显得外来。
 ──────────────────────────────────────── */
 .cs-outro {
-  background: var(--cs-ink);
-  padding: clamp(40px, 5vw, 72px) var(--gutter) clamp(28px, 3vw, 40px);
+  background: var(--cs-paper);
+  border-top: 1px solid var(--cs-hair);
+  padding: clamp(44px, 5.5vw, 78px) var(--gutter) clamp(30px, 3.5vw, 46px);
 }
 .cs-outro-inner {
   max-width: var(--cs-max);
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  gap: clamp(24px, 4vw, 56px);
-  align-items: center;
+  gap: clamp(20px, 3vw, 44px);
+  align-items: stretch;
 }
-.cs-outro-left  { justify-self: start; }
-.cs-outro-right { justify-self: end; text-align: right; }
+.cs-outro-left {
+  position: relative;              /* 总结面板的定位参照 */
+  display: flex;
+  align-items: flex-end;
+}
+.cs-outro-center { justify-self: center; }
+.cs-outro-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
 
 /* ── 项目总结按钮 ── */
 .cs-summary-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 11px 20px;
-  border: 1px solid var(--cs-hair-dark);
+  height: 52px;
+  padding: 0 24px;
   border-radius: 100px;
+  background: rgba(2, 2, 2, 0.045);
+  box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.7);
   font-family: var(--f-cjk);
-  font-size: 14.5px;
-  color: rgba(251,251,244,0.78);
-  transition: border-color .3s var(--ease), color .3s var(--ease), background .3s var(--ease);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cs-ink-2);
+  white-space: nowrap;
+  transition: background .25s var(--ease), color .25s var(--ease);
 }
-.cs-summary-btn:hover {
-  color: var(--cs-paper);
-  border-color: rgba(251,251,244,0.4);
-  background: rgba(251,251,244,0.06);
+.cs-summary-btn:hover { background: rgba(2, 2, 2, 0.08); color: var(--cs-ink); }
+.cs-summary-btn[aria-expanded="true"] { background: rgba(2, 2, 2, 0.08); color: var(--cs-ink); }
+
+/* ── 总结面板：贴着按钮向上弹出 ── */
+.cs-summary {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 12px);
+  z-index: 90;
+  width: min(560px, calc(100vw - 44px));
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .35s var(--ease), transform .35s var(--ease);
 }
-.cs-summary-btn i {
-  width: 6px; height: 6px;
+.cs-summary.is-open { opacity: 1; transform: none; pointer-events: auto; }
+.cs-summary-card {
+  position: relative;
+  background: #181212;
+  border-radius: 16px;
+  padding: 22px 26px;
+  box-shadow: 0 10px 34px rgba(24, 18, 18, 0.22);
+  /* 上限由 JS 按「按钮上方到导航栏之间的可用空间」算出，
+     保证向上弹出时不会钻到固定导航下面把关闭按钮挡住 */
+  max-height: var(--cs-summary-max, 60vh);
+  overflow-y: auto;
+}
+.cs-summary-card p {
+  font-family: var(--f-cjk);
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(245, 240, 240, 0.82);
+  margin: 0 0 12px;
+  padding-right: 14px;
+}
+.cs-summary-card p:last-child { margin-bottom: 0; }
+.cs-summary-card strong { color: #F5F0F0; font-weight: 600; }
+.cs-summary-close {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 26px; height: 26px;
   border-radius: 50%;
-  background: var(--cs-accent);
-  flex-shrink: 0;
-  font-style: normal;
-}
-
-/* ── 联系方式卡 ── */
-.cs-contact {
-  background: rgba(251,251,244,0.05);
-  border: 1px solid rgba(251,251,244,0.13);
-  border-radius: 14px;
-  padding: clamp(20px, 2.4vw, 28px) clamp(22px, 2.6vw, 32px);
-  min-width: min(460px, 100%);
-}
-.cs-contact-lede {
-  font-family: var(--f-cjk);
-  font-size: clamp(15.5px, 1.4vw, 17.5px);
-  font-weight: 600;
-  color: var(--cs-paper);
-  margin: 0 0 16px;
-  text-align: center;
-}
-.cs-contact-switch {
-  display: inline-flex;
-  padding: 3px;
-  border-radius: 100px;
-  background: rgba(2,2,2,0.35);
-  margin: 0 auto 14px;
-  gap: 2px;
-}
-.cs-contact-switch button {
-  padding: 6px 18px;
-  border-radius: 100px;
-  font-family: var(--f-cjk);
-  font-size: 13.5px;
-  color: rgba(251,251,244,0.6);
-  transition: background .3s var(--ease), color .3s var(--ease);
-}
-.cs-contact-switch button.is-active {
-  background: var(--cs-paper);
-  color: var(--cs-ink);
-  font-weight: 600;
-}
-.cs-contact-switch-wrap { display: flex; justify-content: center; }
-
-.cs-contact-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(2,2,2,0.35);
-  border-radius: 100px;
-  padding: 5px 5px 5px 18px;
+  justify-content: center;
+  color: rgba(245, 240, 240, 0.5);
+  transition: color .2s var(--ease), background .2s var(--ease);
 }
-.cs-contact-value {
+.cs-summary-close:hover { color: #F5F0F0; background: rgba(245, 240, 240, 0.1); }
+
+/* ── 联系卡 ── */
+.cs-cta-card {
+  width: min(560px, 100%);
+  background: rgba(255, 133, 45, 0.07);
+  border-radius: clamp(26px, 3vw, 36px);
+  padding: clamp(24px, 2.6vw, 32px) clamp(24px, 3vw, 38px) clamp(28px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.6);
+}
+.cs-cta-title {
+  font-family: var(--f-cjk);
+  font-size: clamp(18px, 1.9vw, 23px);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--cs-ink);
+  text-align: center;
+  margin: 0;
+}
+.cs-cta-switch {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 100px;
+  background: rgba(2, 2, 2, 0.05);
+}
+.cs-cta-switch button {
+  padding: 7px 20px;
+  border-radius: 100px;
+  font-family: var(--f-cjk);
+  font-size: 14px;
+  color: var(--cs-ink-3);
+  transition: background .25s var(--ease), color .25s var(--ease), box-shadow .25s var(--ease);
+}
+.cs-cta-switch button.is-active {
+  background: #fff;
+  color: var(--cs-ink);
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(2,2,2,0.06), 0 0 0 1px rgba(2,2,2,0.03);
+}
+
+.cs-cta-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+.cs-cta-pill {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 1000px;
+  padding: 4px 4px 4px 22px;
+  box-shadow:
+    inset 0 1.5px 0 0 rgba(255, 255, 255, 1),
+    0 0 0 1px rgba(2, 2, 2, 0.04),
+    0 1px 3px rgba(2, 2, 2, 0.03);
+}
+.cs-cta-value {
   flex: 1 1 auto;
   min-width: 0;
   font-family: var(--f-body);
-  font-size: 15px;
-  letter-spacing: 0.01em;
-  color: var(--cs-paper);
+  font-size: 16px;
+  color: var(--cs-ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.cs-contact-copy {
-  width: 34px; height: 34px;
+.cs-icon-btn {
+  width: 44px; height: 44px;
   border-radius: 50%;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(251,251,244,0.6);
-  flex-shrink: 0;
-  transition: background .3s var(--ease), color .3s var(--ease);
+  color: var(--cs-ink-3);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1.5px 0 0 #fff,
+    0 0 0 1px rgba(2, 2, 2, 0.04),
+    0 1px 6px -2px rgba(2, 2, 2, 0.06);
+  transition: background .2s var(--ease), color .2s var(--ease), box-shadow .25s var(--ease);
 }
-.cs-contact-copy:hover { background: rgba(251,251,244,0.1); color: var(--cs-paper); }
-.cs-contact-cta {
+.cs-icon-btn:hover {
+  background: #fff;
+  color: var(--cs-ink);
+  box-shadow:
+    inset 0 1.5px 0 0 #fff,
+    0 0 0 1px rgba(2, 2, 2, 0.06),
+    0 4px 14px -6px rgba(2, 2, 2, 0.14);
+}
+.cs-icon-btn:active { box-shadow: 0 1px 0 rgba(2,2,2,0.05); }
+
+.cs-cta-btn {
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 9px 18px;
+  gap: 6px;
+  height: 52px;
+  padding: 0 18px 0 24px;
   border-radius: 100px;
   background: var(--cs-accent);
   color: #fff;
   font-family: var(--f-cjk);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   white-space: nowrap;
-  flex-shrink: 0;
-  transition: transform .3s var(--ease), filter .3s var(--ease);
+  box-shadow:
+    0 6px 16px -8px rgba(160, 70, 10, 0.3),
+    0 2px 6px -3px rgba(160, 70, 10, 0.2),
+    inset 0 -1px 0 1px rgba(120, 50, 0, 0.14);
+  transition: filter .2s var(--ease), transform .3s var(--ease);
 }
-.cs-contact-cta:hover { filter: brightness(1.08); transform: translateX(2px); }
+.cs-cta-btn:hover { filter: brightness(1.06); }
+.cs-cta-btn:hover svg { transform: translateX(3px); }
+.cs-cta-btn svg { transition: transform .35s var(--ease); }
+.cs-cta-btn:active { transform: scale(.985); box-shadow: none; }
 
 /* ── 问问 AI ── */
 .cs-ai-title {
   font-family: var(--f-cjk);
-  font-size: 14.5px;
-  color: rgba(251,251,244,0.66);
-  margin: 0 0 12px;
+  font-size: clamp(16px, 1.7vw, 21px);
+  color: var(--cs-ink-2);
+  text-align: center;
+  margin: 0;
 }
-.cs-ai-row {
+.cs-ai-pill {
   display: inline-flex;
-  gap: 8px;
-  padding: 5px;
-  border-radius: 100px;
-  background: rgba(251,251,244,0.06);
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 1000px;
+  background: rgba(2, 2, 2, 0.05);
+  box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.7);
 }
 .cs-ai-btn {
-  width: 38px; height: 38px;
+  width: 46px; height: 46px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(251,251,244,0.72);
-  transition: background .3s var(--ease), color .3s var(--ease), transform .3s var(--ease);
+  color: var(--cs-ink-2);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow:
+    inset 0 1.5px 0 0 #fff,
+    0 0 0 1px rgba(2, 2, 2, 0.03),
+    0 1px 6px -3px rgba(2, 2, 2, 0.06);
+  transition: background .2s var(--ease), color .2s var(--ease),
+              box-shadow .25s var(--ease), transform .3s var(--ease);
 }
 .cs-ai-btn:hover {
-  background: rgba(251,251,244,0.14);
-  color: var(--cs-paper);
+  background: #fff;
+  color: var(--cs-ink);
   transform: translateY(-2px);
+  box-shadow:
+    inset 0 1.5px 0 0 #fff,
+    0 0 0 1px rgba(2, 2, 2, 0.05),
+    0 8px 20px -8px rgba(2, 2, 2, 0.18);
 }
 .cs-ai-btn i {
-  width: 19px; height: 19px;
+  width: 21px; height: 21px;
   display: block;
   background-color: currentColor;
   -webkit-mask: var(--ai-icon) center / contain no-repeat;
@@ -1683,70 +1787,11 @@
   font-family: var(--f-cjk);
   font-size: 12.5px;
   line-height: 1.6;
-  color: rgba(251,251,244,0.38);
-  margin: 12px 0 0;
-  max-width: 22em;
-  margin-left: auto;
+  color: var(--cs-ink-3);
+  text-align: center;
+  margin: 0;
+  max-width: 20em;
 }
-
-/* ── 项目总结弹层 ── */
-.cs-summary {
-  position: fixed;
-  inset: 0;
-  z-index: 210;
-  background: rgba(2,2,2,0.72);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity .35s var(--ease), visibility .35s var(--ease);
-}
-.cs-summary.is-open { opacity: 1; visibility: visible; }
-.cs-summary-card {
-  position: relative;
-  max-width: 680px;
-  max-height: 84vh;
-  overflow-y: auto;
-  background: #16151300;
-  background-color: #171614;
-  border: 1px solid rgba(251,251,244,0.12);
-  border-radius: 14px;
-  padding: clamp(28px, 3.5vw, 44px);
-  transform: translateY(12px) scale(.98);
-  transition: transform .4s var(--ease);
-}
-.cs-summary.is-open .cs-summary-card { transform: none; }
-/* 中文不适合 uppercase + 大字距，会被拆成一个个孤立的字 */
-.cs-summary-eyebrow {
-  font-family: var(--f-cjk);
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  color: var(--cs-accent);
-  margin: 0 0 16px;
-}
-.cs-summary-card p {
-  font-family: var(--f-cjk);
-  font-size: clamp(15.5px, 1.3vw, 17px);
-  line-height: 1.9;
-  color: rgba(251,251,244,0.8);
-  margin: 0 0 16px;
-}
-.cs-summary-card p:last-of-type { margin-bottom: 0; }
-.cs-summary-card strong { color: var(--cs-paper); font-weight: 600; }
-.cs-summary-close {
-  position: absolute;
-  top: 14px; right: 14px;
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(251,251,244,0.55);
-  transition: background .3s var(--ease), color .3s var(--ease);
-}
-.cs-summary-close:hover { background: rgba(251,251,244,0.1); color: var(--cs-paper); }
 
 /* ── 复制提示 ── */
 .cs-toast {
@@ -1757,11 +1802,11 @@
   z-index: 220;
   padding: 11px 22px;
   border-radius: 100px;
-  background: var(--cs-paper);
-  color: var(--cs-ink);
+  background: var(--cs-ink);
+  color: var(--cs-paper);
   font-family: var(--f-cjk);
   font-size: 14px;
-  box-shadow: 0 12px 34px rgba(0,0,0,0.35);
+  box-shadow: 0 12px 34px rgba(0,0,0,0.25);
   opacity: 0;
   visibility: hidden;
   transition: opacity .3s var(--ease), transform .3s var(--ease), visibility .3s var(--ease);
@@ -1771,9 +1816,9 @@
 /* 上一个 / 下一个作品 —— 详情页不带页脚，这里就是页面结尾，
    底部多留一些空间，收得不至于太突然 */
 .cs-nav {
-  background: var(--cs-ink);
-  border-top: 1px solid var(--cs-hair-dark);
-  padding: clamp(30px, 4vw, 50px) var(--gutter) clamp(56px, 7vw, 96px);
+  background: var(--cs-paper);
+  border-top: 1px solid var(--cs-hair);
+  padding: clamp(26px, 3vw, 38px) var(--gutter) clamp(48px, 6vw, 78px);
 }
 .cs-nav-inner {
   max-width: var(--cs-max);
@@ -1787,7 +1832,7 @@
 .cs-nav a {
   font-family: var(--f-cjk);
   font-size: 16px;
-  color: rgba(251,251,244,0.62);
+  color: var(--cs-ink-3);
   display: inline-flex;
   align-items: center;
   gap: 9px;
@@ -1921,17 +1966,25 @@
   /* 页尾行动区：联系方式优先，其次问 AI，最后总结 */
   .cs-outro-inner {
     grid-template-columns: 1fr;
-    gap: 26px;
-    justify-items: stretch;
+    gap: 28px;
   }
-  .cs-outro-center { order: 1; }
-  .cs-outro-right  { order: 2; justify-self: start; text-align: left; }
-  .cs-outro-left   { order: 3; justify-self: start; }
-  .cs-contact { min-width: 0; }
-  .cs-ai-hint { margin-left: 0; }
-  .cs-contact-row { flex-wrap: wrap; border-radius: 14px; padding: 12px 14px; }
-  .cs-contact-value { flex: 1 1 100%; margin-bottom: 4px; }
-  .cs-contact-cta { flex: 1 1 auto; justify-content: center; }
+  .cs-outro-center { order: 1; justify-self: stretch; }
+  .cs-outro-right  { order: 2; }
+  .cs-outro-left   { order: 3; justify-content: center; }
+  .cs-cta-card { width: 100%; }
+  .cs-cta-br { display: none; }
+  .cs-cta-controls { flex-direction: column; align-items: stretch; }
+  .cs-cta-value { text-align: center; }
+  .cs-cta-btn { justify-content: center; padding: 0 22px; }
+  /* 面板改为居中定位，避免贴着最底部按钮向上弹时越出屏幕 */
+  .cs-summary {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translate(-50%, 10px);
+    width: calc(100vw - 32px);
+  }
+  .cs-summary.is-open { transform: translate(-50%, 0); }
   .cs-lb { padding: 60px 16px 24px; }
   .cs-lb-prev { left: 6px; }
   .cs-lb-next { right: 6px; }

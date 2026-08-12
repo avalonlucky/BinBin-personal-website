@@ -612,18 +612,15 @@ const CONTACT = {
 };
 
 // 提示词里带上本页链接，AI 才能真的去读作品
-const ASK_PROMPT = `我正在评估李斌斌（${location.origin}）是否适合我们的品牌设计 / 视觉设计岗位。`
+const ASK_PROMPT = `我正在评估 Maridian（${location.origin}）是否适合我们的品牌设计 / 视觉设计岗位。`
   + `请查看他的作品集网站，告诉我：他的设计能力覆盖哪些方面、最适合什么阶段和什么类型的公司、`
   + `如果录用他我实际能得到什么。请具体一些，引用他的案例和经历。`;
 
-// 目前只有 ChatGPT 的 ?q= 前填是稳定可用的，其余站点参数不一定被识别，
-// 所以统一先把提示词写进剪贴板，再打开对话页——无论前填是否生效都能用。
+// 只保留实测能通过 ?q= 自动填入的两家。豆包 / 混元 / Kimi 不识别该参数，
+// 点进去是空白对话框，体验反而更差，所以不放。
 const AI_TARGETS = [
-  { name: 'ChatGPT',   icon: 'openai',   url: 'https://chatgpt.com/?q=',              prefill: true  },
-  { name: '豆包',      icon: 'doubao',   url: 'https://www.doubao.com/chat/?q=',      prefill: false },
-  { name: '腾讯混元',  icon: 'hunyuan',  url: 'https://yuanbao.tencent.com/chat?q=',  prefill: false },
-  { name: 'DeepSeek',  icon: 'deepseek', url: 'https://chat.deepseek.com/?q=',        prefill: false },
-  { name: 'Kimi',      icon: 'kimi',     url: 'https://www.kimi.com/?q=',             prefill: false },
+  { name: 'ChatGPT',  icon: 'openai',   url: 'https://chatgpt.com/?q=' },
+  { name: 'DeepSeek', icon: 'deepseek', url: 'https://chat.deepseek.com/?q=' },
 ];
 
 function initOutro() {
@@ -664,28 +661,49 @@ function initOutro() {
       a.href = t.url + encodeURIComponent(ASK_PROMPT);
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
-      a.title = `用 ${t.name} 了解李斌斌`;
-      a.setAttribute('aria-label', `用 ${t.name} 了解李斌斌`);
+      a.title = `用 ${t.name} 了解 Maridian`;
+      a.setAttribute('aria-label', `用 ${t.name} 了解 Maridian`);
       a.innerHTML = `<i aria-hidden="true" style="--ai-icon:url(../assets/ai/${t.icon}.svg)"></i>`;
       a.addEventListener('click', async () => {
         const ok = await copyText(ASK_PROMPT);
-        if (ok) toast(t.prefill ? '提示词已带上，也已复制到剪贴板' : '提示词已复制，粘贴即可提问');
+        if (ok) toast('提示词已带上，也已复制到剪贴板');
       });
       row.appendChild(a);
     });
   }
 
-  /* ── 项目总结弹层 ── */
-  const modal = document.querySelector('.cs-summary');
-  if (!modal) return;
-  const open  = () => { modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false'); lenis.stop(); modal.querySelector('.cs-summary-close')?.focus(); };
-  const close = () => { modal.classList.remove('is-open'); modal.setAttribute('aria-hidden', 'true'); lenis.start(); };
+  /* ── 项目总结：贴着按钮的 popover，不锁滚动、不做全屏遮罩 ── */
+  const panel = outro.querySelector('[data-summary-panel]');
+  const trigger = outro.querySelector('[data-summary-open]');
+  if (!panel || !trigger) return;
 
-  outro.querySelector('[data-summary-open]')?.addEventListener('click', open);
-  modal.querySelector('.cs-summary-close')?.addEventListener('click', close);
-  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  let panelOpen = false;
+  const setPanel = on => {
+    panelOpen = on;
+    trigger.setAttribute('aria-expanded', String(on));
+    if (on) {
+      panel.hidden = false;
+      // 面板向上展开，高度上限 = 按钮上沿到固定导航下沿之间的空间
+      const navBottom = document.getElementById('nav')?.getBoundingClientRect().bottom || 0;
+      const room = trigger.getBoundingClientRect().top - navBottom - 28;
+      panel.style.setProperty('--cs-summary-max', `${Math.max(220, Math.round(room))}px`);
+      requestAnimationFrame(() => panel.classList.add('is-open'));
+    } else {
+      panel.classList.remove('is-open');
+      // 等淡出结束再移出无障碍树
+      setTimeout(() => { if (!panelOpen) panel.hidden = true; }, 350);
+    }
+  };
+
+  trigger.addEventListener('click', () => setPanel(!panelOpen));
+  panel.querySelector('.cs-summary-close')?.addEventListener('click', () => { setPanel(false); trigger.focus(); });
+
+  document.addEventListener('click', e => {
+    if (!panelOpen) return;
+    if (!panel.contains(e.target) && !trigger.contains(e.target)) setPanel(false);
+  });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+    if (e.key === 'Escape' && panelOpen) { setPanel(false); trigger.focus(); }
   });
 }
 

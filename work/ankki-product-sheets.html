@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=73">
-  <link rel="stylesheet" href="../css/case.css?v=17">
+  <link rel="stylesheet" href="../css/case.css?v=19">
 </head>
 <body class="case-page">
 <div class="site">
@@ -272,7 +272,7 @@
               <span class="cs-member"><i>销</i>销售代表</span>
               <span class="cs-member"><i>技</i>技术服务部</span>
               <span class="cs-member"><i>研</i>研发部</span>
-              <span class="cs-member is-me"><i>设</i>李斌斌 · 设计</span>
+              <span class="cs-member is-me"><i>设</i>我 · 设计</span>
             </div>
             <p class="cs-card-text">制度中列名 12 位核心成员。随着 13 款产品逐款推进，每款都由对应的产品负责人撰写文案、销售代表参与评审，实际参与的成员累计约 20 人，横跨销售、技术服务、研发、设计四大部门。</p>
 
@@ -747,20 +747,11 @@
               </div>
             </li>
           </ol>
+
+          <blockquote class="cs-quote-dark">B 端产品不应该用 B 端的方式设计。当所有竞品都在堆功能参数的时候，<em>一个清晰的比喻、一张好看的插画、一套有逻辑的信息架构，反而是最大的差异化优势。</em></blockquote>
         </section>
 
       </div><!-- /.cs-body -->
-
-      <!-- ══════════════════════════════════════
-           CLOSING
-      ══════════════════════════════════════ -->
-      <section class="cs-closing">
-        <div class="cs-closing-inner">
-          <blockquote>
-            B 端产品不应该用 B 端的方式设计。当所有竞品都在堆功能参数的时候，一个清晰的比喻、一张好看的插画、一套有逻辑的信息架构，反而是最大的差异化优势。
-          </blockquote>
-        </div>
-      </section>
 
       <!-- ══════════════════════════════════════
            页尾行动区：项目总结 / 联系方式 / 问问 AI
@@ -768,35 +759,48 @@
       <div class="cs-outro">
         <div class="cs-outro-inner">
 
-          <div class="cs-outro-col cs-outro-left">
-            <button class="cs-summary-btn" type="button" data-summary-open>
-              <i aria-hidden="true"></i>项目总结
-            </button>
-          </div>
+          <div class="cs-outro-left">
+            <button class="cs-summary-btn" type="button" data-summary-open aria-expanded="false">项目总结</button>
 
-          <div class="cs-outro-col cs-outro-center">
-            <div class="cs-contact">
-              <p class="cs-contact-lede">说说你在做的项目，看看我们合不合适。</p>
-              <div class="cs-contact-switch-wrap">
-                <div class="cs-contact-switch" role="group" aria-label="联系方式">
-                  <button type="button" data-contact="email" class="is-active">邮箱</button>
-                  <button type="button" data-contact="phone">电话</button>
-                </div>
-              </div>
-              <div class="cs-contact-row">
-                <span class="cs-contact-value" data-contact-value>bh141425@gmail.com</span>
-                <button class="cs-contact-copy" type="button" data-contact-copy aria-label="复制">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/><path d="M10.5 5.5v-2a1.5 1.5 0 0 0-1.5-1.5H4a1.5 1.5 0 0 0-1.5 1.5V9a1.5 1.5 0 0 0 1.5 1.5h2"/></svg>
+            <!-- 总结面板：贴着按钮向上弹出，不做全屏弹窗 -->
+            <div class="cs-summary" data-summary-panel hidden>
+              <div class="cs-summary-card">
+                <button class="cs-summary-close" type="button" aria-label="关闭">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2l12 12M14 2L2 14"/></svg>
                 </button>
-                <a class="cs-contact-cta" data-contact-cta href="mailto:bh141425@gmail.com"><span>写邮件</span><span aria-hidden="true">→</span></a>
+                <p>Maridian 在昂楷科技主导了 <strong>13 款数据安全产品的单页体系</strong>。项目由他发起——先用展会一手调研提出问题，再推动公司成立跨部门评审小组、出台盖章发布的制度，然后从文案框架做到视觉落地。</p>
+                <p>三个关键动作：把版面约束<strong>等比例翻译成 PPT 区块模板</strong>，让产品经理在预设字数内填空，从源头消除返工；建立<strong>「价值主张副标题」体系</strong>，为每款产品提炼一句比喻而非功能描述；用<strong>一套骨架 + 13 种主色</strong>，让展会现场不看字也能分辨产品线。</p>
+                <p>结果：<strong>26 个正反版面全部落地</strong>，约 20 人跨部门协同，三渠道同步发布并上线电子书架，成为公司展会与销售拜访的核心物料。AI 介入后，插画周期从 7–14 天压到 1–2 天。</p>
               </div>
             </div>
           </div>
 
-          <div class="cs-outro-col cs-outro-right">
-            <p class="cs-ai-title">问问 AI 关于李斌斌</p>
-            <div class="cs-ai-row" data-ai-row></div>
-            <p class="cs-ai-hint">点击会打开对话页并带上一段提问，提示词同时复制到剪贴板，粘贴即可。</p>
+          <div class="cs-outro-center">
+            <div class="cs-cta-card">
+              <p class="cs-cta-title">说说你在做的项目，<br class="cs-cta-br">看看我们合不合适。</p>
+              <div class="cs-cta-switch">
+                <button type="button" data-contact="email" class="is-active">邮箱</button>
+                <button type="button" data-contact="phone">电话</button>
+              </div>
+              <div class="cs-cta-controls">
+                <div class="cs-cta-pill">
+                  <span class="cs-cta-value" data-contact-value>bh141425@gmail.com</span>
+                  <button class="cs-icon-btn" type="button" data-contact-copy aria-label="复制">
+                    <svg width="19" height="19" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="5.6" y="5.6" width="8" height="8" rx="1.6"/><path d="M10.4 5.6v-2A1.6 1.6 0 0 0 8.8 2H4a1.6 1.6 0 0 0-1.6 1.6v4.8A1.6 1.6 0 0 0 4 10h1.6"/></svg>
+                  </button>
+                </div>
+                <a class="cs-cta-btn" data-contact-cta href="mailto:bh141425@gmail.com">
+                  <span>写邮件</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-outro-right">
+            <p class="cs-ai-title">问问 AI 关于 Maridian</p>
+            <div class="cs-ai-pill" data-ai-row></div>
+            <p class="cs-ai-hint">点击会打开对话页并自动带上提问，提示词同时复制到剪贴板。</p>
           </div>
 
         </div>
@@ -809,7 +813,6 @@
           <a href="#" aria-disabled="true">下一个案例 →</a>
         </div>
       </div>
-
 
     </div><!-- /.page-scroll -->
   </main>
@@ -839,24 +842,9 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     项目总结弹层
-══════════════════════════════════════ -->
-<div class="cs-summary" aria-hidden="true" role="dialog" aria-modal="true" aria-label="项目总结">
-  <div class="cs-summary-card">
-    <button class="cs-summary-close" type="button" aria-label="关闭">
-      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 2l12 12M14 2L2 14"/></svg>
-    </button>
-    <p class="cs-summary-eyebrow">30 秒读完这个项目</p>
-    <p>李斌斌在昂楷科技主导了 <strong>13 款数据安全产品的单页体系</strong>。项目由他发起——先做展会一手竞品调研提出问题，再推动公司成立跨部门评审小组、出台盖章发布的工作制度，然后从文案框架一路做到视觉落地。</p>
-    <p>方法上有三个关键动作：把设计稿的版面约束<strong>等比例翻译成 PPT 区块模板</strong>，让不熟悉设计软件的产品经理在预设字数内填空，从源头消除返工；建立<strong>「价值主张副标题」体系</strong>，为每款产品提炼一句有画面感的比喻而非功能描述；用<strong>一套骨架 + 13 种主色</strong>的设计系统，让展会现场不看字也能分辨产品线。</p>
-    <p>结果：13 款产品、<strong>26 个正反版面全部落地</strong>，约 20 人跨部门协同，通过 DING 通知、全员群、全员邮件三渠道发布并同步上线电子书架，成为公司展会与销售拜访的核心物料。AI 介入插画与文案环节，把插画周期从 7–14 天压到 1–2 天。</p>
-  </div>
-</div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="../js/case.js?v=8"></script>
+<script src="../js/case.js?v=10"></script>
 </body>
 </html>
