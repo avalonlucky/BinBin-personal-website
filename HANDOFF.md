@@ -1,6 +1,6 @@
 # Maridian Space 网站交接说明
 
-更新时间：2026-06-02
+更新时间：2026-08-12
 
 ## 项目信息
 
@@ -16,9 +16,76 @@
 - 正式发布分支：GitHub 远端 `main`
 - 当前正式站代码提交：以 GitHub 远端 `main` 最新提交为准
 - 正式站当前资源版本：
-  - `css/style.css?v=72`
+  - `css/style.css?v=73`
+  - `css/case.css?v=3`
   - `js/main.js?v=41`
   - `js/about.js?v=4`
+  - `js/case.js?v=2`
+
+## 作品详情页（Case Study）体系
+
+作品详情页不使用固定页面模板，而是用一套**板块积木**按项目重新排列。
+
+### 文件结构
+
+```
+work/<slug>.html      每个作品一个独立页面
+css/case.css          case-study 板块库，所有详情页共用
+js/case.js            详情页滚动架构与交互，所有详情页共用
+assets/work/<slug>/   该作品的图片资源
+```
+
+### 板块库（`css/case.css`，全部 `cs-` 前缀）
+
+| 板块 | 用途 |
+| --- | --- |
+| `cs-hero` + `cs-hero-meta` | 深色项目头，含 Client / Role / Timeline / Deliverable |
+| `cs-wall` + `cs-sheet` | 双轨反向滚动的作品墙，边缘 mask 渐隐 |
+| `cs-metrics` | 深色数字计数条 |
+| `cs-section` + `cs-num` / `cs-title` / `cs-lede` | 浅色正文段落 |
+| `cs-stats` / `cs-cards` / `cs-question` | 数字、三栏卡片、大提问 |
+| `cs-hub` | 多方汇聚图，SVG 曲线由 JS 按实际布局计算 |
+| `cs-compare` | 两栏对照（问题 vs 方案），`is-mine` 标出自己那栏 |
+| `cs-inst` / `cs-stages` / `cs-minutes` / `cs-docs` | 制度、流程阶段、会议纪要、文件凭证 |
+| `cs-flip` | 滚动驱动的正反面翻转 |
+| `cs-layouts` | 版式对比示意条 |
+| `cs-pills` | 副标题 / 标签胶囊，可按数据染色 |
+| `cs-flow` / `cs-specs` / `cs-phases` | 流程步骤、规范卡、三阶段 |
+| `cs-palette` + `cs-swatches` | 色板 ↔ 作品预览联动 |
+| `cs-gantt` / `cs-timeline` | 甘特图、里程碑时间轴 |
+| `cs-delivery` / `cs-grid13` | 交付数字、作品网格 |
+| `cs-scene` | 场景图位，未就位时显示占位与目标路径 |
+| `cs-closing` / `cs-nav` / `cs-lb` | 深色收尾、上下篇导航、lightbox |
+
+### 写新详情页的注意事项
+
+1. 页面在 `work/` 下，所有资源路径要用 `../`。
+2. `body` 必须带 `class="case-page"`，色彩变量定义在这个类上。
+3. 深色段落用 `cs-hero` / `cs-closing`，浅色正文包在 `.cs-body` 里。
+   `css/style.css` 里 `main section:not(...)` 那条规则已排除 `cs-hero`
+   / `cs-closing` / `cs-section`，新增深色板块要同步加进那串 `:not()`。
+4. `style.css` 有全局 `img { height:100%; object-fit:cover }`，
+   `case.css` 已用 `.case-page img` 改回按比例显示。
+5. 单位统一用 px，不要用 rem——根字号是 `13.28px`，rem 换算容易出错。
+6. 详情页只加载 `case.js`，不要加载 `main.js`（后者是首页专用）。
+7. 产品数据集中写在 `case.js` 顶部的数组里，作品墙 / 色板 / 胶囊 /
+   网格 / lightbox 全部由它驱动，改一处即可。
+
+### 昂楷科技产品单页系列（`work/ankki-product-sheets.html`）
+
+- 首页精选作品 01 已指向该页。
+- 13 款产品的名称与副标题取自单页 PDF 文本层，主色取自单页顶部色带
+  实际取样，产品代号取自页脚，均非编写。
+- 素材由 `彩页合集` 目录下 13 个 PDF 导出：
+  `sheet/` 为 1400px 大图，`thumb/` 为 420px 缩略图，各 26 张。
+- 制度文件里的同事姓名已改为「姓氏 + 职务」，避免公开真实全名。
+- 待补素材（占位块会显示目标路径）：
+  - `assets/work/ankki/doc/ppt-template.png`
+  - `assets/work/ankki/doc/policy.png`
+  - `assets/work/ankki/doc/dingtalk.png`
+  - `assets/work/ankki/doc/minutes.png`
+  - `assets/work/ankki/doc/gantt.png`
+  - `assets/work/ankki/scene/booth.jpg`
 
 ## 已完成的主要修改
 
@@ -70,6 +137,9 @@
   - 右侧内容约 `1264px` 宽
   - 收起行高度约 `150px`
   - 图片底部与容器基本贴合，不应再出现明显留白
+- 已新增作品详情页体系（`css/case.css` + `js/case.js`），以板块积木组合排版，不依赖固定页面模板。
+- 已完成第一个作品详情页：昂楷科技产品单页系列，含 13 款单页作品墙、滚动翻面、13 色色板联动、交互甘特图、里程碑时间轴与正反面 lightbox。
+- 首页精选作品 01 已从占位图替换为昂楷项目，并接入详情页链接。
 ## 用户的视觉要求
 
 视觉修改不能只靠 CSS 猜测。每次都需要：
