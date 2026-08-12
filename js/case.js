@@ -562,6 +562,134 @@ function initLightbox() {
 }
 
 /* ─────────────────────────────────────────
+   复制提示
+───────────────────────────────────────── */
+let toastEl, toastTimer;
+function toast(msg) {
+  if (!toastEl) {
+    toastEl = document.createElement('div');
+    toastEl.className = 'cs-toast';
+    toastEl.setAttribute('role', 'status');
+    document.body.appendChild(toastEl);
+  }
+  toastEl.textContent = msg;
+  toastEl.classList.add('is-on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('is-on'), 2400);
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    // 非安全上下文或权限被拒时的兜底
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;top:-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand('copy');
+    ta.remove();
+    return ok;
+  }
+}
+
+/* ─────────────────────────────────────────
+   页尾：项目总结 / 联系方式 / 问问 AI
+───────────────────────────────────────── */
+const CONTACT = {
+  email: {
+    value: 'bh141425@gmail.com',
+    href:  'mailto:bh141425@gmail.com?subject=' + encodeURIComponent('聊聊设计合作'),
+    cta:   '写邮件',
+  },
+  phone: {
+    value: '131 0633 3009',
+    href:  'tel:+8613106333009',
+    cta:   '拨打',
+  },
+};
+
+// 提示词里带上本页链接，AI 才能真的去读作品
+const ASK_PROMPT = `我正在评估李斌斌（${location.origin}）是否适合我们的品牌设计 / 视觉设计岗位。`
+  + `请查看他的作品集网站，告诉我：他的设计能力覆盖哪些方面、最适合什么阶段和什么类型的公司、`
+  + `如果录用他我实际能得到什么。请具体一些，引用他的案例和经历。`;
+
+// 目前只有 ChatGPT 的 ?q= 前填是稳定可用的，其余站点参数不一定被识别，
+// 所以统一先把提示词写进剪贴板，再打开对话页——无论前填是否生效都能用。
+const AI_TARGETS = [
+  { name: 'ChatGPT',   icon: 'openai',   url: 'https://chatgpt.com/?q=',              prefill: true  },
+  { name: '豆包',      icon: 'doubao',   url: 'https://www.doubao.com/chat/?q=',      prefill: false },
+  { name: '腾讯混元',  icon: 'hunyuan',  url: 'https://yuanbao.tencent.com/chat?q=',  prefill: false },
+  { name: 'DeepSeek',  icon: 'deepseek', url: 'https://chat.deepseek.com/?q=',        prefill: false },
+  { name: 'Kimi',      icon: 'kimi',     url: 'https://www.kimi.com/?q=',             prefill: false },
+];
+
+function initOutro() {
+  const outro = document.querySelector('.cs-outro');
+  if (!outro) return;
+
+  /* ── 联系方式：邮箱 / 电话 切换 ── */
+  const valueEl = outro.querySelector('[data-contact-value]');
+  const ctaEl   = outro.querySelector('[data-contact-cta]');
+  const copyEl  = outro.querySelector('[data-contact-copy]');
+  let mode = 'email';
+
+  const renderContact = () => {
+    const c = CONTACT[mode];
+    valueEl.textContent = c.value;
+    ctaEl.href = c.href;
+    ctaEl.querySelector('span:first-child').textContent = c.cta;
+    outro.querySelectorAll('[data-contact]').forEach(b =>
+      b.classList.toggle('is-active', b.dataset.contact === mode));
+  };
+
+  outro.querySelectorAll('[data-contact]').forEach(b => {
+    b.addEventListener('click', () => { mode = b.dataset.contact; renderContact(); });
+  });
+  renderContact();
+
+  copyEl?.addEventListener('click', async () => {
+    const ok = await copyText(CONTACT[mode].value);
+    toast(ok ? `已复制${mode === 'email' ? '邮箱' : '电话'}：${CONTACT[mode].value}` : '复制失败，请手动选择');
+  });
+
+  /* ── 问问 AI ── */
+  const row = outro.querySelector('[data-ai-row]');
+  if (row) {
+    AI_TARGETS.forEach(t => {
+      const a = document.createElement('a');
+      a.className = 'cs-ai-btn';
+      a.href = t.url + encodeURIComponent(ASK_PROMPT);
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.title = `用 ${t.name} 了解李斌斌`;
+      a.setAttribute('aria-label', `用 ${t.name} 了解李斌斌`);
+      a.innerHTML = `<i aria-hidden="true" style="--ai-icon:url(../assets/ai/${t.icon}.svg)"></i>`;
+      a.addEventListener('click', async () => {
+        const ok = await copyText(ASK_PROMPT);
+        if (ok) toast(t.prefill ? '提示词已带上，也已复制到剪贴板' : '提示词已复制，粘贴即可提问');
+      });
+      row.appendChild(a);
+    });
+  }
+
+  /* ── 项目总结弹层 ── */
+  const modal = document.querySelector('.cs-summary');
+  if (!modal) return;
+  const open  = () => { modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false'); lenis.stop(); modal.querySelector('.cs-summary-close')?.focus(); };
+  const close = () => { modal.classList.remove('is-open'); modal.setAttribute('aria-hidden', 'true'); lenis.start(); };
+
+  outro.querySelector('[data-summary-open]')?.addEventListener('click', open);
+  modal.querySelector('.cs-summary-close')?.addEventListener('click', close);
+  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+  });
+}
+
+/* ─────────────────────────────────────────
    导航药丸描边（与首页一致）
 ───────────────────────────────────────── */
 function initCanvasBorders() {
@@ -656,6 +784,7 @@ initReveal();
 initToc();
 initNavTheme();
 initLightbox();
+initOutro();
 initCanvasBorders();
 initClock();
 
