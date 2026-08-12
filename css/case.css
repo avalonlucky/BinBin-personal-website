@@ -25,6 +25,87 @@
 }
 
 /* ────────────────────────────────────────
+   页内导航（左侧固定目录）
+   由 case.js 依据正文板块自动生成，只在正文区间显示。
+   宽度受限于「1180 容器居中后剩下的左侧空白」，
+   所以窄屏退化为只显示序号、hover 再展开标题。
+──────────────────────────────────────── */
+.cs-toc {
+  position: fixed;
+  left: 28px;
+  top: 132px;               /* 顶部锚定：留出固定导航的高度 */
+  z-index: 60;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .45s var(--ease), visibility .45s var(--ease);
+}
+.cs-toc.is-visible { opacity: 1; visibility: visible; }
+
+.cs-toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.cs-toc a {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 7px 0 7px 12px;
+  border-left: 2px solid var(--cs-hair);
+  font-family: var(--f-cjk);
+  font-size: 14.5px;
+  line-height: 1.35;
+  color: var(--cs-ink-3);
+  transition: color .3s var(--ease), border-color .3s var(--ease);
+}
+.cs-toc a i {
+  font-style: normal;
+  font-family: var(--f-body);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--cs-paper-3);
+  flex: 0 0 auto;
+  width: 17px;
+  transition: color .3s var(--ease);
+}
+.cs-toc a:hover { color: var(--cs-ink); border-left-color: var(--cs-ink-3); }
+.cs-toc a:hover i { color: var(--cs-ink-3); }
+.cs-toc li.is-active a {
+  color: var(--cs-ink);
+  font-weight: 600;
+  border-left-color: var(--cs-accent);
+}
+.cs-toc li.is-active a i { color: var(--cs-accent); }
+
+/* 宽屏：标题常显 */
+@media (min-width: 1420px) {
+  .cs-toc { display: block; width: 138px; }
+}
+
+/* 中等宽度：只留序号，hover 展开成浮层 */
+@media (min-width: 1024px) and (max-width: 1419px) {
+  .cs-toc {
+    display: block;
+    padding: 8px;
+    border-radius: 8px;
+    transition: opacity .45s var(--ease), visibility .45s var(--ease),
+                background .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .cs-toc a span { display: none; }
+  .cs-toc:hover,
+  .cs-toc:focus-within {
+    background: var(--cs-paper);
+    box-shadow: 0 10px 34px rgba(2,2,2,0.12);
+  }
+  .cs-toc:hover a span,
+  .cs-toc:focus-within a span { display: inline; white-space: nowrap; }
+}
+
+/* ────────────────────────────────────────
    通用：段落容器 / 编号 / 标题
 ──────────────────────────────────────── */
 .cs-section {

@@ -357,6 +357,83 @@ function initReveal() {
 }
 
 /* ─────────────────────────────────────────
+   页内导航 — 按正文板块自动生成
+   板块标题取自各段的 .cs-num（「01 — 项目背景」），
+   过长的可在 section 上用 data-toc 覆盖。
+───────────────────────────────────────── */
+function initToc() {
+  const body = document.querySelector('.cs-body');
+  if (!body) return;
+
+  const sections = [...body.querySelectorAll('.cs-section')];
+  if (sections.length < 3) return;
+
+  const nav = document.createElement('nav');
+  nav.className = 'cs-toc';
+  nav.setAttribute('aria-label', '页面内导航');
+
+  const ol = document.createElement('ol');
+  const items = sections.map((sec, i) => {
+    if (!sec.id) sec.id = `sec-${String(i + 1).padStart(2, '0')}`;
+
+    const raw = sec.querySelector('.cs-num')?.textContent.trim() || '';
+    const parts = raw.split('—').map(s => s.trim());
+    const num = parts[0] || String(i + 1).padStart(2, '0');
+    const label = sec.dataset.toc || parts[1] || '';
+
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = `#${sec.id}`;
+    a.title = label;
+    a.innerHTML = `<i>${num}</i><span>${label}</span>`;
+    li.appendChild(a);
+    ol.appendChild(li);
+
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const y = sec.getBoundingClientRect().top + scroller.scrollTop - 72;
+      lenis.scrollTo(y);
+      history.replaceState(null, '', `#${sec.id}`);
+    });
+
+    return { sec, li, a };
+  });
+
+  nav.appendChild(ol);
+  document.querySelector('.site').appendChild(nav);
+
+  const setActive = idx => items.forEach(({ li, a }, i) => {
+    const on = i === idx;
+    li.classList.toggle('is-active', on);
+    on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current');
+  });
+  setActive(0);
+
+  // 只在「目录整体压在浅色正文上」时显示。
+  // 目录是浅底深字，落到深色的首屏或收尾段上会看不清，
+  // 所以显隐边界按目录自身高度算，而不是用固定百分比。
+  const RAIL_TOP = 132;
+  const pad = 24;
+  ScrollTrigger.create({
+    trigger: body,
+    start: () => `top ${RAIL_TOP - pad}px`,
+    end:   () => `bottom ${RAIL_TOP + nav.offsetHeight + pad}px`,
+    invalidateOnRefresh: true,
+    onToggle: self => nav.classList.toggle('is-visible', self.isActive),
+  });
+
+  // 当前板块高亮：相邻区间首尾相接，不会出现无高亮的空档
+  items.forEach(({ sec }, i) => {
+    ScrollTrigger.create({
+      trigger: sec,
+      start: 'top 45%',
+      end: 'bottom 45%',
+      onToggle: self => { if (self.isActive) setActive(i); },
+    });
+  });
+}
+
+/* ─────────────────────────────────────────
    导航配色：深色 hero → 浅色正文 → 深色收尾
 ───────────────────────────────────────── */
 function initNavTheme() {
@@ -559,6 +636,7 @@ initCounters();
 initGantt();
 initTimeline();
 initReveal();
+initToc();
 initNavTheme();
 initLightbox();
 initCanvasBorders();
