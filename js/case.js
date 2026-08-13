@@ -173,6 +173,93 @@ function initPalette() {
   show(0);
 }
 
+/* ═════════════════════════════════════════
+   内刊案例（《昂楷视界》）专用交互
+   —— 元素不存在时各函数直接返回，两个详情页共用同一个 case.js。
+═════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────
+   印章 — 阳刻 / 阴刻 切换
+   手稿里做过「黑白反白实验」，这里把两个结果做成可切换的实物。
+───────────────────────────────────────── */
+function initSeal() {
+  const box = document.querySelector('[data-seal]');
+  if (!box) return;
+  const stage = box.querySelector('.cs-seal-stage');
+  const faces = {
+    relief:  box.querySelector('[data-seal-face="relief"]'),   // 阳刻（正形）
+    inverse: box.querySelector('[data-seal-face="inverse"]'),   // 阴刻（反白）
+  };
+  const btns = [...box.querySelectorAll('[data-seal-mode]')];
+
+  const show = mode => {
+    Object.entries(faces).forEach(([k, el]) => el?.classList.toggle('is-off', k !== mode));
+    stage.classList.toggle('is-inverse', mode === 'inverse');
+    btns.forEach(b => b.classList.toggle('is-active', b.dataset.sealMode === mode));
+  };
+
+  btns.forEach(b => b.addEventListener('click', () => show(b.dataset.sealMode)));
+  show('relief');
+}
+
+/* ─────────────────────────────────────────
+   目录三级优先级 — hover 卡片，点亮真实目录页上对应的版面位置
+   坐标是在导出图上叠百分比网格量出来的（1800×1187），
+   用百分比存，图片换尺寸也不用改。
+───────────────────────────────────────── */
+const TOC_HOTSPOTS = [
+  // 01 最瞩目：封面核心文章，占掉左页大半，配大图 + 摘要 + 署名
+  [{ l: 23.4, t: 21.8, w: 24.2, h: 43.0 }],
+  // 02 图文结合：从每章挑出的代表文章，各自单独配图
+  [{ l: 52.6, t: 25.2, w: 19.0, h: 22.0 },
+   { l: 52.6, t: 48.6, w: 19.0, h: 21.5 },
+   { l: 77.6, t: 50.2, w: 17.8, h: 40.5 }],
+  // 03 基础信息层：常规条目，点线引导 + 页码
+  [{ l: 23.4, t: 69.5, w: 24.2, h: 9.5 },
+   { l: 23.4, t: 79.5, w: 24.2, h: 12.5 },
+   { l: 52.6, t: 11.5, w: 19.0, h: 12.0 },
+   { l: 77.6, t: 11.5, w: 17.8, h: 13.0 }],
+];
+
+function initTocMap() {
+  const map = document.querySelector('[data-tocmap]');
+  if (!map) return;
+  const fig   = map.querySelector('.cs-tocmap-fig');
+  const prios = [...map.querySelectorAll('.cs-prio')];
+  if (!fig || !prios.length) return;
+
+  // 按数据建热区：每个优先级一组，同组一起亮
+  const groups = TOC_HOTSPOTS.map((boxes, gi) => boxes.map(b => {
+    const el = document.createElement('div');
+    el.className = 'cs-hot';
+    el.style.cssText = `left:${b.l}%;top:${b.t}%;width:${b.w}%;height:${b.h}%`;
+    if (b === boxes[0]) {
+      const tag = document.createElement('span');
+      tag.textContent = prios[gi]?.dataset.prioLabel || `0${gi + 1}`;
+      el.appendChild(tag);
+    }
+    fig.appendChild(el);
+    return el;
+  }));
+
+  let current = -1;
+  const light = gi => {
+    if (gi === current) return;
+    current = gi;
+    groups.forEach((g, i) => g.forEach(el => el.classList.toggle('is-on', i === gi)));
+    prios.forEach((p, i) => p.classList.toggle('is-active', i === gi));
+    fig.classList.toggle('is-lit', gi >= 0);
+  };
+
+  prios.forEach((p, i) => {
+    p.addEventListener('mouseenter', () => light(i));
+    p.addEventListener('focus',      () => light(i));
+    p.addEventListener('click',      () => light(current === i ? -1 : i));
+  });
+  // 只在整块移出时才灭，卡片之间来回移动不闪
+  map.addEventListener('mouseleave', () => light(-1));
+}
+
 /* ─────────────────────────────────────────
    翻面演示 — 滚动驱动 rotateY 0→180
 ───────────────────────────────────────── */
@@ -802,6 +889,8 @@ initWall();
 initGrid();
 initPills();
 initPalette();
+initSeal();
+initTocMap();
 initFlip();
 initLayoutCompare();
 initHub();

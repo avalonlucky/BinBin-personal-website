@@ -13,9 +13,24 @@
   --cs-ink-2:     #3A3733;
   --cs-ink-3:     #75706A;
   --cs-accent:    #FF852D;
+  /* 强调色的 rgb 分量单独存一份，供 rgb(var(--cs-accent-rgb) / A) 调透明度用。
+     不要在板块里写死 rgba(255,133,45,…)，否则整页换色时改不动。 */
+  --cs-accent-rgb: 255 133 45;
+  /* 浅底上压强调色文字时用这个更深的版本：强调色本身压在自己的浅色底上
+     对比度只有 2 点几，不够看。 */
+  --cs-accent-deep: #A84A12;
   --cs-hair:      rgba(2, 2, 2, 0.11);
   --cs-hair-dark: rgba(251, 251, 244, 0.14);
   --cs-max:       1240px;
+}
+
+/* 《昂楷视界》内刊案例：整页换成期刊自己的主色（规范里的 #E60012 / #222222）。
+   刊物本身就带一套色彩规范，详情页用它自己的颜色讲它自己的事。
+   撤销只需去掉 body 上的 is-vision。 */
+.case-page.is-vision {
+  --cs-accent:      #E60012;
+  --cs-accent-rgb:  230 0 18;
+  --cs-accent-deep: #A8000D;
 }
 
 /* 全局 img 规则是 cover + 100% 高，详情页的图需要按原比例显示 */
@@ -173,7 +188,7 @@
   left: 50%; top: -20%;
   width: 90vw; height: 70vh;
   transform: translateX(-50%);
-  background: radial-gradient(ellipse at center, rgba(255,133,45,0.16), transparent 68%);
+  background: radial-gradient(ellipse at center, rgb(var(--cs-accent-rgb) / 0.16), transparent 68%);
   pointer-events: none;
 }
 .cs-hero-inner {
@@ -447,10 +462,10 @@
 
 /* 浅色引言块 —— 一个详情页只需要一处黑色强调，其余收束型引言用这个。
    注意：强调色不能直接用 --cs-accent，橙字压在橙色浅底上对比度不足，
-   改用更深的 #A84A12（对比度约 5:1）。 */
+   改用更深的 var(--cs-accent-deep)（对比度约 5:1）。 */
 .cs-quote-soft {
   padding: 30px 34px;
-  background: rgba(255, 133, 45, 0.07);
+  background: rgb(var(--cs-accent-rgb) / 0.07);
   border-radius: clamp(14px, 1.4vw, 18px);
   box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.6);
   font-family: var(--f-cjk);
@@ -462,7 +477,7 @@
 .cs-quote-soft em {
   font-style: normal;
   font-weight: 600;
-  color: #A84A12;
+  color: var(--cs-accent-deep);
 }
 
 /* ────────────────────────────────────────
@@ -591,8 +606,8 @@
   margin-top: 9px;
   padding: 4px 11px;
   border-radius: 100px;
-  background: rgba(255,133,45,0.12);
-  color: #B0521A;
+  background: rgb(var(--cs-accent-rgb) / 0.12);
+  color: var(--cs-accent-deep);
   font-family: var(--f-cjk);
   font-size: 13.5px;
 }
@@ -608,8 +623,8 @@
 }
 .cs-block.is-filled {
   border-style: solid;
-  border-color: rgba(255,133,45,0.5);
-  background: rgba(255,133,45,0.05);
+  border-color: rgb(var(--cs-accent-rgb) / 0.5);
+  background: rgb(var(--cs-accent-rgb) / 0.05);
 }
 .cs-block-k {
   font-family: var(--f-cjk);
@@ -685,7 +700,7 @@
   flex-shrink: 0;
 }
 .cs-member.is-me i { background: var(--cs-accent); }
-.cs-member.is-me { border-color: rgba(255,133,45,0.45); }
+.cs-member.is-me { border-color: rgb(var(--cs-accent-rgb) / 0.45); }
 
 .cs-stages {
   display: grid;
@@ -731,7 +746,7 @@
 
 .cs-note {
   padding: 13px 17px;
-  background: rgba(255,133,45,0.07);
+  background: rgb(var(--cs-accent-rgb) / 0.07);
   border-left: 2px solid var(--cs-accent);
   border-radius: 0 5px 5px 0;
   font-family: var(--f-cjk);
@@ -940,7 +955,7 @@
   border-radius: 5px;
   overflow: hidden;
 }
-.cs-layout.is-mine { border-color: rgba(255,133,45,0.45); }
+.cs-layout.is-mine { border-color: rgb(var(--cs-accent-rgb) / 0.45); }
 .cs-layout-k {
   padding: 8px 12px;
   font-family: var(--f-cjk);
@@ -948,7 +963,7 @@
   background: var(--cs-paper-2);
   color: var(--cs-ink-3);
 }
-.cs-layout.is-mine .cs-layout-k { background: rgba(255,133,45,0.1); color: #B0521A; }
+.cs-layout.is-mine .cs-layout-k { background: rgb(var(--cs-accent-rgb) / 0.1); color: var(--cs-accent-deep); }
 .cs-layout-vis { padding: 14px; display: flex; flex-direction: column; gap: 6px; min-height: 190px; }
 .cs-bar {
   height: 15px;
@@ -956,7 +971,7 @@
   background: var(--cs-paper-3);
   transform-origin: left;
 }
-.cs-bar.is-accent { background: rgba(255,133,45,0.35); }
+.cs-bar.is-accent { background: rgb(var(--cs-accent-rgb) / 0.35); }
 .cs-bar.is-block { flex: 1; background: var(--cs-paper-3); }
 
 /* 副标题 pills */
@@ -1132,7 +1147,7 @@
 .cs-spec-type .t3 { font-family: var(--f-cjk); font-size: 13px; color: var(--cs-ink-3); }
 .cs-spec-bars { display: flex; flex-direction: column; gap: 5px; }
 .cs-spec-bars i { height: 8px; border-radius: 2px; background: var(--cs-paper-3); display: block; }
-.cs-spec-bars i:first-child { background: rgba(255,133,45,0.6); }
+.cs-spec-bars i:first-child { background: rgb(var(--cs-accent-rgb) / 0.6); }
 
 /* ────────────────────────────────────────
    三阶段
@@ -1380,7 +1395,7 @@
   font-family: var(--f-heading);
   font-size: clamp(40px, 4.4vw, 62px);
   line-height: 0.86;
-  color: rgba(255, 133, 45, 0.32);
+  color: rgb(var(--cs-accent-rgb) / 0.32);
 }
 .cs-lesson h3 {
   font-family: var(--f-cjk);
@@ -1648,7 +1663,7 @@
 /* ── 联系卡 ── */
 .cs-cta-card {
   width: 100%;
-  background: rgba(255, 133, 45, 0.07);
+  background: rgb(var(--cs-accent-rgb) / 0.07);
   border-radius: clamp(26px, 3vw, 36px);
   padding: clamp(24px, 2.6vw, 32px) clamp(24px, 3vw, 38px) clamp(28px, 3vw, 36px);
   display: flex;
@@ -1956,6 +1971,486 @@
 .cs-lb.is-single .cs-lb-flip { display: none; }
 .cs-lb.is-single .cs-lb-stage img { max-height: 84vh; max-width: min(94vw, 1400px); }
 
+/* ════════════════════════════════════════
+   内刊案例专用板块
+   （《昂楷视界》/《昂楷之道》。放在库里而不是页面内联，
+     以后再做画册 / 期刊类作品可以直接复用。）
+════════════════════════════════════════ */
+
+/* ── 三本刊物：深色头图下方的封面并排 ── */
+.cs-journals {
+  background: var(--cs-ink);
+  padding: 0 24px clamp(40px, 5vw, 64px);
+}
+.cs-journals-inner {
+  max-width: var(--cs-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.4vw, 34px);
+}
+.cs-journal {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: zoom-in;
+  font: inherit;
+}
+.cs-journal-fig {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  background: rgba(251, 251, 244, 0.05);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.5), 0 26px 60px rgba(0,0,0,0.42);
+  transition: transform .55s var(--ease), box-shadow .55s var(--ease);
+}
+.cs-journal-fig img { width: 100%; display: block; aspect-ratio: 922 / 1217; }
+.cs-journal:hover .cs-journal-fig {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.55), 0 34px 74px rgba(0,0,0,0.5);
+}
+.cs-journal-meta { margin: 16px 0 0; }
+.cs-journal-k {
+  font-family: var(--f-mono, var(--f-body));
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--cs-accent);
+  text-transform: uppercase;
+}
+.cs-journal-n {
+  font-family: var(--f-cjk);
+  font-size: clamp(15px, 1.3vw, 17px);
+  font-weight: 600;
+  color: rgba(251, 251, 244, 0.94);
+  margin: 6px 0 4px;
+}
+.cs-journal-d {
+  font-family: var(--f-cjk);
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(251, 251, 244, 0.56);
+  margin: 0;
+}
+
+/* ── 印章：阳刻 / 阴刻 切换（手稿里的「黑白反白实验」） ── */
+.cs-seal {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  margin: 32px 0 0;
+}
+.cs-seal-stage {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: clamp(14px, 1.4vw, 18px);
+  display: grid;
+  place-items: center;
+  padding: 14%;
+  background: var(--cs-paper-2);
+  transition: background .5s var(--ease);
+}
+/* 阴刻时底色换成主色，白字才立得住 */
+.cs-seal-stage.is-inverse { background: var(--cs-accent); }
+.cs-seal-stage img {
+  width: 100%;
+  display: block;
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+.cs-seal-stage img.is-off { opacity: 0; transform: scale(.94); position: absolute; }
+.cs-seal-switch { display: flex; gap: 8px; margin: 0 0 20px; }
+.cs-seal-switch button {
+  font-family: var(--f-cjk);
+  font-size: 13px;
+  padding: 7px 15px;
+  border-radius: 100px;
+  border: 1px solid var(--cs-hair);
+  background: transparent;
+  color: var(--cs-ink-3);
+  cursor: pointer;
+  transition: all .3s var(--ease);
+}
+.cs-seal-switch button.is-active {
+  border-color: rgb(var(--cs-accent-rgb) / 0.5);
+  background: rgb(var(--cs-accent-rgb) / 0.08);
+  color: var(--cs-accent-deep);
+}
+.cs-seal-keys { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 0; }
+.cs-seal-key {
+  font-family: var(--f-cjk);
+  font-size: 12.5px;
+  padding: 5px 13px;
+  border-radius: 100px;
+  border: 1px solid var(--cs-hair);
+  color: var(--cs-ink-2);
+}
+
+/* ── 印章式页码：页脚那枚淡印章 + 数字 ── */
+.cs-pagenum {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(14px, 1.6vw, 22px);
+  flex-wrap: wrap;
+  margin: 24px 0 0;
+}
+.cs-pagenum-cell {
+  width: clamp(58px, 5.4vw, 74px);
+  aspect-ratio: 1;
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 3px;
+  background: var(--cs-paper);
+  border: 1px solid var(--cs-hair);
+}
+.cs-pagenum-cell img {
+  position: absolute;
+  inset: 14%;
+  width: 72%;
+  /* 刊物里这枚印章是压在页码底下的淡水印，不是实心图标 */
+  opacity: 0.34;
+}
+.cs-pagenum-cell b {
+  position: relative;
+  font-family: var(--f-cjk);
+  font-size: clamp(17px, 1.6vw, 21px);
+  font-weight: 600;
+  color: var(--cs-ink);
+}
+.cs-pagenum-note {
+  font-family: var(--f-cjk);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--cs-ink-3);
+  margin: 0;
+  align-self: center;
+  flex: 1 1 220px;
+}
+
+/* ── 目录热区：hover 优先级 → 高亮真实目录页上对应的位置 ── */
+.cs-tocmap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+  gap: clamp(24px, 3vw, 44px);
+  align-items: start;
+  margin: 30px 0 0;
+}
+.cs-tocmap-fig {
+  position: relative;
+  border-radius: clamp(10px, 1vw, 14px);
+  overflow: hidden;
+  border: 1px solid var(--cs-hair);
+  background: #fff;
+  cursor: zoom-in;
+}
+.cs-tocmap-fig img { width: 100%; display: block; aspect-ratio: 1800 / 1187; }
+/* 未高亮时压一层灰，让被点亮的区块跳出来 */
+.cs-tocmap-fig::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 2, 2, 0.5);
+  opacity: 0;
+  transition: opacity .45s var(--ease);
+  pointer-events: none;
+}
+.cs-tocmap-fig.is-lit::after { opacity: 1; }
+.cs-hot {
+  position: absolute;
+  border: 1.5px solid var(--cs-accent);
+  border-radius: 4px;
+  box-shadow: 0 0 0 9999px rgba(2, 2, 2, 0);
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
+  pointer-events: none;
+  /* 高亮块自己要盖在灰罩之上 */
+  z-index: 2;
+  background: rgb(var(--cs-accent-rgb) / 0.1);
+  backdrop-filter: brightness(1.9) saturate(1.15);
+}
+.cs-hot.is-on { opacity: 1; transform: scale(1); }
+.cs-hot span {
+  position: absolute;
+  top: -11px;
+  left: -1px;
+  font-family: var(--f-mono, var(--f-body));
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: var(--cs-accent);
+  color: #fff;
+  white-space: nowrap;
+}
+.cs-prios { display: flex; flex-direction: column; gap: 12px; }
+.cs-prio {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  width: 100%;
+  text-align: left;
+  padding: 18px 20px;
+  border: 1px solid var(--cs-hair);
+  border-radius: clamp(10px, 1vw, 14px);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: border-color .35s var(--ease), background .35s var(--ease);
+}
+.cs-prio:hover,
+.cs-prio.is-active {
+  border-color: rgb(var(--cs-accent-rgb) / 0.45);
+  background: rgb(var(--cs-accent-rgb) / 0.05);
+}
+.cs-prio-n {
+  font-family: var(--f-display, var(--f-heading));
+  font-size: clamp(24px, 2.2vw, 30px);
+  line-height: 1;
+  color: var(--cs-accent);
+}
+.cs-prio-n small {
+  display: block;
+  font-family: var(--f-cjk);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--cs-ink-3);
+  margin-top: 5px;
+}
+.cs-prio h4 {
+  font-family: var(--f-cjk);
+  font-size: clamp(14.5px, 1.3vw, 16px);
+  font-weight: 600;
+  color: var(--cs-ink);
+  margin: 2px 0 5px;
+  line-height: 1.45;
+}
+.cs-prio p {
+  font-family: var(--f-cjk);
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--cs-ink-2);
+  margin: 0;
+}
+.cs-prio p em { font-style: normal; font-weight: 600; color: var(--cs-accent-deep); }
+
+/* ── 五大章节：内容架构 ── */
+/* 固定三列 + 第六格放汇总：五张卡用 auto-fit 会排成 4+1，最后一张孤零零挂在下一行。
+   align-items:start 让每张卡各自贴合内容高度，不去强行拉平——
+   章节本来就有长有短，拉平反而显得假。 */
+.cs-chapters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(14px, 1.6vw, 20px);
+  margin: 30px 0 0;
+}
+.cs-chapter-sum {
+  padding: 22px;
+  border: 1px dashed var(--cs-hair);
+  border-radius: clamp(10px, 1vw, 14px);
+  background: transparent;
+}
+.cs-chapter-sum dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 9px 14px;
+  margin: 0;
+}
+.cs-chapter-sum dt {
+  font-family: var(--f-display, var(--f-heading));
+  font-size: clamp(20px, 1.9vw, 25px);
+  line-height: 1;
+  color: var(--cs-accent);
+}
+.cs-chapter-sum dd {
+  font-family: var(--f-cjk);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--cs-ink-2);
+  margin: 0;
+  align-self: center;
+}
+.cs-chapter {
+  border: 1px solid var(--cs-hair);
+  border-radius: clamp(10px, 1vw, 14px);
+  overflow: hidden;
+  background: var(--cs-paper);
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+.cs-chapter:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(2, 2, 2, 0.07);
+}
+.cs-chapter.is-lead {
+  border-color: rgb(var(--cs-accent-rgb) / 0.3);
+  background: linear-gradient(180deg, rgb(var(--cs-accent-rgb) / 0.06), var(--cs-paper) 70%);
+}
+.cs-chapter-head {
+  padding: 15px 18px;
+  border-bottom: 1px solid var(--cs-hair);
+}
+.cs-chapter-cn {
+  font-family: var(--f-cjk);
+  font-size: clamp(15px, 1.35vw, 17px);
+  font-weight: 600;
+  color: var(--cs-ink);
+}
+.cs-chapter-en {
+  font-family: var(--f-mono, var(--f-body));
+  font-size: 9.5px;
+  letter-spacing: 0.11em;
+  color: var(--cs-accent);
+  margin-top: 3px;
+}
+.cs-chapter-body { padding: 4px 18px 14px; }
+.cs-art {
+  position: relative;
+  padding: 9px 0 9px 15px;
+  border-bottom: 1px solid rgb(2 2 2 / 0.05);
+  font-family: var(--f-cjk);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--cs-ink-2);
+}
+.cs-art:last-child { border-bottom: none; }
+.cs-art::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 16px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgb(var(--cs-accent-rgb) / 0.55);
+}
+.cs-art i {
+  font-style: normal;
+  color: var(--cs-ink-3);
+  font-size: 11.5px;
+  white-space: nowrap;
+}
+
+/* ── 双刊对照：对外 / 对内两种设计语言 ── */
+.cs-books {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 2.2vw, 28px);
+  margin: 30px 0 0;
+}
+.cs-book {
+  border: 1px solid var(--cs-hair);
+  border-radius: clamp(10px, 1vw, 14px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--cs-paper);
+}
+.cs-book-fig { cursor: zoom-in; overflow: hidden; background: var(--cs-paper-2); }
+.cs-book-fig img {
+  width: 100%;
+  display: block;
+  transition: transform .6s var(--ease);
+}
+.cs-book-fig:hover img { transform: scale(1.03); }
+.cs-book-body { padding: 22px clamp(18px, 1.8vw, 24px) 24px; flex: 1; }
+.cs-book-k {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 12px;
+}
+.cs-book-k i {
+  font-style: normal;
+  font-family: var(--f-cjk);
+  font-size: 11px;
+  padding: 3px 11px;
+  border-radius: 100px;
+  background: var(--cs-ink);
+  color: rgba(251, 251, 244, 0.9);
+}
+.cs-book.is-inner .cs-book-k i { background: var(--cs-accent); color: #fff; }
+.cs-book-k b {
+  font-family: var(--f-cjk);
+  font-size: clamp(15.5px, 1.4vw, 18px);
+  font-weight: 600;
+}
+.cs-book-body > p {
+  font-family: var(--f-cjk);
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--cs-ink-2);
+  margin: 0 0 16px;
+}
+.cs-book-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.cs-book-tags span {
+  font-family: var(--f-cjk);
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--cs-hair);
+  color: var(--cs-ink-2);
+}
+.cs-book.is-inner .cs-book-tags span {
+  border-color: rgb(var(--cs-accent-rgb) / 0.3);
+  background: rgb(var(--cs-accent-rgb) / 0.06);
+  color: var(--cs-accent-deep);
+}
+
+/* ── 规范条目：七个维度 ── */
+.cs-rules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+  gap: clamp(12px, 1.4vw, 18px);
+  margin: 30px 0 0;
+}
+.cs-rule {
+  padding: 20px;
+  border: 1px solid var(--cs-hair);
+  border-radius: clamp(10px, 1vw, 14px);
+  background: var(--cs-paper);
+}
+.cs-rule-n {
+  font-family: var(--f-mono, var(--f-body));
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: var(--cs-accent);
+  margin-bottom: 10px;
+}
+.cs-rule h4 {
+  font-family: var(--f-cjk);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--cs-ink);
+  margin: 0 0 7px;
+}
+.cs-rule p {
+  font-family: var(--f-cjk);
+  font-size: 12.5px;
+  line-height: 1.72;
+  color: var(--cs-ink-2);
+  margin: 0;
+}
+.cs-rule p code {
+  font-family: var(--f-mono, monospace);
+  font-size: 11.5px;
+  color: var(--cs-accent-deep);
+}
+/* 色彩规范那张卡里的两块色 */
+.cs-rule-colors { display: flex; gap: 10px; margin: 0 0 10px; }
+.cs-rule-colors i {
+  flex: 1;
+  height: 30px;
+  border-radius: 4px;
+  display: block;
+}
+
 /* ────────────────────────────────────────
    进场（JS 未跑时不隐藏内容）
 ──────────────────────────────────────── */
@@ -1970,6 +2465,11 @@
   .cs-specs { grid-template-columns: repeat(2, 1fr); }
   .cs-hub { gap: 14px 120px; }
   .cs-hub-core { width: 104px; height: 104px; }
+  /* 目录热区在窄屏上没法边看图边 hover，改成上下堆叠，
+     并把热区高亮关掉（见 case.js 的 matchMedia 判断） */
+  .cs-tocmap { grid-template-columns: 1fr; }
+  .cs-seal { grid-template-columns: 1fr; }
+  .cs-seal-stage { max-width: 260px; }
 }
 
 @media (max-width: 768px) {
@@ -2023,6 +2523,13 @@
   .cs-lb-prev { left: 6px; }
   .cs-lb-next { right: 6px; }
   .cs-stats { gap: 26px; }
+
+  /* 内刊案例的板块 */
+  .cs-journals-inner { grid-template-columns: 1fr; gap: 26px; }
+  .cs-journal-fig { max-width: 320px; }
+  .cs-books { grid-template-columns: 1fr; }
+  .cs-chapters { grid-template-columns: 1fr; }
+  .cs-pagenum { gap: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
