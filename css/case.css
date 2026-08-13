@@ -286,7 +286,11 @@
   cursor: zoom-in;
   display: block;
 }
-.cs-sheet img { width: 100%; display: block; }
+/* aspect-ratio 必须写死：缩略图是 lazy 的，没有它则图片加载前高度为 0，
+   单页墙第二排会整排塌成一条线；而 0 高度的 lazy 图 Chrome 又永远不会去加载，
+   于是死锁在「只有一排」。同时它还保证首屏之后的页面高度从一开始就是最终值，
+   ScrollTrigger 测出来的位置不会因为图片陆续到货而失效。 */
+.cs-sheet img { width: 100%; display: block; aspect-ratio: 420 / 543; }
 .cs-sheet:hover {
   transform: translateY(-10px) scale(1.045);
   box-shadow: 0 6px 12px rgba(0,0,0,0.45), 0 26px 56px rgba(0,0,0,0.5);

@@ -72,7 +72,8 @@ function sheetCard(p, index, eager) {
   el.dataset.lb = index;
   el.setAttribute('aria-label', `放大查看 ${p.name}`);
   el.innerHTML = `
-    <img src="${thumb(p)}" alt="${p.name}单页正面" loading="${eager ? 'eager' : 'lazy'}" decoding="async">
+    <img src="${thumb(p)}" alt="${p.name}单页正面" width="420" height="543"
+         loading="${eager ? 'eager' : 'lazy'}" decoding="async">
     <span class="cs-sheet-label"><b>${p.name}</b><span>${p.slogan}</span></span>`;
   return el;
 }
@@ -192,8 +193,13 @@ function initFlip() {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: wrap,
-      start: 'top 68%',
-      end: 'bottom 42%',
+      // 用 center 而不是 top/bottom：翻面区间对视口中线左右对称，
+      // 进度 0（正面）和进度 1（反面）都发生在单页基本完整可见的时候。
+      // 原来写 top 68% → bottom 42%，进度 1 时单页顶部已经滚出屏幕 188px，
+      // 于是「翻到反面」和「翻回正面」都看不到，只剩中间 90° 那一帧一直在眼前。
+      // 区间长度 = 44% 视口高，短屏上会等比缩短，不会像百分比端点那样退化成 0。
+      start: 'center 72%',
+      end: 'center 28%',
       scrub: 0.5,
       onUpdate: self => {
         hint?.style.setProperty('--flip-progress', self.progress.toFixed(3));
@@ -812,3 +818,16 @@ initClock();
 
 window.addEventListener('load', () => ScrollTrigger.refresh());
 window.addEventListener('resize', () => ScrollTrigger.refresh());
+
+/* lazy 图是滚动到一半才到货的，只要它改变了文档高度，
+   ScrollTrigger 之前量下来的 start/end 就全部偏掉——翻面块会卡在侧面转不回来。
+   所有 <img> 都写了 width/height 预留了位置，这里再兜一层：
+   任何图片加载完成后合并成一次 refresh（load 事件不冒泡，用捕获）。 */
+let refreshTimer;
+document.addEventListener('load', e => {
+  if (e.target.tagName !== 'IMG') return;
+  clearTimeout(refreshTimer);
+  refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+}, true);
+
+document.fonts?.ready.then(() => ScrollTrigger.refresh());
