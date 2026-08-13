@@ -384,97 +384,6 @@ function initMindmap() {
 }
 
 /* ─────────────────────────────────────────
-   横向滚动块（仅 ≤768px）
-   把纵向滚动借给横向：区块钉住，手指继续上滑时内容从右往左走，
-   走完最后一项再把滚动还回去。桌面端不介入。
-   容器 [data-hscroll] + 轨道 [data-hscroll-track]，任何重复结构都能套。
-───────────────────────────────────────── */
-function initHScroll() {
-  const wraps = [...document.querySelectorAll('[data-hscroll]')];
-  if (!wraps.length || prefersReducedMotion.matches) return;
-
-  gsap.matchMedia().add('(max-width: 768px)', () => {
-    const made = [];
-
-    wraps.forEach(wrap => {
-      const track = wrap.querySelector('[data-hscroll-track]');
-      if (!track) return;
-      const isPin = wrap.dataset.hscroll === 'pin';
-
-      // 进度点要按「实际排在轨道上的项」数，不是 DOM 子元素数：
-      // 思维导图用 display:contents 把两侧容器摊掉了，真正的项在更深一层。
-      const flexItems = el => [...el.children].flatMap(c => {
-        const d = getComputedStyle(c).display;
-        if (d === 'none') return [];
-        return d === 'contents' ? flexItems(c) : [c];
-      });
-      let dots = wrap.querySelector('.cs-hscroll-dots');
-      if (!dots) {
-        dots = document.createElement('div');
-        dots.className = 'cs-hscroll-dots';
-        flexItems(track).forEach(() => dots.appendChild(document.createElement('i')));
-        track.parentNode.insertBefore(dots, track.nextSibling);
-      }
-      const pips = [...dots.children];
-      const n = pips.length;
-
-      const distance = () => Math.max(0, track.scrollWidth - wrap.clientWidth + 16);
-      if (distance() <= 0) { dots.remove(); return; }
-
-      /* ── 默认模式：原生横向滑动，只需要跟着更新圆点 ── */
-      if (!isPin) {
-        const onScroll = () => {
-          const max = wrap.scrollWidth - wrap.clientWidth;
-          const i = max <= 0 ? 0 : Math.min(n - 1, Math.round(wrap.scrollLeft / max * (n - 1)));
-          pips.forEach((p, k) => p.classList.toggle('is-on', k === i));
-        };
-        wrap.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-        made.push({ cleanup: () => { wrap.removeEventListener('scroll', onScroll); dots.remove(); } });
-        return;
-      }
-
-      const tween = gsap.to(track, { x: () => -distance(), ease: 'none' });
-      const st = ScrollTrigger.create({
-        trigger: wrap,
-        start: () => `top ${(document.querySelector('#nav')?.offsetHeight || 64) + 12}px`,
-        end: () => '+=' + distance(),
-        pin: true,
-        pinSpacing: true,
-        anticipatePin: 1,
-        scrub: 0.6,
-        invalidateOnRefresh: true,
-        animation: tween,
-        onUpdate: self => {
-          const i = Math.min(n - 1, Math.round(self.progress * (n - 1)));
-          pips.forEach((p, k) => p.classList.toggle('is-on', k === i));
-        },
-      });
-      pips[0]?.classList.add('is-on');
-      // 钉住后 ScrollTrigger 会把元素包进 .pin-spacer。钉的位置在导航下方，
-      // 于是元素上方留出一条空隙——深色区块会从这条空隙里透出页面的浅色底。
-      // 把区块自己的底色刷到占位层上，接缝就看不出来了。
-      const spacer = wrap.parentElement;
-      const bg = getComputedStyle(wrap).backgroundColor;
-      const painted = spacer?.classList.contains('pin-spacer') && bg && !/rgba?\(0, 0, 0, 0\)|transparent/.test(bg);
-      if (painted) spacer.style.background = bg;
-      made.push({
-        cleanup: () => {
-          if (painted) spacer.style.background = '';
-          st.kill();
-          tween.kill();
-          gsap.set(track, { clearProps: 'x' });
-          dots.remove();
-        },
-      });
-    });
-
-    // 切回桌面时把 pin、位移、监听和进度点一起撤干净
-    return () => made.forEach(m => m.cleanup());
-  });
-}
-
-/* ─────────────────────────────────────────
    刊物阅读器 — 整本翻页
    页面图在 assets/work/vision/book/<key>/000.webp 起编号。
    第三期原始 PDF 是跨页版，导出时已拆成单页并按
@@ -1346,7 +1255,6 @@ initPalette();
 initSeal();
 initTocMap();
 initReader();
-initHScroll();
 initPageDemo();
 initSlides();
 initMindmap();
