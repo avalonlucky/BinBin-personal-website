@@ -406,6 +406,7 @@ function initReader() {
   const faceF = flip.querySelector('.cs-rd-face.front img');
   const faceB = flip.querySelector('.cs-rd-face.back img');
   const tabsBox = rd.querySelector('.cs-rd-tabs');
+  const coach = rd.querySelector('[data-rd-coach]');
   const range = rd.querySelector('.cs-rd-range');
   const count = rd.querySelector('.cs-rd-count');
   const btnPrev = rd.querySelector('.cs-rd-nav.prev');
@@ -467,10 +468,19 @@ function initReader() {
   };
 
   /* ── 翻页：一层绕书脊旋转的元素，正面是当前页、背面是翻过去看到的那页 ── */
+  const COACH_KEY = 'maridian-reader-coached';
+  const hideCoach = remember => {
+    if (!coach || !coach.classList.contains('is-on')) return;
+    coach.classList.remove('is-on');
+    coach.setAttribute('aria-hidden', 'true');
+    if (remember) { try { localStorage.setItem(COACH_KEY, '1'); } catch (e) {} }
+  };
+
   const turn = dir => {
     if (busy) return;
     const target = pos + dir;
     if (target < 0 || target > maxPos()) return;
+    hideCoach(true);          // 翻过一次就说明学会了
     busy = true;
 
     if (prefersReducedMotion.matches) { pos = target; render(); busy = false; return; }
@@ -528,6 +538,7 @@ function initReader() {
     if (!drag.started) {
       if (drag.moved < 8) return;
       drag.started = true;
+      hideCoach(true);
       // 起手时才装配翻页元素，避免每次点击都闪一下
       const d = drag.dir;
       const frontI = d > 0 ? rightIdx(pos) : (single() ? pos : leftIdx(pos));
@@ -583,8 +594,17 @@ function initReader() {
     rd.classList.add('is-open');
     rd.setAttribute('aria-hidden', 'false');
     lenis.stop();
+    let seen = false;
+    try { seen = localStorage.getItem(COACH_KEY) === '1'; } catch (e) {}
+    if (coach && !seen) {
+      coach.classList.add('is-on');
+      coach.setAttribute('aria-hidden', 'false');
+      // 兜底：就算一直不动，8 秒后也让它退开，别永远挡着封面
+      setTimeout(() => hideCoach(false), 8000);
+    }
   };
   const close = () => {
+    hideCoach(false);
     rd.classList.remove('is-open');
     rd.setAttribute('aria-hidden', 'true');
     lenis.start();

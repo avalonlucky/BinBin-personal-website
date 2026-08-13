@@ -2658,36 +2658,70 @@
 }
 .cs-reader.is-open { display: flex; }
 
-/* 顶栏：刊物切换 + 关闭 */
-.cs-rd-top {
+/* 左侧竖排刊物导航 —— 横排在左上角太像装饰，很多人不会当成选项卡 */
+.cs-rd-rail {
+  flex: 0 0 auto;
+  width: 210px;
   display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px clamp(14px, 2vw, 28px);
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 4px;
+  align-self: center;
 }
-.cs-rd-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.cs-rd-rail-k {
+  font-family: var(--f-body);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(251, 251, 244, 0.34);
+  margin: 0 0 12px 14px;
+}
+.cs-rd-tabs { display: flex; flex-direction: column; gap: 4px; }
 .cs-rd-tab {
+  position: relative;
   font-family: var(--f-cjk);
-  font-size: 14px;
-  padding: 8px 16px;
-  border-radius: 100px;
-  border: 1px solid rgba(251, 251, 244, 0.18);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  padding: 13px 16px 13px 18px;
+  border-radius: 10px;
+  border: 0;
   background: transparent;
-  color: rgba(251, 251, 244, 0.6);
+  color: rgba(251, 251, 244, 0.92);
   cursor: pointer;
-  transition: all .3s var(--ease);
-  white-space: nowrap;
+  transition: background .3s var(--ease), color .3s var(--ease);
 }
-.cs-rd-tab:hover { color: rgba(251, 251, 244, 0.9); border-color: rgba(251, 251, 244, 0.4); }
+/* 左侧那道竖线：选中时变成主色，是「现在在读哪一本」最直接的信号 */
+.cs-rd-tab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) scaleY(0.3);
+  width: 3px;
+  height: 62%;
+  border-radius: 3px;
+  background: rgba(251, 251, 244, 0.2);
+  transition: transform .35s var(--ease), background .3s var(--ease);
+}
+.cs-rd-tab:hover { background: rgba(251, 251, 244, 0.07); }
 .cs-rd-tab.is-active {
-  background: var(--cs-accent);
-  border-color: var(--cs-accent);
-  color: #fff;
+  background: rgb(var(--cs-accent-rgb) / 0.12);
+  color: var(--cs-accent-lift);
 }
-.cs-rd-tab small { display: block; font-size: 11px; opacity: 0.72; margin-top: 2px; }
+.cs-rd-tab.is-active::before { background: var(--cs-accent); transform: translateY(-50%) scaleY(1); }
+.cs-rd-tab small {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(251, 251, 244, 0.44);
+  margin-top: 3px;
+}
+.cs-rd-tab.is-active small { color: rgb(var(--cs-accent-rgb) / 0.75); }
 .cs-rd-close {
-  margin-left: auto;
+  position: absolute;
+  top: 16px;
+  right: clamp(14px, 2vw, 28px);
+  z-index: 10;
   width: 38px;
   height: 38px;
   border-radius: 50%;
@@ -2704,15 +2738,18 @@
 /* 书台 */
 .cs-rd-stage {
   flex: 1;
-  display: grid;
-  place-items: center;
-  padding: 0 clamp(10px, 4vw, 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 3vw, 44px);
+  padding: 0 clamp(10px, 3vw, 48px);
   min-height: 0;
 }
 .cs-rd-book {
   --pg-ar: 0.758;
-  /* 高度按「视口减去上下操作栏」算，不用 vh 硬写——短窗口下 vh 会撑出去 */
-  --bh: min(calc(100vh - 190px), calc((100vw - clamp(20px, 8vw, 128px) - 96px) / (2 * var(--pg-ar))));
+  --rail: 254px;   /* 左侧导航 210 + 间距 */
+  /* 高度按「视口减去上下留白」算，不用 vh 硬写——短窗口下 vh 会撑出去 */
+  --bh: min(calc(100vh - 150px), calc((100vw - var(--rail) - clamp(20px, 6vw, 96px)) / (2 * var(--pg-ar))));
   position: relative;
   height: var(--bh);
   width: calc(var(--bh) * var(--pg-ar) * 2);
@@ -2840,6 +2877,92 @@
   color: rgba(251, 251, 244, 0.4);
 }
 
+/* 首次进来的翻页引导 —— 压在合着的那半边书上。
+   很多人打开之后不知道怎么翻，这一层把三种翻法直接摆出来，
+   翻过一次就不再出现（记在 localStorage）。 */
+.cs-rd-coach {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 7;
+  display: grid;
+  place-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .5s var(--ease);
+}
+.cs-rd-coach.is-on { opacity: 1; }
+.cs-rd-coach-card {
+  background: rgba(12, 10, 10, 0.86);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(251, 251, 244, 0.14);
+  border-radius: 16px;
+  padding: 24px 26px 22px;
+  max-width: 280px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+.cs-rd-coach b {
+  display: block;
+  font-family: var(--f-cjk);
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(251, 251, 244, 0.96);
+  margin-bottom: 4px;
+}
+.cs-rd-coach s {
+  display: block;
+  text-decoration: none;
+  font-family: var(--f-cjk);
+  font-size: 12.5px;
+  color: rgba(251, 251, 244, 0.5);
+  margin-bottom: 16px;
+}
+.cs-rd-coach ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+.cs-rd-coach li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--f-cjk);
+  font-size: 13.5px;
+  color: rgba(251, 251, 244, 0.78);
+  text-align: left;
+}
+.cs-rd-coach li i {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  background: rgb(var(--cs-accent-rgb) / 0.16);
+  color: var(--cs-accent-lift);
+  font-style: normal;
+  font-size: 12px;
+}
+/* 一只手从右往左划，示意拖拽方向 */
+.cs-rd-coach-hand {
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgb(var(--cs-accent-rgb) / 0.18);
+  color: var(--cs-accent-lift);
+  animation: cs-rd-swipe 2.1s var(--ease) infinite;
+}
+@keyframes cs-rd-swipe {
+  0%, 100% { transform: translateX(14px); opacity: 0.35; }
+  35%      { transform: translateX(14px); opacity: 1; }
+  75%      { transform: translateX(-14px); opacity: 1; }
+  90%      { transform: translateX(-14px); opacity: 0; }
+}
+
 /* 封面区的「可翻阅」提示 */
 .cs-journals-cta {
   max-width: var(--cs-max);
@@ -2874,7 +2997,28 @@
 }
 
 @media (max-width: 768px) {
+  /* 窄屏没有左侧空间，导航回到顶部横排，但保留「选中=红、未选中=白」 */
+  .cs-rd-stage { flex-direction: column; gap: 12px; padding-top: 8px; }
+  .cs-rd-rail {
+    width: 100%;
+    flex-direction: row;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 12px;
+    align-self: stretch;
+  }
+  .cs-rd-rail::-webkit-scrollbar { display: none; }
+  .cs-rd-rail-k { display: none; }
+  .cs-rd-tabs { flex-direction: row; gap: 6px; }
+  .cs-rd-tab { flex: 0 0 auto; padding: 9px 14px; font-size: 13.5px; border-radius: 100px; }
+  .cs-rd-tab::before { display: none; }
+  .cs-rd-tab small { display: none; }
+  .cs-rd-coach { width: 100%; }
+  /* 手机上没有方向键，这一条去掉 */
+  .cs-rd-coach li:last-child { display: none; }
   .cs-rd-book {
+    --rail: 0px;
     /* 窄屏一次只看一页，两页并排每页会小到看不清 */
     --bh: min(calc(100vh - 210px), calc((100vw - 24px) / var(--pg-ar)));
     width: calc(var(--bh) * var(--pg-ar));
