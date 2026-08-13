@@ -162,7 +162,7 @@
 }
 .cs-lede {
   font-family: var(--f-cjk);
-  font-size: clamp(17.5px, 1.3vw, 19px);
+  font-size: clamp(18.5px, 1.4vw, 20.5px);
   line-height: 1.85;
   color: var(--cs-ink-2);
   margin: 18px 0 0;
@@ -258,7 +258,7 @@
 }
 .cs-hero-meta dd {
   font-family: var(--f-cjk);
-  font-size: 16px;
+  font-size: 17px;
   color: rgba(251,251,244,0.82);
   margin: 0;
   line-height: 1.5;
@@ -376,7 +376,7 @@
 }
 .cs-metric-l {
   font-family: var(--f-cjk);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.55;
   color: rgba(251,251,244,0.55);
   margin-top: 9px;
@@ -405,7 +405,7 @@
 }
 .cs-stat-l {
   font-family: var(--f-cjk);
-  font-size: 15px;
+  font-size: 16px;
   color: var(--cs-ink-3);
   margin-top: 8px;
   line-height: 1.55;
@@ -434,7 +434,7 @@
 }
 .cs-card-text {
   font-family: var(--f-cjk);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.8;
   color: var(--cs-ink-2);
   margin: 0;
@@ -526,7 +526,7 @@
 }
 .cs-hub-node p {
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   line-height: 1.6;
   color: var(--cs-ink-3);
   margin: 0;
@@ -601,7 +601,7 @@
 }
 .cs-compare-v {
   font-family: var(--f-cjk);
-  font-size: 15.5px;
+  font-size: 16.5px;
   line-height: 1.7;
   color: var(--cs-ink-2);
 }
@@ -640,7 +640,7 @@
 }
 .cs-block-v {
   font-family: var(--f-cjk);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.65;
   color: var(--cs-ink-2);
 }
@@ -689,7 +689,7 @@
   border: 1px solid var(--cs-hair);
   border-radius: 100px;
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   color: var(--cs-ink-2);
 }
 .cs-member i {
@@ -735,7 +735,7 @@
 .cs-stage ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
 .cs-stage li {
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   line-height: 1.6;
   color: var(--cs-ink-3);
   padding-left: 13px;
@@ -755,7 +755,7 @@
   border-left: 2px solid var(--cs-accent);
   border-radius: 0 5px 5px 0;
   font-family: var(--f-cjk);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.75;
   color: var(--cs-ink-2);
   margin: 20px 0 0;
@@ -804,7 +804,7 @@
 .cs-doc-cap {
   padding: 13px 16px;
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   line-height: 1.6;
   color: var(--cs-ink-2);
   border-top: 1px solid var(--cs-hair);
@@ -842,7 +842,7 @@
 .cs-minutes-prod ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 5px; }
 .cs-minutes-prod li {
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   line-height: 1.65;
   color: var(--cs-ink-2);
   padding-left: 26px;
@@ -918,7 +918,7 @@
 }
 .cs-flip-copy p {
   font-family: var(--f-cjk);
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.85;
   color: var(--cs-ink-2);
   margin: 0;
@@ -985,7 +985,7 @@
   padding: 7px 16px;
   border-radius: 100px;
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   color: #fff;
   background: var(--pill-c, var(--cs-ink));
   white-space: nowrap;
@@ -1105,7 +1105,7 @@
 }
 .cs-palette-meta p {
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   color: var(--cs-ink-2);
   margin: 4px 0 0;
   line-height: 1.6;
@@ -1141,7 +1141,7 @@
 }
 .cs-spec p {
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   line-height: 1.65;
   color: var(--cs-ink-3);
   margin: 12px 0 0;
@@ -1194,7 +1194,7 @@
 .cs-phase.is-dark h4 { color: var(--cs-paper); }
 .cs-phase > p {
   font-family: var(--f-cjk);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.75;
   color: var(--cs-ink-2);
   margin: 0;
@@ -1203,7 +1203,7 @@
 .cs-phase ul { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .cs-phase li {
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   padding: 7px 11px;
   background: var(--cs-paper-2);
   border-radius: 4px;
@@ -1243,7 +1243,7 @@
 .cs-gantt-row { align-items: center; margin-bottom: 5px; }
 .cs-gantt-row > .cs-gantt-name {
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   color: var(--cs-ink-2);
   padding-right: 12px;
   white-space: nowrap;
@@ -1327,7 +1327,7 @@
 }
 .cs-ms-body p {
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   line-height: 1.7;
   color: var(--cs-ink-3);
   margin: 0;
@@ -1356,7 +1356,7 @@
 }
 .cs-deliver-l {
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   line-height: 1.65;
   color: var(--cs-ink-3);
   margin-top: 9px;
@@ -1413,7 +1413,7 @@
 }
 .cs-lesson p {
   font-family: var(--f-cjk);
-  font-size: clamp(16.5px, 1.3vw, 18.5px);
+  font-size: clamp(17.5px, 1.35vw, 19.5px);
   line-height: 1.9;
   color: var(--cs-ink-2);
   margin: 0;
@@ -1443,7 +1443,7 @@
   padding: 13px 18px;
   border-top: 1px solid var(--cs-hair);
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: 15.5px;
   line-height: 1.6;
   color: var(--cs-ink-3);
   display: flex;
@@ -1504,7 +1504,7 @@
   justify-content: center;
   gap: 10px;
   font-family: var(--f-cjk);
-  font-size: 15px;
+  font-size: 16px;
   color: var(--cs-ink-3);
   text-align: center;
   padding: 24px;
@@ -1644,7 +1644,7 @@
 }
 .cs-summary-card p {
   font-family: var(--f-cjk);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.75;
   color: rgba(245, 240, 240, 0.82);
   margin: 0 0 12px;
@@ -1839,7 +1839,7 @@
 }
 .cs-ai-hint {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 13.5px;
   line-height: 1.6;
   color: var(--cs-ink-3);
   text-align: center;
@@ -2029,14 +2029,14 @@
 }
 .cs-journal-n {
   font-family: var(--f-cjk);
-  font-size: clamp(15px, 1.3vw, 17px);
+  font-size: clamp(16px, 1.4vw, 18px);
   font-weight: 600;
   color: rgba(251, 251, 244, 0.94);
   margin: 6px 0 4px;
 }
 .cs-journal-d {
   font-family: var(--f-cjk);
-  font-size: 13px;
+  font-size: 14.5px;
   line-height: 1.6;
   color: rgba(251, 251, 244, 0.56);
   margin: 0;
@@ -2074,7 +2074,7 @@
 .cs-seal-switch button { flex: 1; text-align: center; }
 .cs-seal-switch button {
   font-family: var(--f-cjk);
-  font-size: 13px;
+  font-size: 14px;
   padding: 7px 15px;
   border-radius: 100px;
   border: 1px solid var(--cs-hair);
@@ -2091,7 +2091,7 @@
 .cs-seal-keys { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 0; }
 .cs-seal-key {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 13.5px;
   padding: 5px 13px;
   border-radius: 100px;
   border: 1px solid var(--cs-hair);
@@ -2192,7 +2192,7 @@
 }
 .cs-prio h4 {
   font-family: var(--f-cjk);
-  font-size: clamp(14.5px, 1.3vw, 16px);
+  font-size: clamp(15.5px, 1.35vw, 17px);
   font-weight: 600;
   color: var(--cs-ink);
   margin: 2px 0 5px;
@@ -2200,7 +2200,7 @@
 }
 .cs-prio p {
   font-family: var(--f-cjk);
-  font-size: 13.5px;
+  font-size: 15px;
   line-height: 1.75;
   color: var(--cs-ink-2);
   margin: 0;
@@ -2260,7 +2260,7 @@
 .cs-mm-core span {
   display: block;
   font-family: var(--f-cjk);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--cs-ink-3);
   margin-top: 4px;
 }
@@ -2284,7 +2284,7 @@
 }
 .cs-chapter-sum dd {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--cs-ink-2);
   margin: 0;
@@ -2311,7 +2311,7 @@
 }
 .cs-chapter-cn {
   font-family: var(--f-cjk);
-  font-size: clamp(15px, 1.35vw, 17px);
+  font-size: clamp(16px, 1.4vw, 18px);
   font-weight: 600;
   color: var(--cs-ink);
 }
@@ -2328,7 +2328,7 @@
   padding: 9px 0 9px 15px;
   border-bottom: 1px solid rgb(2 2 2 / 0.05);
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 14px;
   line-height: 1.55;
   color: var(--cs-ink-2);
 }
@@ -2346,7 +2346,7 @@
 .cs-art i {
   font-style: normal;
   color: var(--cs-ink-3);
-  font-size: 11.5px;
+  font-size: 12.5px;
   white-space: nowrap;
 }
 
@@ -2396,7 +2396,7 @@
 }
 .cs-book-body > p {
   font-family: var(--f-cjk);
-  font-size: 13.5px;
+  font-size: 15px;
   line-height: 1.75;
   color: var(--cs-ink-2);
   margin: 0 0 16px;
@@ -2404,7 +2404,7 @@
 .cs-book-tags { display: flex; flex-wrap: wrap; gap: 7px; }
 .cs-book-tags span {
   font-family: var(--f-cjk);
-  font-size: 12px;
+  font-size: 13px;
   padding: 4px 12px;
   border-radius: 100px;
   border: 1px solid var(--cs-hair);
@@ -2475,7 +2475,7 @@
 }
 .cs-pd-ctrl button {
   font-family: var(--f-cjk);
-  font-size: 13px;
+  font-size: 14px;
   padding: 7px 16px;
   border-radius: 100px;
   border: 1px solid var(--cs-hair);
@@ -2490,7 +2490,7 @@
 }
 .cs-pd-state {
   font-family: var(--f-cjk);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--cs-ink-3);
 }
 .cs-pd-state b { color: var(--cs-accent-deep); font-weight: 600; }
@@ -2564,14 +2564,14 @@
 }
 .cs-slide-cap p {
   font-family: var(--f-cjk);
-  font-size: clamp(14px, 1.25vw, 15.5px);
+  font-size: clamp(15px, 1.3vw, 16.5px);
   line-height: 1.8;
   color: var(--cs-ink-2);
   margin: 0;
 }
 .cs-slide-hint {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--cs-ink-3);
   margin: 14px 0 0;
 }
@@ -2607,21 +2607,21 @@
 }
 .cs-rule h4 {
   font-family: var(--f-cjk);
-  font-size: clamp(15.5px, 1.35vw, 17px);
+  font-size: clamp(16.5px, 1.4vw, 18px);
   font-weight: 600;
   color: var(--cs-ink);
   margin: 0 0 7px;
 }
 .cs-rule p {
   font-family: var(--f-cjk);
-  font-size: clamp(14px, 1.2vw, 15px);
+  font-size: clamp(15px, 1.25vw, 16px);
   line-height: 1.78;
   color: var(--cs-ink-2);
   margin: 0;
 }
 .cs-rule p code {
   font-family: var(--f-mono, monospace);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--cs-accent-deep);
 }
 /* 色彩规范那张卡里的两块色 */

@@ -17,7 +17,7 @@
 - 当前正式站代码提交：以 GitHub 远端 `main` 最新提交为准
 - 正式站当前资源版本：
   - `css/style.css?v=73`
-  - `css/case.css?v=27`
+  - `css/case.css?v=28`
   - `js/main.js?v=41`
   - `js/about.js?v=4`
   - `js/case.js?v=16`
