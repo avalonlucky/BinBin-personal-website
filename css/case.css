@@ -2003,7 +2003,7 @@
   background: none;
   color: inherit;
   text-align: left;
-  cursor: zoom-in;
+  cursor: pointer;
   font: inherit;
 }
 .cs-journal-fig {
@@ -2018,6 +2018,62 @@
 .cs-journal:hover .cs-journal-fig {
   transform: translateY(-10px);
   box-shadow: 0 6px 14px rgba(0,0,0,0.55), 0 34px 74px rgba(0,0,0,0.5);
+}
+
+/* 「可翻阅」标记：常驻在封面上，不做成 hover 才出现——
+   鼠标没移上去的人根本不会知道这里能点。 */
+.cs-journal-fig::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 42%;
+  background: linear-gradient(180deg, transparent, rgba(2,2,2,0.72));
+  opacity: 0.9;
+  transition: opacity .45s var(--ease);
+  pointer-events: none;
+  z-index: 1;
+}
+.cs-journal-badge {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(14px, 1.6vw, 22px);
+  transform: translateX(-50%);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 100px;
+  background: rgba(251, 251, 244, 0.94);
+  color: #141210;
+  font-family: var(--f-cjk);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transition: background .35s var(--ease), color .35s var(--ease),
+              transform .45s var(--ease), box-shadow .45s var(--ease);
+  pointer-events: none;
+}
+.cs-journal-badge svg { flex-shrink: 0; }
+.cs-journal-badge b { font-weight: 600; }
+.cs-journal-badge span { font-weight: 400; opacity: 0.62; }
+.cs-journal:hover .cs-journal-badge {
+  background: var(--cs-accent);
+  color: #fff;
+  transform: translateX(-50%) translateY(-4px);
+  box-shadow: 0 10px 26px rgb(var(--cs-accent-rgb) / 0.5);
+}
+.cs-journal:hover .cs-journal-badge span { opacity: 0.8; }
+.cs-journal:hover .cs-journal-fig::before { opacity: 1; }
+
+/* 进入视口时，三个标记依次弹一下，确保被看见 */
+.cs-journal-badge.is-cue { animation: cs-badge-cue 1.5s var(--ease) 1; }
+@keyframes cs-badge-cue {
+  0%, 100% { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 0 0 rgb(var(--cs-accent-rgb) / 0.5); }
+  30%      { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 0 14px rgb(var(--cs-accent-rgb) / 0); }
+  55%      { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 0 0 rgb(var(--cs-accent-rgb) / 0.5); }
+  85%      { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 0 14px rgb(var(--cs-accent-rgb) / 0); }
 }
 .cs-journal-meta { margin: 16px 0 0; }
 .cs-journal-k {
@@ -2787,14 +2843,14 @@
 /* 封面区的「可翻阅」提示 */
 .cs-journals-cta {
   max-width: var(--cs-max);
-  margin: clamp(22px, 2.6vw, 34px) auto 0;
+  margin: clamp(24px, 2.8vw, 36px) auto 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   font-family: var(--f-cjk);
-  font-size: 14.5px;
-  color: rgba(251, 251, 244, 0.66);
+  font-size: 15px;
+  color: rgba(251, 251, 244, 0.72);
   opacity: 0;
   transform: translateY(8px);
   transition: opacity .6s var(--ease), transform .6s var(--ease);
@@ -2804,13 +2860,14 @@
   font-style: normal;
   display: inline-grid;
   place-items: center;
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: 1px solid rgb(var(--cs-accent-rgb) / 0.6);
   color: var(--cs-accent-lift);
   animation: cs-rd-pulse 2.4s var(--ease) infinite;
 }
+.cs-journals-cta b { color: rgba(251, 251, 244, 0.95); font-weight: 600; }
 @keyframes cs-rd-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgb(var(--cs-accent-rgb) / 0.45); }
   60%      { box-shadow: 0 0 0 12px rgb(var(--cs-accent-rgb) / 0); }
