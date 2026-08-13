@@ -384,6 +384,236 @@ function initMindmap() {
 }
 
 /* ─────────────────────────────────────────
+   刊物阅读器 — 整本翻页
+   页面图在 assets/work/vision/book/<key>/000.webp 起编号。
+   第三期原始 PDF 是跨页版，导出时已拆成单页并按
+   「封面 → p1..p82 → 封底」重新排好。
+───────────────────────────────────────── */
+const BOOKS = [
+  { key: 'v3',  name: '《昂楷视界》第三期', sub: '十五周年特刊', pages: 84,  ar: 0.758 },
+  { key: 'v4',  name: '《昂楷视界》第四期', sub: '数安中国 · 环球智慧', pages: 108, ar: 0.775 },
+  { key: 'dao', name: '《昂楷之道》',       sub: '同道 · 同行 · 同心', pages: 108, ar: 0.780 },
+];
+
+function initReader() {
+  const rd = document.querySelector('[data-reader]');
+  if (!rd) return;
+
+  const stageBook = rd.querySelector('.cs-rd-book');
+  const pgL   = rd.querySelector('.cs-rd-pg.is-left');
+  const pgR   = rd.querySelector('.cs-rd-pg.is-right');
+  const flip  = rd.querySelector('.cs-rd-flip');
+  const faceF = flip.querySelector('.cs-rd-face.front img');
+  const faceB = flip.querySelector('.cs-rd-face.back img');
+  const tabsBox = rd.querySelector('.cs-rd-tabs');
+  const range = rd.querySelector('.cs-rd-range');
+  const count = rd.querySelector('.cs-rd-count');
+  const btnPrev = rd.querySelector('.cs-rd-nav.prev');
+  const btnNext = rd.querySelector('.cs-rd-nav.next');
+  const hitPrev = rd.querySelector('.cs-rd-hit.prev');
+  const hitNext = rd.querySelector('.cs-rd-hit.next');
+
+  let book = BOOKS[0];
+  let pos = 0;
+  let busy = false;
+  const single = () => window.innerWidth <= 768;
+
+  const url = i => (i == null || i < 0 || i >= book.pages)
+    ? null : `../assets/work/vision/book/${book.key}/${String(i).padStart(3, '0')}.webp`;
+
+  // 桌面按跨页走：pos 0 只有封面，之后 left=2p-1 / right=2p
+  const leftIdx  = p => single() ? null : (p === 0 ? null : 2 * p - 1);
+  const rightIdx = p => single() ? p : 2 * p;
+  const maxPos   = () => single() ? book.pages - 1 : Math.floor(book.pages / 2);
+
+  const setImg = (slot, i) => {
+    const src = url(i);
+    const img = slot.querySelector('img');
+    slot.classList.toggle('is-blank', !src);
+    if (src) { img.src = src; img.style.visibility = ''; }
+    else { img.removeAttribute('src'); img.style.visibility = 'hidden'; }
+  };
+
+  // 只预取前后几页，300 张图不能一次性拉
+  const preload = () => {
+    const base = single() ? pos : 2 * pos;
+    for (let d = -3; d <= 5; d++) {
+      const u = url(base + d);
+      if (u) { const im = new Image(); im.src = u; }
+    }
+  };
+
+  const render = () => {
+    stageBook.style.setProperty('--pg-ar', book.ar);
+    stageBook.classList.toggle('is-single', single());
+    setImg(pgL, leftIdx(pos));
+    setImg(pgR, rightIdx(pos));
+    // 页码直接用数组下标——它正好等于刊物上印的页码（下标 0 是封面、最后一张是封底），
+    // 之前 +1 显示成 4–5、纸上却印着 3 和 4，对不上。
+    const l = leftIdx(pos), r = rightIdx(pos);
+    const last = book.pages - 1;
+    const nameOf = i => i === 0 ? '封面' : (i === last ? '封底' : String(i));
+    let label;
+    if (l == null || l >= book.pages) label = nameOf(Math.min(r, last));
+    else if (r >= book.pages)         label = nameOf(l);
+    else                              label = `${nameOf(l)}–${nameOf(r)}`;
+    count.innerHTML = `<b>${label}</b> · 共 ${book.pages} 页`;
+    range.max = maxPos();
+    range.value = pos;
+    const atStart = pos <= 0, atEnd = pos >= maxPos();
+    btnPrev.disabled = hitPrev.disabled = atStart;
+    btnNext.disabled = hitNext.disabled = atEnd;
+    preload();
+  };
+
+  /* ── 翻页：一层绕书脊旋转的元素，正面是当前页、背面是翻过去看到的那页 ── */
+  const turn = dir => {
+    if (busy) return;
+    const target = pos + dir;
+    if (target < 0 || target > maxPos()) return;
+    busy = true;
+
+    if (prefersReducedMotion.matches) { pos = target; render(); busy = false; return; }
+
+    let frontI, backI, underSlot, underI;
+    if (dir > 0) {
+      frontI = rightIdx(pos);
+      backI  = single() ? target : leftIdx(target);
+      underSlot = pgR; underI = single() ? rightIdx(target) : rightIdx(target);
+    } else {
+      frontI = single() ? pos : leftIdx(pos);
+      backI  = single() ? target : rightIdx(target);
+      underSlot = single() ? pgR : pgL; underI = single() ? rightIdx(target) : leftIdx(target);
+    }
+
+    faceF.src = url(frontI) || '';
+    faceB.src = url(backI) || '';
+    faceF.style.visibility = url(frontI) ? '' : 'hidden';
+    faceB.style.visibility = url(backI) ? '' : 'hidden';
+    // 翻页元素盖住的那一格，先换成翻完之后应该露出的页
+    setImg(underSlot, underI);
+
+    flip.classList.add('is-on');
+    flip.classList.toggle('to-left', dir > 0);
+    flip.classList.toggle('to-right', dir < 0);
+    gsap.fromTo(flip, { rotateY: 0 }, {
+      rotateY: dir > 0 ? -180 : 180,
+      duration: 0.72,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        pos = target;
+        flip.classList.remove('is-on');
+        gsap.set(flip, { rotateY: 0 });
+        render();
+        busy = false;
+      },
+    });
+  };
+
+  /* ── 拖拽翻页 ── */
+  let drag = null;
+  const onDown = e => {
+    if (busy || e.button === 1 || e.button === 2) return;
+    const r = stageBook.getBoundingClientRect();
+    const half = single() ? 1 : 2;
+    const dir = (e.clientX - r.left) > r.width / half ? 1 : -1;
+    if (single() && (e.clientX - r.left) < r.width / 2) return;   // 窄屏左半边不接管
+    if (pos + dir < 0 || pos + dir > maxPos()) return;
+    drag = { x0: e.clientX, dir, w: r.width / (single() ? 1 : 2), moved: 0, started: false };
+  };
+  const onMove = e => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x0;
+    drag.moved = Math.abs(dx);
+    if (!drag.started) {
+      if (drag.moved < 8) return;
+      drag.started = true;
+      // 起手时才装配翻页元素，避免每次点击都闪一下
+      const d = drag.dir;
+      const frontI = d > 0 ? rightIdx(pos) : (single() ? pos : leftIdx(pos));
+      const backI  = d > 0 ? (single() ? pos + 1 : leftIdx(pos + 1)) : (single() ? pos - 1 : rightIdx(pos - 1));
+      faceF.src = url(frontI) || ''; faceB.src = url(backI) || '';
+      flip.classList.add('is-on');
+      flip.classList.toggle('to-left', d > 0);
+      flip.classList.toggle('to-right', d < 0);
+    }
+    const p = Math.min(1, Math.max(0, (drag.dir > 0 ? -dx : dx) / drag.w));
+    gsap.set(flip, { rotateY: drag.dir > 0 ? -180 * p : 180 * p });
+    drag.p = p;
+  };
+  const onUp = () => {
+    if (!drag) return;
+    const d = drag;
+    drag = null;
+    if (!d.started) return;
+    flip.classList.remove('is-on');
+    gsap.set(flip, { rotateY: 0 });
+    if ((d.p || 0) > 0.28) turn(d.dir);
+  };
+  stageBook.addEventListener('pointerdown', onDown);
+  window.addEventListener('pointermove', onMove);
+  window.addEventListener('pointerup', onUp);
+
+  hitPrev.addEventListener('click', () => turn(-1));
+  hitNext.addEventListener('click', () => turn(1));
+  btnPrev.addEventListener('click', () => turn(-1));
+  btnNext.addEventListener('click', () => turn(1));
+  range.addEventListener('input', () => { if (busy) return; pos = Number(range.value); render(); });
+
+  /* ── 刊物切换 ── */
+  const showBook = key => {
+    book = BOOKS.find(b => b.key === key) || BOOKS[0];
+    pos = 0;
+    tabsBox.querySelectorAll('.cs-rd-tab').forEach(b => b.classList.toggle('is-active', b.dataset.book === book.key));
+    render();
+  };
+  BOOKS.forEach(b => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'cs-rd-tab';
+    btn.dataset.book = b.key;
+    btn.innerHTML = `${b.name}<small>${b.sub}</small>`;
+    btn.addEventListener('click', () => showBook(b.key));
+    tabsBox.appendChild(btn);
+  });
+
+  /* ── 开关 ── */
+  const open = key => {
+    showBook(key);
+    rd.classList.add('is-open');
+    rd.setAttribute('aria-hidden', 'false');
+    lenis.stop();
+  };
+  const close = () => {
+    rd.classList.remove('is-open');
+    rd.setAttribute('aria-hidden', 'true');
+    lenis.start();
+  };
+  rd.querySelector('.cs-rd-close').addEventListener('click', close);
+  document.querySelectorAll('[data-open-book]').forEach(el => {
+    el.addEventListener('click', e => { e.preventDefault(); open(el.dataset.openBook); });
+  });
+  document.addEventListener('keydown', e => {
+    if (!rd.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') turn(1);
+    if (e.key === 'ArrowLeft')  turn(-1);
+  });
+  window.addEventListener('resize', () => { if (rd.classList.contains('is-open')) render(); });
+
+  /* ── 滚到封面区时提示「可以翻阅」 ── */
+  const cta = document.querySelector('.cs-journals-cta');
+  if (cta) {
+    ScrollTrigger.create({
+      trigger: cta,
+      start: 'top 92%',
+      once: true,
+      onEnter: () => cta.classList.add('is-on'),
+    });
+  }
+}
+
+/* ─────────────────────────────────────────
    翻面演示 — 滚动驱动 rotateY 0→180
 ───────────────────────────────────────── */
 function initFlip() {
@@ -1014,6 +1244,7 @@ initPills();
 initPalette();
 initSeal();
 initTocMap();
+initReader();
 initPageDemo();
 initSlides();
 initMindmap();

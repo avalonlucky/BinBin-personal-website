@@ -2585,6 +2585,261 @@
 }
 .cs-figure.is-compact.is-narrow { max-width: 520px; }
 
+/* ════════════════════════════════════════
+   刊物阅读器 —— 整本翻页
+   两页并排 + 一层绕书脊旋转的翻页元素。
+   页面尺寸不写死：--pg-ar 是单页宽高比，各刊不同，由 JS 设进来；
+   书高取「视口高」与「视口宽能容下两页」中较小的一个。
+════════════════════════════════════════ */
+.cs-reader {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  flex-direction: column;
+  background: rgba(2, 2, 2, 0.94);
+  backdrop-filter: blur(6px);
+}
+.cs-reader.is-open { display: flex; }
+
+/* 顶栏：刊物切换 + 关闭 */
+.cs-rd-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px clamp(14px, 2vw, 28px);
+  flex-wrap: wrap;
+}
+.cs-rd-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.cs-rd-tab {
+  font-family: var(--f-cjk);
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid rgba(251, 251, 244, 0.18);
+  background: transparent;
+  color: rgba(251, 251, 244, 0.6);
+  cursor: pointer;
+  transition: all .3s var(--ease);
+  white-space: nowrap;
+}
+.cs-rd-tab:hover { color: rgba(251, 251, 244, 0.9); border-color: rgba(251, 251, 244, 0.4); }
+.cs-rd-tab.is-active {
+  background: var(--cs-accent);
+  border-color: var(--cs-accent);
+  color: #fff;
+}
+.cs-rd-tab small { display: block; font-size: 11px; opacity: 0.72; margin-top: 2px; }
+.cs-rd-close {
+  margin-left: auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(251, 251, 244, 0.18);
+  background: transparent;
+  color: rgba(251, 251, 244, 0.8);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.cs-rd-close:hover { background: rgba(251, 251, 244, 0.1); }
+
+/* 书台 */
+.cs-rd-stage {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 0 clamp(10px, 4vw, 64px);
+  min-height: 0;
+}
+.cs-rd-book {
+  --pg-ar: 0.758;
+  /* 高度按「视口减去上下操作栏」算，不用 vh 硬写——短窗口下 vh 会撑出去 */
+  --bh: min(calc(100vh - 190px), calc((100vw - clamp(20px, 8vw, 128px) - 96px) / (2 * var(--pg-ar))));
+  position: relative;
+  height: var(--bh);
+  width: calc(var(--bh) * var(--pg-ar) * 2);
+  display: flex;
+  perspective: 2600px;
+  filter: drop-shadow(0 24px 60px rgba(0, 0, 0, 0.6));
+}
+.cs-rd-pg {
+  width: 50%;
+  height: 100%;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+}
+.cs-rd-pg img { width: 100%; height: 100%; display: block; }
+.cs-rd-pg.is-blank { background: rgba(251, 251, 244, 0.06); }
+/* 书脊阴影，两页之间那道折痕 */
+.cs-rd-book::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 46px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.22) 44%, rgba(0,0,0,0.28) 50%, rgba(0,0,0,0.22) 56%, transparent);
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* 翻动中的那一页 */
+.cs-rd-flip {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  transform-style: preserve-3d;
+  display: none;
+  z-index: 5;
+}
+.cs-rd-flip.is-on { display: block; }
+.cs-rd-flip.to-left  { left: 50%; transform-origin: left center; }
+.cs-rd-flip.to-right { left: 0;   transform-origin: right center; }
+.cs-rd-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  background: #fff;
+  overflow: hidden;
+}
+.cs-rd-face img { width: 100%; height: 100%; display: block; }
+.cs-rd-face.back { transform: rotateY(180deg); }
+
+/* 点击区：左右各半页，角上给一个翻角提示 */
+.cs-rd-hit {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 6;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.cs-rd-hit.prev { left: 0; }
+.cs-rd-hit.next { left: 50%; }
+.cs-rd-hit::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 62px;
+  height: 62px;
+  opacity: 0;
+  transition: opacity .3s var(--ease);
+}
+.cs-rd-hit.next::after {
+  right: 0;
+  background: linear-gradient(225deg, rgba(255,255,255,0.9) 0 46%, rgba(0,0,0,0.16) 47%, transparent 54%);
+}
+.cs-rd-hit.prev::after {
+  left: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0 46%, rgba(0,0,0,0.16) 47%, transparent 54%);
+}
+.cs-rd-hit:hover::after { opacity: 1; }
+.cs-rd-hit[disabled] { cursor: default; }
+.cs-rd-hit[disabled]::after { display: none; }
+
+/* 底栏：页码 + 进度条 */
+.cs-rd-bottom {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 22px);
+  padding: 14px clamp(14px, 3vw, 40px) 20px;
+  color: rgba(251, 251, 244, 0.62);
+  font-family: var(--f-cjk);
+  font-size: 13.5px;
+}
+.cs-rd-nav {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(251, 251, 244, 0.18);
+  background: transparent;
+  color: rgba(251, 251, 244, 0.85);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: background .3s var(--ease);
+}
+.cs-rd-nav:hover:not([disabled]) { background: rgba(251, 251, 244, 0.12); }
+.cs-rd-nav[disabled] { opacity: 0.28; cursor: default; }
+.cs-rd-range {
+  flex: 1;
+  accent-color: var(--cs-accent);
+  cursor: pointer;
+  min-width: 0;
+}
+.cs-rd-count { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cs-rd-count b { color: rgba(251, 251, 244, 0.95); font-weight: 600; }
+.cs-rd-hint {
+  white-space: nowrap;
+  font-size: 12.5px;
+  color: rgba(251, 251, 244, 0.4);
+}
+
+/* 封面区的「可翻阅」提示 */
+.cs-journals-cta {
+  max-width: var(--cs-max);
+  margin: clamp(22px, 2.6vw, 34px) auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--f-cjk);
+  font-size: 14.5px;
+  color: rgba(251, 251, 244, 0.66);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .6s var(--ease), transform .6s var(--ease);
+}
+.cs-journals-cta.is-on { opacity: 1; transform: none; }
+.cs-journals-cta i {
+  font-style: normal;
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgb(var(--cs-accent-rgb) / 0.6);
+  color: var(--cs-accent-lift);
+  animation: cs-rd-pulse 2.4s var(--ease) infinite;
+}
+@keyframes cs-rd-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--cs-accent-rgb) / 0.45); }
+  60%      { box-shadow: 0 0 0 12px rgb(var(--cs-accent-rgb) / 0); }
+}
+
+@media (max-width: 768px) {
+  .cs-rd-book {
+    /* 窄屏一次只看一页，两页并排每页会小到看不清 */
+    --bh: min(calc(100vh - 210px), calc((100vw - 24px) / var(--pg-ar)));
+    width: calc(var(--bh) * var(--pg-ar));
+  }
+  .cs-rd-book.is-single .cs-rd-pg.is-left { display: none; }
+  .cs-rd-book::after { display: none; }
+  .cs-rd-book .cs-rd-pg { width: 100%; }
+  /* 单页模式：翻动的那一页要盖满整个可见页，不能还是半页宽 */
+  .cs-rd-flip,
+  .cs-rd-flip.to-left,
+  .cs-rd-flip.to-right { width: 100%; left: 0; }
+  /* 点击区仍按左右半边分，方便单手点 */
+  .cs-rd-hit { width: 50%; }
+  .cs-rd-hit.next { left: 50%; }
+  .cs-rd-tab small { display: none; }
+  /* 底栏一行放不下：提示文字收起，其余允许换行 */
+  .cs-rd-hint { display: none; }
+  .cs-rd-bottom { flex-wrap: wrap; padding-bottom: 14px; }
+  .cs-rd-top { padding: 10px 12px; gap: 10px; }
+  .cs-rd-tab { font-size: 13px; padding: 7px 13px; }
+}
+
 /* ── 规范条目：七个维度 ── */
 .cs-rules {
   display: grid;

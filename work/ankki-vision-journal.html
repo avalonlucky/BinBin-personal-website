@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=73">
-  <link rel="stylesheet" href="../css/case.css?v=29">
+  <link rel="stylesheet" href="../css/case.css?v=32">
 </head>
 <body class="case-page is-vision">
 <div class="site">
@@ -88,9 +88,7 @@
         <div class="cs-journals-inner">
 
           <button class="cs-journal" type="button"
-                  data-zoom="../assets/work/vision/cover/v3-cover.webp"
-                  data-zoom-title="《昂楷视界》第三期 · 十五周年特刊 封面"
-                  data-zoom-note="主标题「抛弃幻想 · 战胜恐惧 · 创造希望」／封面人物为董事长专访">
+                  data-open-book="v3">
             <div class="cs-journal-fig">
               <img src="../assets/work/vision/cover/v3-cover.webp" width="922" height="1217"
                    alt="《昂楷视界》第三期十五周年特刊封面" loading="eager" decoding="async">
@@ -103,9 +101,7 @@
           </button>
 
           <button class="cs-journal" type="button"
-                  data-zoom="../assets/work/vision/cover/v4-cover.webp"
-                  data-zoom-title="《昂楷视界》第四期 封面"
-                  data-zoom-note="主题「数安中国 · 环球智慧」，国际代表团到访昂楷科技">
+                  data-open-book="v4">
             <div class="cs-journal-fig">
               <img src="../assets/work/vision/cover/v4-cover.webp" width="1200" height="1549"
                    alt="《昂楷视界》第四期封面" loading="eager" decoding="async">
@@ -118,9 +114,7 @@
           </button>
 
           <button class="cs-journal" type="button"
-                  data-zoom="../assets/work/vision/cover/dao-cover.webp"
-                  data-zoom-title="《昂楷之道》封面"
-                  data-zoom-note="对内的文化读本：原创插画、撞色几何、拼图元素">
+                  data-open-book="dao">
             <div class="cs-journal-fig">
               <img src="../assets/work/vision/cover/dao-cover.webp" width="1200" height="1540"
                    alt="《昂楷之道》封面" loading="eager" decoding="async">
@@ -133,6 +127,13 @@
           </button>
 
         </div>
+
+        <p class="cs-journals-cta">
+          <i aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.4h4.2c.9 0 1.8.5 1.8 1.3v8c0-.6-.8-1.1-1.8-1.1H2zM14 3.4H9.8c-1 0-1.8.5-1.8 1.3v8c0-.6.8-1.1 1.8-1.1H14z"/></svg>
+          </i>
+          点击封面，可以整本翻阅——三本刊物、共 300 页，支持拖拽、点书角与方向键
+        </p>
       </div>
 
       <!-- ══════════════════════════════════════
@@ -974,6 +975,45 @@
 </div><!-- /.site -->
 
 <!-- ══════════════════════════════════════
+     刊物阅读器 — 整本翻页
+══════════════════════════════════════ -->
+<div class="cs-reader" data-reader aria-hidden="true" role="dialog" aria-modal="true" aria-label="刊物翻阅">
+  <div class="cs-rd-top">
+    <div class="cs-rd-tabs"></div>
+    <button class="cs-rd-close" type="button" aria-label="关闭">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 2l12 12M14 2L2 14"/></svg>
+    </button>
+  </div>
+
+  <div class="cs-rd-stage">
+    <div class="cs-rd-book">
+      <div class="cs-rd-pg is-left"><img alt=""></div>
+      <div class="cs-rd-pg is-right"><img alt=""></div>
+
+      <div class="cs-rd-flip">
+        <div class="cs-rd-face front"><img alt=""></div>
+        <div class="cs-rd-face back"><img alt=""></div>
+      </div>
+
+      <button class="cs-rd-hit prev" type="button" aria-label="上一页"></button>
+      <button class="cs-rd-hit next" type="button" aria-label="下一页"></button>
+    </div>
+  </div>
+
+  <div class="cs-rd-bottom">
+    <button class="cs-rd-nav prev" type="button" aria-label="上一页">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2L4 8l6 6"/></svg>
+    </button>
+    <button class="cs-rd-nav next" type="button" aria-label="下一页">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2l6 6-6 6"/></svg>
+    </button>
+    <input class="cs-rd-range" type="range" min="0" max="1" step="1" value="0" aria-label="跳转到指定页">
+    <span class="cs-rd-count"></span>
+    <span class="cs-rd-hint">拖拽 / 点书角 / ← → 翻页 · Esc 关闭</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
      LIGHTBOX
 ══════════════════════════════════════ -->
 <div class="cs-lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="版面放大查看">
@@ -1000,6 +1040,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="../js/case.js?v=16"></script>
+<script src="../js/case.js?v=19"></script>
 </body>
 </html>
