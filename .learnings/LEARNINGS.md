@@ -9,19 +9,19 @@
 For visual replica work, always compare against the reference site with real rendered measurements and/or screenshots before finalizing changes.
 
 ### Details
-The user corrected that visual changes, especially typography sizing and positioning, must be carefully compared with the original reference website. Do not rely only on CSS values or rough visual guessing. For this Estrela Studio replica, inspect the reference site, measure computed styles and element positions, and verify the local result against those measurements or screenshots.
+The user corrected that visual changes, especially typography sizing, positioning, and motion geometry, must be carefully compared with the original reference website. Do not rely only on CSS values or rough visual guessing. For this Estrela Studio replica, inspect the reference site, measure computed styles and element positions, and verify the local result against those measurements or screenshots. This recurred on the About reading orbit: repeatedly tuning a generic circle still missed the reference contract of eight clear cards plus two faded silhouettes.
 
 ### Suggested Action
 Before completing future visual alignment tasks, open or fetch the reference site, compare rendered sizes/positions, make scoped edits, then verify with a local browser measurement or screenshot comparison.
 
 ### Metadata
 - Source: user_feedback
-- Related Files: css/style.css, index.html
+- Related Files: css/style.css, index.html, about.html, js/about.js
 - Tags: visual-qa, reference-site, typography, frontend
 - Pattern-Key: frontend.reference_visual_qa
-- Recurrence-Count: 1
+- Recurrence-Count: 2
 - First-Seen: 2026-05-30
-- Last-Seen: 2026-05-30
+- Last-Seen: 2026-08-04
 
 ---
 

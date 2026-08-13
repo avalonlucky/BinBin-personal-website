@@ -123,6 +123,14 @@ assets/work/<slug>/   该作品的图片资源
 | `doc/ppt-back.webp` | PPT 区块模板反面 | 无需脱敏 |
 | `scene/booth-real.webp` | 展会现场实拍 | 已裁掉所有可辨识人脸 |
 | `scene/booth-render.webp` | 展位陈列效果图 | AI 生成，页面已明确标注 |
+| `card-ankki-booth.webp` | 首页精选作品 01 封面 | 从 booth-render 原图裁的竖版，见下 |
+
+- 首页卡片封面必须是**竖版**素材：`.work-col` 收起态约 280×576（比例 0.49），
+  展开态约 496×957（0.52），`object-fit: cover`。景观图直接放上去只会露出中间一条窄缝。
+  `card-ankki-booth.webp`（690×1381）的做法是：从 1672×941 原图取
+  `x 552..1022 / y 0..941`，即**以背景墙 LOGO 为水平中心、纵向取满**，
+  这样收起态两侧只被裁掉 9px，LOGO、slogan、五个图标、四张单页全在框内。
+  换封面时先用 PIL 按上面两个比例模拟 cover 裁切再看效果，别直接扔进浏览器猜。
 
 - 脱敏用 `redact.py`（局部降采样再放大回原尺寸，不可逆）。若要新增脱敏，
   先用 `magick <图> -crop WxH+X+Y +repage -resize <放大>` 反复取点定位坐标，
