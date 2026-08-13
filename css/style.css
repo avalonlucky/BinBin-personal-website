@@ -37,6 +37,23 @@
   --f-body:    'PP Neue Montreal', system-ui, sans-serif;
   --f-cjk:     'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', system-ui, sans-serif;
   --ease:      cubic-bezier(.16, 1, .3, 1);
+
+  /* ── 字号规范 ──
+     全站只用这七级，不再随手写数字。13.5px 是下限，再小在正文里就不该出现。
+     标题级用 clamp 跟着视口缩，UI 级固定，避免同一个界面里忽大忽小。 */
+  --fs-xs:   13.5px;                    /* 下限：标签、页码、辅助信息 */
+  --fs-sm:   15px;                      /* 副标题、图注、次要说明 */
+  --fs-base: 17px;                      /* 正文、导航项、按钮 */
+  --fs-md:   19px;                      /* 强调正文、小标题 */
+  --fs-lg:   clamp(21px, 2vw, 25px);    /* 三级标题 */
+  --fs-xl:   clamp(26px, 2.8vw, 34px);  /* 二级标题 */
+  --fs-2xl:  clamp(33px, 4.2vw, 52px);  /* 一级标题 */
+
+  /* ── 深色底上的文字 ──
+     纯黑底上灰字最容易翻车。三级到底，不再往下调。 */
+  --on-dark-1: rgba(251, 251, 244, 0.96);  /* 主要 */
+  --on-dark-2: rgba(251, 251, 244, 0.78);  /* 次要 */
+  --on-dark-3: rgba(251, 251, 244, 0.58);  /* 最弱，下限 */
   --border-c:  rgba(251, 251, 244, 0.18);
   --border-c-dark: rgba(2, 2, 2, 0.12);
   --gutter: 4.5rem;
@@ -357,7 +374,7 @@ main footer {
   margin: 0 0 clamp(2.3rem, 4vh, 3.4rem);
   color: rgba(2,2,2,.55);
   font-family: var(--f-body);
-  font-size: clamp(.92rem, 1vw, 1.1rem);
+  font-size: clamp(var(--fs-xs), 1vw, 1.1rem);
   font-weight: 500;
 }
 .ai-view-label {
@@ -461,7 +478,7 @@ main footer {
   border-radius: 50%;
   background: var(--c-black);
   color: var(--c-white);
-  font-size: clamp(.7rem, .82vw, .9rem);
+  font-size: clamp(var(--fs-xs), .82vw, .9rem);
   font-weight: 600;
   letter-spacing: -.06em;
 }
@@ -486,7 +503,7 @@ main footer {
     0 .6rem 1.8rem rgba(2,2,2,.025);
   color: var(--c-black);
   font-family: var(--f-body);
-  font-size: clamp(.92rem, .9vw, 1.08rem);
+  font-size: clamp(var(--fs-xs), .9vw, 1.08rem);
   transition: background .35s var(--ease), box-shadow .35s var(--ease), transform .35s var(--ease);
 }
 .ai-grid-card:hover {
@@ -623,7 +640,7 @@ main footer {
 }
 .work-col.is-active .work-col-info,
 .work-col:hover .work-col-info { opacity: 1; transform: translateY(0); }
-.work-col-num { font-size: .72rem; letter-spacing: .05em; color: rgba(251,251,244,.7); margin-bottom: .2rem; }
+.work-col-num { font-size: var(--fs-xs); letter-spacing: .05em; color: rgba(251,251,244,.7); margin-bottom: .2rem; }
 .work-col-client {
   display: inline-flex;
   width: fit-content;
@@ -631,7 +648,7 @@ main footer {
   padding: .34rem .75rem;
   background: rgba(251,251,244,.24);
   backdrop-filter: blur(8px);
-  font-size: .72rem; text-transform: uppercase; letter-spacing: .08em;
+  font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .08em;
   color: #fff;
 }
 .work-col-title {
@@ -648,7 +665,7 @@ main footer {
 }
 .work-col-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .2rem; }
 .work-col-tags span {
-  font-size: .72rem; color: var(--c-white);
+  font-size: var(--fs-xs); color: var(--c-white);
   border: 1px solid rgba(251,251,244,.4);
   border-radius: 10rem; padding: .24rem .78rem;
 }
@@ -661,7 +678,7 @@ main footer {
   transform: translate(-50%, calc(-50% + 12px)) scale(.92);
   display: inline-flex; align-items: center; gap: .5rem;
   background: var(--c-white); color: var(--c-black);
-  font-size: .8rem; font-weight: 500; white-space: nowrap;
+  font-size: var(--fs-sm); font-weight: 500; white-space: nowrap;
   padding: .65rem 1.2rem; border-radius: 10rem;
   opacity: 0;
   transition: opacity .35s var(--ease), transform .5s var(--ease);
@@ -676,7 +693,7 @@ main footer {
   display: inline-flex;
   align-items: center;
   gap: .4rem;
-  font-size: .85rem;
+  font-size: var(--fs-sm);
   color: var(--c-black);
   border-bottom: 1px solid rgba(2,2,2,.25);
   padding-bottom: 2px;
@@ -725,7 +742,7 @@ main footer {
 .about-img img { width: 100%; display: block; }
 .about-body { display: flex; flex-direction: column; gap: 1.8rem; }
 .about-desc {
-  font-size: .9rem;
+  font-size: var(--fs-base);
   line-height: 1.85;
   color: rgba(2,2,2,.6);
 }
@@ -733,7 +750,7 @@ main footer {
   display: inline-flex;
   align-items: center;
   gap: .4rem;
-  font-size: .85rem;
+  font-size: var(--fs-sm);
   color: var(--c-black);
   border-bottom: 1px solid rgba(2,2,2,.25);
   padding-bottom: 2px;
@@ -1082,7 +1099,7 @@ main footer {
   transition: opacity 1.3s var(--ease);
 }
 .testi-card footer {
-  font-size: clamp(.8rem, .85vw, 1rem);
+  font-size: clamp(var(--fs-xs), .85vw, 1rem);
   color: rgba(251,251,244,.55);
   opacity: .1;
   transition: opacity 1.3s var(--ease);
@@ -1579,7 +1596,7 @@ main footer {
   border-top: 1px solid rgba(251,251,244,.06);
 }
 .footer-bottom p {
-  font-size: .7rem;
+  font-size: var(--fs-xs);
   color: rgba(251,251,244,.25);
 }
 
@@ -1657,7 +1674,7 @@ main footer {
 .about-eyebrow {
   margin-bottom: 1.25rem;
   color: rgba(2,2,2,.42);
-  font-size: .72rem;
+  font-size: var(--fs-xs);
   letter-spacing: .18em;
   text-transform: uppercase;
 }
@@ -1690,7 +1707,7 @@ main footer {
   background: var(--c-orange);
   color: var(--c-white);
   font-family: var(--f-cjk);
-  font-size: .92rem;
+  font-size: var(--fs-sm);
   transition: transform .35s var(--ease), background .35s var(--ease);
 }
 
@@ -1795,6 +1812,8 @@ main footer {
   background: linear-gradient(145deg, rgba(251,251,244,.14), transparent 40%, rgba(2,2,2,.32));
 }
 
+/* 例外：这十六个迷你书封上的字是图形纹理（模拟书脊印刷），不是给人读的内容，
+   所以不受 --fs-xs 下限约束。除此之外全站不应再出现 13.5px 以下的文字。 */
 .book-cover span,
 .book-cover strong,
 .book-cover small {
@@ -1870,7 +1889,7 @@ main footer {
   display: block;
   margin-bottom: 3rem;
   color: rgba(2,2,2,.4);
-  font-size: .82rem;
+  font-size: var(--fs-xs);
 }
 
 .about-note-grid h3 {
@@ -1882,10 +1901,10 @@ main footer {
 }
 
 .about-note-grid p {
-  color: rgba(2,2,2,.58);
+  color: rgba(2,2,2,.62);
   font-family: var(--f-cjk);
-  font-size: .98rem;
-  line-height: 1.75;
+  font-size: var(--fs-sm);
+  line-height: 1.8;
 }
 
 .about-page .s-footer {
@@ -1934,7 +1953,7 @@ main footer {
 }
 @media (max-width: 768px) {
   :root { --gutter: 2rem; }
-  html { font-size: 12px; }
+  html { font-size: var(--fs-xs); }
 
   main.page {
     height: 100dvh;
@@ -2070,7 +2089,7 @@ main footer {
     flex-direction: column;
     gap: .7rem;
     padding: 1rem .7rem;
-    font-size: .95rem;
+    font-size: var(--fs-sm);
     text-align: center;
   }
 
@@ -2212,7 +2231,7 @@ main footer {
   .design-row-content p {
     opacity: 1;
     transform: none;
-    font-size: .95rem;
+    font-size: var(--fs-sm);
     line-height: 1.7;
     margin-top: 1.4rem;
   }
@@ -2234,8 +2253,8 @@ main footer {
   }
 
   .about-desc {
-    font-size: .95rem;
-    line-height: 1.75;
+    font-size: var(--fs-sm);
+    line-height: 1.8;
   }
 
   .testi-inner {

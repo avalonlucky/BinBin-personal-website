@@ -85,7 +85,7 @@
 .cs-toc a i {
   font-style: normal;
   font-family: var(--f-body);
-  font-size: 11.5px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.06em;
   color: var(--cs-paper-3);
   flex: 0 0 auto;
@@ -250,7 +250,7 @@
 }
 .cs-hero-meta dt {
   font-family: var(--f-body);
-  font-size: 12px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(251,251,244,0.38);
@@ -335,7 +335,7 @@
   display: block;
   margin-top: 2px;
   color: rgba(255,255,255,0.62);
-  font-size: 12px;
+  font-size: var(--fs-xs);
 }
 /* 产品主色细条，坐实“色彩编码” */
 .cs-sheet::after {
@@ -426,7 +426,7 @@
 .cs-card-label {
   display: block;
   font-family: var(--f-body);
-  font-size: 12px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--cs-accent);
@@ -554,7 +554,7 @@
 }
 .cs-hub-core span {
   font-family: var(--f-body);
-  font-size: 11px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--cs-accent);
@@ -593,7 +593,7 @@
 .cs-compare-row:last-child { border-bottom: none; }
 .cs-compare-k {
   font-family: var(--f-body);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--cs-ink-3);
@@ -633,7 +633,7 @@
 }
 .cs-block-k {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.06em;
   color: var(--cs-accent);
   margin-bottom: 4px;
@@ -698,7 +698,7 @@
   background: var(--cs-ink-3);
   color: #fff;
   font-style: normal;
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -720,7 +720,7 @@
 .cs-stage + .cs-stage { border-left: 1px solid var(--cs-hair); }
 .cs-stage-n {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.14em;
   color: var(--cs-accent);
   margin-bottom: 8px;
@@ -853,7 +853,7 @@
   position: absolute;
   left: 0;
   font-family: var(--f-body);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   color: var(--cs-ink-3);
 }
 
@@ -902,7 +902,7 @@
 .cs-flip-copy { position: relative; }
 .cs-flip-side-k {
   font-family: var(--f-body);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--cs-accent);
@@ -1012,7 +1012,7 @@
 .cs-flow-step span {
   display: block;
   font-family: var(--f-body);
-  font-size: 11px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--cs-accent);
@@ -1075,7 +1075,7 @@
 }
 .cs-swatch-t small {
   font-family: var(--f-body);
-  font-size: 12px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.06em;
   color: var(--cs-ink-3);
 }
@@ -1114,7 +1114,7 @@
   display: block;
   margin-top: 8px;
   font-family: var(--f-body);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.1em;
   color: var(--cs-ink-3);
 }
@@ -1178,7 +1178,7 @@
 .cs-phase.is-dark .cs-phase-n { color: rgba(251,251,244,0.14); }
 .cs-phase-k {
   font-family: var(--f-body);
-  font-size: 12px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--cs-accent);
@@ -1233,7 +1233,7 @@
 }
 .cs-gantt-head > div {
   font-family: var(--f-body);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.1em;
   color: var(--cs-ink-3);
   text-align: center;
@@ -1258,7 +1258,7 @@
   align-items: center;
   padding: 0 8px;
   font-family: var(--f-cjk);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
@@ -1312,7 +1312,7 @@
   align-items: center;
   justify-content: center;
   font-family: var(--f-body);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   flex-shrink: 0;
   z-index: 1;
 }
@@ -2078,7 +2078,7 @@
 .cs-journal-meta { margin: 16px 0 0; }
 .cs-journal-k {
   font-family: var(--f-mono, var(--f-body));
-  font-size: 11px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.1em;
   color: var(--cs-accent-lift);
   text-transform: uppercase;
@@ -2087,14 +2087,14 @@
   font-family: var(--f-cjk);
   font-size: clamp(16px, 1.4vw, 18px);
   font-weight: 600;
-  color: rgba(251, 251, 244, 0.94);
+  color: var(--on-dark-1);
   margin: 6px 0 4px;
 }
 .cs-journal-d {
   font-family: var(--f-cjk);
   font-size: 14.5px;
   line-height: 1.6;
-  color: rgba(251, 251, 244, 0.56);
+  color: var(--on-dark-3);
   margin: 0;
 }
 
@@ -2202,7 +2202,7 @@
   top: -11px;
   left: -1px;
   font-family: var(--f-mono, var(--f-body));
-  font-size: 10px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.08em;
   padding: 2px 7px;
   border-radius: 3px;
@@ -2241,7 +2241,7 @@
 .cs-prio-n small {
   display: block;
   font-family: var(--f-cjk);
-  font-size: 10.5px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.04em;
   color: var(--cs-ink-3);
   margin-top: 5px;
@@ -2373,7 +2373,7 @@
 }
 .cs-chapter-en {
   font-family: var(--f-mono, var(--f-body));
-  font-size: 9.5px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.11em;
   color: var(--cs-accent);
   margin-top: 3px;
@@ -2402,7 +2402,7 @@
 .cs-art i {
   font-style: normal;
   color: var(--cs-ink-3);
-  font-size: 12.5px;
+  font-size: var(--fs-xs);
   white-space: nowrap;
 }
 
@@ -2438,7 +2438,7 @@
 .cs-book-k i {
   font-style: normal;
   font-family: var(--f-cjk);
-  font-size: 11px;
+  font-size: var(--fs-xs);
   padding: 3px 11px;
   border-radius: 100px;
   background: var(--cs-ink);
@@ -2493,7 +2493,7 @@
   border-bottom: 1.5px solid var(--cs-accent);
   padding-bottom: 5px;
   font-family: var(--f-cjk);
-  font-size: 9.5px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.06em;
   color: var(--cs-accent);
 }
@@ -2658,65 +2658,45 @@
 }
 .cs-reader.is-open { display: flex; }
 
-/* 左侧竖排刊物导航 —— 横排在左上角太像装饰，很多人不会当成选项卡 */
+/* 左侧竖排刊物导航 —— 横排在左上角太像装饰，很多人不会当成导航。
+   选中态用「半透明白底 + 白字」，不用红底红字：
+   纯黑上压红底再压红字，刺眼且笔画糊在一起。 */
 .cs-rd-rail {
   flex: 0 0 auto;
-  width: 210px;
+  width: 232px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   align-self: center;
 }
-.cs-rd-rail-k {
-  font-family: var(--f-body);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(251, 251, 244, 0.34);
-  margin: 0 0 12px 14px;
-}
-.cs-rd-tabs { display: flex; flex-direction: column; gap: 4px; }
+.cs-rd-tabs { display: flex; flex-direction: column; gap: 6px; }
 .cs-rd-tab {
-  position: relative;
   font-family: var(--f-cjk);
-  font-size: 15px;
+  font-size: var(--fs-base);
   font-weight: 600;
+  line-height: 1.35;
   text-align: left;
-  padding: 13px 16px 13px 18px;
-  border-radius: 10px;
+  padding: 15px 18px;
+  border-radius: 12px;
   border: 0;
   background: transparent;
-  color: rgba(251, 251, 244, 0.92);
+  color: var(--on-dark-2);
   cursor: pointer;
   transition: background .3s var(--ease), color .3s var(--ease);
 }
-/* 左侧那道竖线：选中时变成主色，是「现在在读哪一本」最直接的信号 */
-.cs-rd-tab::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%) scaleY(0.3);
-  width: 3px;
-  height: 62%;
-  border-radius: 3px;
-  background: rgba(251, 251, 244, 0.2);
-  transition: transform .35s var(--ease), background .3s var(--ease);
-}
-.cs-rd-tab:hover { background: rgba(251, 251, 244, 0.07); }
+.cs-rd-tab:hover { background: rgba(251, 251, 244, 0.07); color: var(--on-dark-1); }
 .cs-rd-tab.is-active {
-  background: rgb(var(--cs-accent-rgb) / 0.12);
-  color: var(--cs-accent-lift);
+  background: rgba(251, 251, 244, 0.14);
+  color: #FFF;
 }
-.cs-rd-tab.is-active::before { background: var(--cs-accent); transform: translateY(-50%) scaleY(1); }
 .cs-rd-tab small {
   display: block;
-  font-size: 12px;
+  font-size: var(--fs-sm);
   font-weight: 400;
-  color: rgba(251, 251, 244, 0.44);
-  margin-top: 3px;
+  color: var(--on-dark-3);
+  margin-top: 5px;
 }
-.cs-rd-tab.is-active small { color: rgb(var(--cs-accent-rgb) / 0.75); }
+.cs-rd-tab.is-active small { color: var(--on-dark-2); }
 .cs-rd-close {
   position: absolute;
   top: 16px;
@@ -2844,9 +2824,9 @@
   align-items: center;
   gap: clamp(12px, 2vw, 22px);
   padding: 14px clamp(14px, 3vw, 40px) 20px;
-  color: rgba(251, 251, 244, 0.62);
+  color: var(--on-dark-2);
   font-family: var(--f-cjk);
-  font-size: 13.5px;
+  font-size: var(--fs-sm);
 }
 .cs-rd-nav {
   width: 40px;
@@ -2873,13 +2853,12 @@
 .cs-rd-count b { color: rgba(251, 251, 244, 0.95); font-weight: 600; }
 .cs-rd-hint {
   white-space: nowrap;
-  font-size: 12.5px;
-  color: rgba(251, 251, 244, 0.4);
+  font-size: var(--fs-xs);
+  color: var(--on-dark-3);
 }
 
 /* 首次进来的翻页引导 —— 压在合着的那半边书上。
-   很多人打开之后不知道怎么翻，这一层把三种翻法直接摆出来，
-   翻过一次就不再出现（记在 localStorage）。 */
+   不做卡片、不写标题，只留一只手的方向示意和三种翻法，横排一行。 */
 .cs-rd-coach {
   position: absolute;
   left: 0;
@@ -2889,78 +2868,60 @@
   z-index: 7;
   display: grid;
   place-content: center;
-  gap: 14px;
+  gap: 22px;
   padding: 24px;
-  text-align: center;
   pointer-events: none;
   opacity: 0;
   transition: opacity .5s var(--ease);
 }
 .cs-rd-coach.is-on { opacity: 1; }
-.cs-rd-coach-card {
-  background: rgba(12, 10, 10, 0.86);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(251, 251, 244, 0.14);
-  border-radius: 16px;
-  padding: 24px 26px 22px;
-  max-width: 280px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-}
-.cs-rd-coach b {
-  display: block;
-  font-family: var(--f-cjk);
-  font-size: 16px;
-  font-weight: 600;
-  color: rgba(251, 251, 244, 0.96);
-  margin-bottom: 4px;
-}
-.cs-rd-coach s {
-  display: block;
-  text-decoration: none;
-  font-family: var(--f-cjk);
-  font-size: 12.5px;
-  color: rgba(251, 251, 244, 0.5);
-  margin-bottom: 16px;
-}
-.cs-rd-coach ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
-.cs-rd-coach li {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  font-family: var(--f-cjk);
-  font-size: 13.5px;
-  color: rgba(251, 251, 244, 0.78);
-  text-align: left;
-}
-.cs-rd-coach li i {
-  flex: 0 0 auto;
-  width: 26px;
-  height: 26px;
-  border-radius: 7px;
-  display: grid;
-  place-items: center;
-  background: rgb(var(--cs-accent-rgb) / 0.16);
-  color: var(--cs-accent-lift);
-  font-style: normal;
-  font-size: 12px;
-}
 /* 一只手从右往左划，示意拖拽方向 */
 .cs-rd-coach-hand {
-  width: 46px;
-  height: 46px;
-  margin: 0 auto 14px;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: rgb(var(--cs-accent-rgb) / 0.18);
-  color: var(--cs-accent-lift);
+  background: rgba(251, 251, 244, 0.12);
+  color: var(--on-dark-1);
   animation: cs-rd-swipe 2.1s var(--ease) infinite;
 }
 @keyframes cs-rd-swipe {
-  0%, 100% { transform: translateX(14px); opacity: 0.35; }
-  35%      { transform: translateX(14px); opacity: 1; }
-  75%      { transform: translateX(-14px); opacity: 1; }
-  90%      { transform: translateX(-14px); opacity: 0; }
+  0%, 100% { transform: translateX(16px); opacity: 0.3; }
+  35%      { transform: translateX(16px); opacity: 1; }
+  75%      { transform: translateX(-16px); opacity: 1; }
+  90%      { transform: translateX(-16px); opacity: 0; }
+}
+.cs-rd-coach ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 18px;
+}
+.cs-rd-coach li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-cjk);
+  font-size: var(--fs-sm);
+  color: var(--on-dark-2);
+  white-space: nowrap;
+}
+.cs-rd-coach li i {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(251, 251, 244, 0.14);
+  color: var(--on-dark-1);
+  font-style: normal;
+  font-size: var(--fs-xs);
 }
 
 /* 封面区的「可翻阅」提示 */
@@ -2973,7 +2934,7 @@
   gap: 12px;
   font-family: var(--f-cjk);
   font-size: 15px;
-  color: rgba(251, 251, 244, 0.72);
+  color: var(--on-dark-2);
   opacity: 0;
   transform: translateY(8px);
   transition: opacity .6s var(--ease), transform .6s var(--ease);
@@ -3009,10 +2970,8 @@
     align-self: stretch;
   }
   .cs-rd-rail::-webkit-scrollbar { display: none; }
-  .cs-rd-rail-k { display: none; }
   .cs-rd-tabs { flex-direction: row; gap: 6px; }
   .cs-rd-tab { flex: 0 0 auto; padding: 9px 14px; font-size: 13.5px; border-radius: 100px; }
-  .cs-rd-tab::before { display: none; }
   .cs-rd-tab small { display: none; }
   .cs-rd-coach { width: 100%; }
   /* 手机上没有方向键，这一条去掉 */
@@ -3056,7 +3015,7 @@
 }
 .cs-rule-n {
   font-family: var(--f-mono, var(--f-body));
-  font-size: 10.5px;
+  font-size: var(--fs-xs);
   letter-spacing: 0.12em;
   color: var(--cs-accent);
   margin-bottom: 10px;
@@ -3134,11 +3093,11 @@
   /* 两张一组的图在手机上并排放小，细节交给点击放大——
      一张一张竖着堆，两张就能吃掉一屏半。 */
   .cs-figure-pair { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .cs-figure-pair .cs-figure-cap { padding: 9px 10px; font-size: 12.5px; flex-direction: column; align-items: flex-start; gap: 4px; }
-  .cs-figure-pair .cs-figure-cap i { font-size: 11.5px; }
+  .cs-figure-pair .cs-figure-cap { padding: 9px 10px; font-size: var(--fs-xs); flex-direction: column; align-items: flex-start; gap: 4px; }
+  .cs-figure-pair .cs-figure-cap i { font-size: var(--fs-xs); }
   /* 调研照片改 2×2 */
   .cs-docs { grid-template-columns: 1fr 1fr !important; gap: 10px; }
-  .cs-doc-cap { padding: 9px 11px; font-size: 12.5px; }
+  .cs-doc-cap { padding: 9px 11px; font-size: var(--fs-xs); }
   .cs-lesson { grid-template-columns: 1fr; gap: 10px; }
   .cs-lesson-n { font-size: 38px; }
 
