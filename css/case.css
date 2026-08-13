@@ -19,6 +19,10 @@
   /* 浅底上压强调色文字时用这个更深的版本：强调色本身压在自己的浅色底上
      对比度只有 2 点几，不够看。 */
   --cs-accent-deep: #A84A12;
+  /* 深底（首屏 / 计数条）上压强调色文字时用这个更亮的版本。
+     橙色本身在黑底上就有 7:1，所以默认等于强调色本身；
+     红色不行——#E60012 压在 #020202 上只有 4.35:1，字会发闷。 */
+  --cs-accent-lift: var(--cs-accent);
   --cs-hair:      rgba(2, 2, 2, 0.11);
   --cs-hair-dark: rgba(251, 251, 244, 0.14);
   --cs-max:       1240px;
@@ -31,6 +35,7 @@
   --cs-accent:      #E60012;
   --cs-accent-rgb:  230 0 18;
   --cs-accent-deep: #A8000D;
+  --cs-accent-lift: #FF3B47;   /* 黑底上约 5.8:1 */
 }
 
 /* 全局 img 规则是 cover + 100% 高，详情页的图需要按原比例显示 */
@@ -201,7 +206,7 @@
   font-size: 13px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--cs-accent);
+  color: var(--cs-accent-lift);
   margin: 0 0 22px;
 }
 .cs-hero-title {
@@ -215,7 +220,7 @@
 }
 .cs-hero-title em {
   font-style: normal;
-  color: var(--cs-accent);
+  color: var(--cs-accent-lift);
 }
 .cs-hero-sub {
   font-family: var(--f-cjk);
@@ -360,7 +365,7 @@
   font-family: var(--f-heading);
   font-size: clamp(40px, 4.6vw, 62px);
   line-height: 1;
-  color: var(--cs-accent);
+  color: var(--cs-accent-lift);
 }
 .cs-metric-n small {
   font-family: var(--f-cjk);
@@ -1980,7 +1985,8 @@
 /* ── 三本刊物：深色头图下方的封面并排 ── */
 .cs-journals {
   background: var(--cs-ink);
-  padding: 0 24px clamp(40px, 5vw, 64px);
+  /* 上内边距不能省：紧贴 hero-meta 那条信息行会显得挤 */
+  padding: clamp(46px, 5.4vw, 78px) 24px clamp(46px, 5.4vw, 74px);
 }
 .cs-journals-inner {
   max-width: var(--cs-max);
@@ -2018,7 +2024,7 @@
   font-family: var(--f-mono, var(--f-body));
   font-size: 11px;
   letter-spacing: 0.1em;
-  color: var(--cs-accent);
+  color: var(--cs-accent-lift);
   text-transform: uppercase;
 }
 .cs-journal-n {
@@ -2062,7 +2068,10 @@
   transition: opacity .5s var(--ease), transform .5s var(--ease);
 }
 .cs-seal-stage img.is-off { opacity: 0; transform: scale(.94); position: absolute; }
-.cs-seal-switch { display: flex; gap: 8px; margin: 0 0 20px; }
+/* 切换按钮放在印章正下方——放在右侧文字上方时没人发现这里可以点 */
+.cs-seal-left { display: flex; flex-direction: column; gap: 14px; }
+.cs-seal-switch { display: flex; gap: 8px; margin: 0; }
+.cs-seal-switch button { flex: 1; text-align: center; }
 .cs-seal-switch button {
   font-family: var(--f-cjk);
   font-size: 13px;
@@ -2087,48 +2096,6 @@
   border-radius: 100px;
   border: 1px solid var(--cs-hair);
   color: var(--cs-ink-2);
-}
-
-/* ── 印章式页码：页脚那枚淡印章 + 数字 ── */
-.cs-pagenum {
-  display: flex;
-  align-items: flex-end;
-  gap: clamp(14px, 1.6vw, 22px);
-  flex-wrap: wrap;
-  margin: 24px 0 0;
-}
-.cs-pagenum-cell {
-  width: clamp(58px, 5.4vw, 74px);
-  aspect-ratio: 1;
-  position: relative;
-  display: grid;
-  place-items: center;
-  border-radius: 3px;
-  background: var(--cs-paper);
-  border: 1px solid var(--cs-hair);
-}
-.cs-pagenum-cell img {
-  position: absolute;
-  inset: 14%;
-  width: 72%;
-  /* 刊物里这枚印章是压在页码底下的淡水印，不是实心图标 */
-  opacity: 0.34;
-}
-.cs-pagenum-cell b {
-  position: relative;
-  font-family: var(--f-cjk);
-  font-size: clamp(17px, 1.6vw, 21px);
-  font-weight: 600;
-  color: var(--cs-ink);
-}
-.cs-pagenum-note {
-  font-family: var(--f-cjk);
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--cs-ink-3);
-  margin: 0;
-  align-self: center;
-  flex: 1 1 220px;
 }
 
 /* ── 目录热区：hover 优先级 → 高亮真实目录页上对应的位置 ── */
@@ -2240,16 +2207,62 @@
 }
 .cs-prio p em { font-style: normal; font-weight: 600; color: var(--cs-accent-deep); }
 
-/* ── 五大章节：内容架构 ── */
-/* 固定三列 + 第六格放汇总：五张卡用 auto-fit 会排成 4+1，最后一张孤零零挂在下一行。
-   align-items:start 让每张卡各自贴合内容高度，不去强行拉平——
-   章节本来就有长有短，拉平反而显得假。 */
-.cs-chapters {
+/* ── 内容架构思维导图 ──
+   左右两侧挂章节卡、中间一枚印章做中心节点，连线由 case.js 按实际布局算，
+   做法同 cs-hub（不要写死坐标，卡片高度会随文案变）。 */
+.cs-mindmap {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: start;
-  gap: clamp(14px, 1.6vw, 20px);
-  margin: 30px 0 0;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: clamp(16px, 2vw, 26px) clamp(60px, 9vw, 132px);
+  align-items: center;
+  margin: 34px 0 0;
+}
+.cs-mindmap-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.cs-mindmap-svg path {
+  fill: none;
+  stroke: var(--cs-accent);
+  stroke-width: 1;
+  opacity: 0.45;
+}
+.cs-mm-side {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.4vw, 18px);
+  position: relative;
+  z-index: 1;
+}
+.cs-mm-core {
+  position: relative;
+  z-index: 1;
+  width: clamp(132px, 13vw, 168px);
+  padding: 20px 16px 18px;
+  border-radius: clamp(12px, 1.2vw, 16px);
+  border: 1px solid rgb(var(--cs-accent-rgb) / 0.28);
+  background: linear-gradient(180deg, rgb(var(--cs-accent-rgb) / 0.08), var(--cs-paper));
+  text-align: center;
+}
+.cs-mm-core img { width: 52%; display: block; margin: 0 auto 12px; }
+.cs-mm-core b {
+  display: block;
+  font-family: var(--f-cjk);
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 600;
+  color: var(--cs-ink);
+}
+.cs-mm-core span {
+  display: block;
+  font-family: var(--f-cjk);
+  font-size: 12px;
+  color: var(--cs-ink-3);
+  margin-top: 4px;
 }
 .cs-chapter-sum {
   padding: 22px;
@@ -2403,6 +2416,175 @@
   color: var(--cs-accent-deep);
 }
 
+/* ── 印章式页码演示 ──
+   点上一页 / 下一页，页码跟着变，印章按奇偶落到左下或右下角，
+   演示的正是规范里那条「奇数页左对齐、偶数页右对齐，距边各 12mm」。 */
+.cs-pagedemo { margin: 26px 0 0; }
+.cs-pd-stage {
+  position: relative;
+  max-width: 340px;
+  aspect-ratio: 210 / 297;
+  border: 1px solid var(--cs-hair);
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(2,2,2,0.06), 0 16px 34px rgba(2,2,2,0.07);
+  overflow: hidden;
+}
+/* 版面示意：页眉红线 + 几行灰色文字块，够读者认出这是内页就行 */
+.cs-pd-head {
+  position: absolute;
+  left: 8%; right: 8%; top: 7%;
+  border-bottom: 1.5px solid var(--cs-accent);
+  padding-bottom: 5px;
+  font-family: var(--f-cjk);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: var(--cs-accent);
+}
+.cs-pd-lines { position: absolute; left: 8%; right: 8%; top: 17%; }
+.cs-pd-lines i {
+  display: block;
+  height: 4px;
+  border-radius: 2px;
+  background: rgb(2 2 2 / 0.09);
+  margin-bottom: 9px;
+}
+.cs-pd-num {
+  position: absolute;
+  bottom: 5.5%;
+  width: 13.5%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  transition: left .55s var(--ease), right .55s var(--ease);
+}
+.cs-pd-num img { position: absolute; inset: 0; width: 100%; opacity: 0.34; }
+.cs-pd-num b {
+  position: relative;
+  font-family: var(--f-cjk);
+  font-size: clamp(13px, 1.2vw, 16px);
+  font-weight: 600;
+  color: var(--cs-ink);
+}
+.cs-pd-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  flex-wrap: wrap;
+}
+.cs-pd-ctrl button {
+  font-family: var(--f-cjk);
+  font-size: 13px;
+  padding: 7px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--cs-hair);
+  background: transparent;
+  color: var(--cs-ink-2);
+  cursor: pointer;
+  transition: all .3s var(--ease);
+}
+.cs-pd-ctrl button:hover {
+  border-color: rgb(var(--cs-accent-rgb) / 0.5);
+  color: var(--cs-accent-deep);
+}
+.cs-pd-state {
+  font-family: var(--f-cjk);
+  font-size: 13px;
+  color: var(--cs-ink-3);
+}
+.cs-pd-state b { color: var(--cs-accent-deep); font-weight: 600; }
+.cs-pd-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  gap: clamp(22px, 3vw, 42px);
+  align-items: center;
+}
+
+/* ── 章节过渡页画廊：一张主图 + 一排缩略图，点缩略图切换 ── */
+.cs-slides {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: clamp(22px, 3vw, 44px);
+  align-items: start;
+  margin: 30px 0 0;
+}
+.cs-slides-stage {
+  position: relative;
+  aspect-ratio: 923 / 1217;
+  border-radius: clamp(8px, 0.8vw, 12px);
+  overflow: hidden;
+  background: var(--cs-ink);
+  box-shadow: 0 3px 10px rgba(2,2,2,0.16), 0 20px 44px rgba(2,2,2,0.14);
+  cursor: zoom-in;
+  padding: 0;
+  border: 0;
+  width: 100%;
+}
+.cs-slides-stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity .5s var(--ease);
+}
+.cs-slides-stage img.is-on { opacity: 1; }
+.cs-slides-thumbs {
+  display: flex;
+  gap: 10px;
+  margin: 0 0 18px;
+  flex-wrap: wrap;
+}
+.cs-slide-thumb {
+  width: 62px;
+  aspect-ratio: 923 / 1217;
+  padding: 0;
+  border: 1px solid var(--cs-hair);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--cs-ink);
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease);
+}
+.cs-slide-thumb img { width: 100%; height: 100%; }
+.cs-slide-thumb:hover { opacity: 0.85; transform: translateY(-2px); }
+.cs-slide-thumb.is-active {
+  opacity: 1;
+  border-color: var(--cs-accent);
+  box-shadow: 0 0 0 2px rgb(var(--cs-accent-rgb) / 0.22);
+}
+.cs-slide-cap h4 {
+  font-family: var(--f-cjk);
+  font-size: clamp(16px, 1.5vw, 19px);
+  font-weight: 600;
+  color: var(--cs-ink);
+  margin: 0 0 8px;
+}
+.cs-slide-cap p {
+  font-family: var(--f-cjk);
+  font-size: clamp(14px, 1.25vw, 15.5px);
+  line-height: 1.8;
+  color: var(--cs-ink-2);
+  margin: 0;
+}
+.cs-slide-hint {
+  font-family: var(--f-cjk);
+  font-size: 12.5px;
+  color: var(--cs-ink-3);
+  margin: 14px 0 0;
+}
+
+/* 大图收窄：规范图 / 手稿 / 时间线这类横图铺满整栏会把版面撑散，
+   限宽居中，细节留给点击放大。 */
+.cs-figure.is-compact {
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cs-figure.is-compact.is-narrow { max-width: 520px; }
+
 /* ── 规范条目：七个维度 ── */
 .cs-rules {
   display: grid;
@@ -2425,21 +2607,21 @@
 }
 .cs-rule h4 {
   font-family: var(--f-cjk);
-  font-size: 14.5px;
+  font-size: clamp(15.5px, 1.35vw, 17px);
   font-weight: 600;
   color: var(--cs-ink);
   margin: 0 0 7px;
 }
 .cs-rule p {
   font-family: var(--f-cjk);
-  font-size: 12.5px;
-  line-height: 1.72;
+  font-size: clamp(14px, 1.2vw, 15px);
+  line-height: 1.78;
   color: var(--cs-ink-2);
   margin: 0;
 }
 .cs-rule p code {
   font-family: var(--f-mono, monospace);
-  font-size: 11.5px;
+  font-size: 13px;
   color: var(--cs-accent-deep);
 }
 /* 色彩规范那张卡里的两块色 */
@@ -2528,8 +2710,13 @@
   .cs-journals-inner { grid-template-columns: 1fr; gap: 26px; }
   .cs-journal-fig { max-width: 320px; }
   .cs-books { grid-template-columns: 1fr; }
-  .cs-chapters { grid-template-columns: 1fr; }
-  .cs-pagenum { gap: 12px; }
+  /* 思维导图：窄屏没有左右两侧可言，改成中心在最上的一列，连线交给 JS 撤掉 */
+  .cs-mindmap { grid-template-columns: 1fr; gap: 14px; }
+  .cs-mm-core { width: 100%; order: -1; }
+  .cs-pd-wrap,
+  .cs-slides { grid-template-columns: 1fr; }
+  .cs-pd-stage { max-width: 300px; }
+  .cs-slides-stage { max-width: 300px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

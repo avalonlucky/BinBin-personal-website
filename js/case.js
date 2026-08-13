@@ -261,6 +261,129 @@ function initTocMap() {
 }
 
 /* ─────────────────────────────────────────
+   印章式页码演示 — 上一页 / 下一页
+   页码按奇偶落到左下或右下，正是规范里那条
+   「奇数页左对齐、偶数页右对齐，距边各 12mm」。
+───────────────────────────────────────── */
+function initPageDemo() {
+  const box = document.querySelector('[data-pagedemo]');
+  if (!box) return;
+  const num   = box.querySelector('.cs-pd-num');
+  const label = box.querySelector('.cs-pd-num b');
+  const state = box.querySelector('[data-pd-state]');
+  const head  = box.querySelector('.cs-pd-head');
+  const MAX = 84;                       // 第三期共 84 页（42 个跨页）
+  const HEADS = [
+    [3,  '刊首语 / KANSHOUYU'],
+    [9,  '鸿程·笃行 / HONGCHENG·DUXING'],
+    [27, '行澜·领驭 / HANGLAN·LINGYU'],
+    [36, '实战·撷英 / SHIZHAN·XIEYING'],
+    [58, '心语·织梦 / XINYU·ZHIMENG'],
+  ];
+  let page = 27;
+
+  const render = () => {
+    const odd = page % 2 === 1;
+    label.textContent = page;
+    // 12mm / 210mm ≈ 5.7% —— 按刊物的实际边距换算成百分比
+    num.style.left  = odd ? '5.7%' : 'auto';
+    num.style.right = odd ? 'auto' : '5.7%';
+    state.innerHTML = `第 <b>${page}</b> 页 · ${odd ? '奇数页 · 靠左' : '偶数页 · 靠右'} · 距边 12mm`;
+    const h = HEADS.filter(([from]) => page >= from).pop();
+    head.textContent = h ? h[1] : '目录 / CONTENTS';
+  };
+
+  box.querySelectorAll('[data-pd-step]').forEach(b => {
+    b.addEventListener('click', () => {
+      page = Math.min(MAX, Math.max(1, page + Number(b.dataset.pdStep)));
+      render();
+    });
+  });
+  render();
+}
+
+/* ─────────────────────────────────────────
+   章节过渡页画廊 — 点缩略图切换主图
+───────────────────────────────────────── */
+function initSlides() {
+  const box = document.querySelector('[data-slides]');
+  if (!box) return;
+  const stage  = box.querySelector('.cs-slides-stage');
+  const shots  = [...stage.querySelectorAll('img')];
+  const thumbs = [...box.querySelectorAll('.cs-slide-thumb')];
+  // 注意：不能用 [data-slide-title] 找说明文字——缩略图按钮上也有同名属性，
+  // querySelector 会先命中按钮，把它的 <img> 覆盖掉。
+  const capT   = box.querySelector('[data-slide-cap-title]');
+  const capP   = box.querySelector('[data-slide-cap-note]');
+  if (!shots.length || !thumbs.length) return;
+
+  const show = i => {
+    shots.forEach((im, k) => im.classList.toggle('is-on', k === i));
+    thumbs.forEach((t, k) => t.classList.toggle('is-active', k === i));
+    capT.textContent = thumbs[i].dataset.slideTitle || '';
+    capP.textContent = thumbs[i].dataset.slideNote || '';
+    // 放大看的还是当前这张
+    stage.dataset.zoom = shots[i].getAttribute('src');
+    stage.dataset.zoomTitle = thumbs[i].dataset.slideTitle || '';
+    stage.dataset.zoomNote = thumbs[i].dataset.slideNote || '';
+  };
+
+  thumbs.forEach((t, i) => {
+    t.addEventListener('click', () => show(i));
+    t.addEventListener('mouseenter', () => show(i));
+  });
+  show(0);
+}
+
+/* ─────────────────────────────────────────
+   内容架构思维导图 — 中心印章连向各章节
+   连线按实际布局计算（同 cs-hub），卡片高度变了也不用改坐标。
+───────────────────────────────────────── */
+function initMindmap() {
+  const map = document.querySelector('[data-mindmap]');
+  if (!map) return;
+  const svg   = map.querySelector('.cs-mindmap-svg');
+  const core  = map.querySelector('.cs-mm-core');
+  const nodes = [...map.querySelectorAll('.cs-chapter')];
+  if (!svg || !core || !nodes.length) return;
+
+  const draw = () => {
+    // 窄屏是单列堆叠，画连线只会横穿卡片
+    if (window.innerWidth <= 768) { svg.innerHTML = ''; return; }
+    const mb = map.getBoundingClientRect();
+    const cb = core.getBoundingClientRect();
+    const cx = cb.left - mb.left + cb.width / 2;
+    const cy = cb.top - mb.top + cb.height / 2;
+
+    svg.setAttribute('viewBox', `0 0 ${mb.width} ${mb.height}`);
+    svg.innerHTML = nodes.map(n => {
+      const nb = n.getBoundingClientRect();
+      const onLeft = (nb.left - mb.left + nb.width / 2) < cx;
+      // 左侧卡片从自己的右边缘出发，右侧卡片从左边缘出发
+      const x = nb.left - mb.left + (onLeft ? nb.width : 0);
+      const y = nb.top - mb.top + nb.height / 2;
+      const ex = cx + (onLeft ? -cb.width / 2 - 5 : cb.width / 2 + 5);
+      const mx = (x + ex) / 2;
+      return `<path d="M ${x} ${y} C ${mx} ${y} ${mx} ${cy} ${ex} ${cy}" />`;
+    }).join('');
+
+    if (prefersReducedMotion.matches) return;
+    svg.querySelectorAll('path').forEach(p => {
+      const len = p.getTotalLength();
+      gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+      gsap.to(p, {
+        strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut',
+        scrollTrigger: { trigger: map, start: 'top 80%' },
+      });
+    });
+  };
+
+  draw();
+  let t;
+  window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 180); });
+}
+
+/* ─────────────────────────────────────────
    翻面演示 — 滚动驱动 rotateY 0→180
 ───────────────────────────────────────── */
 function initFlip() {
@@ -891,6 +1014,9 @@ initPills();
 initPalette();
 initSeal();
 initTocMap();
+initPageDemo();
+initSlides();
+initMindmap();
 initFlip();
 initLayoutCompare();
 initHub();

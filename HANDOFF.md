@@ -1,6 +1,6 @@
 # Maridian Space 网站交接说明
 
-更新时间：2026-08-12
+更新时间：2026-08-13
 
 ## 项目信息
 
@@ -17,10 +17,10 @@
 - 当前正式站代码提交：以 GitHub 远端 `main` 最新提交为准
 - 正式站当前资源版本：
   - `css/style.css?v=73`
-  - `css/case.css?v=20`
+  - `css/case.css?v=27`
   - `js/main.js?v=41`
   - `js/about.js?v=4`
-  - `js/case.js?v=11`
+  - `js/case.js?v=16`
 
 ## 作品详情页（Case Study）体系
 
@@ -61,11 +61,14 @@ assets/work/<slug>/   该作品的图片资源
 | `cs-outro` / `cs-cta-card` / `cs-ai-pill` / `cs-summary` | 页尾行动区（浅底）：项目总结 popover、邮箱↔电话切换、问问 AI |
 | `cs-journals` / `cs-journal` | 深色头图下方的刊物封面并排，hover 抬起 |
 | `cs-seal` | 印章阳刻／阴刻切换，底色随之反转 |
-| `cs-pagenum` | 印章式页码演示（淡印章水印 + 数字） |
 | `cs-tocmap` / `cs-prio` / `cs-hot` | 目录热区联动：hover 优先级卡 → 点亮真实版面上对应位置 |
-| `cs-chapters` / `cs-chapter` / `cs-art` | 章节内容架构卡（三列 + 第六格汇总） |
+| `cs-chapter` / `cs-art` / `cs-chapter-sum` | 章节卡与文章条目（挂在思维导图两侧） |
 | `cs-books` / `cs-book` | 双刊对照（对外／对内两种设计语言） |
 | `cs-rules` / `cs-rule` | 规范条目卡，`auto-fit` 自适应，可放色块与 `<code>` 数值 |
+| `cs-mindmap` / `cs-mm-core` / `cs-mm-side` | 思维导图：中心节点 + 左右挂卡，连线由 JS 按实际布局算 |
+| `cs-pagedemo` | 印章式页码演示：上一页／下一页，页码按奇偶换边 |
+| `cs-slides` / `cs-slide-thumb` | 一张主图 + 一排缩略图，点缩略图切换并同步放大目标 |
+| `cs-figure.is-compact` / `.is-narrow` | 大图限宽居中（780 / 520），细节留给点击放大 |
 
 ### 写新详情页的注意事项
 
@@ -199,7 +202,16 @@ assets/work/<slug>/   该作品的图片资源
   的导出图）。要改坐标别靠肉眼估，用脚本在图上叠 5% 网格再读数。
 - **不要展示 `合作伙伴寄语` 那一跨页**（第三期第 3 跨页）：上面是奇安信、方广资本、
   DAMA 中国等外部机构的具名寄语，属于第三方信息，不适合放公开作品页。
-  编委会名单（目录页左栏）是公司内部人员，沿用第一个案例的口径，未做脱敏。
+- **编委会名单已脱敏**：`v3-toc.webp` 与 `v4-toc.webp` 的名单区都用 `redact.py`
+  降采样处理过（v3: `138,416,184,212`；v4: `134,292,188,145`），
+  只留「总编／副总编／委员」这些职务标签，结构还读得出来。
+  同理，`刊首语` 那一跨页（第 4 跨页）没有采用——上面有董事长的手写签名与具名图注。
+- 深色区块里的强调色文字要用 `--cs-accent-lift`：#E60012 压在 #020202 上只有
+  4.35:1，字会发闷；lift 版 #FF3B47 约 5.8:1。橙色不需要，所以默认值等于强调色本身。
+- 踩过的坑：`cs-slides` 的说明文字最初用 `[data-slide-title]` 取，
+  结果 `querySelector` 先命中了同名属性的缩略图按钮，`textContent` 一赋值
+  就把按钮里的 `<img>` 冲掉了。**给容器和条目用不同的 data 名**（现在是
+  `data-slide-cap-title`）。
 
 ## 已完成的主要修改
 
