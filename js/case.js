@@ -621,18 +621,16 @@ function initReader() {
   });
   window.addEventListener('resize', () => { if (rd.classList.contains('is-open')) render(); });
 
-  /* ── 滚到封面区时提示「可以翻阅」──
-     三个常驻标记依次闪一下，确保没把鼠标移上去的人也能注意到。 */
-  const cta = document.querySelector('.cs-journals-cta');
+  /* ── 滚到封面区时，三枚「翻阅整本」胶囊依次闪一下 ──
+     不依赖 hover，没把鼠标移上去的人也能注意到这里可以点。 */
   const badges = [...document.querySelectorAll('.cs-journal-badge')];
   const journals = document.querySelector('.cs-journals');
-  if (journals) {
+  if (journals && badges.length) {
     ScrollTrigger.create({
       trigger: journals,
       start: 'top 72%',
       once: true,
       onEnter: () => {
-        cta?.classList.add('is-on');
         if (prefersReducedMotion.matches) return;
         badges.forEach((b, i) => setTimeout(() => {
           b.classList.add('is-cue');

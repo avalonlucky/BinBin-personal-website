@@ -2076,25 +2076,14 @@
   85%      { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 0 14px rgb(var(--cs-accent-rgb) / 0); }
 }
 .cs-journal-meta { margin: 16px 0 0; }
-.cs-journal-k {
-  font-family: var(--f-mono, var(--f-body));
-  font-size: var(--fs-xs);
-  letter-spacing: 0.1em;
-  color: var(--cs-accent-lift);
-  text-transform: uppercase;
-}
+/* 封面下面只留一行：刊名 + 这一期的主题。年份不写在这里——
+   三本的出版年份不是「一年一本」，写上去反而制造疑问。 */
 .cs-journal-n {
   font-family: var(--f-cjk);
-  font-size: clamp(16px, 1.4vw, 18px);
+  font-size: var(--fs-md);
   font-weight: 600;
+  line-height: 1.5;
   color: var(--on-dark-1);
-  margin: 6px 0 4px;
-}
-.cs-journal-d {
-  font-family: var(--f-cjk);
-  font-size: 14.5px;
-  line-height: 1.6;
-  color: var(--on-dark-3);
   margin: 0;
 }
 
@@ -2922,39 +2911,6 @@
   color: var(--on-dark-1);
   font-style: normal;
   font-size: var(--fs-xs);
-}
-
-/* 封面区的「可翻阅」提示 */
-.cs-journals-cta {
-  max-width: var(--cs-max);
-  margin: clamp(24px, 2.8vw, 36px) auto 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  font-family: var(--f-cjk);
-  font-size: 15px;
-  color: var(--on-dark-2);
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity .6s var(--ease), transform .6s var(--ease);
-}
-.cs-journals-cta.is-on { opacity: 1; transform: none; }
-.cs-journals-cta i {
-  font-style: normal;
-  display: inline-grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid rgb(var(--cs-accent-rgb) / 0.6);
-  color: var(--cs-accent-lift);
-  animation: cs-rd-pulse 2.4s var(--ease) infinite;
-}
-.cs-journals-cta b { color: rgba(251, 251, 244, 0.95); font-weight: 600; }
-@keyframes cs-rd-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--cs-accent-rgb) / 0.45); }
-  60%      { box-shadow: 0 0 0 12px rgb(var(--cs-accent-rgb) / 0); }
 }
 
 @media (max-width: 768px) {
