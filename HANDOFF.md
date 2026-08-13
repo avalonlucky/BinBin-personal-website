@@ -260,6 +260,13 @@ env -u HTTP_PROXY -u HTTPS_PROXY -u ALL_PROXY -u http_proxy -u https_proxy -u al
 
 注意：本机代理可能导致 Wrangler 刷新 Cloudflare token 时出现 `ECONNRESET`。部署时应使用上面的 `env -u ...` 方式绕开代理。
 
+Wrangler 的 OAuth token 有效期很短（`~/.wrangler/config/default.toml` 里的 `expiration_time`）。
+过期后 refresh 也可能失败，此时非交互环境下 `wrangler pages deploy` 会**静默挂住**（等交互登录），
+不会报错。挂住时先 `npx wrangler whoami < /dev/null` 看一眼，若提示 not logged in，
+需要在交互终端里跑 `wrangler login` 重新授权，或设 `CLOUDFLARE_API_TOKEN`。
+另外：Pages 对不存在的路径会返回 **200 + index.html**，所以「curl 资源拿到 200」
+不能证明部署成功，必须核对 `content_type` 或直接 grep 线上 HTML 的内容。
+
 ## 发布后验证
 
 检查正式站资源版本：
