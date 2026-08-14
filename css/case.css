@@ -3845,10 +3845,14 @@
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
   padding-top: clamp(86px, 9vw, 132px);
-  padding-bottom: clamp(88px, 9vw, 136px);
+  /* 下一节（.is-outcome）底色与这里完全相同，两边各留 130px 会拼出
+     一块 260px 的空洞。相接的这一侧收到常规节奏附近即可。 */
+  padding-bottom: clamp(52px, 5vw, 72px);
   background: var(--cs-paper);
   color: var(--cs-ink);
 }
+/* 时间轴最后一项不需要再垫一段：区块自己的下内边距已经够了 */
+.case-page.is-vision .is-proofroom .cs-line-item:last-child { padding-bottom: 0; }
 .case-page.is-vision .is-proofroom .cs-num,
 .case-page.is-vision .is-proofroom .cs-lede,
 .case-page.is-vision .is-proofroom .cs-line-body p,
@@ -3898,8 +3902,9 @@
 .case-page.is-vision .is-outcome {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
-  padding-top: clamp(88px, 9vw, 140px);
-  padding-bottom: clamp(92px, 10vw, 152px);
+  /* 上接 05、下接 07，三节同底色，靠间距分节即可，不用堆到 140px */
+  padding-top: clamp(52px, 5vw, 72px);
+  padding-bottom: clamp(52px, 5vw, 72px);
   background: var(--cs-paper);
   color: var(--cs-ink);
 }
