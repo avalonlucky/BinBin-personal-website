@@ -8,6 +8,7 @@
      </div>
 
      <div data-hscroll="pin">      「钉住」模式：把纵向滚动借给横向，走完才还回去
+     <div data-hscroll="flow">     「流动」模式：区块自然上滑，同时让卡片横向推进
      需要 GSAP + ScrollTrigger；缺任一则自动退回滑动模式。
 
    桌面端（>768px）完全不介入，样式与结构维持原样。
@@ -23,7 +24,9 @@
     if (!hasGsap) { simpleOnly(wraps); return; }
 
     gsap.matchMedia().add('(max-width: 768px)', () => {
-      const made = wraps.map(build).filter(Boolean);
+      // Array.map 会额外传入 index；直接传 build 会让第二项起的 index
+      // 被误当成 forceSwipe，从而意外退回手动滑动模式。
+      const made = wraps.map(wrap => build(wrap)).filter(Boolean);
       return () => made.forEach(m => m.cleanup());
     });
   }
@@ -67,7 +70,37 @@
     const distance = () => Math.max(0, track.scrollWidth - wrap.clientWidth + 16);
     if (distance() <= 0) { dots.remove(); return null; }
 
-    const isPin = wrap.dataset.hscroll === 'pin' && !forceSwipe && !reduceMotion.matches;
+    const mode = wrap.dataset.hscroll;
+    const isFlow = mode === 'flow' && !forceSwipe && !reduceMotion.matches;
+    const isPin = mode === 'pin' && !forceSwipe && !reduceMotion.matches;
+
+    /* ── 流动模式：纵向页面照常滚动，卡片随区块经过视口时横向推进。
+       不 pin，也不生成额外占位，适合手机作品详情页的短卡片组。 ── */
+    if (isFlow) {
+      const tween = gsap.to(track, { x: () => -distance(), ease: 'none' });
+      const st = ScrollTrigger.create({
+        trigger: wrap,
+        start: 'top 92%',
+        end: 'bottom 8%',
+        scrub: 0.45,
+        invalidateOnRefresh: true,
+        animation: tween,
+        onUpdate: self => {
+          const i = Math.min(n - 1, Math.round(self.progress * (n - 1)));
+          pips.forEach((p, k) => p.classList.toggle('is-on', k === i));
+        },
+      });
+      pips[0]?.classList.add('is-on');
+
+      return {
+        cleanup: () => {
+          st.kill();
+          tween.kill();
+          gsap.set(track, { clearProps: 'x' });
+          dots.remove();
+        },
+      };
+    }
 
     /* ── 滑动模式：交给浏览器原生滚动，JS 只更新圆点 ── */
     if (!isPin) {

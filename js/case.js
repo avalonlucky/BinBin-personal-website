@@ -448,8 +448,8 @@ function initDeck() {
       return () => { st.kill(); tween.kill(); gsap.set(track, { clearProps: 'x' }); };
     });
 
-    // 手机端把纵向滚动映射成横向叙事。用户只需正常上推页面，
-    // 面板会依次从右向左经过，不再要求先猜到这里可以横划。
+    // 手机端把区块经过视口的进度映射成横向叙事。页面保持正常流动，
+    // 避免 pin 额外制造一整屏甚至数屏高的空白占位。
     gsap.matchMedia().add('(max-width: 768px)', () => {
       const view = deck.querySelector('.cs-deck-view');
       if (!view) return;
@@ -461,11 +461,8 @@ function initDeck() {
       const tween = gsap.to(track, { x: () => -distance(), ease: 'none' });
       const st = ScrollTrigger.create({
         trigger: view,
-        start: () => `top ${(document.querySelector('#nav')?.offsetHeight || 64) + 12}px`,
-        end: () => '+=' + Math.max(Math.round(distance() * 0.86), Math.round(window.innerHeight * 0.62)),
-        pin: true,
-        pinSpacing: true,
-        anticipatePin: 1,
+        start: 'top 92%',
+        end: 'bottom 8%',
         scrub: 0.45,
         invalidateOnRefresh: true,
         animation: tween,
@@ -489,8 +486,8 @@ function initDeck() {
   });
 }
 
-/* 手机端同类横向卡片统一由纵向滚动驱动。这里使用元素自身的 scrollLeft，
-   不监听 wheel/touchmove，因此反向滚动、停止和恢复都由 ScrollTrigger 接管。 */
+/* 手机端同类横向卡片统一由纵向滚动驱动。卡片在区块自然经过视口时推进，
+   不 pin、不增加占位；反向滚动、停止和恢复仍由 ScrollTrigger 接管。 */
 function initMobileAutoRails() {
   const rails = [
     ...document.querySelectorAll('.case-page.is-vision .is-proofroom .cs-line'),
@@ -508,11 +505,8 @@ function initMobileAutoRails() {
       const tween = gsap.to(view, { scrollLeft: () => distance(), ease: 'none' });
       const st = ScrollTrigger.create({
         trigger: view,
-        start: () => `top ${(document.querySelector('#nav')?.offsetHeight || 64) + 12}px`,
-        end: () => '+=' + Math.max(Math.round(distance() * 0.82), Math.round(window.innerHeight * 0.56)),
-        pin: true,
-        pinSpacing: true,
-        anticipatePin: 1,
+        start: 'top 92%',
+        end: 'bottom 8%',
         scrub: 0.45,
         invalidateOnRefresh: true,
         animation: tween,

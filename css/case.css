@@ -3403,7 +3403,7 @@
     width: auto;
     gap: 18px;
     padding: 24px var(--gutter) 0;
-    transform: none !important;
+    transform: none;
   }
   .cs-panel, .cs-panel.is-wide {
     flex-basis: auto;
@@ -4050,8 +4050,11 @@
     align-items: stretch;
     gap: 12px;
     padding: 20px var(--gutter) 6px;
-    transform: none !important;
+    transform: none;
     will-change: auto;
+  }
+  .case-page.is-vision .is-system-lab .cs-deck-view.is-auto-x .cs-deck-track {
+    will-change: transform;
   }
   .case-page.is-vision .is-system-lab .cs-panel {
     flex: 0 0 calc(100vw - 54px);
