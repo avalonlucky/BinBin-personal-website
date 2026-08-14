@@ -3952,9 +3952,14 @@
 
 @media (max-width: 768px) {
   /* 手机内容不是桌面稿的缩放版：收紧字号，并删掉依赖桌面页内导航的章节编号。 */
-  /* 礼盒在手机上就是一块真正的 16:9 画布，不把横片撑成整屏，
-     也不在视频容器里制造上下留白。轨道高度仍由 JS 按滚动距离计算。 */
+  /* 礼盒在手机上就是一块真正的 16:9 画布；它进入视口时立即推进，
+     不使用 sticky 轨道，也不额外制造滚动占位。 */
+  .case-page.is-vision .cs-reveal-scroll.is-mobile-scrub {
+    height: auto;
+  }
   .case-page.is-vision .cs-reveal-scroll.is-mobile-scrub > .cs-reveal {
+    position: relative;
+    top: auto;
     height: auto;
     min-height: 0;
     aspect-ratio: 16 / 9;

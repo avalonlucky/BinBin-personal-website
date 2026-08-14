@@ -254,7 +254,6 @@ function initScrubVideo() {
   const mobileScrub = window.matchMedia('(max-width: 768px)').matches || hasCoarsePointer;
   if (mobileScrub) scrollTrack.classList.add('is-mobile-scrub');
   const scrollScreens = Math.max(1, Number(box.dataset.scrollScreens) || 3.2);
-  const mobileScrollScreens = Math.max(1, Number(box.dataset.mobileScrollScreens) || 2.4);
   const sourceFps = Math.max(1, Number(box.dataset.videoFps) || 30);
   const frameDuration = 1 / sourceFps;
   const reducedPoster = box.dataset.reducedPoster;
@@ -318,8 +317,8 @@ function initScrubVideo() {
   video.addEventListener('loadedmetadata', prepareVideo);
 
   const triggerOptions = {
-    trigger: mobileScrub ? scrollTrack : box,
-    start: 'top top',
+    trigger: box,
+    start: mobileScrub ? 'top bottom' : 'top top',
     scrub: true,
     invalidateOnRefresh: true,
     onUpdate: self => syncToProgress(self.progress),
@@ -327,16 +326,9 @@ function initScrubVideo() {
   };
 
   if (mobileScrub) {
-    // Android Chrome 上自定义滚动容器 + transform pin 容易只留下 pin-spacer。
-    // 手机改用原生 position:sticky，ScrollTrigger 只负责把轨道进度映射到帧。
-    const sizeMobileTrack = () => {
-      const viewportHeight = box.clientHeight || window.innerHeight;
-      const distance = Math.round(viewportHeight * mobileScrollScreens);
-      scrollTrack.style.setProperty('--reveal-track-height', `${viewportHeight + distance}px`);
-    };
-    sizeMobileTrack();
-    triggerOptions.end = () => '+=' + Math.round(box.clientHeight * mobileScrollScreens);
-    triggerOptions.onRefreshInit = sizeMobileTrack;
+    // The first frame starts moving as soon as the video enters from below.
+    // Finish when its top reaches the viewport top, without extra track space.
+    triggerOptions.end = 'top top';
   } else {
     triggerOptions.end = () => '+=' + Math.round(window.innerHeight * scrollScreens);
     triggerOptions.pin = true;
