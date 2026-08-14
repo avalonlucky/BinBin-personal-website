@@ -214,6 +214,101 @@ function initSeal() {
    横向面板组 — 把区块钉在视口，纵向滚动换算成横向位移。
    走到最后一张才把滚动还给页面。窄屏不介入（CSS 已退回纵向堆叠）。
 ───────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   礼盒开启 — 视频进度绑定滚轮
+   钉住区块，把滚动进度换算成 currentTime；滚多快动多快，往回滚反着走。
+   两个前提：
+     1. 视频必须是全关键帧编码（ffmpeg -g 1），否则每次 seek 都要回溯到
+        上一个关键帧再解码，滚起来会一顿一顿；
+     2. 只在 requestAnimationFrame 里写 currentTime，onUpdate 里直接写会
+        因为 seek 还没完成而丢帧。
+───────────────────────────────────────── */
+function initScrubVideo() {
+  const box = document.querySelector('[data-scrub-video]');
+  if (!box) return;
+  const video = box.querySelector('video');
+  if (!video) return;
+
+  let target = 0, raf = 0, ready = false;
+
+  const seek = () => {
+    raf = 0;
+    if (!ready) return;
+    // seek 还在进行时不下新指令，否则浏览器会排队丢帧
+    if (video.seeking) { raf = requestAnimationFrame(seek); return; }
+    if (Math.abs(video.currentTime - target) > 0.01) video.currentTime = target;
+  };
+  const queue = () => { if (!raf) raf = requestAnimationFrame(seek); };
+
+  const onReady = () => {
+    if (ready) return;
+    ready = true;
+    video.pause();
+    queue();
+    ScrollTrigger.refresh();
+  };
+  if (video.readyState >= 1) onReady();
+  video.addEventListener('loadedmetadata', onReady, { once: true });
+
+  if (prefersReducedMotion.matches) {
+    // 不想要动效的人直接看开盒后的样子
+    video.addEventListener('loadedmetadata', () => { video.currentTime = video.duration - 0.05; }, { once: true });
+    return;
+  }
+
+  ScrollTrigger.create({
+    trigger: box,
+    start: () => `top ${(document.querySelector('#nav')?.offsetHeight || 64) + 12}px`,
+    // 滚动行程给到 2.2 屏：太短会觉得动画被快进，太长会觉得卡住
+    end: () => '+=' + Math.round(window.innerHeight * 2.2),
+    pin: true,
+    pinSpacing: true,
+    anticipatePin: 1,
+    scrub: true,
+    invalidateOnRefresh: true,
+    onUpdate: self => {
+      const d = video.duration;
+      if (!d || !isFinite(d)) return;
+      target = Math.min(d - 0.02, Math.max(0, self.progress * d));
+      box.classList.toggle('is-open', self.progress > 0.12);
+      queue();
+    },
+  });
+}
+
+/* ─────────────────────────────────────────
+   粘性堆叠 — 被后一张盖住时轻微缩小变淡，像纸被压下去
+───────────────────────────────────────── */
+function initStack() {
+  const stacks = [...document.querySelectorAll('[data-stack]')];
+  if (!stacks.length || prefersReducedMotion.matches) return;
+
+  stacks.forEach(stack => {
+    const cards = [...stack.querySelectorAll('.cs-stack-card')];
+    gsap.matchMedia().add('(min-width: 769px)', () => {
+      const tweens = cards.slice(0, -1).map((card, i) => {
+        const next = cards[i + 1];
+        return gsap.to(card, {
+          scale: 0.955,
+          opacity: 0.5,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: next,
+            start: 'top 85%',
+            end: 'top 40%',
+            scrub: 0.5,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
+      return () => {
+        tweens.forEach(tw => { tw.scrollTrigger?.kill(); tw.kill(); });
+        gsap.set(cards, { clearProps: 'scale,opacity' });
+      };
+    });
+  });
+}
+
 function initDeck() {
   const decks = [...document.querySelectorAll('[data-deck]')];
   if (!decks.length) return;
@@ -896,7 +991,7 @@ function initReveal() {
     }
   });
 
-  const grouped = '.cs-card, .cs-stat, .cs-hub-node, .cs-spec, .cs-phase, .cs-deliver, .cs-doc, .cs-flow-step, .cs-shift-goals li, .cs-facet';
+  const grouped = '.cs-card, .cs-stat, .cs-hub-node, .cs-spec, .cs-phase, .cs-deliver, .cs-doc, .cs-flow-step, .cs-shift-goals li, .cs-facet, .cs-plate';
   document.querySelectorAll(grouped).forEach(el => {
     gsap.from(el, {
       opacity: 0, y: 22, duration: .65, ease: 'power2.out',
@@ -1346,7 +1441,9 @@ initGrid();
 initPills();
 initPalette();
 initSeal();
+initScrubVideo();
 initDeck();
+initStack();
 initTocMap();
 initReader();
 initPageDemo();

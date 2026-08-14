@@ -733,6 +733,55 @@
 .cs-shift-goals.is-muted li:hover { background: rgb(2 2 2 / 0.035); }
 
 /* ────────────────────────────────────────
+   礼盒开启（.cs-reveal）
+   视频进度绑定滚轮：钉住区块，把滚动距离换算成 currentTime。
+   滚多快动多快，往回滚就反着关上。视频是全关键帧编码的，
+   逐帧 seek 才不会卡（见 HANDOFF「滚动绑定视频」）。
+──────────────────────────────────────── */
+.cs-reveal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: clamp(30px, 3.2vw, 46px) var(--gutter);
+  /* 底色跟正文一样：这段视频本身是奶白调，压深色反而像贴了块广告牌，
+     浅底能让礼盒像直接放在页面上。 */
+  background: var(--cs-paper);
+}
+.cs-reveal-video {
+  width: min(1120px, 100%);
+  max-height: 74vh;
+  height: auto;
+  display: block;
+  border-radius: clamp(10px, 1vw, 14px);
+  object-fit: contain;
+  background: var(--cs-paper-2);
+}
+.cs-reveal-cap {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(28px, 3vw, 44px);
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+  transition: opacity .5s var(--ease);
+}
+.cs-reveal.is-open .cs-reveal-cap { opacity: 0; }
+.cs-reveal-k {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.2em;
+  color: var(--cs-ink-3);
+  margin: 0 0 6px;
+}
+.cs-reveal-t {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--cs-ink);
+  margin: 0;
+}
+
+/* ────────────────────────────────────────
    横向面板组（.cs-deck）
    把区块钉在视口，纵向滚动换算成横向位移：五张面板从左到右依次推过，
    走完最后一张才把滚动还给页面。桌面端专用；窄屏退回纵向堆叠。
@@ -790,6 +839,24 @@
   background: var(--cs-accent);
 }
 
+/* 轨道外面这层不动，遮罩加在它身上：面板滑出左缘时渐隐，
+   不会硬邦邦地压在左侧目录上；往回滚会原样渐显回来。 */
+.cs-deck-view {
+  --deck-fade: clamp(90px, 12vw, 190px);
+  overflow: visible;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--deck-fade),
+    #000 calc(100% - 40px),
+    transparent 100%);
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--deck-fade),
+    #000 calc(100% - 40px),
+    transparent 100%);
+}
 .cs-deck-track {
   display: flex;
   align-items: stretch;
@@ -946,6 +1013,124 @@
 /* 面板头的大标题比常规小节小一档：它上面还压着导航，
    用 2xl 会把面板挤出视口。 */
 .cs-deck-head .cs-title { font-size: var(--fs-xl); }
+
+/* ────────────────────────────────────────
+   粘性堆叠（.cs-stack）
+   卡片一张张叠上来：每张 sticky 在略微递增的高度上，后一张盖住前一张，
+   被盖住的那张同时轻微缩小、变淡，像一叠纸被压下去。
+   跟横向面板组是两种节奏——同一页里不要只用一种交互。
+──────────────────────────────────────── */
+.cs-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 26px;
+  /* 最后一张之后留一段，末尾那张才有机会停在视口中间被看清 */
+  padding-bottom: 12vh;
+}
+.cs-stack-card {
+  position: sticky;
+  /* 每张比前一张低 14px，露出下面那几张的边，一眼看出是「一叠」 */
+  top: calc(var(--nav-h, 76px) + 16px + var(--i, 0) * 14px);
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: clamp(14px, 1.6vw, 24px);
+  padding: clamp(20px, 2.2vw, 32px);
+  border: 1px solid var(--cs-hair);
+  border-radius: 12px;
+  background: var(--cs-paper-2);
+  box-shadow: 0 10px 30px rgba(2, 2, 2, 0.05);
+  transform-origin: 50% 0;
+  will-change: transform, opacity;
+}
+.cs-stack-n {
+  font-family: var(--f-heading);
+  font-size: 30px;
+  line-height: 1;
+  color: rgb(var(--cs-accent-rgb) / 0.42);
+  margin: 0;
+}
+.cs-stack-body { min-width: 0; }
+.cs-stack-body.is-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(18px, 2.4vw, 36px);
+  align-items: start;
+}
+.cs-stack-body h3 {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--cs-ink);
+  margin: 0 0 12px;
+  line-height: 1.35;
+}
+.cs-stack-body > div > h3 { margin-top: 0; }
+.cs-stack-body p {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-base);
+  line-height: 1.78;
+  color: var(--cs-ink-2);
+  margin: 0 0 12px;
+}
+.cs-stack-body p:last-child { margin-bottom: 0; }
+.cs-stack-body strong { color: var(--cs-ink); font-weight: 600; }
+.cs-stack-body .cs-quote-soft { font-size: var(--fs-sm); margin: 12px 0 0; }
+.cs-stack-body .cs-shift { margin: 14px 0; }
+.cs-stack-body .cs-stats { margin: 0; }
+
+/* ────────────────────────────────────────
+   版面小样一排（.cs-plates）
+   一排等宽的书页缩略图，点开放大。用来替代「大图 + 缩略图切换」那种
+   看板式控件：读者要的是一眼看到这一组长什么样，不是逐张切。
+──────────────────────────────────────── */
+.cs-plates.is-two { grid-template-columns: 1fr 1fr; margin-top: 0; }
+.cs-plates.is-two .cs-plate img { aspect-ratio: 4 / 3; }
+.cs-plates {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(10px, 1.2vw, 16px);
+  margin-top: 22px;
+}
+.cs-plate {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: zoom-in;
+  font: inherit;
+}
+.cs-plate img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 923 / 1217;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--cs-hair);
+  background: var(--cs-paper);
+  transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+}
+.cs-plate:hover img {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(2, 2, 2, 0.13);
+}
+.cs-plate b {
+  display: block;
+  margin: 11px 0 3px;
+  font-family: var(--f-cjk);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--cs-ink);
+}
+.cs-plate small {
+  display: block;
+  font-family: var(--f-cjk);
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--cs-ink-3);
+}
 
 /* ────────────────────────────────────────
    多面受众（.cs-facets）
@@ -3440,6 +3625,8 @@
   /* 面板组在窄屏退回纵向堆叠：横向钉住在手机上滑起来不稳，
      而且面板里的图文两栏也塞不下。 */
   .cs-deck { overflow: visible; }
+  /* 单列堆叠时没有滑出的边，遮罩会白白把首尾两张切掉一块 */
+  .cs-deck-view { -webkit-mask-image: none; mask-image: none; }
   .cs-deck-track {
     flex-direction: column;
     width: auto;
@@ -3454,6 +3641,13 @@
   }
   .cs-panel-fig .cs-figure img { max-height: 42vh; }
   .cs-deck-steps { display: none; }
+
+  .cs-plates[data-hscroll-track] > .cs-plate { flex: 0 0 min(56vw, 220px); }
+
+  /* 窄屏取消粘性堆叠：屏幕本来就矮，叠起来会把内容顶出视口 */
+  .cs-stack-card { position: static; grid-template-columns: 1fr; gap: 8px; }
+  .cs-stack { padding-bottom: 0; gap: 14px; }
+  .cs-stack-body.is-split { grid-template-columns: 1fr; }
 
   .cs-shift { grid-template-columns: 1fr; }
   /* order 必须按位置判定，不能按 is-mine——02 的主色一侧在左，

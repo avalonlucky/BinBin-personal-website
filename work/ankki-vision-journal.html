@@ -11,8 +11,8 @@
   <link rel="preload" href="../fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="../css/style.css?v=78">
-  <link rel="stylesheet" href="../css/case.css?v=58">
+  <link rel="stylesheet" href="../css/style.css?v=79">
+  <link rel="stylesheet" href="../css/case.css?v=62">
 </head>
 <body class="case-page is-vision">
 <div class="site">
@@ -126,6 +126,22 @@
         </div>
 
       </div>
+
+      <!-- ══════════════════════════════════════
+           礼盒开启 — 视频进度绑定滚轮
+      ══════════════════════════════════════ -->
+      <section class="cs-reveal" data-scrub-video>
+        <video class="cs-reveal-video"
+               src="../assets/work/vision/video/giftbox.mp4"
+               poster="../assets/work/vision/video/giftbox-poster.webp"
+               width="1120" height="630"
+               muted playsinline preload="auto"
+               aria-label="《昂楷视界》礼盒从关闭到开启，内含三本刊物"></video>
+        <div class="cs-reveal-cap">
+          <p class="cs-reveal-k">往下滚，把它打开</p>
+          <p class="cs-reveal-t">三本刊物，一只礼盒</p>
+        </div>
+      </section>
 
       <!-- ══════════════════════════════════════
            正文（浅色）
@@ -259,6 +275,7 @@
             <div class="cs-deck-rail"><b data-deck-fill></b></div>
           </div>
 
+          <div class="cs-deck-view">
           <div class="cs-deck-track" data-deck-track>
 
             <!-- 面板 1：视觉规范 -->
@@ -425,6 +442,7 @@
             </article>
 
           </div>
+          </div>
         </section>
 
         <!-- ── 05 内容架构 ── -->
@@ -523,57 +541,55 @@
           <h3 class="cs-sub">章节过渡页：让读者知道自己换了一个场</h3>
           <p class="cs-lede">每一章之间插一张全出血的过渡页：一张与本章语气相符的大图，右上角压章节名，页眉保留红色下划线与拼音。它不承载信息，只负责让阅读节奏喘一口气。</p>
 
-          <div class="cs-slides" data-slides>
-            <button class="cs-slides-stage" type="button">
+          <div data-hscroll>
+          <div class="cs-plates" data-hscroll-track>
+            <button class="cs-plate" type="button"
+                    data-zoom="../assets/work/vision/spread/v3-divider-hongcheng-page.webp"
+                    data-zoom-title="鸿程 · 笃行 · 章节过渡页"
+                    data-zoom-note="整个跨页只放一张星轨云海和四个字。这一章讲战略与判断，用最安静的画面开场。">
               <img src="../assets/work/vision/spread/v3-divider-hongcheng-page.webp" width="923" height="1217"
                    alt="鸿程·笃行章节过渡页" loading="lazy" decoding="async">
+              <b>鸿程 · 笃行</b>
+              <small>星轨云海，最安静的开场</small>
+            </button>
+            <button class="cs-plate" type="button"
+                    data-zoom="../assets/work/vision/spread/v3-divider-hanglan.webp"
+                    data-zoom-title="行澜 · 领驭 · 章节过渡页"
+                    data-zoom-note="深色调加一束光，过渡页同时承担本章首篇文章的标题页——省一页，也让读者立刻知道这章要讲什么。">
               <img src="../assets/work/vision/spread/v3-divider-hanglan.webp" width="922" height="1217"
                    alt="行澜·领驭章节过渡页" loading="lazy" decoding="async">
+              <b>行澜 · 领驭</b>
+              <small>深色加一束光，兼作首篇标题页</small>
+            </button>
+            <button class="cs-plate" type="button"
+                    data-zoom="../assets/work/vision/spread/v3-divider-shizhan.webp"
+                    data-zoom-title="实战 · 撷英 · 章节过渡页"
+                    data-zoom-note="换成一线同事的人物特写，标题压在画面留白处。这一章是员工自己写的故事，画面语气必须从「公司」切到「人」。">
               <img src="../assets/work/vision/spread/v3-divider-shizhan.webp" width="923" height="1217"
                    alt="实战·撷英章节过渡页" loading="lazy" decoding="async">
+              <b>实战 · 撷英</b>
+              <small>一线同事特写，语气从公司切到人</small>
+            </button>
+            <button class="cs-plate" type="button"
+                    data-zoom="../assets/work/vision/spread/v3-divider-xinyu.webp"
+                    data-zoom-title="心语 · 织梦 · 章节过渡页"
+                    data-zoom-note="员工活动实拍加手写感标题，是全书语气最轻的一章，过渡页也跟着放松下来。">
               <img src="../assets/work/vision/spread/v3-divider-xinyu.webp" width="923" height="1217"
                    alt="心语·织梦章节过渡页" loading="lazy" decoding="async">
+              <b>心语 · 织梦</b>
+              <small>活动实拍加手写感标题，全书最轻</small>
             </button>
-
-            <div>
-              <div class="cs-slides-thumbs">
-                <button class="cs-slide-thumb" type="button"
-                        data-slide-title="鸿程 · 笃行"
-                        data-slide-note="整个跨页只放一张星轨云海和四个字。这一章讲战略与判断，用最安静的画面开场。">
-                  <img src="../assets/work/vision/spread/v3-divider-hongcheng-page.webp" width="923" height="1217" alt="鸿程·笃行" loading="lazy" decoding="async">
-                </button>
-                <button class="cs-slide-thumb" type="button"
-                        data-slide-title="行澜 · 领驭"
-                        data-slide-note="深色调加一束光，过渡页同时承担本章首篇文章的标题页——省一页，也让读者立刻知道这章要讲什么。">
-                  <img src="../assets/work/vision/spread/v3-divider-hanglan.webp" width="922" height="1217" alt="行澜·领驭" loading="lazy" decoding="async">
-                </button>
-                <button class="cs-slide-thumb" type="button"
-                        data-slide-title="实战 · 撷英"
-                        data-slide-note="换成一线同事的人物特写，标题压在画面留白处。这一章是员工自己写的故事，画面语气必须从「公司」切到「人」。">
-                  <img src="../assets/work/vision/spread/v3-divider-shizhan.webp" width="923" height="1217" alt="实战·撷英" loading="lazy" decoding="async">
-                </button>
-                <button class="cs-slide-thumb" type="button"
-                        data-slide-title="心语 · 织梦"
-                        data-slide-note="员工活动实拍加手写感标题，是全书语气最轻的一章，过渡页也跟着放松下来。">
-                  <img src="../assets/work/vision/spread/v3-divider-xinyu.webp" width="923" height="1217" alt="心语·织梦" loading="lazy" decoding="async">
-                </button>
-              </div>
-              <div class="cs-slide-cap">
-                <h4 data-slide-cap-title></h4>
-                <p data-slide-cap-note></p>
-              </div>
-              <p class="cs-slide-hint">点缩略图切换 · 点大图放大查看</p>
-            </div>
+            <button class="cs-plate" type="button"
+                    data-zoom="../assets/work/vision/spread/v3-inner-drop.webp"
+                    data-zoom-title="内文版式 · 首字下沉与圆形人像"
+                    data-zoom-note="正文思源宋体 9–11pt、行距 1.6–1.8 倍、首字下沉 2–3 行">
+              <img src="../assets/work/vision/spread/v3-inner-drop.webp" width="922" height="1217"
+                   alt="内文版式，首字下沉与圆形人像" loading="lazy" decoding="async">
+              <b>内文版式</b>
+              <small>首字下沉、三栏正文、圆形人像</small>
+            </button>
           </div>
-
-          <button class="cs-figure is-compact is-narrow" type="button"
-                  data-zoom="../assets/work/vision/spread/v3-inner-drop.webp"
-                  data-zoom-title="内文版式 · 首字下沉与圆形人像"
-                  data-zoom-note="正文思源宋体 9–11pt、行距 1.6–1.8 倍、首字下沉 2–3 行">
-            <img src="../assets/work/vision/spread/v3-inner-drop.webp" width="922" height="1217"
-                 alt="内文版式，首字下沉与圆形人像" loading="lazy" decoding="async">
-            <span class="cs-figure-cap"><span><b>内文版式</b>首字下沉、三栏正文、圆形人像与署名——规范落到每一页</span><i>点击放大</i></span>
-          </button>
+          </div>
         </section>
 
         <!-- ── 06 落地与延展（钉住横向面板：绘卷 → 第四期 → 两种语言 → 插画） ── -->
@@ -591,6 +607,7 @@
             <div class="cs-deck-rail"><b data-deck-fill></b></div>
           </div>
 
+          <div class="cs-deck-view">
           <div class="cs-deck-track" data-deck-track>
 
             <!-- 面板 1：信息设计 · 拾光绘卷 -->
@@ -696,28 +713,20 @@
             </article>
 
           </div>
+          </div>
         </section>
 
-        <!-- ── 07 从校对到印刷（钉住横向面板：校对 → AI 报告 → 纸张 → 评审） ── -->
-        <section class="cs-deck" data-toc="校对与印刷" data-deck>
-          <div class="cs-deck-head">
-            <p class="cs-num">07 — 从校对到印刷</p>
-            <h2 class="cs-title">设计师，<em>也要自己把好编辑这道关</em></h2>
-            <p class="cs-lede">一本内刊里有几十篇文章、上百个人名和职务。排版做完只是一半，剩下一半没人替设计师做。</p>
-            <ol class="cs-deck-steps">
-              <li class="cs-deck-step is-on" data-deck-step><i>01</i>校对流程</li>
-              <li class="cs-deck-step" data-deck-step><i>02</i>AI 校对报告</li>
-              <li class="cs-deck-step" data-deck-step><i>03</i>纸张与打样</li>
-              <li class="cs-deck-step" data-deck-step><i>04</i>双线评审</li>
-            </ol>
-            <div class="cs-deck-rail"><b data-deck-fill></b></div>
-          </div>
+        <!-- ── 07 从校对到印刷（粘性堆叠：卡片依次叠上来） ── -->
+        <section class="cs-section" data-toc="校对与印刷">
+          <p class="cs-num">07 — 从校对到印刷</p>
+          <h2 class="cs-title">设计师，<em>也要自己把好编辑这道关</em></h2>
+          <p class="cs-lede">一本内刊里有几十篇文章、上百个人名和职务。排版做完只是一半，剩下一半没人替设计师做。</p>
 
-          <div class="cs-deck-track" data-deck-track>
+          <div class="cs-stack" data-stack>
 
-            <!-- 面板 1：校对流程 -->
-            <article class="cs-panel is-solo">
-              <div class="cs-panel-txt">
+            <article class="cs-stack-card" style="--i:0">
+              <p class="cs-stack-n">01</p>
+              <div class="cs-stack-body">
                 <h3>把每一个字、每一处署名都核对过</h3>
                 <ul class="cs-specs-mini is-block">
                   <li><b>多轮校对 · 多角色复核</b><span>参照出版行业的思路安排流程。企业内刊不必也不宜照搬出版社的三校三审，但设计师自己要把好这道关，对每一处文字、每一张图、每一个署名负责。</span></li>
@@ -727,37 +736,43 @@
               </div>
             </article>
 
-            <!-- 面板 2：AI 校对报告 -->
-            <article class="cs-panel is-wide">
-              <div class="cs-panel-fig is-pair">
-                <button class="cs-figure" type="button"
-                        data-zoom="../assets/work/vision/doc/ai-proof.webp"
-                        data-zoom-title="AI 全文校对报告 · 结论摘要"
-                        data-zoom-note="54 项确定错误 / 70 项用词优化 / 14 项事实核查 / 8 项版权与用工表述风险">
-                  <img src="../assets/work/vision/doc/ai-proof.webp" width="1535" height="1280"
-                       alt="AI 全文校对报告结论摘要，列出错别字、拼音、事实核查等问题" loading="lazy" decoding="async">
-                  <span class="cs-figure-cap"><span><b>结论摘要</b></span><i>点击放大</i></span>
-                </button>
-                <button class="cs-figure" type="button"
-                        data-zoom="../assets/work/vision/doc/ai-proof-table.webp"
-                        data-zoom-title="AI 全文校对报告 · A 类必须修改的确定错误"
-                        data-zoom-note="逐条列出编号、页码位置、原文与建议修改">
-                  <img src="../assets/work/vision/doc/ai-proof-table.webp" width="2274" height="1804"
-                       alt="AI 校对报告 A 类错误逐条表，含编号、页码、原文与建议修改" loading="lazy" decoding="async">
-                  <span class="cs-figure-cap"><span><b>逐条清单</b></span><i>点击放大</i></span>
-                </button>
-              </div>
-              <div class="cs-panel-txt">
-                <h3>机器不会累，人会</h3>
-                <p>报告分四类：确定错误、用词优化、事实核查、版权与用工表述风险，逐条给出编号、页码位置、原文与建议修改。</p>
-                <p class="cs-quote-soft">最能说明问题的是这一条：<em>内页 36—57 的栏目页眉拼音连续 22 页错成 XIEYIN，正确的 XIEYING 只出现在目录里</em>。这种错误人眼校三遍也容易滑过去——因为它每一页都长得一样。</p>
+            <article class="cs-stack-card" style="--i:1">
+              <p class="cs-stack-n">02</p>
+              <div class="cs-stack-body is-split">
+                <div>
+                  <h3>机器不会累，人会</h3>
+                  <p>AI 全文校对报告分四类：确定错误、用词优化、事实核查、版权与用工表述风险，逐条给出编号、页码位置、原文与建议修改。</p>
+                  <p class="cs-quote-soft">最能说明问题的是这一条：<em>内页 36—57 的栏目页眉拼音连续 22 页错成 XIEYIN，正确的 XIEYING 只出现在目录里</em>。这种错误人眼校三遍也容易滑过去——因为它每一页都长得一样。</p>
+                </div>
+                <div class="cs-plates is-two">
+                  <button class="cs-plate" type="button"
+                          data-zoom="../assets/work/vision/doc/ai-proof.webp"
+                          data-zoom-title="AI 全文校对报告 · 结论摘要"
+                          data-zoom-note="54 项确定错误 / 70 项用词优化 / 14 项事实核查 / 8 项版权与用工表述风险">
+                    <img src="../assets/work/vision/doc/ai-proof.webp" width="1535" height="1280"
+                         alt="AI 全文校对报告结论摘要" loading="lazy" decoding="async">
+                    <b>结论摘要</b>
+                  </button>
+                  <button class="cs-plate" type="button"
+                          data-zoom="../assets/work/vision/doc/ai-proof-table.webp"
+                          data-zoom-title="AI 全文校对报告 · A 类必须修改的确定错误"
+                          data-zoom-note="逐条列出编号、页码位置、原文与建议修改">
+                    <img src="../assets/work/vision/doc/ai-proof-table.webp" width="2274" height="1804"
+                         alt="AI 校对报告 A 类错误逐条表" loading="lazy" decoding="async">
+                    <b>逐条清单</b>
+                  </button>
+                </div>
               </div>
             </article>
 
-            <!-- 面板 3：纸张与打样 -->
-            <article class="cs-panel is-solo">
-              <div class="cs-panel-txt">
-                <h3>为了一张满意的纸，打了无数次样</h3>
+            <article class="cs-stack-card" style="--i:2">
+              <p class="cs-stack-n">03</p>
+              <div class="cs-stack-body is-split">
+                <div>
+                  <h3>为了一张满意的纸，打了无数次样</h3>
+                  <p>打样阶段我坚持要用 80 克铜版纸——它的手感和厚度，是一本内刊「分量」的一部分。为此做了<strong>多轮供应商沟通、询价、打样与实物对比</strong>，最终找到能够提供相应纸张、并满足预期印刷效果的供应商。</p>
+                  <p>这一步考验的是<strong>能不能把设计从屏幕推进到生产现场</strong>。</p>
+                </div>
                 <div class="cs-stats">
                   <div class="cs-stat">
                     <div class="cs-stat-n"><span data-count="80">80</span><small>克</small></div>
@@ -768,14 +783,12 @@
                     <p class="cs-stat-l">供应商沟通 · 询价 · 打样 · 实物对比</p>
                   </div>
                 </div>
-                <p>打样阶段我坚持要用 80 克铜版纸——它的手感和厚度，是一本内刊「分量」的一部分。为此做了<strong>多轮供应商沟通、询价、打样与实物对比</strong>，最终找到能够提供相应纸张、并满足预期印刷效果的供应商。</p>
-                <p>这一步考验的是<strong>能不能把设计从屏幕推进到生产现场</strong>。</p>
               </div>
             </article>
 
-            <!-- 面板 4：双线评审 -->
-            <article class="cs-panel is-solo">
-              <div class="cs-panel-txt">
+            <article class="cs-stack-card" style="--i:3">
+              <p class="cs-stack-n">04</p>
+              <div class="cs-stack-body">
                 <h3>双线并行，把漫长的评审流程跑通</h3>
                 <p>公司评审流程很长，需要多部门同时评审。为了不让项目卡在流程里，我把它拆成两条线同时推进，任何一条都不空等。</p>
                 <div class="cs-shift">
@@ -984,6 +997,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="../js/hscroll.js?v=1"></script>
-<script src="../js/case.js?v=32"></script>
+<script src="../js/case.js?v=35"></script>
 </body>
 </html>

@@ -324,6 +324,39 @@ assets/work/<slug>/   该作品的图片资源
 
 后续所有板块的标题和副标题，优先采用左对齐、上下排版。
 
+### 滚动交互的四种节奏（内刊页）
+
+用户明确要求「不要老是同一种交互，太单调」。内刊页现在有四种，新加内容时
+**先看这一页已经用了哪种，挑一种没用过的**，不要再堆同一个：
+
+| 板块 | 交互 | 用在哪 |
+| --- | --- | --- |
+| `.cs-reveal` + `initScrubVideo()` | 视频进度绑定滚轮 | 礼盒开启（首屏与 01 之间） |
+| `.cs-deck` + `initDeck()` | 钉住区块，纵向滚动换算成横向位移 | 04 视觉体系、06 落地与延展 |
+| `.cs-stack` + `initStack()` | 粘性堆叠，卡片一张张叠上来 | 07 从校对到印刷 |
+| `.cs-plates` | 一排缩略图，点开放大 | 05 的章节过渡页 |
+
+**滚动绑定视频（`.cs-reveal`）的两个硬前提**，缺一个都会卡：
+
+1. 视频必须**全关键帧**编码，否则每次 seek 要回溯到上一个关键帧再解码。
+   本页的 `assets/work/vision/video/giftbox.mp4` 是这么转的：
+   ```bash
+   ffmpeg -i 原片.mp4 -an -sn -vf scale=1120:-2 -c:v libx264 -profile:v high \
+     -pix_fmt yuv420p -g 1 -keyint_min 1 -sc_threshold 0 -crf 31 -preset slow \
+     -movflags +faststart giftbox.mp4
+   ```
+   全关键帧会把体积撑大：原片 4.8MB / 10s / 720p，转完 1120px crf31 是 2.8MB。
+   再往上调画质，crf28 就是 4.0MB，crf26 + 1280px 是 6.3MB——超过 4MB 不值得。
+2. `currentTime` 只能在 `requestAnimationFrame` 里写，而且**上一次 seek 没完成
+   （`video.seeking` 为 true）就不要下新指令**，否则浏览器排队丢帧。
+
+`.cs-deck` 的横向轨道外面必须套一层 **不动的** `.cs-deck-view`：遮罩加在它身上，
+面板滑出左缘时渐隐，不会硬压在左侧目录上。遮罩不能加在轨道自己身上——轨道
+是被 transform 推着走的，遮罩会跟着一起跑。
+
+`.cs-stack` 的 sticky 顶距用 `--i` 递增（每张低 14px），露出下面几张的边才像
+「一叠」；窄屏要改回 `position: static`，手机屏太矮，叠起来会把内容顶出视口。
+
 ### 两栏对照的标准做法：`.cs-shift`
 
 用户定的：「以后涉及到这种结构的，就要按照现在的这个来。」凡是「主 / 次」「问题 / 解法」
