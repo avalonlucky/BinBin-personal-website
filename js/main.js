@@ -371,17 +371,6 @@ function initScrollAnimations() {
       scrollTrigger: { trigger: '.values-track', start: 'top 90%', end: 'top 58%', scrub: true },
     });
 
-  // ── Footer wordmark parallax ──
-  gsap.from('.footer-wordmark span', {
-    scrollTrigger: {
-      trigger: '.s-footer',
-      start: 'top bottom',
-      end: 'bottom bottom',
-      scrub: 2,
-    },
-    y: 80,
-  });
-
   // ── Image parallax on scroll ──
   gsap.utils.toArray('.about-img img').forEach(img => {
     gsap.fromTo(img,

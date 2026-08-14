@@ -575,40 +575,6 @@ function initPageDemo() {
 }
 
 /* ─────────────────────────────────────────
-   章节过渡页画廊 — 点缩略图切换主图
-───────────────────────────────────────── */
-function initSlides() {
-  const box = document.querySelector('[data-slides]');
-  if (!box) return;
-  const stage  = box.querySelector('.cs-slides-stage');
-  const shots  = [...stage.querySelectorAll('img')];
-  const thumbs = [...box.querySelectorAll('.cs-slide-thumb')];
-  // 注意：不能用 [data-slide-title] 找说明文字——缩略图按钮上也有同名属性，
-  // querySelector 会先命中按钮，把它的 <img> 覆盖掉。
-  const capT   = box.querySelector('[data-slide-cap-title]');
-  const capP   = box.querySelector('[data-slide-cap-note]');
-  if (!shots.length || !thumbs.length) return;
-
-  const show = i => {
-    shots.forEach((im, k) => im.classList.toggle('is-on', k === i));
-    thumbs.forEach((t, k) => t.classList.toggle('is-active', k === i));
-    capT.textContent = thumbs[i].dataset.slideTitle || '';
-    capP.textContent = thumbs[i].dataset.slideNote || '';
-    // 放大看的还是当前这张
-    stage.dataset.zoom = shots[i].getAttribute('src');
-    stage.dataset.zoomTitle = thumbs[i].dataset.slideTitle || '';
-    stage.dataset.zoomNote = thumbs[i].dataset.slideNote || '';
-  };
-
-  thumbs.forEach((t, i) => {
-    t.addEventListener('click', () => show(i));
-    t.addEventListener('mouseenter', () => show(i));
-  });
-  show(0);
-}
-
-
-/* ─────────────────────────────────────────
    刊物阅读器 — 整本翻页
    页面图在 assets/work/vision/book/<key>/000.webp 起编号。
    第三期原始 PDF 是跨页版，导出时已拆成单页并按
@@ -1510,7 +1476,6 @@ initLine();
 initTocMap();
 initReader();
 initPageDemo();
-initSlides();
 initFlip();
 initLayoutCompare();
 initHub();

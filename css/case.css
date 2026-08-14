@@ -1069,85 +1069,24 @@
   align-items: start;
   margin-top: 26px;
 }
-.cs-sticky-media {
-  position: sticky;
-  top: calc(var(--nav-h, 76px) + 26px);
-}
-.cs-sticky-stage {
-  position: relative;
-  height: min(58vh, 520px);
-}
-.cs-sticky-shot {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  place-items: center;
-  opacity: 0;
-  transform: scale(0.985);
-  transition: opacity .55s var(--ease), transform .55s var(--ease);
-  pointer-events: none;
-}
-.cs-sticky-shot.is-pair { grid-template-columns: 1fr 1fr; align-items: center; }
-.cs-sticky-shot.is-on { opacity: 1; transform: none; pointer-events: auto; }
-.cs-shot {
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  border: none;
-  background: none;
-  cursor: zoom-in;
-  font: inherit;
-}
-.cs-shot img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: contain;
-  border-radius: 8px;
-}
-.cs-sticky-cap {
-  margin: 14px 0 0;
-  font-family: var(--f-cjk);
-  font-size: var(--fs-sm);
-  color: var(--cs-ink-3);
-  text-align: center;
-}
 
-.cs-sticky-steps { display: flex; flex-direction: column; }
-.cs-sticky-step {
-  padding: clamp(30px, 5vh, 64px) 0;
-  opacity: 0.34;
-  transition: opacity .5s var(--ease);
-}
-.cs-sticky-step.is-on { opacity: 1; }
-.cs-sticky-step + .cs-sticky-step { border-top: 1px solid var(--cs-hair); }
-.cs-sticky-n {
-  font-family: var(--f-heading);
-  font-size: 26px;
-  line-height: 1;
-  color: rgb(var(--cs-accent-rgb) / 0.42);
-  margin: 0 0 10px;
-}
-.cs-sticky-step h3 {
-  font-family: var(--f-cjk);
-  font-size: var(--fs-lg);
-  font-weight: 600;
-  color: var(--cs-ink);
-  margin: 0 0 12px;
-  line-height: 1.35;
-}
-.cs-sticky-step p {
-  font-family: var(--f-cjk);
-  font-size: var(--fs-base);
-  line-height: 1.78;
-  color: var(--cs-ink-2);
-  margin: 0 0 12px;
-}
-.cs-sticky-step p:last-child { margin-bottom: 0; }
-.cs-sticky-step strong { color: var(--cs-ink); font-weight: 600; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .cs-sticky-step .cs-quote-soft { font-size: var(--fs-sm); margin-top: 12px; }
 
 /* ────────────────────────────────────────
@@ -2985,115 +2924,24 @@
 }
 .cs-prio p em { font-style: normal; font-weight: 600; color: var(--cs-accent-deep); }
 
-/* ── 内容架构思维导图 ──
-   左右两侧挂章节卡、中间一枚印章做中心节点，连线由 case.js 按实际布局算，
-   做法同 cs-hub（不要写死坐标，卡片高度会随文案变）。 */
-.cs-mindmap {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  gap: clamp(16px, 2vw, 26px) clamp(60px, 9vw, 132px);
-  align-items: center;
-  margin: 34px 0 0;
-}
-.cs-mindmap-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
-}
-.cs-mindmap-svg path {
-  fill: none;
-  stroke: var(--cs-accent);
-  stroke-width: 1;
-  opacity: 0.45;
-}
-.cs-mm-side {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(12px, 1.4vw, 18px);
-  position: relative;
-  z-index: 1;
-}
-.cs-mm-core {
-  position: relative;
-  z-index: 1;
-  width: clamp(132px, 13vw, 168px);
-  padding: 20px 16px 18px;
-  border-radius: clamp(12px, 1.2vw, 16px);
-  border: 1px solid rgb(var(--cs-accent-rgb) / 0.28);
-  background: linear-gradient(180deg, rgb(var(--cs-accent-rgb) / 0.08), var(--cs-paper));
-  text-align: center;
-}
-.cs-mm-core img { width: 52%; display: block; margin: 0 auto 12px; }
-.cs-mm-core b {
-  display: block;
-  font-family: var(--f-cjk);
-  font-size: clamp(15px, 1.4vw, 17px);
-  font-weight: 600;
-  color: var(--cs-ink);
-}
-.cs-mm-core span {
-  display: block;
-  font-family: var(--f-cjk);
-  font-size: 13px;
-  color: var(--cs-ink-3);
-  margin-top: 4px;
-}
-.cs-chapter-sum {
-  padding: 22px;
-  border: 1px dashed var(--cs-hair);
-  border-radius: clamp(10px, 1vw, 14px);
-  background: transparent;
-}
-.cs-chapter-sum dl {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 9px 14px;
-  margin: 0;
-}
-.cs-chapter-sum dt {
-  font-family: var(--f-display, var(--f-heading));
-  font-size: clamp(20px, 1.9vw, 25px);
-  line-height: 1;
-  color: var(--cs-accent);
-}
-.cs-chapter-sum dd {
-  font-family: var(--f-cjk);
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--cs-ink-2);
-  margin: 0;
-  align-self: center;
-}
-.cs-chapter {
-  border: 1px solid var(--cs-hair);
-  border-radius: clamp(10px, 1vw, 14px);
-  overflow: hidden;
-  background: var(--cs-paper);
-  transition: transform .4s var(--ease), box-shadow .4s var(--ease);
-}
-.cs-chapter:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 34px rgba(2, 2, 2, 0.07);
-}
-.cs-chapter.is-lead {
-  border-color: rgb(var(--cs-accent-rgb) / 0.3);
-  background: linear-gradient(180deg, rgb(var(--cs-accent-rgb) / 0.06), var(--cs-paper) 70%);
-}
-.cs-chapter-head {
-  padding: 15px 18px;
-  border-bottom: 1px solid var(--cs-hair);
-}
-.cs-chapter-cn {
-  font-family: var(--f-cjk);
-  font-size: clamp(16px, 1.4vw, 18px);
-  font-weight: 600;
-  color: var(--cs-ink);
-}
-.cs-chapter-body { padding: 4px 18px 14px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .cs-art {
   position: relative;
   padding: 9px 0 9px 15px;
@@ -3121,71 +2969,20 @@
   white-space: nowrap;
 }
 
-/* ── 双刊对照：对外 / 对内两种设计语言 ── */
-.cs-books {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(18px, 2.2vw, 28px);
-  margin: 30px 0 0;
-}
-.cs-book {
-  border: 1px solid var(--cs-hair);
-  border-radius: clamp(10px, 1vw, 14px);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background: var(--cs-paper);
-}
-.cs-book-fig { cursor: zoom-in; overflow: hidden; background: var(--cs-paper-2); }
-.cs-book-fig img {
-  width: 100%;
-  display: block;
-  transition: transform .6s var(--ease);
-}
-.cs-book-fig:hover img { transform: scale(1.03); }
-.cs-book-body { padding: 22px clamp(18px, 1.8vw, 24px) 24px; flex: 1; }
-.cs-book-k {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin-bottom: 12px;
-}
-.cs-book-k i {
-  font-style: normal;
-  font-family: var(--f-cjk);
-  font-size: var(--fs-xs);
-  padding: 3px 11px;
-  border-radius: 100px;
-  background: var(--cs-ink);
-  color: rgba(251, 251, 244, 0.9);
-}
-.cs-book.is-inner .cs-book-k i { background: var(--cs-accent); color: #fff; }
-.cs-book-k b {
-  font-family: var(--f-cjk);
-  font-size: clamp(15.5px, 1.4vw, 18px);
-  font-weight: 600;
-}
-.cs-book-body > p {
-  font-family: var(--f-cjk);
-  font-size: 15px;
-  line-height: 1.75;
-  color: var(--cs-ink-2);
-  margin: 0 0 16px;
-}
-.cs-book-tags { display: flex; flex-wrap: wrap; gap: 7px; }
-.cs-book-tags span {
-  font-family: var(--f-cjk);
-  font-size: 13px;
-  padding: 4px 12px;
-  border-radius: 100px;
-  border: 1px solid var(--cs-hair);
-  color: var(--cs-ink-2);
-}
-.cs-book.is-inner .cs-book-tags span {
-  border-color: rgb(var(--cs-accent-rgb) / 0.3);
-  background: rgb(var(--cs-accent-rgb) / 0.06);
-  color: var(--cs-accent-deep);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ── 印章式页码演示 ──
    点上一页 / 下一页，页码跟着变，印章按奇偶落到左下或右下角，
@@ -3272,80 +3069,18 @@
   align-items: center;
 }
 
-/* ── 章节过渡页画廊：一张主图 + 一排缩略图，点缩略图切换 ── */
-.cs-slides {
-  display: grid;
-  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
-  gap: clamp(22px, 3vw, 44px);
-  align-items: start;
-  margin: 30px 0 0;
-}
-.cs-slides-stage {
-  position: relative;
-  aspect-ratio: 923 / 1217;
-  border-radius: clamp(8px, 0.8vw, 12px);
-  overflow: hidden;
-  background: var(--cs-ink);
-  box-shadow: 0 3px 10px rgba(2,2,2,0.16), 0 20px 44px rgba(2,2,2,0.14);
-  cursor: zoom-in;
-  padding: 0;
-  border: 0;
-  width: 100%;
-}
-.cs-slides-stage img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity .5s var(--ease);
-}
-.cs-slides-stage img.is-on { opacity: 1; }
-.cs-slides-thumbs {
-  display: flex;
-  gap: 10px;
-  margin: 0 0 18px;
-  flex-wrap: wrap;
-}
-.cs-slide-thumb {
-  width: 62px;
-  aspect-ratio: 923 / 1217;
-  padding: 0;
-  border: 1px solid var(--cs-hair);
-  border-radius: 4px;
-  overflow: hidden;
-  background: var(--cs-ink);
-  cursor: pointer;
-  opacity: 0.5;
-  transition: opacity .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease);
-}
-.cs-slide-thumb img { width: 100%; height: 100%; }
-.cs-slide-thumb:hover { opacity: 0.85; transform: translateY(-2px); }
-.cs-slide-thumb.is-active {
-  opacity: 1;
-  border-color: var(--cs-accent);
-  box-shadow: 0 0 0 2px rgb(var(--cs-accent-rgb) / 0.22);
-}
-.cs-slide-cap h4 {
-  font-family: var(--f-cjk);
-  font-size: clamp(16px, 1.5vw, 19px);
-  font-weight: 600;
-  color: var(--cs-ink);
-  margin: 0 0 8px;
-}
-.cs-slide-cap p {
-  font-family: var(--f-cjk);
-  font-size: clamp(15px, 1.3vw, 16.5px);
-  line-height: 1.8;
-  color: var(--cs-ink-2);
-  margin: 0;
-}
-.cs-slide-hint {
-  font-family: var(--f-cjk);
-  font-size: 13.5px;
-  color: var(--cs-ink-3);
-  margin: 14px 0 0;
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* 大图收窄：规范图 / 手稿 / 时间线这类横图铺满整栏会把版面撑散，
    限宽居中，细节留给点击放大。 */
@@ -3682,53 +3417,14 @@
   .cs-rd-tab { font-size: 13px; padding: 7px 13px; }
 }
 
-/* ── 规范条目：七个维度 ── */
-.cs-rules {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
-  gap: clamp(12px, 1.4vw, 18px);
-  margin: 30px 0 0;
-}
-.cs-rule {
-  padding: 20px;
-  border: 1px solid var(--cs-hair);
-  border-radius: clamp(10px, 1vw, 14px);
-  background: var(--cs-paper);
-}
-.cs-rule-n {
-  font-family: var(--f-mono, var(--f-body));
-  font-size: var(--fs-xs);
-  letter-spacing: 0.12em;
-  color: var(--cs-accent);
-  margin-bottom: 10px;
-}
-.cs-rule h4 {
-  font-family: var(--f-cjk);
-  font-size: clamp(16.5px, 1.4vw, 18px);
-  font-weight: 600;
-  color: var(--cs-ink);
-  margin: 0 0 7px;
-}
-.cs-rule p {
-  font-family: var(--f-cjk);
-  font-size: clamp(15px, 1.25vw, 16px);
-  line-height: 1.78;
-  color: var(--cs-ink-2);
-  margin: 0;
-}
-.cs-rule p code {
-  font-family: var(--f-mono, monospace);
-  font-size: 14px;
-  color: var(--cs-accent-deep);
-}
-/* 色彩规范那张卡里的两块色 */
-.cs-rule-colors { display: flex; gap: 10px; margin: 0 0 10px; }
-.cs-rule-colors i {
-  flex: 1;
-  height: 30px;
-  border-radius: 4px;
-  display: block;
-}
+
+
+
+
+
+
+
+
 
 /* ────────────────────────────────────────
    进场（JS 未跑时不隐藏内容）
@@ -3792,11 +3488,10 @@
 
   .cs-plates[data-hscroll-track] > .cs-plate { flex: 0 0 min(56vw, 220px); }
 
-  /* 窄屏取消图钉住：屏幕矮，钉住会把文字挤没 */
-  .cs-sticky { grid-template-columns: 1fr; gap: 18px; }
-  .cs-sticky-media { position: static; }
-  .cs-sticky-stage { height: 42vh; }
-  .cs-sticky-step { opacity: 1; padding: 22px 0; }
+
+
+
+
   .cs-line { padding-left: 32px; }
   .cs-line-rail { left: 5px; }
   .cs-line-dot { left: -32px; width: 10px; height: 10px; }
@@ -3860,17 +3555,15 @@
   /* 内刊案例的板块 */
   .cs-journals-inner { grid-template-columns: 1fr; gap: 26px; }
   .cs-journal-fig { max-width: 320px; }
-  .cs-books { grid-template-columns: 1fr; }
-  /* 思维导图：窄屏没有左右两侧可言。用 display:contents 把两侧容器摊掉，
-     五张章节卡 + 汇总卡直接成为横向轨道上的项，中心节点排到最前面。 */
-  .cs-mindmap { gap: 14px; }
-  .cs-mm-side { display: contents; }
-  .cs-mm-core { width: min(78vw, 300px); order: -1; align-self: stretch; display: grid; place-content: center; }
-  .cs-mindmap-svg { display: none; }
+
+
+
+
+
   .cs-pd-wrap,
   .cs-slides { grid-template-columns: 1fr; }
   .cs-pd-stage { max-width: 300px; }
-  .cs-slides-stage { max-width: 300px; }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3985,156 +3678,28 @@
     radial-gradient(circle at 72% 50%, rgba(230,0,18,.06), transparent 33%),
     var(--cs-paper);
 }
-.cs-architecture {
-  display: grid;
-  grid-template-columns: minmax(210px, .58fr) minmax(0, 2.2fr);
-  gap: clamp(20px, 3vw, 46px);
-  margin-top: 36px;
-  min-height: min(70vh, 710px);
-}
-.cs-architecture-tabs {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-top: 1px solid var(--cs-hair);
-}
-.cs-architecture-tab {
-  display: grid;
-  grid-template-columns: 32px 1fr;
-  gap: 0 12px;
-  align-items: center;
-  width: 100%;
-  padding: 20px 8px 20px 0;
-  border: 0;
-  border-bottom: 1px solid var(--cs-hair);
-  background: transparent;
-  color: var(--cs-ink-3);
-  text-align: left;
-  cursor: pointer;
-  font: inherit;
-  transition: color .35s var(--ease), padding-left .35s var(--ease);
-}
-.cs-architecture-tab i {
-  grid-row: 1 / span 2;
-  font-family: var(--f-body);
-  font-size: 12px;
-  font-style: normal;
-  letter-spacing: .08em;
-  color: inherit;
-}
-.cs-architecture-tab span {
-  font-family: var(--f-cjk);
-  font-size: clamp(17px, 1.7vw, 22px);
-  font-weight: 600;
-  color: inherit;
-}
-.cs-architecture-tab small {
-  font-family: var(--f-cjk);
-  font-size: 12px;
-  letter-spacing: .04em;
-  opacity: .65;
-}
-.cs-architecture-tab:hover,
-.cs-architecture-tab.is-active { color: var(--cs-ink); padding-left: 8px; }
-.cs-architecture-tab.is-active i { color: var(--cs-accent); }
-.cs-architecture-stage {
-  position: relative;
-  min-width: 0;
-  min-height: 620px;
-  overflow: hidden;
-  border-radius: 24px;
-  background: #181614;
-  box-shadow: 0 30px 70px rgba(35,20,14,.14);
-}
-.cs-architecture-ghost {
-  position: absolute;
-  right: -1vw;
-  top: -4vw;
-  z-index: 1;
-  font-family: var(--f-heading);
-  font-size: clamp(180px, 25vw, 380px);
-  line-height: 1;
-  color: rgba(251,251,244,.045);
-  pointer-events: none;
-}
-.cs-architecture-figure {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  background: #181614;
-  cursor: zoom-in;
-  overflow: hidden;
-}
-.cs-architecture-figure::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(12,10,9,.22), transparent 56%), linear-gradient(0deg, rgba(12,10,9,.88), transparent 54%);
-  pointer-events: none;
-}
-.cs-architecture-figure img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(.86) contrast(1.03);
-  transform: scale(1.02);
-  transition: opacity .32s var(--ease), transform 1.15s var(--ease), filter .7s var(--ease);
-}
-.cs-architecture-stage:hover .cs-architecture-figure img { transform: scale(1.055); filter: saturate(1) contrast(1.03); }
-.cs-architecture-stage.is-switching .cs-architecture-figure img { opacity: .12; transform: scale(1.08); }
-.cs-architecture-copy {
-  position: absolute;
-  left: clamp(24px, 4vw, 58px);
-  right: clamp(24px, 4vw, 58px);
-  bottom: clamp(24px, 4vw, 50px);
-  z-index: 2;
-  max-width: 610px;
-  pointer-events: none;
-}
-.cs-architecture-copy > p:first-child {
-  margin: 0 0 7px;
-  font-family: var(--f-body);
-  font-size: 12px;
-  letter-spacing: .14em;
-  color: #ff6973;
-  text-transform: uppercase;
-}
-.cs-architecture-copy h3 {
-  margin: 0 0 8px;
-  font-family: var(--f-cjk);
-  font-size: clamp(32px, 4.4vw, 62px);
-  line-height: 1.1;
-  font-weight: 600;
-  color: #fbfbf4;
-}
-.cs-architecture-copy > p:nth-of-type(2) {
-  max-width: 520px;
-  margin: 0;
-  font-family: var(--f-cjk);
-  font-size: clamp(15px, 1.35vw, 18px);
-  line-height: 1.7;
-  color: rgba(251,251,244,.68);
-}
-.cs-architecture-read {
-  margin-top: 20px;
-  padding: 10px 16px;
-  border: 1px solid rgba(251,251,244,.3);
-  border-radius: 100px;
-  background: rgba(12,10,9,.18);
-  color: #fbfbf4;
-  font-family: var(--f-cjk);
-  font-size: 14px;
-  cursor: pointer;
-  pointer-events: auto;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: background .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease);
-}
-.cs-architecture-read:hover { background: #e60012; border-color: #e60012; transform: translateY(-2px); }
-.cs-architecture-read span { margin-left: 8px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* 06 / 体系落地，改成占满内容宽度的编辑现场 */
 .is-evolution {
@@ -4144,41 +3709,16 @@
   padding-bottom: clamp(74px, 7vw, 108px);
   background: #e8e2d7;
 }
-.is-evolution .cs-sticky { grid-template-columns: minmax(0, 1.18fr) minmax(360px, .82fr); }
-.is-evolution .cs-sticky-stage {
-  height: min(72vh, 720px);
-  padding: clamp(20px, 2.5vw, 34px);
-  border-radius: 24px;
-  background:
-    radial-gradient(circle at 50% 46%, rgba(230,0,18,.13), transparent 42%),
-    #171513;
-  box-shadow: 0 34px 70px rgba(36,26,20,.2);
-}
-.is-evolution .cs-shot img { border-radius: 12px; }
-.is-evolution .cs-sticky-cap { text-align: left; padding-left: 4px; }
-.is-evolution .cs-sticky-step {
-  position: relative;
-  padding: clamp(60px, 9vh, 110px) 0 clamp(60px, 9vh, 110px) 28px;
-  opacity: .22;
-  transform: translateX(0);
-  transition: opacity .5s var(--ease), transform .5s var(--ease);
-}
-.is-evolution .cs-sticky-step::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 18%;
-  bottom: 18%;
-  width: 2px;
-  background: var(--cs-accent);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform .55s var(--ease);
-}
-.is-evolution .cs-sticky-step.is-on { opacity: 1; transform: translateX(8px); }
-.is-evolution .cs-sticky-step.is-on::before { transform: scaleY(1); }
-.is-evolution .cs-sticky-n { font-size: clamp(44px, 5vw, 68px); color: rgba(230,0,18,.28); }
-.is-evolution .cs-sticky-step h3 { font-size: clamp(23px, 2.5vw, 32px); }
+
+
+
+
+
+
+
+
+
+
 
 /* 05 / 校对室 */
 .is-proofroom {
@@ -4303,34 +3843,20 @@
   .is-system-lab .cs-panel::before { font-size: 96px; top: -8px; }
   .is-system-lab .cs-deck-track { padding-top: 22px; }
 
-  .cs-architecture { grid-template-columns: 1fr; min-height: 0; }
-  .cs-architecture-tabs {
-    flex-direction: row;
-    overflow-x: auto;
-    border: 0;
-    scrollbar-width: none;
-  }
-  .cs-architecture-tabs::-webkit-scrollbar { display: none; }
-  .cs-architecture-tab {
-    flex: 0 0 auto;
-    width: auto;
-    min-width: 150px;
-    padding: 12px 14px;
-    border: 1px solid var(--cs-hair);
-    border-radius: 100px;
-    grid-template-columns: 24px 1fr;
-  }
-  .cs-architecture-tab + .cs-architecture-tab { margin-left: 8px; }
-  .cs-architecture-tab small { display: none; }
-  .cs-architecture-tab:hover,
-  .cs-architecture-tab.is-active { padding-left: 14px; border-color: rgba(230,0,18,.5); }
-  .cs-architecture-stage { min-height: min(126vw, 560px); border-radius: 16px; }
-  .cs-architecture-copy { left: 20px; right: 20px; bottom: 22px; }
-  .cs-architecture-ghost { font-size: 170px; }
 
-  .is-evolution .cs-sticky { grid-template-columns: 1fr; }
-  .is-evolution .cs-sticky-stage { height: 52vh; border-radius: 16px; }
-  .is-evolution .cs-sticky-step { padding: 30px 0 30px 18px; opacity: 1; transform: none; }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   .is-proofroom .cs-line { margin-top: 30px; }
   .is-proofroom .cs-line-body { padding: 22px; border-radius: 16px; }
@@ -4432,78 +3958,24 @@
   padding-bottom: clamp(86px, 9vw, 132px);
   background: var(--cs-paper);
 }
-.case-page.is-vision .cs-architecture {
-  grid-template-columns: minmax(210px, .54fr) minmax(0, 2.35fr);
-  gap: clamp(26px, 4vw, 64px);
-  min-height: min(72vh, 730px);
-  margin-top: 44px;
-}
-.case-page.is-vision .cs-architecture-tabs { border-color: var(--cs-hair); }
-.case-page.is-vision .cs-architecture-tab {
-  color: var(--cs-ink-3);
-  border-color: var(--cs-hair);
-}
-.case-page.is-vision .cs-architecture-tab:hover,
-.case-page.is-vision .cs-architecture-tab.is-active { color: var(--cs-ink); }
-.case-page.is-vision .cs-architecture-tab.is-active i { color: var(--cs-accent-deep); }
-.case-page.is-vision .cs-architecture-stage {
-  min-height: 650px;
-  border-radius: 10px;
-  background: var(--cs-paper-2);
-  box-shadow: inset 0 0 0 1px rgba(2,2,2,.045), 0 24px 64px rgba(44,35,27,.07);
-}
-.case-page.is-vision .cs-architecture-figure { background: var(--cs-paper-2); }
-.case-page.is-vision .cs-architecture-figure::after {
-  background: linear-gradient(0deg, rgba(242,239,231,.92) 0, rgba(242,239,231,0) 43%);
-}
-.case-page.is-vision .cs-architecture-figure img {
-  object-fit: contain;
-  padding: clamp(22px, 3vw, 46px) clamp(22px, 3vw, 46px) 150px;
-  filter: none;
-  transform: scale(1);
-}
-.case-page.is-vision .cs-architecture-stage:hover .cs-architecture-figure img {
-  transform: scale(1.018);
-  filter: none;
-}
-.case-page.is-vision .cs-architecture-stage.is-switching .cs-architecture-figure img {
-  opacity: .16;
-  transform: scale(1.025);
-}
-.case-page.is-vision .cs-architecture-ghost {
-  top: -22px;
-  right: 10px;
-  color: rgba(2,2,2,.035);
-}
-.case-page.is-vision .cs-architecture-copy {
-  left: clamp(22px, 3vw, 42px);
-  right: auto;
-  bottom: clamp(20px, 2.5vw, 34px);
-  width: min(620px, calc(100% - 44px));
-  max-width: none;
-  padding: 18px 20px;
-  border: 1px solid rgba(2,2,2,.07);
-  border-radius: 7px;
-  background: rgba(251,251,244,.91);
-  box-shadow: 0 12px 34px rgba(44,35,27,.06);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-.case-page.is-vision .cs-architecture-copy > p:first-child { color: var(--cs-accent-deep); }
-.case-page.is-vision .cs-architecture-copy h3 { color: var(--cs-ink); font-size: clamp(27px, 3.2vw, 46px); }
-.case-page.is-vision .cs-architecture-copy > p:nth-of-type(2) { color: var(--cs-ink-2); }
-.case-page.is-vision .cs-architecture-read {
-  color: var(--cs-ink);
-  border-color: var(--cs-hair);
-  background: rgba(255,255,255,.6);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-.case-page.is-vision .cs-architecture-read:hover {
-  color: var(--cs-accent-deep);
-  border-color: rgba(168,74,18,.32);
-  background: #fffdf7;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* 06 / 延展：浅色编辑台，图片切换但不换页面色调 */
 .case-page.is-vision .is-evolution {
@@ -4513,24 +3985,12 @@
   padding-bottom: clamp(84px, 8vw, 124px);
   background: var(--cs-paper-2);
 }
-.case-page.is-vision .is-evolution .cs-sticky {
-  grid-template-columns: minmax(0, 1.18fr) minmax(360px, .82fr);
-  gap: clamp(40px, 5vw, 76px);
-}
-.case-page.is-vision .is-evolution .cs-sticky-stage {
-  height: min(72vh, 710px);
-  padding: clamp(24px, 3vw, 40px);
-  border-radius: 10px;
-  background: #fffdf7;
-  box-shadow: inset 0 0 0 1px rgba(2,2,2,.045), 0 24px 64px rgba(44,35,27,.07);
-}
-.case-page.is-vision .is-evolution .cs-sticky-step {
-  padding: clamp(60px, 9vh, 104px) 0 clamp(60px, 9vh, 104px) 26px;
-  opacity: .24;
-}
-.case-page.is-vision .is-evolution .cs-sticky-step::before { background: var(--cs-accent); }
-.case-page.is-vision .is-evolution .cs-sticky-step.is-on { opacity: 1; }
-.case-page.is-vision .is-evolution .cs-sticky-n { color: rgba(168,74,18,.25); }
+
+
+
+
+
+
 
 /* 05 / 校对与印刷：回到纸张式时间线，不做深色卡片墙 */
 .case-page.is-vision .is-proofroom {
@@ -4662,21 +4122,15 @@
     opacity: 1;
     transform: none;
   }
-  .case-page.is-vision .cs-architecture { grid-template-columns: 1fr; min-height: 0; margin-top: 30px; }
-  .case-page.is-vision .cs-architecture-tab { border-color: var(--cs-hair); }
-  .case-page.is-vision .cs-architecture-tab:hover,
-  .case-page.is-vision .cs-architecture-tab.is-active { border-color: rgba(168,74,18,.3); }
-  .case-page.is-vision .cs-architecture-stage { min-height: min(132vw, 570px); border-radius: 8px; }
-  .case-page.is-vision .cs-architecture-figure img { padding: 16px 16px 172px; }
-  .case-page.is-vision .cs-architecture-copy {
-    left: 14px;
-    bottom: 14px;
-    width: calc(100% - 28px);
-    padding: 16px;
-  }
-  .case-page.is-vision .is-evolution .cs-sticky { grid-template-columns: 1fr; }
-  .case-page.is-vision .is-evolution .cs-sticky-stage { height: 52vh; border-radius: 8px; }
-  .case-page.is-vision .is-evolution .cs-sticky-step { padding: 30px 0 30px 18px; opacity: 1; transform: none; }
+
+
+
+
+
+
+
+
+
   .case-page.is-vision .is-proofroom .cs-line-body { padding: 0 0 34px; }
   .case-page.is-vision .is-outcome .cs-lesson,
   .case-page.is-vision .is-outcome .cs-lesson:first-child { padding: 26px 0; }
