@@ -497,7 +497,11 @@ function initTocMap() {
   const map = document.querySelector('[data-tocmap]');
   if (!map) return;
   const fig   = map.querySelector('.cs-tocmap-fig');
-  const prios = [...map.querySelectorAll('.cs-prio')];
+  // 优先级卡不一定和图在同一个容器里：面板组把图放进 .cs-panel-fig、
+  // 把卡片放进 .cs-panel-txt，只在 map 内部找会一张都找不到，
+  // 联动就静默失效。往上找到共同祖先再找卡片。
+  const scope = map.closest('.cs-panel, .cs-section, .cs-deck') || document;
+  const prios = [...scope.querySelectorAll('.cs-prio')];
   if (!fig || !prios.length) return;
 
   // 按数据建热区：每个优先级一组，同组一起亮

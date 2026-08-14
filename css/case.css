@@ -3898,7 +3898,7 @@
 .case-page.is-vision .is-outcome .cs-lessons {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
-  margin-top: clamp(50px, 6vw, 82px);
+  margin-top: clamp(28px, 3.5vw, 48px);
   border-top: 1px solid var(--cs-hair);
   border-bottom: 1px solid var(--cs-hair);
 }
