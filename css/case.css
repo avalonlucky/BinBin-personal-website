@@ -842,19 +842,24 @@
 /* 轨道外面这层不动，遮罩加在它身上：面板滑出左缘时渐隐，
    不会硬邦邦地压在左侧目录上；往回滚会原样渐显回来。 */
 .cs-deck-view {
-  --deck-fade: clamp(90px, 12vw, 190px);
+  /* 可见区左缘 = 正文容器的左缘（容器居中后 + gutter），和轨道的
+     padding-left 用同一个表达式。左侧目录就贴在这条线外面，所以
+     这条线以左必须是全透明的，不能只是「淡一点」。 */
+  --deck-edge: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
   overflow: visible;
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0,
-    #000 var(--deck-fade),
-    #000 calc(100% - 40px),
+    transparent calc(var(--deck-edge) - 56px),
+    #000 var(--deck-edge),
+    #000 calc(100% - 48px),
     transparent 100%);
   mask-image: linear-gradient(
     to right,
     transparent 0,
-    #000 var(--deck-fade),
-    #000 calc(100% - 40px),
+    transparent calc(var(--deck-edge) - 56px),
+    #000 var(--deck-edge),
+    #000 calc(100% - 48px),
     transparent 100%);
 }
 .cs-deck-track {
@@ -1015,49 +1020,81 @@
 .cs-deck-head .cs-title { font-size: var(--fs-xl); }
 
 /* ────────────────────────────────────────
-   粘性堆叠（.cs-stack）
-   卡片一张张叠上来：每张 sticky 在略微递增的高度上，后一张盖住前一张，
-   被盖住的那张同时轻微缩小、变淡，像一叠纸被压下去。
-   跟横向面板组是两种节奏——同一页里不要只用一种交互。
+   图钉住 · 文字滚动（.cs-sticky）
+   左栏图片钉在视口，右栏文字往上走，走到哪一段左边就换成哪张图。
+   苹果 / 三星的产品页大量用这种：读者只滚一个方向，图文却在同步换。
+   和 .cs-deck 的横向推移是两种节奏——一页里两种都用，不要重复。
 ──────────────────────────────────────── */
-.cs-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  margin-top: 26px;
-  /* 最后一张之后留一段，末尾那张才有机会停在视口中间被看清 */
-  padding-bottom: 12vh;
-}
-.cs-stack-card {
-  position: sticky;
-  /* 每张比前一张低 14px，露出下面那几张的边，一眼看出是「一叠」 */
-  top: calc(var(--nav-h, 76px) + 16px + var(--i, 0) * 14px);
+.cs-sticky {
   display: grid;
-  grid-template-columns: 54px minmax(0, 1fr);
-  gap: clamp(14px, 1.6vw, 24px);
-  padding: clamp(20px, 2.2vw, 32px);
-  border: 1px solid var(--cs-hair);
-  border-radius: 12px;
-  background: var(--cs-paper-2);
-  box-shadow: 0 10px 30px rgba(2, 2, 2, 0.05);
-  transform-origin: 50% 0;
-  will-change: transform, opacity;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  gap: clamp(28px, 4vw, 68px);
+  align-items: start;
+  margin-top: 26px;
 }
-.cs-stack-n {
+.cs-sticky-media {
+  position: sticky;
+  top: calc(var(--nav-h, 76px) + 26px);
+}
+.cs-sticky-stage {
+  position: relative;
+  height: min(58vh, 520px);
+}
+.cs-sticky-shot {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  place-items: center;
+  opacity: 0;
+  transform: scale(0.985);
+  transition: opacity .55s var(--ease), transform .55s var(--ease);
+  pointer-events: none;
+}
+.cs-sticky-shot.is-pair { grid-template-columns: 1fr 1fr; align-items: center; }
+.cs-sticky-shot.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.cs-shot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+  font: inherit;
+}
+.cs-shot img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  border-radius: 8px;
+}
+.cs-sticky-cap {
+  margin: 14px 0 0;
+  font-family: var(--f-cjk);
+  font-size: var(--fs-sm);
+  color: var(--cs-ink-3);
+  text-align: center;
+}
+
+.cs-sticky-steps { display: flex; flex-direction: column; }
+.cs-sticky-step {
+  padding: clamp(30px, 5vh, 64px) 0;
+  opacity: 0.34;
+  transition: opacity .5s var(--ease);
+}
+.cs-sticky-step.is-on { opacity: 1; }
+.cs-sticky-step + .cs-sticky-step { border-top: 1px solid var(--cs-hair); }
+.cs-sticky-n {
   font-family: var(--f-heading);
-  font-size: 30px;
+  font-size: 26px;
   line-height: 1;
   color: rgb(var(--cs-accent-rgb) / 0.42);
-  margin: 0;
+  margin: 0 0 10px;
 }
-.cs-stack-body { min-width: 0; }
-.cs-stack-body.is-split {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: clamp(18px, 2.4vw, 36px);
-  align-items: start;
-}
-.cs-stack-body h3 {
+.cs-sticky-step h3 {
   font-family: var(--f-cjk);
   font-size: var(--fs-lg);
   font-weight: 600;
@@ -1065,19 +1102,91 @@
   margin: 0 0 12px;
   line-height: 1.35;
 }
-.cs-stack-body > div > h3 { margin-top: 0; }
-.cs-stack-body p {
+.cs-sticky-step p {
   font-family: var(--f-cjk);
   font-size: var(--fs-base);
   line-height: 1.78;
   color: var(--cs-ink-2);
   margin: 0 0 12px;
 }
-.cs-stack-body p:last-child { margin-bottom: 0; }
-.cs-stack-body strong { color: var(--cs-ink); font-weight: 600; }
-.cs-stack-body .cs-quote-soft { font-size: var(--fs-sm); margin: 12px 0 0; }
-.cs-stack-body .cs-shift { margin: 14px 0; }
-.cs-stack-body .cs-stats { margin: 0; }
+.cs-sticky-step p:last-child { margin-bottom: 0; }
+.cs-sticky-step strong { color: var(--cs-ink); font-weight: 600; }
+.cs-sticky-step .cs-quote-soft { font-size: var(--fs-sm); margin-top: 12px; }
+
+/* ────────────────────────────────────────
+   竖向时间轴（.cs-line）
+   一条主线随滚动从上往下描出来，走到哪一节哪个圆点亮。
+   适合「一关一关往下走」的流程，比横向推移安静，也不占额外滚动。
+──────────────────────────────────────── */
+.cs-line {
+  position: relative;
+  margin-top: 30px;
+  padding-left: 46px;
+}
+.cs-line-rail {
+  position: absolute;
+  left: 11px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--cs-hair);
+}
+.cs-line-rail b {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 0;
+  border-radius: 2px;
+  background: var(--cs-accent);
+}
+.cs-line-item { position: relative; padding: 0 0 clamp(34px, 5vh, 58px); }
+.cs-line-item:last-child { padding-bottom: 0; }
+.cs-line-dot {
+  position: absolute;
+  left: -42px;
+  top: 7px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--cs-paper-3);
+  background: var(--cs-paper);
+  transition: border-color .4s var(--ease), background .4s var(--ease), transform .4s var(--ease);
+}
+.cs-line-item.is-on .cs-line-dot {
+  border-color: var(--cs-accent);
+  background: var(--cs-accent);
+  transform: scale(1.18);
+}
+.cs-line-k {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.08em;
+  color: var(--cs-ink-3);
+  margin: 0 0 6px;
+  transition: color .4s var(--ease);
+}
+.cs-line-item.is-on .cs-line-k { color: var(--cs-accent-deep); }
+.cs-line-body h3 {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--cs-ink);
+  margin: 0 0 12px;
+  line-height: 1.35;
+}
+.cs-line-body p {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-base);
+  line-height: 1.78;
+  color: var(--cs-ink-2);
+  margin: 0 0 12px;
+}
+.cs-line-body p:last-child { margin-bottom: 0; }
+.cs-line-body strong { color: var(--cs-ink); font-weight: 600; }
+.cs-line-body .cs-plates.is-two { margin: 14px 0; max-width: 520px; }
+.cs-line-body .cs-stats { margin: 16px 0 0; }
+.cs-line-body .cs-shift { margin: 14px 0; }
+.cs-line-body .cs-quote-soft { font-size: var(--fs-sm); margin: 12px 0 0; }
 
 /* ────────────────────────────────────────
    版面小样一排（.cs-plates）
@@ -3644,10 +3753,14 @@
 
   .cs-plates[data-hscroll-track] > .cs-plate { flex: 0 0 min(56vw, 220px); }
 
-  /* 窄屏取消粘性堆叠：屏幕本来就矮，叠起来会把内容顶出视口 */
-  .cs-stack-card { position: static; grid-template-columns: 1fr; gap: 8px; }
-  .cs-stack { padding-bottom: 0; gap: 14px; }
-  .cs-stack-body.is-split { grid-template-columns: 1fr; }
+  /* 窄屏取消图钉住：屏幕矮，钉住会把文字挤没 */
+  .cs-sticky { grid-template-columns: 1fr; gap: 18px; }
+  .cs-sticky-media { position: static; }
+  .cs-sticky-stage { height: 42vh; }
+  .cs-sticky-step { opacity: 1; padding: 22px 0; }
+  .cs-line { padding-left: 32px; }
+  .cs-line-rail { left: 5px; }
+  .cs-line-dot { left: -32px; width: 10px; height: 10px; }
 
   .cs-shift { grid-template-columns: 1fr; }
   /* order 必须按位置判定，不能按 is-mine——02 的主色一侧在左，

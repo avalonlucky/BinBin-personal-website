@@ -229,30 +229,26 @@ function initScrubVideo() {
   const video = box.querySelector('video');
   if (!video) return;
 
-  let target = 0, raf = 0, ready = false;
+  let target = 0, raf = 0;
 
-  const seek = () => {
+  // 只在 rAF 里写 currentTime，并且上一次 seek 没完成就不下新指令：
+  // 直接在 onUpdate 里连写会排队丢帧，滚起来一顿一顿。
+  const apply = () => {
     raf = 0;
-    if (!ready) return;
-    // seek 还在进行时不下新指令，否则浏览器会排队丢帧
-    if (video.seeking) { raf = requestAnimationFrame(seek); return; }
-    if (Math.abs(video.currentTime - target) > 0.01) video.currentTime = target;
+    if (video.seeking) { raf = requestAnimationFrame(apply); return; }
+    if (Math.abs(video.currentTime - target) > 0.01) {
+      try { video.currentTime = target; } catch (e) { /* 元数据还没到，下一帧再说 */ }
+    }
   };
-  const queue = () => { if (!raf) raf = requestAnimationFrame(seek); };
+  const queue = () => { if (!raf) raf = requestAnimationFrame(apply); };
 
-  const onReady = () => {
-    if (ready) return;
-    ready = true;
-    video.pause();
-    queue();
-    ScrollTrigger.refresh();
-  };
-  if (video.readyState >= 1) onReady();
-  video.addEventListener('loadedmetadata', onReady, { once: true });
+  video.addEventListener('loadedmetadata', () => { video.pause(); queue(); ScrollTrigger.refresh(); });
 
   if (prefersReducedMotion.matches) {
     // 不想要动效的人直接看开盒后的样子
-    video.addEventListener('loadedmetadata', () => { video.currentTime = video.duration - 0.05; }, { once: true });
+    const rest = () => { video.currentTime = Math.max(0, video.duration - 0.05); };
+    if (video.readyState >= 1) rest();
+    else video.addEventListener('loadedmetadata', rest, { once: true });
     return;
   }
 
@@ -270,42 +266,90 @@ function initScrubVideo() {
       const d = video.duration;
       if (!d || !isFinite(d)) return;
       target = Math.min(d - 0.02, Math.max(0, self.progress * d));
-      box.classList.toggle('is-open', self.progress > 0.12);
+      box.classList.toggle('is-open', self.progress > 0.1);
       queue();
     },
   });
 }
 
 /* ─────────────────────────────────────────
-   粘性堆叠 — 被后一张盖住时轻微缩小变淡，像纸被压下去
+   图钉住 · 文字滚动（.cs-sticky）
+   右栏每一段进入视口中带时，左栏换成它对应的那张图。
+   判定用「离视口中线最近的那一段」，比逐段 enter/leave 稳——
+   相邻两段的触发区间会重叠，用 toggle 容易两张图同时亮。
 ───────────────────────────────────────── */
-function initStack() {
-  const stacks = [...document.querySelectorAll('[data-stack]')];
-  if (!stacks.length || prefersReducedMotion.matches) return;
+function initSticky() {
+  const boxes = [...document.querySelectorAll('[data-sticky]')];
+  if (!boxes.length) return;
 
-  stacks.forEach(stack => {
-    const cards = [...stack.querySelectorAll('.cs-stack-card')];
-    gsap.matchMedia().add('(min-width: 769px)', () => {
-      const tweens = cards.slice(0, -1).map((card, i) => {
-        const next = cards[i + 1];
-        return gsap.to(card, {
-          scale: 0.955,
-          opacity: 0.5,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: next,
-            start: 'top 85%',
-            end: 'top 40%',
-            scrub: 0.5,
-            invalidateOnRefresh: true,
-          },
-        });
+  boxes.forEach(box => {
+    const steps = [...box.querySelectorAll('[data-step]')];
+    const shots = [...box.querySelectorAll('[data-shot]')];
+    const cap   = box.querySelector('[data-sticky-cap]');
+    if (!steps.length || !shots.length) return;
+
+    let cur = -1;
+    const show = i => {
+      if (i === cur || i < 0) return;
+      cur = i;
+      shots.forEach((s, k) => s.classList.toggle('is-on', k === i));
+      steps.forEach((s, k) => s.classList.toggle('is-on', k === i));
+      if (cap && steps[i].dataset.cap) cap.textContent = steps[i].dataset.cap;
+    };
+
+    const pick = () => {
+      const mid = window.innerHeight * 0.46;
+      let best = 0, bestD = Infinity;
+      steps.forEach((s, i) => {
+        const r = s.getBoundingClientRect();
+        const d = Math.abs(r.top + r.height / 2 - mid);
+        if (d < bestD) { bestD = d; best = i; }
       });
-      return () => {
-        tweens.forEach(tw => { tw.scrollTrigger?.kill(); tw.kill(); });
-        gsap.set(cards, { clearProps: 'scale,opacity' });
-      };
+      show(best);
+    };
+
+    ScrollTrigger.create({
+      trigger: box,
+      start: 'top bottom',
+      end: 'bottom top',
+      onUpdate: pick,
+      onRefresh: pick,
     });
+    pick();
+  });
+}
+
+/* ─────────────────────────────────────────
+   竖向时间轴（.cs-line）— 主线随滚动描出来，经过的圆点点亮
+───────────────────────────────────────── */
+function initLine() {
+  const lines = [...document.querySelectorAll('[data-line]')];
+  if (!lines.length) return;
+
+  lines.forEach(line => {
+    const fill  = line.querySelector('[data-line-fill]');
+    const items = [...line.querySelectorAll('[data-line-item]')];
+    if (!fill || !items.length) return;
+
+    const draw = () => {
+      const r = line.getBoundingClientRect();
+      // 描到视口中线：线头始终在读者正在读的那一行附近
+      const p = (window.innerHeight * 0.5 - r.top) / r.height;
+      fill.style.height = (Math.max(0, Math.min(1, p)) * 100).toFixed(2) + '%';
+      items.forEach(it => {
+        const d = it.querySelector('.cs-line-dot').getBoundingClientRect();
+        it.classList.toggle('is-on', d.top <= window.innerHeight * 0.5);
+      });
+    };
+
+    ScrollTrigger.create({
+      trigger: line,
+      start: 'top bottom',
+      end: 'bottom top',
+      onUpdate: draw,
+      onRefresh: draw,
+    });
+    draw();
   });
 }
 
@@ -1443,7 +1487,8 @@ initPalette();
 initSeal();
 initScrubVideo();
 initDeck();
-initStack();
+initSticky();
+initLine();
 initTocMap();
 initReader();
 initPageDemo();
