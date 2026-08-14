@@ -215,56 +215,66 @@ function initSeal() {
    走到最后一张才把滚动还给页面。窄屏不介入（CSS 已退回纵向堆叠）。
 ───────────────────────────────────────── */
 function initDeck() {
-  const deck = document.querySelector('[data-deck]');
-  if (!deck) return;
-  const track = deck.querySelector('[data-deck-track]');
-  const steps = [...deck.querySelectorAll('[data-deck-step]')];
-  const fill  = deck.querySelector('[data-deck-fill]');
-  const sealPanel = deck.querySelector('[data-seal]')?.closest('.cs-panel');
-  if (!track) return;
+  const decks = [...document.querySelectorAll('[data-deck]')];
+  if (!decks.length) return;
 
-  gsap.matchMedia().add('(min-width: 769px)', () => {
-    // 轨道左右各留一个 gutter，最后一张不要贴着视口右缘
-    const pad = () => parseFloat(getComputedStyle(track).paddingLeft) || 0;
-    const distance = () => Math.max(0, track.scrollWidth - window.innerWidth + pad());
+  decks.forEach(deck => {
+    const track = deck.querySelector('[data-deck-track]');
+    if (!track) return;
+    const steps = [...deck.querySelectorAll('[data-deck-step]')];
+    const fill  = deck.querySelector('[data-deck-fill]');
+    const sealPanel = deck.querySelector('[data-seal]')?.closest('.cs-panel');
 
-    const tween = gsap.to(track, { x: () => -distance(), ease: 'none' });
-    const st = ScrollTrigger.create({
-      trigger: deck,
-      start: () => `top ${(document.querySelector('#nav')?.offsetHeight || 64) + 12}px`,
-      end: () => '+=' + distance(),
-      pin: true,
-      pinSpacing: true,
-      anticipatePin: 1,
-      scrub: 0.6,
-      invalidateOnRefresh: true,
-      animation: tween,
-      onUpdate: self => {
-        const i = Math.min(steps.length - 1, Math.round(self.progress * (steps.length - 1)));
-        steps.forEach((s, k) => s.classList.toggle('is-on', k === i));
-        if (fill) fill.style.width = (self.progress * 100).toFixed(2) + '%';
-        // 印章：面板中心越过视口中线就翻面，不用点按钮
-        if (sealPanel && window.__sealShow) {
-          const r = sealPanel.getBoundingClientRect();
-          window.__sealShow(r.left + r.width / 2 < window.innerWidth * 0.5 ? 'inverse' : 'relief');
-        }
-      },
+    gsap.matchMedia().add('(min-width: 769px)', () => {
+      // 轨道左内边距同时是「最后一张离右缘的余量」
+      const pad = () => parseFloat(getComputedStyle(track).paddingRight) || 0;
+      const distance = () => Math.max(0, track.scrollWidth - window.innerWidth + pad());
+      if (distance() <= 0) return;
+
+      const tween = gsap.to(track, { x: () => -distance(), ease: 'none' });
+      const st = ScrollTrigger.create({
+        trigger: deck,
+        start: () => `top ${(document.querySelector('#nav')?.offsetHeight || 64) + 12}px`,
+        end: () => '+=' + distance(),
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        scrub: 0.6,
+        invalidateOnRefresh: true,
+        animation: tween,
+        onUpdate: self => {
+          const i = Math.min(steps.length - 1, Matheq(self.progress, steps.length));
+          steps.forEach((s, k) => s.classList.toggle('is-on', k === i));
+          if (fill) fill.style.width = (self.progress * 100).toFixed(2) + '%';
+          // 印章：面板中心越过视口中线就翻面，不用点按钮
+          if (sealPanel && window.__sealShow) {
+            const r = sealPanel.getBoundingClientRect();
+            window.__sealShow(r.left + r.width / 2 < window.innerWidth * 0.5 ? 'inverse' : 'relief');
+          }
+        },
+      });
+
+      return () => { st.kill(); tween.kill(); gsap.set(track, { clearProps: 'x' }); };
     });
 
-    return () => { st.kill(); tween.kill(); gsap.set(track, { clearProps: 'x' }); };
+    // 窄屏：面板纵向堆叠，印章进入视口时自己翻一次
+    if (sealPanel) {
+      gsap.matchMedia().add('(max-width: 768px)', () => {
+        const st = ScrollTrigger.create({
+          trigger: sealPanel,
+          start: 'center 70%',
+          end: 'center 24%',
+          onToggle: self => window.__sealShow?.(self.isActive ? 'inverse' : 'relief'),
+        });
+        return () => st.kill();
+      });
+    }
   });
+}
 
-  // 窄屏：面板纵向堆叠，印章进入视口时自己翻一次
-  gsap.matchMedia().add('(max-width: 768px)', () => {
-    if (!sealPanel) return;
-    const st = ScrollTrigger.create({
-      trigger: sealPanel,
-      start: 'center 70%',
-      end: 'center 24%',
-      onToggle: self => window.__sealShow?.(self.isActive ? 'inverse' : 'relief'),
-    });
-    return () => st.kill();
-  });
+/* 进度 → 第几步。步数少时四舍五入会让第一步一闪而过，用等分区间更稳。 */
+function Matheq(progress, n) {
+  return Math.max(0, Math.min(n - 1, Math.floor(progress * n - 1e-6)));
 }
 
 /* ─────────────────────────────────────────

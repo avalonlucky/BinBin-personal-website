@@ -811,6 +811,25 @@
   border-radius: 10px;
 }
 .cs-panel.is-wide { flex-basis: min(1060px, 86vw); }
+/* 纯文字面板：没有图，单栏、窄一点，别把一句话摊成一整屏 */
+.cs-panel.is-solo {
+  grid-template-columns: minmax(0, 1fr);
+  flex-basis: min(720px, 68vw);
+}
+.cs-panel.is-solo .cs-panel-txt { align-self: center; }
+.cs-panel.is-solo .cs-stats { margin: 14px 0 16px; gap: clamp(20px, 3vw, 40px); }
+.cs-panel.is-solo .cs-stat-n { font-size: clamp(30px, 3.4vw, 42px); }
+.cs-panel .cs-shift { margin: 14px 0; }
+/* 面板里的对照块整体收一档，面板高度要卡在视口以内 */
+.cs-panel .cs-shift-label { padding: 10px 12px; font-size: var(--fs-base); margin-bottom: 4px; }
+.cs-panel .cs-shift-goals li { padding: 10px 12px; }
+.cs-panel .cs-shift-goals b,
+.cs-panel .cs-shift-goals span { font-size: var(--fs-sm); }
+.cs-panel .cs-quote-soft { margin: 12px 0 0; font-size: var(--fs-sm); }
+
+/* 关键词换行排的变体：说明较长时，关键词单独占一行 */
+.cs-specs-mini.is-block li { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+.cs-specs-mini.is-block b { font-size: var(--fs-base); color: var(--cs-ink); font-weight: 600; }
 
 /* 面板里的图统一压到视口高度以内——反正点开能放大，
    没必要在页面上占掉一屏。 */
