@@ -1215,6 +1215,17 @@
   color: var(--cs-ink);
   margin: 0 0 10px;
 }
+/* 中英并置的能力名：英文用衬线显示体另起一行，是名字的一部分，
+   不是装饰性眉标——所以不用主色、不做大写字距。 */
+.cs-facet-en {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--f-heading);
+  font-size: var(--fs-md);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--cs-ink-3);
+}
 .cs-facet p {
   font-family: var(--f-cjk);
   font-size: var(--fs-sm);
@@ -3922,22 +3933,6 @@
 .case-page.is-vision .is-outcome .cs-lesson h3,
 .case-page.is-vision .is-outcome .cs-lesson strong { color: var(--cs-ink); }
 .case-page.is-vision .is-outcome .cs-lesson p { color: var(--cs-ink-2); font-size: 17px; line-height: 1.82; }
-.case-page.is-vision .cs-capability-figure {
-  display: block;
-  width: 100%;
-  margin: clamp(54px, 7vw, 96px) 0 0;
-  padding: 0;
-  border: 0;
-  border-radius: 18px;
-  overflow: hidden;
-  background: transparent;
-  cursor: zoom-in;
-}
-.case-page.is-vision .cs-capability-figure img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
 
 @media (max-width: 900px) {
   .case-page.is-vision .is-outcome .cs-lessons { grid-template-columns: 1fr; }
