@@ -115,19 +115,27 @@
     }
 
     /* ── 钉住模式：区块固定在视口，纵向滚动被换算成横向位移 ── */
-    const tween = gsap.to(track, { x: () => -distance(), ease: 'none' });
+    // 末尾留一小段真实滚动距离：最后一张先完整停在导航下方，
+    // 再把纵向滚动交还给页面。直接按进度 set，避免 scrub 惯性在
+    // pin 已释放后仍追赶，导致最后一张被导航压住。
+    const hold = () => Math.min(220, Math.max(150, window.innerHeight * 0.22));
+    const navBottom = () => Math.ceil(document.querySelector('#nav')?.getBoundingClientRect().bottom || 64) + 10;
     const st = ScrollTrigger.create({
       trigger: wrap,
-      start: () => `top ${(document.querySelector('#nav')?.offsetHeight || 64) + 12}px`,
-      end: () => '+=' + distance(),
+      refreshPriority: 100 - (Number(wrap.dataset.pinOrder) || 50),
+      start: () => `top ${navBottom()}px`,
+      end: () => '+=' + (distance() + hold()),
       pin: true,
       pinSpacing: true,
       anticipatePin: 1,
-      scrub: 0.6,
       invalidateOnRefresh: true,
-      animation: tween,
       onUpdate: self => {
-        const i = Math.min(n - 1, Math.round(self.progress * (n - 1)));
+        const travel = distance();
+        const horizontalProgress = travel <= 0
+          ? 1
+          : Math.min(1, self.progress * (travel + hold()) / travel);
+        gsap.set(track, { x: -travel * horizontalProgress });
+        const i = Math.min(n - 1, Math.round(horizontalProgress * (n - 1)));
         pips.forEach((p, k) => p.classList.toggle('is-on', k === i));
       },
     });
@@ -145,7 +153,6 @@
       cleanup: () => {
         if (painted) spacer.style.background = '';
         st.kill();
-        tween.kill();
         gsap.set(track, { clearProps: 'x' });
         dots.remove();
       },

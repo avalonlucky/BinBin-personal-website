@@ -448,8 +448,8 @@ function initDeck() {
       return () => { st.kill(); tween.kill(); gsap.set(track, { clearProps: 'x' }); };
     });
 
-    // 手机端把区块经过视口的进度映射成横向叙事。页面保持正常流动，
-    // 避免 pin 额外制造一整屏甚至数屏高的空白占位。
+    // 手机端先把卡片组固定在导航下方，纵向滚动只负责推进横向卡片；
+    // 最后一张完整出现后才释放页面进入下一段。
     gsap.matchMedia().add('(max-width: 768px)', () => {
       const view = deck.querySelector('.cs-deck-view');
       if (!view) return;
@@ -458,18 +458,26 @@ function initDeck() {
       if (distance() <= 0) return;
 
       view.classList.add('is-auto-x');
-      const tween = gsap.to(track, { x: () => -distance(), ease: 'none' });
+      const navBottom = () => Math.ceil(document.querySelector('#nav')?.getBoundingClientRect().bottom || 64) + 10;
+      const hold = () => Math.min(220, Math.max(150, window.innerHeight * 0.22));
       const st = ScrollTrigger.create({
         trigger: view,
-        start: 'top 92%',
-        end: 'bottom 8%',
-        scrub: 0.45,
+        refreshPriority: 98,
+        start: () => `top ${navBottom()}px`,
+        end: () => `+=${distance() + hold()}`,
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
         invalidateOnRefresh: true,
-        animation: tween,
         onUpdate: self => {
-          const active = Math.min(visiblePanels.length - 1, Matheq(self.progress, visiblePanels.length));
+          const travel = distance();
+          const horizontalProgress = travel <= 0
+            ? 1
+            : Math.min(1, self.progress * (travel + hold()) / travel);
+          gsap.set(track, { x: -travel * horizontalProgress });
+          const active = Math.min(visiblePanels.length - 1, Matheq(horizontalProgress, visiblePanels.length));
           activate(active, [], visiblePanels);
-          if (fill) fill.style.width = `${(self.progress * 100).toFixed(2)}%`;
+          if (fill) fill.style.width = `${(horizontalProgress * 100).toFixed(2)}%`;
           if (sealPanel && window.__sealShow) {
             window.__sealShow(visiblePanels[active] === sealPanel ? 'inverse' : 'relief');
           }
@@ -478,7 +486,6 @@ function initDeck() {
 
       return () => {
         st.kill();
-        tween.kill();
         view.classList.remove('is-auto-x');
         gsap.set(track, { clearProps: 'x' });
       };
@@ -486,8 +493,8 @@ function initDeck() {
   });
 }
 
-/* 手机端同类横向卡片统一由纵向滚动驱动。卡片在区块自然经过视口时推进，
-   不 pin、不增加占位；反向滚动、停止和恢复仍由 ScrollTrigger 接管。 */
+/* 手机端同类横向卡片统一由纵向滚动驱动。卡片组固定在导航下方，
+   横向内容全部走完后才把纵向滚动交还给页面。 */
 function initMobileAutoRails() {
   const rails = [
     ...document.querySelectorAll('.case-page.is-vision .is-proofroom .cs-line'),
@@ -497,26 +504,47 @@ function initMobileAutoRails() {
 
   gsap.matchMedia().add('(max-width: 768px)', () => {
     const made = rails.map(view => {
-      const distance = () => Math.max(0, view.scrollWidth - view.clientWidth);
+      const visibleCards = () => [...view.children].filter(card =>
+        getComputedStyle(card).display !== 'none'
+      );
+      const distance = () => {
+        const cards = visibleCards();
+        const first = cards[0];
+        const last = cards[cards.length - 1];
+        if (!first || !last) return 0;
+
+        // Align the final card with the same gutter as the first card instead
+        // of overscrolling it to the container's absolute maximum.
+        return Math.max(0, last.offsetLeft - first.offsetLeft);
+      };
       if (distance() <= 0) return null;
 
       view.classList.add('is-auto-x');
       view.scrollLeft = 0;
-      const tween = gsap.to(view, { scrollLeft: () => distance(), ease: 'none' });
+      const navBottom = () => Math.ceil(document.querySelector('#nav')?.getBoundingClientRect().bottom || 64) + 10;
+      const hold = () => Math.min(220, Math.max(150, window.innerHeight * 0.22));
       const st = ScrollTrigger.create({
         trigger: view,
-        start: 'top 92%',
-        end: 'bottom 8%',
-        scrub: 0.45,
+        refreshPriority: view.closest('.is-proofroom') ? 97 : 96,
+        start: () => `top ${navBottom()}px`,
+        end: () => `+=${distance() + hold()}`,
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
         invalidateOnRefresh: true,
-        animation: tween,
+        onUpdate: self => {
+          const travel = distance();
+          const horizontalProgress = travel <= 0
+            ? 1
+            : Math.min(1, self.progress * (travel + hold()) / travel);
+          view.scrollLeft = travel * horizontalProgress;
+        },
       });
-      return { view, tween, st };
+      return { view, st };
     }).filter(Boolean);
 
-    return () => made.forEach(({ view, tween, st }) => {
+    return () => made.forEach(({ view, st }) => {
       st.kill();
-      tween.kill();
       view.classList.remove('is-auto-x');
       view.scrollLeft = 0;
     });
