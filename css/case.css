@@ -952,7 +952,12 @@
 /* 面板里的页码演示：文字已经搬到右栏，这里只留纸张本身，
    高度压到视口以内，别把整组面板顶高。 */
 .cs-panel-fig .cs-pd-wrap { display: block; }
-.cs-panel-fig .cs-pd-stage { max-width: none; height: 38vh; aspect-ratio: auto; width: min(100%, 244px); margin: 0 auto; }
+.cs-panel-fig .cs-pd-stage {
+  width: min(100%, 300px);
+  height: auto;
+  aspect-ratio: 3 / 4;
+  margin: 0 auto;
+}
 .cs-panel-fig .cs-pd-ctrl { justify-content: center; margin-top: 14px; }
 
 .cs-panel-txt { min-width: 0; }
