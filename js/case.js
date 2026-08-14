@@ -371,53 +371,6 @@ function initScrubVideo() {
 }
 
 /* ─────────────────────────────────────────
-   图钉住 · 文字滚动（.cs-sticky）
-   右栏每一段进入视口中带时，左栏换成它对应的那张图。
-   判定用「离视口中线最近的那一段」，比逐段 enter/leave 稳——
-   相邻两段的触发区间会重叠，用 toggle 容易两张图同时亮。
-───────────────────────────────────────── */
-function initSticky() {
-  const boxes = [...document.querySelectorAll('[data-sticky]')];
-  if (!boxes.length) return;
-
-  boxes.forEach(box => {
-    const steps = [...box.querySelectorAll('[data-step]')];
-    const shots = [...box.querySelectorAll('[data-shot]')];
-    const cap   = box.querySelector('[data-sticky-cap]');
-    if (!steps.length || !shots.length) return;
-
-    let cur = -1;
-    const show = i => {
-      if (i === cur || i < 0) return;
-      cur = i;
-      shots.forEach((s, k) => s.classList.toggle('is-on', k === i));
-      steps.forEach((s, k) => s.classList.toggle('is-on', k === i));
-      if (cap && steps[i].dataset.cap) cap.textContent = steps[i].dataset.cap;
-    };
-
-    const pick = () => {
-      const mid = window.innerHeight * 0.46;
-      let best = 0, bestD = Infinity;
-      steps.forEach((s, i) => {
-        const r = s.getBoundingClientRect();
-        const d = Math.abs(r.top + r.height / 2 - mid);
-        if (d < bestD) { bestD = d; best = i; }
-      });
-      show(best);
-    };
-
-    ScrollTrigger.create({
-      trigger: box,
-      start: 'top bottom',
-      end: 'bottom top',
-      onUpdate: pick,
-      onRefresh: pick,
-    });
-    pick();
-  });
-}
-
-/* ─────────────────────────────────────────
    竖向时间轴（.cs-line）— 主线随滚动描出来，经过的圆点点亮
 ───────────────────────────────────────── */
 function initLine() {
@@ -514,77 +467,6 @@ function initDeck() {
       });
     }
   });
-}
-
-/* ─────────────────────────────────────────
-   内容架构章节舞台 — 用一张大画面承担章节情绪，左侧像目录一样切换。
-   图片预载完成后再替换，避免快速掠过时出现白帧。
-───────────────────────────────────────── */
-function initChapterStage() {
-  const box = document.querySelector('[data-chapter-stage]');
-  if (!box) return;
-
-  const tabs = [...box.querySelectorAll('[data-chapter-index]')];
-  const stage = box.querySelector('.cs-architecture-stage');
-  const figure = box.querySelector('[data-chapter-figure]');
-  const image = box.querySelector('[data-chapter-visual]');
-  const ghost = box.querySelector('[data-chapter-ghost]');
-  const title = box.querySelector('[data-chapter-title]:not(button)');
-  const sub = box.querySelector('[data-chapter-sub]:not(button)');
-  const count = box.querySelector('[data-chapter-count]:not(button)');
-  const note = box.querySelector('[data-chapter-note]:not(button)');
-  if (!tabs.length || !stage || !figure || !image) return;
-
-  let current = -1;
-  let request = 0;
-  const show = (index, immediate = false) => {
-    index = (index + tabs.length) % tabs.length;
-    if (index === current) return;
-    current = index;
-    const tab = tabs[index];
-    const ticket = ++request;
-    tabs.forEach((item, i) => {
-      const active = i === index;
-      item.classList.toggle('is-active', active);
-      item.setAttribute('aria-selected', String(active));
-    });
-
-    const commit = () => {
-      if (ticket !== request) return;
-      image.src = tab.dataset.chapterImage;
-      image.alt = `${tab.dataset.chapterTitle}章节过渡版面`;
-      figure.dataset.zoom = tab.dataset.chapterImage;
-      figure.dataset.zoomTitle = `${tab.dataset.chapterTitle} · ${tab.dataset.chapterSub}`;
-      figure.dataset.zoomNote = tab.dataset.chapterNote;
-      if (ghost) ghost.textContent = String(index + 1).padStart(2, '0');
-      if (title) title.textContent = tab.dataset.chapterTitle;
-      if (sub) sub.textContent = tab.dataset.chapterSub;
-      if (count) count.textContent = tab.dataset.chapterCount;
-      if (note) note.textContent = tab.dataset.chapterNote;
-      stage.classList.remove('is-switching');
-    };
-
-    if (immediate || prefersReducedMotion.matches) { commit(); return; }
-    stage.classList.add('is-switching');
-    const preload = new Image();
-    preload.onload = () => window.setTimeout(commit, 150);
-    preload.onerror = commit;
-    preload.src = tab.dataset.chapterImage;
-  };
-
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => show(i));
-    tab.addEventListener('mouseenter', () => {
-      if (window.matchMedia('(hover:hover)').matches) show(i);
-    });
-  });
-  box.addEventListener('keydown', event => {
-    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-    event.preventDefault();
-    show(current + (event.key === 'ArrowRight' ? 1 : -1));
-    tabs[current].focus();
-  });
-  show(0, true);
 }
 
 /* 进度 → 第几步。步数少时四舍五入会让第一步一闪而过，用等分区间更稳。 */
@@ -725,53 +607,6 @@ function initSlides() {
   show(0);
 }
 
-/* ─────────────────────────────────────────
-   内容架构思维导图 — 中心印章连向各章节
-   连线按实际布局计算（同 cs-hub），卡片高度变了也不用改坐标。
-───────────────────────────────────────── */
-function initMindmap() {
-  const map = document.querySelector('[data-mindmap]');
-  if (!map) return;
-  const svg   = map.querySelector('.cs-mindmap-svg');
-  const core  = map.querySelector('.cs-mm-core');
-  const nodes = [...map.querySelectorAll('.cs-chapter')];
-  if (!svg || !core || !nodes.length) return;
-
-  const draw = () => {
-    // 窄屏是单列堆叠，画连线只会横穿卡片
-    if (window.innerWidth <= 768) { svg.innerHTML = ''; return; }
-    const mb = map.getBoundingClientRect();
-    const cb = core.getBoundingClientRect();
-    const cx = cb.left - mb.left + cb.width / 2;
-    const cy = cb.top - mb.top + cb.height / 2;
-
-    svg.setAttribute('viewBox', `0 0 ${mb.width} ${mb.height}`);
-    svg.innerHTML = nodes.map(n => {
-      const nb = n.getBoundingClientRect();
-      const onLeft = (nb.left - mb.left + nb.width / 2) < cx;
-      // 左侧卡片从自己的右边缘出发，右侧卡片从左边缘出发
-      const x = nb.left - mb.left + (onLeft ? nb.width : 0);
-      const y = nb.top - mb.top + nb.height / 2;
-      const ex = cx + (onLeft ? -cb.width / 2 - 5 : cb.width / 2 + 5);
-      const mx = (x + ex) / 2;
-      return `<path d="M ${x} ${y} C ${mx} ${y} ${mx} ${cy} ${ex} ${cy}" />`;
-    }).join('');
-
-    if (prefersReducedMotion.matches) return;
-    svg.querySelectorAll('path').forEach(p => {
-      const len = p.getTotalLength();
-      gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
-      gsap.to(p, {
-        strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut',
-        scrollTrigger: { trigger: map, start: 'top 80%' },
-      });
-    });
-  };
-
-  draw();
-  let t;
-  window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 180); });
-}
 
 /* ─────────────────────────────────────────
    刊物阅读器 — 整本翻页
@@ -1211,7 +1046,7 @@ function initReveal() {
     }
   });
 
-  const grouped = '.cs-card, .cs-stat, .cs-hub-node, .cs-spec, .cs-phase, .cs-deliver, .cs-doc, .cs-flow-step, .cs-shift-goals li, .cs-facet, .cs-plate, .cs-architecture-tab, .is-outcome .cs-lesson';
+  const grouped = '.cs-card, .cs-stat, .cs-hub-node, .cs-spec, .cs-phase, .cs-deliver, .cs-doc, .cs-flow-step, .cs-shift-goals li, .cs-facet, .cs-plate, .is-outcome .cs-lesson';
   document.querySelectorAll(grouped).forEach(el => {
     gsap.from(el, {
       opacity: 0, y: 22, duration: .65, ease: 'power2.out',
@@ -1671,14 +1506,11 @@ initPalette();
 initSeal();
 initScrubVideo();
 initDeck();
-initChapterStage();
-initSticky();
 initLine();
 initTocMap();
 initReader();
 initPageDemo();
 initSlides();
-initMindmap();
 initFlip();
 initLayoutCompare();
 initHub();
