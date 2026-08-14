@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=79">
-  <link rel="stylesheet" href="../css/case.css?v=63">
+  <link rel="stylesheet" href="../css/case.css?v=64">
 </head>
 <body class="case-page is-vision">
 <div class="site">
@@ -130,12 +130,14 @@
       <!-- ══════════════════════════════════════
            礼盒开启 — 视频进度绑定滚轮
       ══════════════════════════════════════ -->
-      <section class="cs-reveal" data-scrub-video>
+      <section class="cs-reveal" data-scrub-video data-scroll-screens="3.2" data-video-fps="30"
+               data-reduced-poster="../assets/work/vision/video/giftbox-open.webp">
         <video class="cs-reveal-video"
-               src="../assets/work/vision/video/giftbox.mp4?v=2"
-               poster="../assets/work/vision/video/giftbox-poster.webp"
-               width="1120" height="630"
+               src="../assets/work/vision/video/giftbox-scroll.mp4?v=1"
+               poster="../assets/work/vision/video/giftbox-closed.webp"
+               width="1920" height="1080"
                muted playsinline preload="auto"
+               disablepictureinpicture
                aria-label="《昂楷视界》礼盒从关闭到开启，内含三本刊物"></video>
         <div class="cs-reveal-cap">
           <p class="cs-reveal-k">往下滚，把它打开</p>
@@ -921,6 +923,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="../js/hscroll.js?v=1"></script>
-<script src="../js/case.js?v=37"></script>
+<script src="../js/case.js?v=38"></script>
 </body>
 </html>

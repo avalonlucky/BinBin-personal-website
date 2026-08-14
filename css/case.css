@@ -742,19 +742,29 @@
   position: relative;
   display: grid;
   place-items: center;
-  padding: clamp(30px, 3.2vw, 46px) var(--gutter);
-  /* 底色跟正文一样：这段视频本身是奶白调，压深色反而像贴了块广告牌，
-     浅底能让礼盒像直接放在页面上。 */
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 620px;
+  padding: 0;
+  overflow: hidden;
   background: var(--cs-paper);
 }
 .cs-reveal-video {
-  width: min(1120px, 100%);
-  max-height: 74vh;
-  height: auto;
+  width: 100%;
+  height: 100%;
   display: block;
-  border-radius: clamp(10px, 1vw, 14px);
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
   background: var(--cs-paper-2);
+}
+.cs-reveal::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 22%;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgb(251 251 244 / 0.22));
 }
 .cs-reveal-cap {
   position: absolute;
@@ -763,9 +773,11 @@
   transform: translateX(-50%);
   text-align: center;
   pointer-events: none;
+  z-index: 1;
   transition: opacity .5s var(--ease);
 }
 .cs-reveal.is-open .cs-reveal-cap { opacity: 0; }
+.cs-reveal.is-reduced .cs-reveal-cap { display: none; }
 .cs-reveal-k {
   font-family: var(--f-cjk);
   font-size: var(--fs-xs);
@@ -3715,6 +3727,13 @@
 }
 
 @media (max-width: 768px) {
+  .cs-reveal {
+    min-height: 520px;
+    background: #f4f0e7;
+  }
+  .cs-reveal-video { object-fit: contain; }
+  .cs-reveal::after { height: 30%; }
+
   .cs-hero-meta,
   .cs-metrics-inner { grid-template-columns: repeat(2, 1fr); gap: 22px; }
   .cs-cards,

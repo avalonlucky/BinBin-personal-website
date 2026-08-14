@@ -344,14 +344,16 @@ assets/work/<slug>/   该作品的图片资源
 **滚动绑定视频（`.cs-reveal`）的两个硬前提**，缺一个都会卡：
 
 1. 视频必须**全关键帧**编码，否则每次 seek 要回溯到上一个关键帧再解码。
-   本页的 `assets/work/vision/video/giftbox.mp4` 是这么转的：
+   本页当前使用的 `assets/work/vision/video/giftbox-scroll.mp4` 是这么转的：
    ```bash
-   ffmpeg -i 原片.mp4 -an -sn -vf scale=1120:-2 -c:v libx264 -profile:v high \
-     -pix_fmt yuv420p -g 1 -keyint_min 1 -sc_threshold 0 -crf 31 -preset slow \
-     -movflags +faststart giftbox.mp4
+   ffmpeg -i 原片.mp4 -an -sn \
+     -vf "scale=1920:-2:flags=lanczos,setpts=PTS-STARTPTS" \
+     -c:v libx264 -profile:v high -pix_fmt yuv420p \
+     -g 1 -keyint_min 1 -sc_threshold 0 -crf 28 -preset slow \
+     -movflags +faststart -avoid_negative_ts make_zero giftbox-scroll.mp4
    ```
-   全关键帧会把体积撑大：原片 4.8MB / 10s / 720p，转完 1120px crf31 是 2.8MB。
-   再往上调画质，crf28 就是 4.0MB，crf26 + 1280px 是 6.3MB——超过 4MB 不值得。
+   目前这支 7.2 秒、1920×1080、216 帧的视频约 6.9MB。滚动行程写在页面的
+   `data-scroll-screens="3.2"`：数字越大，开盒越慢；数字越小，开盒越快。
 2. `currentTime` 只能在 `requestAnimationFrame` 里写，而且**上一次 seek 没完成
    （`video.seeking` 为 true）就不要下新指令**，否则浏览器排队丢帧。
 3. **裁剪时必须把时间戳归零**。`ffmpeg -ss 4.6 -i in.mp4`（输入端 seek）会让

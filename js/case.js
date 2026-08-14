@@ -26,6 +26,27 @@ lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(t => lenis.raf(t * 1000));
 gsap.ticker.lagSmoothing(0);
 
+/* main.page 才是真正的滚动容器，浏览器刷新时不会替它恢复 scrollTop。
+   只在刷新 / 前进后退时恢复；从其他页面正常点进来仍从顶部开始。 */
+const scrollRestoreKey = `case-scroll:${location.pathname}`;
+const navigationType = performance.getEntriesByType('navigation')[0]?.type;
+const shouldRestoreScroll = navigationType === 'reload' || navigationType === 'back_forward';
+let lastCaseScroll = scroller.scrollTop;
+let savedCaseScroll = 0;
+try { savedCaseScroll = Number(sessionStorage.getItem(scrollRestoreKey)) || 0; } catch (error) { /* storage 不可用时保持浏览器默认 */ }
+
+lenis.on('scroll', event => { lastCaseScroll = event.scroll; });
+window.addEventListener('pagehide', () => {
+  try { sessionStorage.setItem(scrollRestoreKey, String(lastCaseScroll)); } catch (error) { /* storage 不可用时忽略 */ }
+});
+
+function restoreCaseScroll() {
+  if (!shouldRestoreScroll || savedCaseScroll <= 0) return;
+  lenis.scrollTo(savedCaseScroll, { immediate: true, force: true });
+  scroller.scrollTop = savedCaseScroll;
+  ScrollTrigger.update();
+}
+
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
     const hash = link.getAttribute('href');
@@ -216,12 +237,9 @@ function initSeal() {
 ───────────────────────────────────────── */
 /* ─────────────────────────────────────────
    礼盒开启 — 视频进度绑定滚轮
-   钉住区块，把滚动进度换算成 currentTime；滚多快动多快，往回滚反着走。
-   两个前提：
-     1. 视频必须是全关键帧编码（ffmpeg -g 1），否则每次 seek 都要回溯到
-        上一个关键帧再解码，滚起来会一顿一顿；
-     2. 只在 requestAnimationFrame 里写 currentTime，onUpdate 里直接写会
-        因为 seek 还没完成而丢帧。
+   data-scroll-screens 控制滚完视频需要多少屏，数字越大越慢。
+   ScrollTrigger 只更新目标时间；真正的 seek 在 rAF 里做插值并按源视频帧率
+   量化，避免 wheel 事件密度和浏览器解码速度不同步。
 ───────────────────────────────────────── */
 function initScrubVideo() {
   const box = document.querySelector('[data-scrub-video]');
@@ -229,47 +247,94 @@ function initScrubVideo() {
   const video = box.querySelector('video');
   if (!video) return;
 
-  let target = 0, raf = 0;
+  const scrollScreens = Math.max(1, Number(box.dataset.scrollScreens) || 3.2);
+  const sourceFps = Math.max(1, Number(box.dataset.videoFps) || 30);
+  const frameDuration = 1 / sourceFps;
+  const reducedPoster = box.dataset.reducedPoster;
 
-  // 只在 rAF 里写 currentTime，并且上一次 seek 没完成就不下新指令：
-  // 直接在 onUpdate 里连写会排队丢帧，滚起来一顿一顿。
-  const apply = () => {
-    raf = 0;
-    if (video.seeking) { raf = requestAnimationFrame(apply); return; }
-    if (Math.abs(video.currentTime - target) > 0.01) {
-      try { video.currentTime = target; } catch (e) { /* 元数据还没到，下一帧再说 */ }
-    }
+  let trigger;
+  let targetTime = 0;
+  let displayTime = 0;
+  let raf = 0;
+  let duration = 0;
+
+  const maxTime = () => Math.max(0, duration - frameDuration);
+  const clampTime = value => Math.min(maxTime(), Math.max(0, value));
+
+  const schedule = () => {
+    if (!raf) raf = requestAnimationFrame(renderFrame);
   };
-  const queue = () => { if (!raf) raf = requestAnimationFrame(apply); };
 
-  video.addEventListener('loadedmetadata', () => { video.pause(); queue(); ScrollTrigger.refresh(); });
+  const renderFrame = () => {
+    raf = 0;
+    if (!duration) return;
+
+    const delta = targetTime - displayTime;
+    displayTime = Math.abs(delta) <= frameDuration * 0.35
+      ? targetTime
+      : displayTime + delta * 0.24;
+
+    // 只请求视频里真实存在的帧，减少无意义的小数时间 seek。
+    const nextTime = clampTime(Math.round(displayTime * sourceFps) / sourceFps);
+    if (!video.seeking && Math.abs(video.currentTime - nextTime) >= frameDuration * 0.45) {
+      try { video.currentTime = nextTime; } catch (error) { /* 元数据尚未可用，下一帧重试 */ }
+    }
+
+    if (Math.abs(targetTime - displayTime) > frameDuration * 0.2 || video.seeking) schedule();
+  };
+
+  const syncToProgress = (progress, immediate = false) => {
+    if (!duration) return;
+    targetTime = clampTime(progress * duration);
+    if (immediate) displayTime = targetTime;
+    box.classList.toggle('is-open', progress > 0.08);
+    schedule();
+  };
+
+  const prepareVideo = () => {
+    video.pause();
+    duration = Number.isFinite(video.duration) ? video.duration : 0;
+    if (!duration) return;
+    syncToProgress(trigger?.progress || 0, true);
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+  };
 
   if (prefersReducedMotion.matches) {
-    // 不想要动效的人直接看开盒后的样子
-    const rest = () => { video.currentTime = Math.max(0, video.duration - 0.05); };
-    if (video.readyState >= 1) rest();
-    else video.addEventListener('loadedmetadata', rest, { once: true });
+    box.classList.add('is-open', 'is-reduced');
+    if (reducedPoster) video.poster = reducedPoster;
+    const showLastFrame = () => {
+      duration = Number.isFinite(video.duration) ? video.duration : 0;
+      if (duration) video.currentTime = Math.max(0, duration - frameDuration);
+    };
+    if (video.readyState >= 1) showLastFrame();
+    else video.addEventListener('loadedmetadata', showLastFrame, { once: true });
     return;
   }
 
-  ScrollTrigger.create({
+  video.addEventListener('seeked', schedule);
+  video.addEventListener('loadedmetadata', prepareVideo);
+
+  trigger = ScrollTrigger.create({
     trigger: box,
-    start: () => `top ${(document.querySelector('#nav')?.offsetHeight || 64) + 12}px`,
-    // 滚动行程给到 2.2 屏：太短会觉得动画被快进，太长会觉得卡住
-    end: () => '+=' + Math.round(window.innerHeight * 2.2),
+    start: 'top top',
+    end: () => '+=' + Math.round(window.innerHeight * scrollScreens),
     pin: true,
     pinSpacing: true,
     anticipatePin: 1,
     scrub: true,
     invalidateOnRefresh: true,
-    onUpdate: self => {
-      const d = video.duration;
-      if (!d || !isFinite(d)) return;
-      target = Math.min(d - 0.02, Math.max(0, self.progress * d));
-      box.classList.toggle('is-open', self.progress > 0.1);
-      queue();
-    },
+    onUpdate: self => syncToProgress(self.progress),
+    onRefresh: self => syncToProgress(self.progress, true),
   });
+
+  if (video.readyState >= 1) prepareVideo();
+  else video.load();
+
+  // 浏览器恢复滚动位置发生在 load/pageshow 附近；重新量尺寸并同步当前帧。
+  window.addEventListener('pageshow', () => requestAnimationFrame(() => {
+    ScrollTrigger.refresh();
+    syncToProgress(trigger.progress, true);
+  }));
 }
 
 /* ─────────────────────────────────────────
@@ -1145,9 +1210,16 @@ function initNavTheme() {
   const nav = document.getElementById('nav');
   if (!nav) return;
 
+  const reveal = document.querySelector('[data-scrub-video]');
   const body = document.querySelector('.cs-body');
   const closing = document.querySelector('.cs-closing');
 
+  if (reveal) ScrollTrigger.create({
+    trigger: reveal, start: 'top 60px', end: 'bottom 60px',
+    onEnter:     () => nav.dataset.theme = 'light',
+    onEnterBack: () => nav.dataset.theme = 'light',
+    onLeaveBack: () => nav.dataset.theme = 'dark',
+  });
   if (body) ScrollTrigger.create({
     trigger: body, start: 'top 60px',
     onEnter:     () => nav.dataset.theme = 'light',
@@ -1508,7 +1580,10 @@ initOutro();
 initCanvasBorders();
 initClock();
 
-window.addEventListener('load', () => ScrollTrigger.refresh());
+window.addEventListener('load', () => {
+  ScrollTrigger.refresh();
+  requestAnimationFrame(restoreCaseScroll);
+});
 window.addEventListener('resize', () => ScrollTrigger.refresh());
 
 /* lazy 图是滚动到一半才到货的，只要它改变了文档高度，
