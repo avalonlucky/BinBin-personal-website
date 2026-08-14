@@ -3951,17 +3951,164 @@
 }
 
 @media (max-width: 768px) {
+  /* 手机内容不是桌面稿的缩放版：收紧字号，并删掉依赖桌面页内导航的章节编号。 */
+  .case-page.is-vision .cs-hero-title { font-size: 29px; line-height: 1.2; margin-bottom: 16px; }
+  .case-page.is-vision .cs-hero-sub { font-size: 15px; line-height: 1.72; margin-bottom: 22px; }
+  .case-page.is-vision .cs-title,
+  .case-page.is-vision .cs-deck-head .cs-title { font-size: 24px; line-height: 1.3; }
+  .case-page.is-vision .cs-title em { display: block; }
+  .case-page.is-vision .cs-lede { font-size: 15.5px; line-height: 1.72; margin-top: 14px; }
+  .case-page.is-vision .cs-sub { font-size: 16px; margin-top: 28px; }
+  .case-page.is-vision .cs-body .cs-num { display: none; }
+  .case-page.is-vision .cs-section { padding-top: 42px; padding-bottom: 42px; }
+  .case-page.is-vision .cs-panel-txt h3,
+  .case-page.is-vision .cs-lesson h3,
+  .case-page.is-vision .cs-facet h4 { font-size: 20px; line-height: 1.35; }
+  .case-page.is-vision .cs-facet p,
+  .case-page.is-vision .cs-shift-body p,
+  .case-page.is-vision .cs-shift-goals span { font-size: 14px; line-height: 1.68; }
+
+  /* HERO 的四组履历信息在桌面承担快速扫读，手机会把黑色首屏拖得过长。 */
+  .case-page.is-vision .cs-hero-meta { display: none; }
+
+  /* 调研模块保留方法和现场照片，七个桌面式索引方块在手机省略。 */
+  .case-page.is-vision .cs-flow.is-steps { display: none; }
+
+  /* 手机删去的细节卡与补充句；桌面仍完整保留。 */
+  .case-page.is-vision .is-mobile-omit { display: none !important; }
+  .case-page.is-vision .is-system-lab .is-mobile-cover .cs-panel-fig { display: none; }
+
   .case-page.is-vision .is-system-lab { padding-top: 52px; }
+  /* 手机不是把桌面的五张面板纵向摊开，而是保留同级内容的横向关系。
+     下一张露出一角，既是滑动提示，也把 04 从五屏压缩成一组。 */
+  .case-page.is-vision .is-system-lab {
+    overflow: hidden;
+    padding-bottom: 36px;
+  }
+  .case-page.is-vision .is-system-lab .cs-deck-view {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    overscroll-behavior-inline: contain;
+    touch-action: pan-x;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .case-page.is-vision .is-system-lab .cs-deck-view::-webkit-scrollbar { display: none; }
+  .case-page.is-vision .is-system-lab .cs-deck-track {
+    width: max-content;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 12px;
+    padding: 20px var(--gutter) 6px;
+    transform: none !important;
+    will-change: auto;
+  }
   .case-page.is-vision .is-system-lab .cs-panel {
+    flex: 0 0 calc(100vw - 54px);
+    width: calc(100vw - 54px);
+    max-width: 352px;
     min-height: 0;
     grid-template-columns: 1fr;
+    align-content: start;
+    gap: 16px;
+    padding: 18px;
     border-radius: 8px;
     opacity: 1;
     transform: none;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
+  .case-page.is-vision .is-system-lab .cs-panel-fig .cs-figure img,
+  .case-page.is-vision .is-system-lab .cs-panel-fig .cs-tocmap-fig img { max-height: 29svh; }
+  .case-page.is-vision .is-system-lab .cs-panel-txt h3 { margin-bottom: 9px; }
+  .case-page.is-vision .is-system-lab .cs-panel-txt p { font-size: 14px; line-height: 1.66; }
+  .case-page.is-vision .is-system-lab .cs-specs-mini li { padding-block: 7px; }
+  .case-page.is-vision .is-system-lab .cs-prio { padding: 9px 10px; }
+  .case-page.is-vision .is-system-lab .cs-deck-rail { margin-inline: 0; }
 
-
-  .case-page.is-vision .is-proofroom .cs-line-body { padding: 0 0 34px; }
+  /* 05 的四个环节同样是并列步骤。手机上横向吸附，时间轴主线退场。 */
+  .case-page.is-vision .is-proofroom { overflow: hidden; }
+  .case-page.is-vision .is-proofroom .cs-line {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    max-width: none;
+    margin: 32px calc(var(--gutter) * -1) 0;
+    padding: 0 var(--gutter) 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    overscroll-behavior-inline: contain;
+    touch-action: pan-x;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .case-page.is-vision .is-proofroom .cs-line::-webkit-scrollbar { display: none; }
+  .case-page.is-vision .is-proofroom .cs-line-rail,
+  .case-page.is-vision .is-proofroom .cs-line-dot { display: none; }
+  .case-page.is-vision .is-proofroom .cs-line-item,
+  .case-page.is-vision .is-proofroom .cs-line-item:last-child {
+    flex: 0 0 calc(100vw - 54px);
+    width: calc(100vw - 54px);
+    max-width: 352px;
+    padding: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  .case-page.is-vision .is-proofroom .cs-line-body,
+  .case-page.is-vision .is-proofroom .cs-line-item:last-child .cs-line-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+    border: 1px solid var(--cs-hair);
+    border-radius: 10px;
+    background: var(--cs-paper-2);
+  }
+  .case-page.is-vision .is-proofroom .cs-line-k { font-size: 20px; margin-bottom: 10px; }
+  .case-page.is-vision .is-proofroom .cs-line-body p { font-size: 14px; line-height: 1.68; }
+  .case-page.is-vision .is-proofroom .cs-shift-label,
+  .case-page.is-vision .is-proofroom .cs-shift-label.is-mine {
+    background: var(--cs-paper-2);
+  }
+  /* 三点总结在手机上只占一组卡片高度，下一张保留可见边缘。 */
+  .case-page.is-vision .is-outcome { overflow: hidden; }
+  .case-page.is-vision .is-outcome .cs-lessons {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    margin: 26px calc(var(--gutter) * -1) 0;
+    padding: 0 var(--gutter) 10px;
+    border: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    overscroll-behavior-inline: contain;
+    touch-action: pan-x;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .case-page.is-vision .is-outcome .cs-lessons::-webkit-scrollbar { display: none; }
   .case-page.is-vision .is-outcome .cs-lesson,
-  .case-page.is-vision .is-outcome .cs-lesson:first-child { padding: 26px 0; }
+  .case-page.is-vision .is-outcome .cs-lesson:first-child,
+  .case-page.is-vision .is-outcome .cs-lesson:last-child {
+    flex: 0 0 calc(100vw - 54px);
+    width: calc(100vw - 54px);
+    max-width: 352px;
+    min-height: 380px;
+    align-content: center;
+    gap: 18px;
+    padding: 24px;
+    border: 1px solid var(--cs-hair);
+    border-radius: 10px;
+    background: var(--cs-paper-2);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  .case-page.is-vision .is-outcome .cs-lesson p { font-size: 14px; line-height: 1.7; }
 }

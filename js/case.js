@@ -416,9 +416,11 @@ function initDeck() {
     const fill  = deck.querySelector('[data-deck-fill]');
     const sealPanel = deck.querySelector('[data-seal]')?.closest('.cs-panel');
 
-    const activate = i => {
-      steps.forEach((s, k) => s.classList.toggle('is-on', k === i));
-      panels.forEach((p, k) => p.classList.toggle('is-active', k === i));
+    const activate = (i, currentSteps = steps, currentPanels = panels) => {
+      steps.forEach(s => s.classList.remove('is-on'));
+      panels.forEach(p => p.classList.remove('is-active'));
+      currentSteps[i]?.classList.add('is-on');
+      currentPanels[i]?.classList.add('is-active');
     };
     activate(0);
 
@@ -454,18 +456,49 @@ function initDeck() {
       return () => { st.kill(); tween.kill(); gsap.set(track, { clearProps: 'x' }); };
     });
 
-    // 窄屏：面板纵向堆叠，印章进入视口时自己翻一次
-    if (sealPanel) {
-      gsap.matchMedia().add('(max-width: 768px)', () => {
-        const st = ScrollTrigger.create({
-          trigger: sealPanel,
-          start: 'center 70%',
-          end: 'center 24%',
-          onToggle: self => window.__sealShow?.(self.isActive ? 'inverse' : 'relief'),
+    // 窄屏保留横向叙事，但交给浏览器原生触摸滚动；只用 JS 同步
+    // 顶部进度、当前面板和印章状态，避免五张长卡机械堆成五屏。
+    gsap.matchMedia().add('(max-width: 768px)', () => {
+      const view = deck.querySelector('.cs-deck-view');
+      if (!view) return;
+
+      let frame = 0;
+      const sync = () => {
+        frame = 0;
+        const viewCenter = view.scrollLeft + view.clientWidth / 2;
+        let active = 0;
+        let nearest = Infinity;
+
+        const visiblePanels = panels.filter(panel => panel.offsetParent !== null);
+        const visibleSteps = steps.filter(step => step.offsetParent !== null);
+
+        visiblePanels.forEach((panel, index) => {
+          const center = panel.offsetLeft + panel.offsetWidth / 2;
+          const delta = Math.abs(center - viewCenter);
+          if (delta < nearest) {
+            nearest = delta;
+            active = index;
+          }
         });
-        return () => st.kill();
-      });
-    }
+
+        activate(active, visibleSteps, visiblePanels);
+        const max = Math.max(1, view.scrollWidth - view.clientWidth);
+        if (fill) fill.style.width = `${Math.min(100, view.scrollLeft / max * 100).toFixed(2)}%`;
+        if (sealPanel && window.__sealShow) {
+          window.__sealShow(visiblePanels[active] === sealPanel ? 'inverse' : 'relief');
+        }
+      };
+      const onScroll = () => {
+        if (!frame) frame = requestAnimationFrame(sync);
+      };
+
+      view.addEventListener('scroll', onScroll, { passive: true });
+      requestAnimationFrame(sync);
+      return () => {
+        view.removeEventListener('scroll', onScroll);
+        if (frame) cancelAnimationFrame(frame);
+      };
+    });
   });
 }
 

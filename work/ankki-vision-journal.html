@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=79">
-  <link rel="stylesheet" href="../css/case.css?v=73">
+  <link rel="stylesheet" href="../css/case.css?v=75">
 </head>
 <body class="case-page is-vision">
 <div class="site">
@@ -271,13 +271,13 @@
               <li class="cs-deck-step is-on" data-deck-step><i>01</i>视觉规范</li>
               <li class="cs-deck-step" data-deck-step><i>02</i>主视觉标识</li>
               <li class="cs-deck-step" data-deck-step><i>03</i>封面与封底</li>
-              <li class="cs-deck-step" data-deck-step><i>04</i>印章式页码</li>
+              <li class="cs-deck-step is-mobile-omit" data-deck-step><i>04</i>印章式页码</li>
               <li class="cs-deck-step" data-deck-step><i>05</i>目录设计</li>
             </ol>
             <div class="cs-deck-rail"><b data-deck-fill></b></div>
           </div>
 
-          <div class="cs-deck-view">
+          <div class="cs-deck-view" tabindex="0" aria-label="视觉体系，左右滑动查看五个设计环节">
           <div class="cs-deck-track" data-deck-track>
 
             <!-- 面板 1：视觉规范 -->
@@ -339,7 +339,7 @@
             </article>
 
             <!-- 面板 3：封面与封底 -->
-            <article class="cs-panel">
+            <article class="cs-panel is-mobile-cover">
               <div class="cs-panel-fig is-pair">
                 <button class="cs-figure" type="button"
                         data-zoom="../assets/work/vision/cover/v3-cover.webp"
@@ -370,7 +370,7 @@
             </article>
 
             <!-- 面板 4：印章式页码 -->
-            <article class="cs-panel">
+            <article class="cs-panel is-mobile-omit">
               <div class="cs-panel-fig">
                 <div class="cs-pagedemo" data-pagedemo>
                   <div class="cs-pd-wrap">
@@ -451,7 +451,7 @@
           <p class="cs-num">05 — 从校对到印刷</p>
           <h2 class="cs-title">设计师，<em>也要自己把好编辑这道关</em></h2>
 
-          <div class="cs-line" data-line>
+          <div class="cs-line" data-line tabindex="0" aria-label="从校对到印刷，左右滑动查看四个环节">
             <span class="cs-line-rail" aria-hidden="true"><b data-line-fill></b></span>
 
             <article class="cs-line-item" data-line-item>
@@ -477,7 +477,7 @@
                     <b>逐条清单</b>
                   </button>
                 </div>
-                <p class="cs-quote-soft">其中一项筛查结果是：<em>内页 36—57 的栏目页眉拼音连续 22 页错成 XIEYIN，而正确的 XIEYING 只出现在目录中</em>。</p>
+                <p class="cs-quote-soft is-mobile-omit">其中一项筛查结果是：<em>内页 36—57 的栏目页眉拼音连续 22 页错成 XIEYIN，而正确的 XIEYING 只出现在目录中</em>。</p>
               </div>
             </article>
 
@@ -538,7 +538,7 @@
         <section class="cs-section is-outcome" data-toc="学习与总结">
           <p class="cs-num">06 — 学习与总结</p>
 
-          <ol class="cs-lessons">
+          <ol class="cs-lessons" tabindex="0" aria-label="学习与总结，左右滑动查看三点">
             <li class="cs-lesson">
               <span class="cs-lesson-n" aria-hidden="true">01</span>
               <div>
@@ -745,6 +745,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="../js/hscroll.js?v=1"></script>
-<script src="../js/case.js?v=45"></script>
+<script src="../js/case.js?v=47"></script>
 </body>
 </html>
