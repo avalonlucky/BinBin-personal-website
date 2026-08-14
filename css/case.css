@@ -133,10 +133,9 @@
 .cs-section {
   max-width: var(--cs-max);
   margin: 0 auto;
+  /* 章节之间只用间距分隔，不画发丝线——上下各 96px 已经够清楚了。 */
   padding: clamp(56px, 7vw, 96px) var(--gutter);
-  border-top: 1px solid var(--cs-hair);
 }
-.cs-section:first-of-type { border-top: none; }
 
 .cs-num {
   font-family: var(--f-body);
@@ -918,6 +917,7 @@
 .cs-doc-empty svg { margin: 0 auto 10px; display: block; opacity: 0.35; }
 .cs-doc-cap {
   padding: 13px 16px;
+  text-align: center;
   font-family: var(--f-cjk);
   font-size: 15.5px;
   line-height: 1.6;
@@ -1135,24 +1135,28 @@
 }
 /* 序号版流程条：左对齐、序号 + 标题一行、下面挂一句说明。
    原来的红色英文小标（Research / System …）看着眼花，换成 01–06。 */
+/* 序号在上、文字在下。横排时每格只有 ~150px，序号和文字挤一行会
+   把两三个字的标题也压成两行；上下排之后大多数标题都能单行。
+   整体居中：个别标题（如「封面封底信息分配」）仍会换行，居中才不会
+   在一排格子里看出参差。 */
 .cs-flow.is-steps { align-items: stretch; }
 .cs-flow.is-steps .cs-flow-step {
-  text-align: left;
-  padding: 16px 16px 17px;
+  text-align: center;
+  padding: 18px 12px 19px;
 }
 .cs-flow.is-steps b {
-  display: flex;
-  align-items: baseline;
-  gap: 9px;
+  display: block;
   font-size: var(--fs-base);
 }
 .cs-flow.is-steps b i {
+  display: block;
+  margin-bottom: 9px;
   font-style: normal;
   font-family: var(--f-body);
   font-size: var(--fs-sm);
   font-weight: 400;
   color: var(--cs-ink-3);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.06em;
 }
 .cs-flow.is-steps small {
   display: block;
