@@ -2511,6 +2511,12 @@ main footer {
   /* 设计观三行：图在上、文在下，横向排开 */
   .design-rows[data-hscroll-track] > .design-row { flex: 0 0 min(78vw, 300px); }
 
+  /* 四类受众：摊平成轨道后外框就没意义了，改成每格自己是一张卡 */
+  .cs-facets[data-hscroll-track] { border: none; border-radius: 0; overflow: visible; }
+  .cs-facets[data-hscroll-track] > .cs-facet {
+    border: 1px solid var(--cs-hair);
+    border-radius: 8px;
+  }
   /* 13 款单页是图册，项要窄一些，一屏能看到两三张才有「一整套」的感觉 */
   .cs-grid13[data-hscroll-track] > * { flex: 0 0 min(42vw, 168px); }
   /* 汇聚图：中心节点在窄屏是绝对定位的，摊平成轨道时要还原成普通项 */

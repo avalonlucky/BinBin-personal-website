@@ -821,7 +821,7 @@ function initReveal() {
     }
   });
 
-  const grouped = '.cs-card, .cs-stat, .cs-hub-node, .cs-spec, .cs-phase, .cs-deliver, .cs-doc, .cs-flow-step, .cs-shift-goals li';
+  const grouped = '.cs-card, .cs-stat, .cs-hub-node, .cs-spec, .cs-phase, .cs-deliver, .cs-doc, .cs-flow-step, .cs-shift-goals li, .cs-facet';
   document.querySelectorAll(grouped).forEach(el => {
     gsap.from(el, {
       opacity: 0, y: 22, duration: .65, ease: 'power2.out',

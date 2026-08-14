@@ -133,8 +133,9 @@
 .cs-section {
   max-width: var(--cs-max);
   margin: 0 auto;
-  /* 章节之间只用间距分隔，不画发丝线——上下各 96px 已经够清楚了。 */
-  padding: clamp(56px, 7vw, 96px) var(--gutter);
+  /* 章节之间只用间距分隔，不画发丝线。没有线之后间距要相应收窄：
+     原来上下各 96px（合 192px）是为了配合分隔线，现在会空出一大块。 */
+  padding: clamp(40px, 4.4vw, 62px) var(--gutter);
 }
 
 .cs-num {
@@ -730,6 +731,45 @@
 .cs-shift-goals.is-muted b { color: var(--cs-ink-3); }
 .cs-shift-goals.is-muted span { color: var(--cs-ink-2); }
 .cs-shift-goals.is-muted li:hover { background: rgb(2 2 2 / 0.035); }
+
+/* ────────────────────────────────────────
+   多面受众（.cs-facets）
+   一排等宽格子，衬线大序号 + 标题 + 一句说明。
+   用在「同一件东西，要对 N 类人说话」这种并列关系上；
+   它不是对照（那用 .cs-shift），所以不分主次、不上底色。
+──────────────────────────────────────── */
+.cs-facets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--cs-hair);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 22px;
+}
+.cs-facet { padding: 30px 26px 32px; }
+.cs-facet + .cs-facet { border-left: 1px solid var(--cs-hair); }
+.cs-facet-n {
+  font-family: var(--f-heading);
+  font-size: 38px;
+  line-height: 1;
+  /* 序号是节奏，不是信息：主色压到四成，别跟标题抢。 */
+  color: rgb(var(--cs-accent-rgb) / 0.42);
+  margin-bottom: 20px;
+}
+.cs-facet h4 {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--cs-ink);
+  margin: 0 0 10px;
+}
+.cs-facet p {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-sm);
+  line-height: 1.75;
+  color: var(--cs-ink-2);
+  margin: 0;
+}
 
 /* ────────────────────────────────────────
    区块填写法（PPT 协作）
