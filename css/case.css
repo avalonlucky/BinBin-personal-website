@@ -619,6 +619,115 @@
 }
 
 /* ────────────────────────────────────────
+   痛点 → 解法（.cs-shift）
+   替代 .cs-compare 的表格式对照。两栏不是对等关系：
+   左栏（问题）刻意做弱——小字、灰、无框、破折号项目符；
+   右栏（挑战）是重点——竖向强调条 + 关键词色块 + 更大字。
+   层级靠字号、色阶和留白建立，不靠边框和格子。
+──────────────────────────────────────── */
+.cs-shift {
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+  margin: 30px 0 8px;
+}
+.cs-shift-label {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.06em;
+  color: var(--cs-ink-3);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--cs-hair);
+  margin-bottom: 20px;
+}
+.cs-shift-label.is-mine {
+  color: var(--cs-accent-deep);
+  border-bottom-color: rgb(var(--cs-accent-rgb) / 0.34);
+}
+
+/* 左栏：问题清单 */
+.cs-shift-flaws {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.cs-shift-flaws li {
+  position: relative;
+  padding-left: 22px;
+  font-family: var(--f-cjk);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--cs-ink-2);
+}
+.cs-shift-flaws li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.66em;
+  width: 9px;
+  height: 1px;
+  background: var(--cs-ink-3);
+}
+.cs-shift-sum {
+  margin-top: 22px;
+  padding-left: 20px;
+  border-left: 2px solid var(--cs-paper-3);
+  font-family: var(--f-cjk);
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+  color: var(--cs-ink-3);
+}
+
+/* 右栏：四个挑战 */
+.cs-shift-goals { list-style: none; margin: 0; padding: 0; }
+.cs-shift-goals li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 18px;
+  align-items: baseline;
+  padding: 16px 14px 16px 20px;
+  border-bottom: 1px solid var(--cs-hair);
+  border-radius: 4px;
+  transition: background .3s ease;
+}
+.cs-shift-goals li:last-child { border-bottom: none; }
+.cs-shift-goals li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  border-radius: 2px;
+  background: rgb(var(--cs-accent-rgb) / 0.5);
+  transition: background .3s ease, top .3s ease, bottom .3s ease;
+}
+.cs-shift-goals li:hover { background: rgb(var(--cs-accent-rgb) / 0.05); }
+.cs-shift-goals li:hover::before {
+  background: var(--cs-accent);
+  top: 5px;
+  bottom: 5px;
+}
+.cs-shift-goals b {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--cs-accent-deep);
+}
+.cs-shift-goals span {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-base);
+  line-height: 1.72;
+  color: var(--cs-ink);
+}
+
+/* ────────────────────────────────────────
    区块填写法（PPT 协作）
 ──────────────────────────────────────── */
 .cs-blocks { display: flex; flex-direction: column; gap: 9px; }
@@ -3052,6 +3161,10 @@
   .cs-stages,
   .cs-phases,
   .cs-layouts { grid-template-columns: 1fr; }
+  /* .cs-shift 上下堆叠即可：左右两栏不是同级重复块，是「问题→解法」的
+     单向关系，横向滚动反而会拆散这层因果。 */
+  .cs-shift { grid-template-columns: 1fr; gap: 32px; }
+  .cs-shift-goals li { grid-template-columns: 1fr; gap: 4px; padding-right: 4px; }
   .cs-compare-col + .cs-compare-col,
   .cs-stage + .cs-stage,
   .cs-phase + .cs-phase { border-left: none; border-top: 1px solid var(--cs-hair); }
