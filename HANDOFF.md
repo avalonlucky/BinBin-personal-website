@@ -324,6 +324,21 @@ assets/work/<slug>/   该作品的图片资源
 
 后续所有板块的标题和副标题，优先采用左对齐、上下排版。
 
+### 两条容易反复犯的错（用户多次指出）
+
+**一、不要强制换行。** 标题右侧还有大片空白却硬拆成两行，是用户最反感的问题之一。根因通常不是
+`<br>`，而是 CSS 上的 `max-width`：`.cs-title` 曾写 `max-width: 20em`，在 44px 字号下等于 880px，
+而容器有 1240px（内容区 1120px）——于是每个标题都提前折行。**已删除** `.cs-title` 和
+`.cs-lesson h3` 的 `max-width`。新增块时不要再给标题类加 `em` 单位的 `max-width`；正文段落
+需要控制行长时用 `.cs-lede` 一类专门的正文类，不要加在标题上。
+
+**二、不要用红色英文小标。** 曾经在 `.cs-flow-step > span`（Research / Position / Distill…）、
+`.cs-phase-k`（AI Explore / Design Execute）、`.cs-chapter-en`（KANSHOUYU 拼音）上做红色大写
+拉丁文眉标，用户评价「搞得眼花缭乱」，要求全部去掉。这三处样式已从 `case.css` 删除。
+需要序列感时用 `.cs-flow.is-steps` —— `<b><i>01</i>标题</b><small>说明</small>`，序号取
+`--cs-ink-3` 中性灰，不用主色红。中文页面上不要再出现纯装饰性的英文/拼音标签（hero 的
+Client / Role / Year / Deliverable 是结构性字段，保留）。
+
 ## 发布流程
 
 提交并推送到正式分支：

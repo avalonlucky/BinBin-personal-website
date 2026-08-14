@@ -154,7 +154,8 @@
   letter-spacing: -0.01em;
   color: var(--cs-ink);
   margin: 0 0 8px;
-  max-width: 20em;
+  /* 不设 max-width。20em 在 44px 下只有 880px，容器却有 1240px——
+     标题会在右边还空着 360px 的时候就折行，看起来像被硬断开的。 */
 }
 .cs-title em {
   font-style: normal;
@@ -1018,6 +1019,36 @@
   color: var(--cs-accent);
   margin-bottom: 6px;
 }
+/* 序号版流程条：左对齐、序号 + 标题一行、下面挂一句说明。
+   原来的红色英文小标（Research / System …）看着眼花，换成 01–06。 */
+.cs-flow.is-steps { align-items: stretch; }
+.cs-flow.is-steps .cs-flow-step {
+  text-align: left;
+  padding: 16px 16px 17px;
+}
+.cs-flow.is-steps b {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  font-size: var(--fs-base);
+}
+.cs-flow.is-steps b i {
+  font-style: normal;
+  font-family: var(--f-body);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--cs-ink-3);
+  letter-spacing: 0.02em;
+}
+.cs-flow.is-steps small {
+  display: block;
+  margin-top: 7px;
+  font-family: var(--f-cjk);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--cs-ink-2);
+}
+
 .cs-flow-step b {
   font-family: var(--f-cjk);
   font-size: 15.5px;
@@ -1176,14 +1207,6 @@
   margin-bottom: 14px;
 }
 .cs-phase.is-dark .cs-phase-n { color: rgba(251,251,244,0.14); }
-.cs-phase-k {
-  font-family: var(--f-body);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--cs-accent);
-  margin-bottom: 8px;
-}
 .cs-phase h4 {
   font-family: var(--f-cjk);
   font-size: 17.5px;
@@ -1409,7 +1432,6 @@
   line-height: 1.45;
   color: var(--cs-ink);
   margin: 0 0 14px;
-  max-width: 26em;
 }
 .cs-lesson p {
   font-family: var(--f-cjk);
@@ -2359,13 +2381,6 @@
   font-size: clamp(16px, 1.4vw, 18px);
   font-weight: 600;
   color: var(--cs-ink);
-}
-.cs-chapter-en {
-  font-family: var(--f-mono, var(--f-body));
-  font-size: var(--fs-xs);
-  letter-spacing: 0.11em;
-  color: var(--cs-accent);
-  margin-top: 3px;
 }
 .cs-chapter-body { padding: 4px 18px 14px; }
 .cs-art {
