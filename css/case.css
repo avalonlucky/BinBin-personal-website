@@ -733,6 +733,202 @@
 .cs-shift-goals.is-muted li:hover { background: rgb(2 2 2 / 0.035); }
 
 /* ────────────────────────────────────────
+   横向面板组（.cs-deck）
+   把区块钉在视口，纵向滚动换算成横向位移：五张面板从左到右依次推过，
+   走完最后一张才把滚动还给页面。桌面端专用；窄屏退回纵向堆叠。
+   用它来合并「同一主题下的多个小节」，比拆成四个纵向小节更有节奏。
+──────────────────────────────────────── */
+.cs-deck {
+  /* 底部不留 padding：钉住后由 pin-spacer 接管间距，
+     留了会把面板挤出视口下缘。 */
+  padding: clamp(30px, 3.2vw, 46px) 0 0;
+  overflow: hidden;
+}
+.cs-deck-head {
+  max-width: var(--cs-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.cs-deck-head .cs-lede { margin-bottom: 0; }
+
+.cs-deck-steps {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 30px;
+  margin: 18px 0 0;
+  padding: 0;
+}
+.cs-deck-step {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--f-cjk);
+  font-size: var(--fs-sm);
+  color: var(--cs-ink-3);
+  transition: color .35s var(--ease);
+}
+.cs-deck-step i {
+  font-style: normal;
+  font-family: var(--f-body);
+  letter-spacing: 0.06em;
+}
+.cs-deck-step.is-on { color: var(--cs-accent-deep); }
+
+.cs-deck-rail {
+  position: relative;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--cs-hair);
+  margin: 11px 0 0;
+}
+.cs-deck-rail b {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  border-radius: 2px;
+  background: var(--cs-accent);
+}
+
+.cs-deck-track {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(20px, 2.2vw, 34px);
+  width: max-content;
+  /* 左内边距要对齐正文容器的左缘（容器居中 + gutter），
+     否则第一张面板会比上面的标题更靠左。 */
+  padding: 22px var(--gutter) 0 max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
+  will-change: transform;
+}
+.cs-panel {
+  flex: 0 0 min(920px, 76vw);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(22px, 2.6vw, 40px);
+  align-items: center;
+  padding: clamp(22px, 2.4vw, 34px);
+  background: var(--cs-paper-2);
+  border-radius: 10px;
+}
+.cs-panel.is-wide { flex-basis: min(1060px, 86vw); }
+
+/* 面板里的图统一压到视口高度以内——反正点开能放大，
+   没必要在页面上占掉一屏。 */
+.cs-panel-fig { min-width: 0; }
+.cs-panel-fig .cs-figure { margin: 0; }
+.cs-panel-fig .cs-figure img { max-height: 42vh; object-fit: contain; background: var(--cs-paper); }
+.cs-panel-fig.is-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.cs-panel-fig.is-pair .cs-figure img { max-height: 42vh; }
+.cs-panel-fig .cs-tocmap { grid-template-columns: 1fr; margin: 0; }
+.cs-panel-fig .cs-tocmap-fig img { max-height: 44vh; object-fit: contain; }
+.cs-panel-fig .cs-pagedemo { margin: 0; }
+/* 面板里的页码演示：文字已经搬到右栏，这里只留纸张本身，
+   高度压到视口以内，别把整组面板顶高。 */
+.cs-panel-fig .cs-pd-wrap { display: block; }
+.cs-panel-fig .cs-pd-stage { max-width: none; height: 38vh; aspect-ratio: auto; width: min(100%, 244px); margin: 0 auto; }
+.cs-panel-fig .cs-pd-ctrl { justify-content: center; margin-top: 14px; }
+
+.cs-panel-txt { min-width: 0; }
+.cs-panel-txt h3 {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--cs-ink);
+  margin: 0 0 12px;
+  line-height: 1.35;
+}
+.cs-panel-txt p {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-base);
+  line-height: 1.78;
+  color: var(--cs-ink-2);
+  margin: 0 0 12px;
+}
+.cs-panel-txt p:last-child { margin-bottom: 0; }
+.cs-panel-txt strong { color: var(--cs-ink); font-weight: 600; }
+
+/* 推导链：一行小字，用箭头串起来 */
+.cs-chain {
+  font-size: var(--fs-sm) !important;
+  color: var(--cs-ink-3) !important;
+  line-height: 1.9 !important;
+  padding: 11px 14px;
+  border-radius: 6px;
+  background: var(--cs-paper);
+}
+
+/* 面板里的规范清单：关键词 + 一行说明，比卡片省地方 */
+.cs-specs-mini { list-style: none; margin: 14px 0 0; padding: 0; }
+.cs-specs-mini li {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--cs-hair);
+}
+.cs-specs-mini li:last-child { border-bottom: none; }
+.cs-specs-mini b {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--cs-accent-deep);
+}
+.cs-specs-mini span {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-sm);
+  line-height: 1.65;
+  color: var(--cs-ink-2);
+}
+.cs-specs-mini span i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 5px;
+  vertical-align: -1px;
+}
+
+/* 面板里的印章：跟着滚动自动在阳刻／阴刻之间翻转，不需要点 */
+.cs-seal.is-inline {
+  grid-template-columns: 108px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  margin: 16px 0 0;
+  padding: 14px;
+  border-radius: 8px;
+  background: var(--cs-paper);
+}
+.cs-seal.is-inline .cs-seal-stage { padding: 12%; border-radius: 8px; }
+.cs-seal.is-inline p { font-size: var(--fs-sm); line-height: 1.7; color: var(--cs-ink-2); margin: 0; }
+.cs-seal-now {
+  font-family: var(--f-cjk);
+  font-size: var(--fs-sm) !important;
+  font-weight: 600;
+  color: var(--cs-accent-deep) !important;
+  margin: 0 0 5px !important;
+}
+
+/* 面板里的三级优先级：竖排、收紧内边距，去掉外层横滑壳 */
+.cs-panel-txt .cs-prios {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+.cs-panel-txt .cs-prio { padding: 11px 14px; gap: 12px; }
+.cs-panel-txt .cs-prio h4 { margin-bottom: 3px; }
+.cs-panel-txt .cs-prio p { font-size: var(--fs-sm); line-height: 1.6; margin: 0; }
+
+/* 面板头的大标题比常规小节小一档：它上面还压着导航，
+   用 2xl 会把面板挤出视口。 */
+.cs-deck-head .cs-title { font-size: var(--fs-xl); }
+
+/* ────────────────────────────────────────
    多面受众（.cs-facets）
    一排等宽格子，衬线大序号 + 标题 + 一句说明。
    用在「同一件东西，要对 N 类人说话」这种并列关系上；
@@ -1617,7 +1813,14 @@
   transition: box-shadow .4s var(--ease);
 }
 .cs-figure:hover { box-shadow: 0 14px 36px rgba(2,2,2,0.1); }
-.cs-figure img { width: 100%; display: block; }
+.cs-figure img {
+  width: 100%;
+  display: block;
+  /* 图都能点开放大，页面上没必要占掉一整屏。统一压到 58vh 以内。 */
+  max-height: 58vh;
+  object-fit: contain;
+  background: var(--cs-paper);
+}
 .cs-figure figcaption,
 .cs-figure-cap {
   padding: 13px 18px;
@@ -3215,6 +3418,24 @@
   /* 单列时表头不再相邻，各自恢复完整圆角；DOM 顺序是「表头 表头 正文 正文」
      （为了让两个表头在 PC 上连成一条带），所以这里必须用 order 重新交错，
      否则手机上会变成两个表头挨在一起。 */
+  /* 面板组在窄屏退回纵向堆叠：横向钉住在手机上滑起来不稳，
+     而且面板里的图文两栏也塞不下。 */
+  .cs-deck { overflow: visible; }
+  .cs-deck-track {
+    flex-direction: column;
+    width: auto;
+    gap: 18px;
+    padding: 24px var(--gutter) 0;
+    transform: none !important;
+  }
+  .cs-panel, .cs-panel.is-wide {
+    flex-basis: auto;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .cs-panel-fig .cs-figure img { max-height: 42vh; }
+  .cs-deck-steps { display: none; }
+
   .cs-shift { grid-template-columns: 1fr; }
   /* order 必须按位置判定，不能按 is-mine——02 的主色一侧在左，
      按 is-mine 排会把表头和另一栏的内容配错。 */

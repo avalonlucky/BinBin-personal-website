@@ -191,15 +191,80 @@ function initSeal() {
     inverse: box.querySelector('[data-seal-face="inverse"]'),   // 阴刻（反白）
   };
   const btns = [...box.querySelectorAll('[data-seal-mode]')];
+  const now = box.querySelector('[data-seal-now]');
+  const LABEL = { relief: '阳刻 · 正形', inverse: '阴刻 · 反白' };
 
+  let cur = null;
   const show = mode => {
+    if (mode === cur) return;
+    cur = mode;
     Object.entries(faces).forEach(([k, el]) => el?.classList.toggle('is-off', k !== mode));
     stage.classList.toggle('is-inverse', mode === 'inverse');
     btns.forEach(b => b.classList.toggle('is-active', b.dataset.sealMode === mode));
+    if (now) now.textContent = LABEL[mode];
   };
 
   btns.forEach(b => b.addEventListener('click', () => show(b.dataset.sealMode)));
   show('relief');
+  // 面板组会按滚动位置调它，所以挂出去
+  window.__sealShow = show;
+}
+
+/* ─────────────────────────────────────────
+   横向面板组 — 把区块钉在视口，纵向滚动换算成横向位移。
+   走到最后一张才把滚动还给页面。窄屏不介入（CSS 已退回纵向堆叠）。
+───────────────────────────────────────── */
+function initDeck() {
+  const deck = document.querySelector('[data-deck]');
+  if (!deck) return;
+  const track = deck.querySelector('[data-deck-track]');
+  const steps = [...deck.querySelectorAll('[data-deck-step]')];
+  const fill  = deck.querySelector('[data-deck-fill]');
+  const sealPanel = deck.querySelector('[data-seal]')?.closest('.cs-panel');
+  if (!track) return;
+
+  gsap.matchMedia().add('(min-width: 769px)', () => {
+    // 轨道左右各留一个 gutter，最后一张不要贴着视口右缘
+    const pad = () => parseFloat(getComputedStyle(track).paddingLeft) || 0;
+    const distance = () => Math.max(0, track.scrollWidth - window.innerWidth + pad());
+
+    const tween = gsap.to(track, { x: () => -distance(), ease: 'none' });
+    const st = ScrollTrigger.create({
+      trigger: deck,
+      start: () => `top ${(document.querySelector('#nav')?.offsetHeight || 64) + 12}px`,
+      end: () => '+=' + distance(),
+      pin: true,
+      pinSpacing: true,
+      anticipatePin: 1,
+      scrub: 0.6,
+      invalidateOnRefresh: true,
+      animation: tween,
+      onUpdate: self => {
+        const i = Math.min(steps.length - 1, Math.round(self.progress * (steps.length - 1)));
+        steps.forEach((s, k) => s.classList.toggle('is-on', k === i));
+        if (fill) fill.style.width = (self.progress * 100).toFixed(2) + '%';
+        // 印章：面板中心越过视口中线就翻面，不用点按钮
+        if (sealPanel && window.__sealShow) {
+          const r = sealPanel.getBoundingClientRect();
+          window.__sealShow(r.left + r.width / 2 < window.innerWidth * 0.5 ? 'inverse' : 'relief');
+        }
+      },
+    });
+
+    return () => { st.kill(); tween.kill(); gsap.set(track, { clearProps: 'x' }); };
+  });
+
+  // 窄屏：面板纵向堆叠，印章进入视口时自己翻一次
+  gsap.matchMedia().add('(max-width: 768px)', () => {
+    if (!sealPanel) return;
+    const st = ScrollTrigger.create({
+      trigger: sealPanel,
+      start: 'center 70%',
+      end: 'center 24%',
+      onToggle: self => window.__sealShow?.(self.isActive ? 'inverse' : 'relief'),
+    });
+    return () => st.kill();
+  });
 }
 
 /* ─────────────────────────────────────────
@@ -839,7 +904,7 @@ function initToc() {
   const body = document.querySelector('.cs-body');
   if (!body) return;
 
-  const sections = [...body.querySelectorAll('.cs-section')];
+  const sections = [...body.querySelectorAll('.cs-section, .cs-deck')];
   if (sections.length < 3) return;
 
   const nav = document.createElement('nav');
@@ -1271,6 +1336,7 @@ initGrid();
 initPills();
 initPalette();
 initSeal();
+initDeck();
 initTocMap();
 initReader();
 initPageDemo();
