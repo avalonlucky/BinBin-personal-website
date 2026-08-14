@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=79">
-  <link rel="stylesheet" href="../css/case.css?v=64">
+  <link rel="stylesheet" href="../css/case.css?v=65">
 </head>
 <body class="case-page is-vision">
 <div class="site">
@@ -84,7 +84,7 @@
       <!-- ══════════════════════════════════════
            两套刊物 · 三次主导设计
       ══════════════════════════════════════ -->
-      <div class="cs-journals" aria-label="两套刊物、三次主导设计" data-hscroll="pin">
+      <div class="cs-journals" aria-label="两套刊物、三次主导设计" data-hscroll>
         <div class="cs-journals-inner" data-hscroll-track>
 
           <button class="cs-journal" type="button"
@@ -130,20 +130,24 @@
       <!-- ══════════════════════════════════════
            礼盒开启 — 视频进度绑定滚轮
       ══════════════════════════════════════ -->
-      <section class="cs-reveal" data-scrub-video data-scroll-screens="3.2" data-video-fps="30"
-               data-reduced-poster="../assets/work/vision/video/giftbox-open.webp">
-        <video class="cs-reveal-video"
-               data-src="../assets/work/vision/video/giftbox-scroll.mp4?v=1"
-               poster="../assets/work/vision/video/giftbox-closed.webp"
-               width="1920" height="1080"
-               muted playsinline preload="auto"
-               disablepictureinpicture
-               aria-label="《昂楷视界》礼盒从关闭到开启，内含三本刊物"></video>
-        <div class="cs-reveal-cap">
-          <p class="cs-reveal-k">往下滚，把它打开</p>
-          <p class="cs-reveal-t">三本刊物，一只礼盒</p>
-        </div>
-      </section>
+      <div class="cs-reveal-scroll">
+        <section class="cs-reveal" data-scrub-video data-scroll-screens="3.2"
+                 data-mobile-scroll-screens="2.4" data-video-fps="30"
+                 data-reduced-poster="../assets/work/vision/video/giftbox-open.webp">
+          <video class="cs-reveal-video"
+                 data-src="../assets/work/vision/video/giftbox-scroll.mp4?v=2"
+                 data-src-hq="../assets/work/vision/video/giftbox-scroll-hq.mp4?v=1"
+                 poster="../assets/work/vision/video/giftbox-closed.webp"
+                 width="2560" height="1440"
+                 muted playsinline preload="auto"
+                 disablepictureinpicture
+                 aria-label="《昂楷视界》礼盒从关闭到开启，内含三本刊物"></video>
+          <div class="cs-reveal-cap">
+            <p class="cs-reveal-k">往下滚，把它打开</p>
+            <p class="cs-reveal-t">三本刊物，一只礼盒</p>
+          </div>
+        </section>
+      </div>
 
       <!-- ══════════════════════════════════════
            正文（浅色）
@@ -923,6 +927,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="../js/hscroll.js?v=1"></script>
-<script src="../js/case.js?v=39"></script>
+<script src="../js/case.js?v=40"></script>
 </body>
 </html>

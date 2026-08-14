@@ -6,6 +6,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
 /* ─────────────────────────────────────────
    滚动容器与首页一致：main.page，不是 window
@@ -20,7 +21,9 @@ const lenis = new Lenis({
   lerp: 0.1,
   wheelMultiplier: 1,
   smoothWheel: true,
-  syncTouch: true,
+  // 真机触摸交给浏览器原生滚动。Lenis 的触摸同步会和移动端 sticky / pin
+  // 争夺同一个位移，表现为占位层在走、内容却没有跟上。
+  syncTouch: false,
 });
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(t => lenis.raf(t * 1000));
@@ -247,11 +250,15 @@ function initScrubVideo() {
   const video = box.querySelector('video');
   if (!video) return;
 
+  const scrollTrack = box.closest('.cs-reveal-scroll') || box;
+  const mobileScrub = window.matchMedia('(max-width: 768px)').matches || hasCoarsePointer;
+  if (mobileScrub) scrollTrack.classList.add('is-mobile-scrub');
   const scrollScreens = Math.max(1, Number(box.dataset.scrollScreens) || 3.2);
+  const mobileScrollScreens = Math.max(1, Number(box.dataset.mobileScrollScreens) || 2.4);
   const sourceFps = Math.max(1, Number(box.dataset.videoFps) || 30);
   const frameDuration = 1 / sourceFps;
   const reducedPoster = box.dataset.reducedPoster;
-  const sourceUrl = video.dataset.src;
+  const sourceUrl = mobileScrub ? video.dataset.src : (video.dataset.srcHq || video.dataset.src);
 
   let trigger;
   let targetTime = 0;
@@ -301,6 +308,7 @@ function initScrubVideo() {
   };
 
   if (prefersReducedMotion.matches) {
+    scrollTrack.classList.add('is-reduced');
     box.classList.add('is-open', 'is-reduced');
     if (reducedPoster) video.poster = reducedPoster;
     return;
@@ -309,18 +317,34 @@ function initScrubVideo() {
   video.addEventListener('seeked', schedule);
   video.addEventListener('loadedmetadata', prepareVideo);
 
-  trigger = ScrollTrigger.create({
-    trigger: box,
+  const triggerOptions = {
+    trigger: mobileScrub ? scrollTrack : box,
     start: 'top top',
-    end: () => '+=' + Math.round(window.innerHeight * scrollScreens),
-    pin: true,
-    pinSpacing: true,
-    anticipatePin: 1,
     scrub: true,
     invalidateOnRefresh: true,
     onUpdate: self => syncToProgress(self.progress),
     onRefresh: self => syncToProgress(self.progress, true),
-  });
+  };
+
+  if (mobileScrub) {
+    // Android Chrome 上自定义滚动容器 + transform pin 容易只留下 pin-spacer。
+    // 手机改用原生 position:sticky，ScrollTrigger 只负责把轨道进度映射到帧。
+    const sizeMobileTrack = () => {
+      const viewportHeight = box.clientHeight || window.innerHeight;
+      const distance = Math.round(viewportHeight * mobileScrollScreens);
+      scrollTrack.style.setProperty('--reveal-track-height', `${viewportHeight + distance}px`);
+    };
+    sizeMobileTrack();
+    triggerOptions.end = () => '+=' + Math.round(box.clientHeight * mobileScrollScreens);
+    triggerOptions.onRefreshInit = sizeMobileTrack;
+  } else {
+    triggerOptions.end = () => '+=' + Math.round(window.innerHeight * scrollScreens);
+    triggerOptions.pin = true;
+    triggerOptions.pinSpacing = true;
+    triggerOptions.anticipatePin = 1;
+  }
+
+  trigger = ScrollTrigger.create(triggerOptions);
 
   // Cloudflare Pages 对部分 MP4 不返回 Range。直接让 <video> 请求时，浏览器每次
   // seek 都会被完整 200 响应夹回 0；先拉成同源 Blob 后，逐帧定位不再依赖服务器。

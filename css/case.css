@@ -738,6 +738,26 @@
    滚多快动多快，往回滚就反着关上。视频是全关键帧编码的，
    逐帧 seek 才不会卡（见 HANDOFF「滚动绑定视频」）。
 ──────────────────────────────────────── */
+.cs-reveal-scroll {
+  position: relative;
+  width: 100%;
+  background: var(--cs-paper);
+}
+.cs-reveal-scroll.is-mobile-scrub {
+  height: var(--reveal-track-height, 340svh);
+}
+.cs-reveal-scroll.is-mobile-scrub.is-reduced { height: 100svh; }
+.cs-reveal-scroll.is-mobile-scrub > .cs-reveal {
+  position: sticky;
+  top: 0;
+  min-height: 0;
+  background: #f4f0e7;
+}
+.cs-reveal-scroll.is-mobile-scrub.is-reduced > .cs-reveal { position: relative; }
+.cs-reveal-scroll.is-mobile-scrub .cs-reveal-video {
+  object-fit: cover;
+  object-position: center;
+}
 .cs-reveal {
   position: relative;
   display: grid;
@@ -3727,11 +3747,6 @@
 }
 
 @media (max-width: 768px) {
-  .cs-reveal {
-    min-height: 520px;
-    background: #f4f0e7;
-  }
-  .cs-reveal-video { object-fit: contain; }
   .cs-reveal::after { height: 30%; }
 
   .cs-hero-meta,
