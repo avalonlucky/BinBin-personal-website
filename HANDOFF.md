@@ -354,6 +354,8 @@ assets/work/<slug>/   该作品的图片资源
    ```
    目前这支 7.2 秒、1920×1080、216 帧的视频约 6.9MB。滚动行程写在页面的
    `data-scroll-screens="3.2"`：数字越大，开盒越慢；数字越小，开盒越快。
+   页面用 `data-src` 保存源地址，再由 `initScrubVideo()` fetch 为 Blob 后交给 video。
+   这是因为 Cloudflare Pages 对该 MP4 不提供 Range，直接 seek 会被夹回第 0 帧。
 2. `currentTime` 只能在 `requestAnimationFrame` 里写，而且**上一次 seek 没完成
    （`video.seeking` 为 true）就不要下新指令**，否则浏览器排队丢帧。
 3. **裁剪时必须把时间戳归零**。`ffmpeg -ss 4.6 -i in.mp4`（输入端 seek）会让

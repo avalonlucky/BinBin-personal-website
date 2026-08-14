@@ -251,6 +251,7 @@ function initScrubVideo() {
   const sourceFps = Math.max(1, Number(box.dataset.videoFps) || 30);
   const frameDuration = 1 / sourceFps;
   const reducedPoster = box.dataset.reducedPoster;
+  const sourceUrl = video.dataset.src;
 
   let trigger;
   let targetTime = 0;
@@ -302,12 +303,6 @@ function initScrubVideo() {
   if (prefersReducedMotion.matches) {
     box.classList.add('is-open', 'is-reduced');
     if (reducedPoster) video.poster = reducedPoster;
-    const showLastFrame = () => {
-      duration = Number.isFinite(video.duration) ? video.duration : 0;
-      if (duration) video.currentTime = Math.max(0, duration - frameDuration);
-    };
-    if (video.readyState >= 1) showLastFrame();
-    else video.addEventListener('loadedmetadata', showLastFrame, { once: true });
     return;
   }
 
@@ -327,8 +322,22 @@ function initScrubVideo() {
     onRefresh: self => syncToProgress(self.progress, true),
   });
 
-  if (video.readyState >= 1) prepareVideo();
-  else video.load();
+  // Cloudflare Pages 对部分 MP4 不返回 Range。直接让 <video> 请求时，浏览器每次
+  // seek 都会被完整 200 响应夹回 0；先拉成同源 Blob 后，逐帧定位不再依赖服务器。
+  const loadScrubSource = async () => {
+    if (!sourceUrl) return;
+    try {
+      const response = await fetch(sourceUrl, { cache: 'force-cache' });
+      if (!response.ok) throw new Error(`Video request failed: ${response.status}`);
+      const blob = await response.blob();
+      video.src = URL.createObjectURL(blob);
+    } catch (error) {
+      // 本地 file 预览或 fetch 被拦时仍可退回普通视频 URL。
+      video.src = sourceUrl;
+    }
+    video.load();
+  };
+  loadScrubSource();
 
   // 浏览器恢复滚动位置发生在 load/pageshow 附近；重新量尺寸并同步当前帧。
   window.addEventListener('pageshow', () => requestAnimationFrame(() => {
