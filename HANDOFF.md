@@ -82,6 +82,12 @@ assets/work/<slug>/   该作品的图片资源
 4. 深色段落用 `cs-hero` / `cs-closing`，浅色正文包在 `.cs-body` 里。
    `css/style.css` 里 `main section:not(...)` 那条规则已排除 `cs-hero`
    / `cs-closing` / `cs-section`，新增深色板块要同步加进那串 `:not()`。
+   **这条规则的权重（0,5,2）高于任何单个板块类（0,1,0），已经顶掉过两次样式：**
+   一次是礼盒区的 `background`（写在 `.cs-reveal` 上不生效，页面底色不对），
+   一次是手机端的 `position: sticky`（被打回 `relative`，轨道高度在、内容却不固定，
+   表现为两屏空白）。**新增 `section` 级板块的第一件事就是把类名加进那串 `:not()`**，
+   不要等到查半天才发现是它。排查手法：在控制台遍历 `document.styleSheets`，
+   用 `el.matches(rule.selectorText)` 列出所有命中该元素并设置了目标属性的规则。
 5. `style.css` 有全局 `img { height:100%; object-fit:cover }`，
    `case.css` 已用 `.case-page img` 改回按比例显示。
 6. 单位统一用 px，不要用 rem——根字号是 `13.28px`，rem 换算容易出错。
