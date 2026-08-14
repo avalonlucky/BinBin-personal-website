@@ -4180,7 +4180,7 @@
 .is-evolution .cs-sticky-n { font-size: clamp(44px, 5vw, 68px); color: rgba(230,0,18,.28); }
 .is-evolution .cs-sticky-step h3 { font-size: clamp(23px, 2.5vw, 32px); }
 
-/* 07 / 校对室 */
+/* 05 / 校对室 */
 .is-proofroom {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
@@ -4243,7 +4243,7 @@
 .is-proofroom .cs-shift-goals li { border-color: rgba(251,251,244,.1); }
 .is-proofroom .cs-shift-goals b { color: #ff5d68; }
 
-/* 08 / 结果收束 */
+/* 06 / 结果收束 */
 .is-outcome {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
@@ -4532,7 +4532,7 @@
 .case-page.is-vision .is-evolution .cs-sticky-step.is-on { opacity: 1; }
 .case-page.is-vision .is-evolution .cs-sticky-n { color: rgba(168,74,18,.25); }
 
-/* 07 / 校对与印刷：回到纸张式时间线，不做深色卡片墙 */
+/* 05 / 校对与印刷：回到纸张式时间线，不做深色卡片墙 */
 .case-page.is-vision .is-proofroom {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
@@ -4551,6 +4551,13 @@
 .case-page.is-vision .is-proofroom .cs-line-body strong { color: var(--cs-ink); }
 .case-page.is-vision .is-proofroom .cs-title em,
 .case-page.is-vision .is-proofroom .cs-line-item.is-on .cs-line-k { color: var(--cs-accent-deep); }
+.case-page.is-vision .is-proofroom .cs-line-k {
+  margin-bottom: 14px;
+  font-size: clamp(24px, 2.7vw, 36px);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
 .case-page.is-vision .is-proofroom .cs-line { max-width: 1040px; margin: 54px auto 0; }
 .case-page.is-vision .is-proofroom .cs-line-rail { background: var(--cs-hair); }
 .case-page.is-vision .is-proofroom .cs-line-item { padding-bottom: clamp(24px, 3vw, 42px); }
@@ -4579,13 +4586,13 @@
 .case-page.is-vision .is-proofroom .cs-shift-goals li { border-color: var(--cs-hair); }
 .case-page.is-vision .is-proofroom .cs-shift-goals b { color: var(--cs-accent-deep); }
 
-/* 08 / 结果：三个判断平铺收束，不用整屏红色制造高潮 */
+/* 06 / 总结：三个判断与一张能力图，在同一米白纸面上收束 */
 .case-page.is-vision .is-outcome {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
   padding-top: clamp(88px, 9vw, 140px);
   padding-bottom: clamp(92px, 10vw, 152px);
-  background: var(--cs-paper-2);
+  background: var(--cs-paper);
   color: var(--cs-ink);
 }
 .case-page.is-vision .is-outcome .cs-num { color: var(--cs-ink-3); }
@@ -4618,19 +4625,22 @@
 .case-page.is-vision .is-outcome .cs-lesson h3,
 .case-page.is-vision .is-outcome .cs-lesson strong { color: var(--cs-ink); }
 .case-page.is-vision .is-outcome .cs-lesson p { color: var(--cs-ink-2); font-size: 17px; line-height: 1.82; }
-.case-page.is-vision .is-outcome > .cs-quote-soft {
-  max-width: 980px;
-  margin: clamp(62px, 7vw, 100px) 0 0;
+.case-page.is-vision .cs-capability-figure {
+  display: block;
+  width: 100%;
+  margin: clamp(54px, 7vw, 96px) 0 0;
   padding: 0;
   border: 0;
+  border-radius: 18px;
+  overflow: hidden;
   background: transparent;
-  box-shadow: none;
-  font-family: var(--f-cjk);
-  font-size: clamp(28px, 3.5vw, 48px);
-  line-height: 1.48;
-  color: var(--cs-ink-2);
+  cursor: zoom-in;
 }
-.case-page.is-vision .is-outcome > .cs-quote-soft em { color: var(--cs-ink); }
+.case-page.is-vision .cs-capability-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
 @media (max-width: 900px) {
   .case-page.is-vision .is-outcome .cs-lessons { grid-template-columns: 1fr; }
