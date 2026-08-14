@@ -660,6 +660,15 @@
 .cs-shift-label:first-of-type  { border-radius: 4px 0 0 4px; }
 .cs-shift-label:nth-of-type(2) { border-radius: 0 4px 4px 0; }
 
+/* 单句说明（左右任一栏都可用）。内边距与清单行对齐。 */
+.cs-shift-text {
+  padding: 14px;
+  font-family: var(--f-cjk);
+  font-size: var(--fs-base);
+  line-height: 1.72;
+  color: var(--cs-ink);
+}
+
 /* 左栏：问题清单 */
 .cs-shift-flaws {
   list-style: none;
