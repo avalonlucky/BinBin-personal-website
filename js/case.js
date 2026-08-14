@@ -459,8 +459,15 @@ function initDeck() {
     const track = deck.querySelector('[data-deck-track]');
     if (!track) return;
     const steps = [...deck.querySelectorAll('[data-deck-step]')];
+    const panels = [...track.querySelectorAll('.cs-panel')];
     const fill  = deck.querySelector('[data-deck-fill]');
     const sealPanel = deck.querySelector('[data-seal]')?.closest('.cs-panel');
+
+    const activate = i => {
+      steps.forEach((s, k) => s.classList.toggle('is-on', k === i));
+      panels.forEach((p, k) => p.classList.toggle('is-active', k === i));
+    };
+    activate(0);
 
     gsap.matchMedia().add('(min-width: 769px)', () => {
       // 轨道左内边距同时是「最后一张离右缘的余量」
@@ -481,7 +488,7 @@ function initDeck() {
         animation: tween,
         onUpdate: self => {
           const i = Math.min(steps.length - 1, Matheq(self.progress, steps.length));
-          steps.forEach((s, k) => s.classList.toggle('is-on', k === i));
+          activate(i);
           if (fill) fill.style.width = (self.progress * 100).toFixed(2) + '%';
           // 印章：面板中心越过视口中线就翻面，不用点按钮
           if (sealPanel && window.__sealShow) {
@@ -507,6 +514,77 @@ function initDeck() {
       });
     }
   });
+}
+
+/* ─────────────────────────────────────────
+   内容架构章节舞台 — 用一张大画面承担章节情绪，左侧像目录一样切换。
+   图片预载完成后再替换，避免快速掠过时出现白帧。
+───────────────────────────────────────── */
+function initChapterStage() {
+  const box = document.querySelector('[data-chapter-stage]');
+  if (!box) return;
+
+  const tabs = [...box.querySelectorAll('[data-chapter-index]')];
+  const stage = box.querySelector('.cs-architecture-stage');
+  const figure = box.querySelector('[data-chapter-figure]');
+  const image = box.querySelector('[data-chapter-visual]');
+  const ghost = box.querySelector('[data-chapter-ghost]');
+  const title = box.querySelector('[data-chapter-title]:not(button)');
+  const sub = box.querySelector('[data-chapter-sub]:not(button)');
+  const count = box.querySelector('[data-chapter-count]:not(button)');
+  const note = box.querySelector('[data-chapter-note]:not(button)');
+  if (!tabs.length || !stage || !figure || !image) return;
+
+  let current = -1;
+  let request = 0;
+  const show = (index, immediate = false) => {
+    index = (index + tabs.length) % tabs.length;
+    if (index === current) return;
+    current = index;
+    const tab = tabs[index];
+    const ticket = ++request;
+    tabs.forEach((item, i) => {
+      const active = i === index;
+      item.classList.toggle('is-active', active);
+      item.setAttribute('aria-selected', String(active));
+    });
+
+    const commit = () => {
+      if (ticket !== request) return;
+      image.src = tab.dataset.chapterImage;
+      image.alt = `${tab.dataset.chapterTitle}章节过渡版面`;
+      figure.dataset.zoom = tab.dataset.chapterImage;
+      figure.dataset.zoomTitle = `${tab.dataset.chapterTitle} · ${tab.dataset.chapterSub}`;
+      figure.dataset.zoomNote = tab.dataset.chapterNote;
+      if (ghost) ghost.textContent = String(index + 1).padStart(2, '0');
+      if (title) title.textContent = tab.dataset.chapterTitle;
+      if (sub) sub.textContent = tab.dataset.chapterSub;
+      if (count) count.textContent = tab.dataset.chapterCount;
+      if (note) note.textContent = tab.dataset.chapterNote;
+      stage.classList.remove('is-switching');
+    };
+
+    if (immediate || prefersReducedMotion.matches) { commit(); return; }
+    stage.classList.add('is-switching');
+    const preload = new Image();
+    preload.onload = () => window.setTimeout(commit, 150);
+    preload.onerror = commit;
+    preload.src = tab.dataset.chapterImage;
+  };
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => show(i));
+    tab.addEventListener('mouseenter', () => {
+      if (window.matchMedia('(hover:hover)').matches) show(i);
+    });
+  });
+  box.addEventListener('keydown', event => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    show(current + (event.key === 'ArrowRight' ? 1 : -1));
+    tabs[current].focus();
+  });
+  show(0, true);
 }
 
 /* 进度 → 第几步。步数少时四舍五入会让第一步一闪而过，用等分区间更稳。 */
@@ -1133,7 +1211,7 @@ function initReveal() {
     }
   });
 
-  const grouped = '.cs-card, .cs-stat, .cs-hub-node, .cs-spec, .cs-phase, .cs-deliver, .cs-doc, .cs-flow-step, .cs-shift-goals li, .cs-facet, .cs-plate';
+  const grouped = '.cs-card, .cs-stat, .cs-hub-node, .cs-spec, .cs-phase, .cs-deliver, .cs-doc, .cs-flow-step, .cs-shift-goals li, .cs-facet, .cs-plate, .cs-architecture-tab, .is-outcome .cs-lesson';
   document.querySelectorAll(grouped).forEach(el => {
     gsap.from(el, {
       opacity: 0, y: 22, duration: .65, ease: 'power2.out',
@@ -1263,6 +1341,7 @@ function initNavTheme() {
     onEnter:     () => nav.dataset.theme = 'dark',
     onLeaveBack: () => nav.dataset.theme = 'light',
   });
+
 }
 
 /* ─────────────────────────────────────────
@@ -1592,6 +1671,7 @@ initPalette();
 initSeal();
 initScrubVideo();
 initDeck();
+initChapterStage();
 initSticky();
 initLine();
 initTocMap();

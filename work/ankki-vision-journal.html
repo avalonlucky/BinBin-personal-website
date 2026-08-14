@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=79">
-  <link rel="stylesheet" href="../css/case.css?v=65">
+  <link rel="stylesheet" href="../css/case.css?v=67">
 </head>
 <body class="case-page is-vision">
 <div class="site">
@@ -142,10 +142,6 @@
                  muted playsinline preload="auto"
                  disablepictureinpicture
                  aria-label="《昂楷视界》礼盒从关闭到开启，内含三本刊物"></video>
-          <div class="cs-reveal-cap">
-            <p class="cs-reveal-k">往下滚，把它打开</p>
-            <p class="cs-reveal-t">三本刊物，一只礼盒</p>
-          </div>
         </section>
       </div>
 
@@ -266,11 +262,11 @@
         </section>
 
         <!-- ── 04 视觉体系（钉住横向面板：规范 → 标识 → 封面 → 页码 → 目录） ── -->
-        <section class="cs-deck" data-toc="视觉体系" data-deck>
+        <section class="cs-deck is-system-lab" data-toc="视觉体系" data-deck>
           <div class="cs-deck-head">
             <p class="cs-num">04 — 视觉体系</p>
             <h2 class="cs-title">先立规则，<em>再谈封面、标识和目录</em></h2>
-            <p class="cs-lede">规范定完，后面每一个具体设计都是它的延伸。往下滚，五个环节依次推过。</p>
+            <p class="cs-lede">规范不是结果，而是一套生成设计的语法。五个环节从同一套规则出发，最终落到每一个可见的细节。</p>
             <ol class="cs-deck-steps">
               <li class="cs-deck-step is-on" data-deck-step><i>01</i>视觉规范</li>
               <li class="cs-deck-step" data-deck-step><i>02</i>主视觉标识</li>
@@ -452,13 +448,66 @@
         </section>
 
         <!-- ── 05 内容架构 ── -->
-        <section class="cs-section" data-toc="内容架构">
+        <section class="cs-section is-architecture" data-toc="内容架构">
           <p class="cs-num">05 — 内容架构</p>
           <h2 class="cs-title">五大章节，<em>一套完整的叙事结构</em></h2>
-          <p class="cs-lede">我为每一个板块的名字都做了提炼与专门的视觉设计——「刊首语」「鸿程 · 笃行」「实战 · 撷英」——中文四字加拼音，配上红色下划线做页眉，再为每个章节设计一张全出血的过渡页。整本刊物因此有了从外部寄语、到战略、到一线、到员工心声的完整叙事线。</p>
+          <p class="cs-lede">二十多篇文章没有被平铺进目录。我先搭出一条从外部寄语、战略与业务，到一线经验和员工心声的阅读路径；五个章节各有独立过渡页，也共享同一套页眉与编号规则。</p>
 
-          <div data-hscroll>
-          <div class="cs-mindmap" data-mindmap data-hscroll-track>
+          <div class="cs-architecture" data-chapter-stage>
+            <div class="cs-architecture-tabs" role="tablist" aria-label="五大章节">
+              <button class="cs-architecture-tab is-active" type="button" role="tab" aria-selected="true"
+                      data-chapter-index="0" data-chapter-title="刊首语" data-chapter-sub="从外部目光开始"
+                      data-chapter-count="02 篇" data-chapter-note="合作伙伴寄语与管理层寄语，为整期建立观察视角。"
+                      data-chapter-image="../assets/work/vision/spread/v3-inner-drop.webp">
+                <i>01</i><span>刊首语</span><small>外部寄语</small>
+              </button>
+              <button class="cs-architecture-tab" type="button" role="tab" aria-selected="false"
+                      data-chapter-index="1" data-chapter-title="鸿程 · 笃行" data-chapter-sub="从战略回望来路"
+                      data-chapter-count="04 篇" data-chapter-note="公司十五年轨迹、战略判断与组织信念，构成全刊最重的一章。"
+                      data-chapter-image="../assets/work/vision/spread/v3-divider-hongcheng.webp">
+                <i>02</i><span>鸿程 · 笃行</span><small>战略与历程</small>
+              </button>
+              <button class="cs-architecture-tab" type="button" role="tab" aria-selected="false"
+                      data-chapter-index="2" data-chapter-title="行澜 · 领驭" data-chapter-sub="把视线推向行业"
+                      data-chapter-count="06 篇" data-chapter-note="行业观察、媒体报道与业务成长，让组织能力进入更大的坐标。"
+                      data-chapter-image="../assets/work/vision/spread/v3-divider-hanglan.webp">
+                <i>03</i><span>行澜 · 领驭</span><small>行业与业务</small>
+              </button>
+              <button class="cs-architecture-tab" type="button" role="tab" aria-selected="false"
+                      data-chapter-index="3" data-chapter-title="实战 · 撷英" data-chapter-sub="回到一线的真实经验"
+                      data-chapter-count="05 篇" data-chapter-note="把销售、技术与交付中的具体经验，变成可被组织复用的知识。"
+                      data-chapter-image="../assets/work/vision/spread/v3-divider-shizhan.webp">
+                <i>04</i><span>实战 · 撷英</span><small>一线经验</small>
+              </button>
+              <button class="cs-architecture-tab" type="button" role="tab" aria-selected="false"
+                      data-chapter-index="4" data-chapter-title="心语 · 织梦" data-chapter-sub="最终落到每一个人"
+                      data-chapter-count="04 篇" data-chapter-note="员工心声、集体记忆与共同荣誉，让一本内刊真正回到组织内部。"
+                      data-chapter-image="../assets/work/vision/spread/v3-divider-xinyu.webp">
+                <i>05</i><span>心语 · 织梦</span><small>员工与文化</small>
+              </button>
+            </div>
+
+            <div class="cs-architecture-stage">
+              <div class="cs-architecture-ghost" data-chapter-ghost aria-hidden="true">01</div>
+              <button class="cs-architecture-figure" type="button"
+                      data-chapter-figure
+                      data-zoom="../assets/work/vision/spread/v3-inner-drop.webp"
+                      data-zoom-title="刊首语 · 从外部目光开始"
+                      data-zoom-note="合作伙伴寄语与管理层寄语，为整期建立观察视角。">
+                <img data-chapter-visual src="../assets/work/vision/spread/v3-inner-drop.webp" width="1800" height="1187"
+                     alt="昂楷视界刊首语版面" loading="lazy" decoding="async">
+              </button>
+              <div class="cs-architecture-copy" aria-live="polite">
+                <p><span data-chapter-count>02 篇</span> · <span data-chapter-sub>从外部目光开始</span></p>
+                <h3 data-chapter-title>刊首语</h3>
+                <p data-chapter-note>合作伙伴寄语与管理层寄语，为整期建立观察视角。</p>
+                <button class="cs-architecture-read" type="button" data-open-book="v3">翻开整本刊物 <span>↗</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-mindmap-legacy" hidden>
+          <div class="cs-mindmap">
             <svg class="cs-mindmap-svg" aria-hidden="true" preserveAspectRatio="none"></svg>
 
             <div class="cs-mm-side">
@@ -547,10 +596,10 @@
         </section>
 
         <!-- ── 06 落地与延展（左图钉住，右侧文字滚动，图随之切换） ── -->
-        <section class="cs-section" data-toc="落地与延展">
+        <section class="cs-section is-evolution" data-toc="落地与延展">
           <p class="cs-num">06 — 落地与延展</p>
           <h2 class="cs-title">规范立住之后，<em>它能走多远</em></h2>
-          <p class="cs-lede">从最难排的一个跨页，到第二本刊物沿用同一套规则，再到主动放下这套规则换一种语言。左边的图会跟着右边的文字换。</p>
+          <p class="cs-lede">从最难排的一个跨页，到第二本刊物沿用同一套规则，再到主动放下这套规则换一种语言。体系的价值，要在真实交付里被验证。</p>
 
           <div class="cs-sticky" data-sticky>
             <div class="cs-sticky-media">
@@ -652,7 +701,7 @@
         </section>
 
         <!-- ── 07 从校对到印刷（竖向时间轴，主线随滚动描出来） ── -->
-        <section class="cs-section" data-toc="校对与印刷">
+        <section class="cs-section is-proofroom" data-toc="校对与印刷">
           <p class="cs-num">07 — 从校对到印刷</p>
           <h2 class="cs-title">设计师，<em>也要自己把好编辑这道关</em></h2>
           <p class="cs-lede">一本内刊里有几十篇文章、上百个人名和职务。排版做完只是一半，剩下一半没人替设计师做。</p>
@@ -745,7 +794,7 @@
         </section>
 
         <!-- ── 08 学习与总结 ── -->
-        <section class="cs-section" data-toc="学习与总结">
+        <section class="cs-section is-outcome" data-toc="学习与总结">
           <p class="cs-num">08 — 学习与总结</p>
           <h2 class="cs-title">规范、纸张，<em>和两种审美</em></h2>
 
@@ -927,6 +976,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="../js/hscroll.js?v=1"></script>
-<script src="../js/case.js?v=40"></script>
+<script src="../js/case.js?v=42"></script>
 </body>
 </html>
