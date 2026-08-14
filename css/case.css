@@ -640,14 +640,18 @@
   font-size: var(--fs-md);
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--cs-ink-3);
+  color: var(--cs-ink-2);
+  /* 常驻底色，不依赖 hover——它是表头，鼠标不在这里时也要立得住。
+     左栏字是黑的，配中性灰底；右栏字是主色，配同色系浅底。 */
+  background: rgb(2 2 2 / 0.05);
   padding: 12px 14px;
   margin-bottom: 8px;
   border-radius: 4px;
-  transition: background .3s ease;
 }
-.cs-shift-label:hover { background: rgb(var(--cs-accent-rgb) / 0.05); }
-.cs-shift-label.is-mine { color: var(--cs-accent-deep); }
+.cs-shift-label.is-mine {
+  color: var(--cs-accent-deep);
+  background: rgb(var(--cs-accent-rgb) / 0.05);
+}
 
 /* 左栏：问题清单 */
 .cs-shift-flaws {
@@ -675,15 +679,6 @@
   height: 5px;
   border-radius: 50%;
   background: var(--cs-ink-3);
-}
-.cs-shift-sum {
-  margin: 22px 14px 0;
-  padding-left: 18px;
-  border-left: 2px solid var(--cs-paper-3);
-  font-family: var(--f-cjk);
-  font-size: var(--fs-sm);
-  line-height: 1.8;
-  color: var(--cs-ink-3);
 }
 
 /* 右栏：四个挑战。关键词只靠颜色区分，字号字重与说明文字一致。 */
