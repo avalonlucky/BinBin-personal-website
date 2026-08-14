@@ -456,48 +456,83 @@ function initDeck() {
       return () => { st.kill(); tween.kill(); gsap.set(track, { clearProps: 'x' }); };
     });
 
-    // 窄屏保留横向叙事，但交给浏览器原生触摸滚动；只用 JS 同步
-    // 顶部进度、当前面板和印章状态，避免五张长卡机械堆成五屏。
+    // 手机端把纵向滚动映射成横向叙事。用户只需正常上推页面，
+    // 面板会依次从右向左经过，不再要求先猜到这里可以横划。
     gsap.matchMedia().add('(max-width: 768px)', () => {
       const view = deck.querySelector('.cs-deck-view');
       if (!view) return;
+      const visiblePanels = panels.filter(panel => panel.offsetParent !== null);
+      const distance = () => Math.max(0, track.scrollWidth - view.clientWidth);
+      if (distance() <= 0) return;
 
-      let frame = 0;
-      const sync = () => {
-        frame = 0;
-        const viewCenter = view.scrollLeft + view.clientWidth / 2;
-        let active = 0;
-        let nearest = Infinity;
-
-        const visiblePanels = panels.filter(panel => panel.offsetParent !== null);
-        const visibleSteps = steps.filter(step => step.offsetParent !== null);
-
-        visiblePanels.forEach((panel, index) => {
-          const center = panel.offsetLeft + panel.offsetWidth / 2;
-          const delta = Math.abs(center - viewCenter);
-          if (delta < nearest) {
-            nearest = delta;
-            active = index;
+      view.classList.add('is-auto-x');
+      const tween = gsap.to(track, { x: () => -distance(), ease: 'none' });
+      const st = ScrollTrigger.create({
+        trigger: view,
+        start: () => `top ${(document.querySelector('#nav')?.offsetHeight || 64) + 12}px`,
+        end: () => '+=' + Math.max(Math.round(distance() * 0.86), Math.round(window.innerHeight * 0.62)),
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        scrub: 0.45,
+        invalidateOnRefresh: true,
+        animation: tween,
+        onUpdate: self => {
+          const active = Math.min(visiblePanels.length - 1, Matheq(self.progress, visiblePanels.length));
+          activate(active, [], visiblePanels);
+          if (fill) fill.style.width = `${(self.progress * 100).toFixed(2)}%`;
+          if (sealPanel && window.__sealShow) {
+            window.__sealShow(visiblePanels[active] === sealPanel ? 'inverse' : 'relief');
           }
-        });
+        },
+      });
 
-        activate(active, visibleSteps, visiblePanels);
-        const max = Math.max(1, view.scrollWidth - view.clientWidth);
-        if (fill) fill.style.width = `${Math.min(100, view.scrollLeft / max * 100).toFixed(2)}%`;
-        if (sealPanel && window.__sealShow) {
-          window.__sealShow(visiblePanels[active] === sealPanel ? 'inverse' : 'relief');
-        }
-      };
-      const onScroll = () => {
-        if (!frame) frame = requestAnimationFrame(sync);
-      };
-
-      view.addEventListener('scroll', onScroll, { passive: true });
-      requestAnimationFrame(sync);
       return () => {
-        view.removeEventListener('scroll', onScroll);
-        if (frame) cancelAnimationFrame(frame);
+        st.kill();
+        tween.kill();
+        view.classList.remove('is-auto-x');
+        gsap.set(track, { clearProps: 'x' });
       };
+    });
+  });
+}
+
+/* 手机端同类横向卡片统一由纵向滚动驱动。这里使用元素自身的 scrollLeft，
+   不监听 wheel/touchmove，因此反向滚动、停止和恢复都由 ScrollTrigger 接管。 */
+function initMobileAutoRails() {
+  const rails = [
+    ...document.querySelectorAll('.case-page.is-vision .is-proofroom .cs-line'),
+    ...document.querySelectorAll('.case-page.is-vision .is-outcome .cs-lessons'),
+  ];
+  if (!rails.length) return;
+
+  gsap.matchMedia().add('(max-width: 768px)', () => {
+    const made = rails.map(view => {
+      const distance = () => Math.max(0, view.scrollWidth - view.clientWidth);
+      if (distance() <= 0) return null;
+
+      view.classList.add('is-auto-x');
+      view.scrollLeft = 0;
+      const tween = gsap.to(view, { scrollLeft: () => distance(), ease: 'none' });
+      const st = ScrollTrigger.create({
+        trigger: view,
+        start: () => `top ${(document.querySelector('#nav')?.offsetHeight || 64) + 12}px`,
+        end: () => '+=' + Math.max(Math.round(distance() * 0.82), Math.round(window.innerHeight * 0.56)),
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        scrub: 0.45,
+        invalidateOnRefresh: true,
+        animation: tween,
+      });
+      return { view, tween, st };
+    }).filter(Boolean);
+
+    return () => made.forEach(({ view, tween, st }) => {
+      st.kill();
+      tween.kill();
+      view.classList.remove('is-auto-x');
+      view.scrollLeft = 0;
     });
   });
 }
@@ -645,6 +680,8 @@ function initReader() {
   let book = BOOKS[0];
   let pos = 0;
   let busy = false;
+  let queuedTurns = 0;
+  let readerHistoryActive = false;
   const single = () => window.innerWidth <= 768;
 
   const url = i => (i == null || i < 0 || i >= book.pages)
@@ -705,13 +742,34 @@ function initReader() {
   };
 
   const turn = dir => {
-    if (busy) return;
+    /* 手机上快速连点时，不丢掉动画期间的输入，也不让多个 GSAP
+       翻页同时改 pos。最多预排 4 页，防止连点把队列拖得太长。 */
+    if (busy) {
+      queuedTurns = Math.max(-4, Math.min(4, queuedTurns + dir));
+      return;
+    }
     const target = pos + dir;
-    if (target < 0 || target > maxPos()) return;
+    if (target < 0 || target > maxPos()) {
+      queuedTurns = 0;
+      return;
+    }
     hideCoach(true);          // 翻过一次就说明学会了
     busy = true;
 
-    if (prefersReducedMotion.matches) { pos = target; render(); busy = false; return; }
+    const continueQueuedTurn = () => {
+      if (!queuedTurns) return;
+      const nextDir = Math.sign(queuedTurns);
+      queuedTurns -= nextDir;
+      requestAnimationFrame(() => turn(nextDir));
+    };
+
+    if (prefersReducedMotion.matches) {
+      pos = target;
+      render();
+      busy = false;
+      continueQueuedTurn();
+      return;
+    }
 
     let frontI, backI, underSlot, underI;
     if (dir > 0) {
@@ -744,6 +802,7 @@ function initReader() {
         gsap.set(flip, { rotateY: 0 });
         render();
         busy = false;
+        continueQueuedTurn();
       },
     });
   };
@@ -801,6 +860,11 @@ function initReader() {
 
   /* ── 刊物切换 ── */
   const showBook = key => {
+    queuedTurns = 0;
+    busy = false;
+    gsap.killTweensOf(flip);
+    flip.classList.remove('is-on');
+    gsap.set(flip, { rotateY: 0 });
     book = BOOKS.find(b => b.key === key) || BOOKS[0];
     pos = 0;
     tabsBox.querySelectorAll('.cs-rd-tab').forEach(b => b.classList.toggle('is-active', b.dataset.book === book.key));
@@ -817,11 +881,18 @@ function initReader() {
   });
 
   /* ── 开关 ── */
-  const open = key => {
+  const open = (key, options = {}) => {
     showBook(key);
     rd.classList.add('is-open');
     rd.setAttribute('aria-hidden', 'false');
     lenis.stop();
+    if (!options.fromHistory && !readerHistoryActive) {
+      const baseState = history.state && typeof history.state === 'object' ? history.state : {};
+      history.pushState({ ...baseState, caseReader: key }, '', location.href);
+      readerHistoryActive = true;
+    } else if (options.fromHistory) {
+      readerHistoryActive = true;
+    }
     let seen = false;
     try { seen = localStorage.getItem(COACH_KEY) === '1'; } catch (e) {}
     if (coach && !seen) {
@@ -831,11 +902,19 @@ function initReader() {
       setTimeout(() => hideCoach(false), 8000);
     }
   };
-  const close = () => {
+  const close = (options = {}) => {
     hideCoach(false);
+    queuedTurns = 0;
+    busy = false;
+    gsap.killTweensOf(flip);
+    flip.classList.remove('is-on');
+    gsap.set(flip, { rotateY: 0 });
     rd.classList.remove('is-open');
     rd.setAttribute('aria-hidden', 'true');
     lenis.start();
+    const shouldStepBack = !options.fromHistory && readerHistoryActive && history.state?.caseReader;
+    readerHistoryActive = false;
+    if (shouldStepBack) history.back();
   };
   rd.querySelector('.cs-rd-close').addEventListener('click', close);
   document.querySelectorAll('[data-open-book]').forEach(el => {
@@ -846,6 +925,16 @@ function initReader() {
     if (e.key === 'Escape') close();
     if (e.key === 'ArrowRight') turn(1);
     if (e.key === 'ArrowLeft')  turn(-1);
+  });
+  /* 阅读器是页内层，手机从左边缘右滑时应先关掉它，
+     不应直接回到个人网站首页。 */
+  window.addEventListener('popstate', event => {
+    const historyBook = event.state?.caseReader;
+    if (historyBook) {
+      if (!rd.classList.contains('is-open')) open(historyBook, { fromHistory: true });
+      return;
+    }
+    if (rd.classList.contains('is-open')) close({ fromHistory: true });
   });
   window.addEventListener('resize', () => { if (rd.classList.contains('is-open')) render(); });
 
@@ -1509,6 +1598,7 @@ initPalette();
 initSeal();
 initScrubVideo();
 initDeck();
+initMobileAutoRails();
 initLine();
 initTocMap();
 initReader();

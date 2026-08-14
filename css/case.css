@@ -3952,6 +3952,49 @@
 
 @media (max-width: 768px) {
   /* 手机内容不是桌面稿的缩放版：收紧字号，并删掉依赖桌面页内导航的章节编号。 */
+  /* 礼盒在手机上就是一块真正的 16:9 画布，不把横片撑成整屏，
+     也不在视频容器里制造上下留白。轨道高度仍由 JS 按滚动距离计算。 */
+  .case-page.is-vision .cs-reveal-scroll.is-mobile-scrub > .cs-reveal {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+  .case-page.is-vision .cs-reveal-scroll.is-mobile-scrub .cs-reveal-video {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    object-position: center;
+    background: transparent;
+  }
+
+  /* 三本刊物在桌面端是主视觉，手机端只是进入阅读器的紧凑索引。 */
+  .case-page.is-vision .cs-journals { padding: 24px 12px 26px; }
+  .case-page.is-vision .cs-journals-inner {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .case-page.is-vision .cs-journal-fig { max-width: none; border-radius: 3px; }
+  .case-page.is-vision .cs-journal-badge {
+    bottom: 7px;
+    gap: 3px;
+    padding: 5px 7px;
+    font-size: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .34);
+  }
+  .case-page.is-vision .cs-journal-badge svg,
+  .case-page.is-vision .cs-journal-badge span { display: none; }
+  .case-page.is-vision .cs-journal-meta { margin-top: 8px; }
+  .case-page.is-vision .cs-journal-n {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
   .case-page.is-vision .cs-hero-title { font-size: 29px; line-height: 1.2; margin-bottom: 16px; }
   .case-page.is-vision .cs-hero-sub { font-size: 15px; line-height: 1.72; margin-bottom: 22px; }
   .case-page.is-vision .cs-title,
@@ -3986,12 +4029,12 @@
     padding-bottom: 36px;
   }
   .case-page.is-vision .is-system-lab .cs-deck-view {
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: none;
     scroll-padding-inline: var(--gutter);
     overscroll-behavior-inline: contain;
-    touch-action: pan-x;
+    touch-action: pan-y;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
@@ -4037,12 +4080,12 @@
     max-width: none;
     margin: 32px calc(var(--gutter) * -1) 0;
     padding: 0 var(--gutter) 10px;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: none;
     scroll-padding-inline: var(--gutter);
     overscroll-behavior-inline: contain;
-    touch-action: pan-x;
+    touch-action: pan-y;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
@@ -4084,12 +4127,12 @@
     margin: 26px calc(var(--gutter) * -1) 0;
     padding: 0 var(--gutter) 10px;
     border: 0;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: none;
     scroll-padding-inline: var(--gutter);
     overscroll-behavior-inline: contain;
-    touch-action: pan-x;
+    touch-action: pan-y;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
