@@ -1057,39 +1057,6 @@
 .cs-deck-head .cs-title { font-size: var(--fs-xl); }
 
 /* ────────────────────────────────────────
-   图钉住 · 文字滚动（.cs-sticky）
-   左栏图片钉在视口，右栏文字往上走，走到哪一段左边就换成哪张图。
-   苹果 / 三星的产品页大量用这种：读者只滚一个方向，图文却在同步换。
-   和 .cs-deck 的横向推移是两种节奏——一页里两种都用，不要重复。
-──────────────────────────────────────── */
-.cs-sticky {
-  display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
-  gap: clamp(28px, 4vw, 68px);
-  align-items: start;
-  margin-top: 26px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.cs-sticky-step .cs-quote-soft { font-size: var(--fs-sm); margin-top: 12px; }
-
-/* ────────────────────────────────────────
    竖向时间轴（.cs-line）
    一条主线随滚动从上往下描出来，走到哪一节哪个圆点亮。
    适合「一关一关往下走」的流程，比横向推移安静，也不占额外滚动。
@@ -2925,23 +2892,6 @@
 .cs-prio p em { font-style: normal; font-weight: 600; color: var(--cs-accent-deep); }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .cs-art {
   position: relative;
   padding: 9px 0 9px 15px;
@@ -2968,20 +2918,6 @@
   font-size: var(--fs-xs);
   white-space: nowrap;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* ── 印章式页码演示 ──
@@ -3068,18 +3004,6 @@
   gap: clamp(22px, 3vw, 42px);
   align-items: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* 大图收窄：规范图 / 手稿 / 时间线这类横图铺满整栏会把版面撑散，
@@ -3418,14 +3342,6 @@
 }
 
 
-
-
-
-
-
-
-
-
 /* ────────────────────────────────────────
    进场（JS 未跑时不隐藏内容）
 ──────────────────────────────────────── */
@@ -3487,9 +3403,6 @@
   .cs-deck-steps { display: none; }
 
   .cs-plates[data-hscroll-track] > .cs-plate { flex: 0 0 min(56vw, 220px); }
-
-
-
 
 
   .cs-line { padding-left: 32px; }
@@ -3554,14 +3467,7 @@
 
   /* 内刊案例的板块 */
   .cs-journals-inner { grid-template-columns: 1fr; gap: 26px; }
-  .cs-journal-fig { max-width: 320px; }
-
-
-
-
-
-  .cs-pd-wrap,
-  .cs-slides { grid-template-columns: 1fr; }
+  .cs-journal-fig { max-width: 320px; }.cs-pd-wrap { grid-template-columns: 1fr; }
   .cs-pd-stage { max-width: 300px; }
 
 }
@@ -3680,27 +3586,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* 06 / 体系落地，改成占满内容宽度的编辑现场 */
 .is-evolution {
   max-width: none;
@@ -3709,15 +3594,6 @@
   padding-bottom: clamp(74px, 7vw, 108px);
   background: #e8e2d7;
 }
-
-
-
-
-
-
-
-
-
 
 
 /* 05 / 校对室 */
@@ -3844,31 +3720,14 @@
   .is-system-lab .cs-deck-track { padding-top: 22px; }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   .is-proofroom .cs-line { margin-top: 30px; }
   .is-proofroom .cs-line-body { padding: 22px; border-radius: 16px; }
   .is-proofroom .cs-line-item.is-on .cs-line-body { transform: none; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .is-system-lab .cs-panel,
-  .cs-architecture-figure img,
-  .is-evolution .cs-sticky-step,
-  .is-proofroom .cs-line-body,
-  .is-outcome .cs-lesson { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {.is-system-lab .cs-panel,
+.is-proofroom .cs-line-body,
+.is-outcome .cs-lesson { transition: none !important; }
 }
 
 /* ============================================================
@@ -3960,23 +3819,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* 06 / 延展：浅色编辑台，图片切换但不换页面色调 */
 .case-page.is-vision .is-evolution {
   max-width: none;
@@ -3985,11 +3827,6 @@
   padding-bottom: clamp(84px, 8vw, 124px);
   background: var(--cs-paper-2);
 }
-
-
-
-
-
 
 
 /* 05 / 校对与印刷：回到纸张式时间线，不做深色卡片墙 */
@@ -4122,13 +3959,6 @@
     opacity: 1;
     transform: none;
   }
-
-
-
-
-
-
-
 
 
   .case-page.is-vision .is-proofroom .cs-line-body { padding: 0 0 34px; }
