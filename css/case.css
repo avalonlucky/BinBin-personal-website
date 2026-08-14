@@ -627,9 +627,10 @@
 ──────────────────────────────────────── */
 .cs-shift {
   display: grid;
-  grid-template-columns: 0.82fr 1.18fr;
-  /* 列间距为 0，让两个表头连成一条通栏色带（和 02 的对照表头一致）。
+  /* 等宽两栏：两个表头是同级的表头，宽度不一致会看出来。
+     列间距为 0，让它们连成一条通栏色带（和 02 的对照表头一致）；
      正文两栏的间距改由左栏 padding-right 撑出来，不用 column-gap。 */
+  grid-template-columns: 1fr 1fr;
   column-gap: 0;
   row-gap: 0;
   align-items: start;
@@ -640,20 +641,21 @@
 
 /* 两个表头。字号字重与清单里的关键词同级——它们是这一段的骨架，
    不该比正文还小。常驻底色，不依赖 hover：鼠标不在这里时也要立得住。
-   左栏字是黑的，配中性灰底；右栏字是主色，配同色系浅底。 */
+   配色沿用 02 对照表头那一套——弱的一侧用纸底灰字，重的一侧用主色实底
+   白字，全页保持同一种「主 / 次」表达。 */
 .cs-shift-label {
   font-family: var(--f-cjk);
   font-size: var(--fs-md);
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--cs-ink-2);
-  background: rgb(2 2 2 / 0.05);
+  color: var(--cs-ink-3);
+  background: var(--cs-paper-2);
   padding: 12px 14px;
   border-radius: 4px 0 0 4px;
 }
 .cs-shift-label.is-mine {
-  color: var(--cs-accent-deep);
-  background: rgb(var(--cs-accent-rgb) / 0.05);
+  color: #fff;
+  background: var(--cs-accent);
   border-radius: 0 4px 4px 0;
 }
 
