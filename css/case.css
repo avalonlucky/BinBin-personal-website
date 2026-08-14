@@ -651,13 +651,14 @@
   color: var(--cs-ink-3);
   background: var(--cs-paper-2);
   padding: 12px 14px;
-  border-radius: 4px 0 0 4px;
 }
 .cs-shift-label.is-mine {
   color: #fff;
   background: var(--cs-accent);
-  border-radius: 0 4px 4px 0;
 }
+/* 圆角按位置判定，不按 is-mine——主色一侧可能在左（02）也可能在右（01）。 */
+.cs-shift-label:first-of-type  { border-radius: 4px 0 0 4px; }
+.cs-shift-label:nth-of-type(2) { border-radius: 0 4px 4px 0; }
 
 /* 左栏：问题清单 */
 .cs-shift-flaws {
@@ -687,11 +688,13 @@
   background: var(--cs-ink-3);
 }
 
-/* 右栏：四个挑战。关键词只靠颜色区分，字号字重与说明文字一致。 */
-.cs-shift-goals { list-style: none; margin: 0; padding: 0; }
+/* 关键词 + 说明的清单。关键词只靠颜色区分，字号字重与说明文字一致。
+   --kw 是关键词列宽：默认放得下三个字，四个字的用 .is-wide。 */
+.cs-shift-goals { list-style: none; margin: 0; padding: 0; --kw: 68px; }
+.cs-shift-goals.is-wide { --kw: 82px; }
 .cs-shift-goals li {
   display: grid;
-  grid-template-columns: 68px 1fr;
+  grid-template-columns: var(--kw) 1fr;
   gap: 18px;
   align-items: baseline;
   padding: 14px;
@@ -714,6 +717,11 @@
   line-height: 1.72;
   color: var(--cs-ink);
 }
+/* 次要一侧：关键词转灰、说明降一档、hover 底色转中性，
+   与灰底表头配成一套。 */
+.cs-shift-goals.is-muted b { color: var(--cs-ink-3); }
+.cs-shift-goals.is-muted span { color: var(--cs-ink-2); }
+.cs-shift-goals.is-muted li:hover { background: rgb(2 2 2 / 0.035); }
 
 /* ────────────────────────────────────────
    区块填写法（PPT 协作）
@@ -3155,10 +3163,13 @@
      （为了让两个表头在 PC 上连成一条带），所以这里必须用 order 重新交错，
      否则手机上会变成两个表头挨在一起。 */
   .cs-shift { grid-template-columns: 1fr; }
-  .cs-shift-label { order: 1; border-radius: 4px; }
-  .cs-shift-label.is-mine { order: 3; margin-top: 30px; border-radius: 4px; }
-  .cs-shift-body:first-of-type { order: 2; padding-right: 0; }
-  .cs-shift-body:last-of-type { order: 4; }
+  /* order 必须按位置判定，不能按 is-mine——02 的主色一侧在左，
+     按 is-mine 排会把表头和另一栏的内容配错。 */
+  .cs-shift-label { border-radius: 4px; }
+  .cs-shift-label:first-of-type  { order: 1; }
+  .cs-shift-body:first-of-type   { order: 2; padding-right: 0; }
+  .cs-shift-label:nth-of-type(2) { order: 3; margin-top: 30px; }
+  .cs-shift-body:last-of-type    { order: 4; }
   .cs-shift-goals li { grid-template-columns: 1fr; gap: 4px; padding-right: 4px; }
   .cs-compare-col + .cs-compare-col,
   .cs-stage + .cs-stage,
