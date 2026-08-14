@@ -628,29 +628,33 @@
 .cs-shift {
   display: grid;
   grid-template-columns: 0.82fr 1.18fr;
-  gap: clamp(28px, 4vw, 64px);
+  /* 列间距为 0，让两个表头连成一条通栏色带（和 02 的对照表头一致）。
+     正文两栏的间距改由左栏 padding-right 撑出来，不用 column-gap。 */
+  column-gap: 0;
+  row-gap: 0;
   align-items: start;
   margin: 30px 0 8px;
 }
+.cs-shift-body { padding-top: 8px; }
+.cs-shift-body:first-of-type { padding-right: clamp(28px, 4vw, 64px); }
 
 /* 两个表头。字号字重与清单里的关键词同级——它们是这一段的骨架，
-   不该比正文还小。hover 底色与下面的行保持同一套反馈。 */
+   不该比正文还小。常驻底色，不依赖 hover：鼠标不在这里时也要立得住。
+   左栏字是黑的，配中性灰底；右栏字是主色，配同色系浅底。 */
 .cs-shift-label {
   font-family: var(--f-cjk);
   font-size: var(--fs-md);
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--cs-ink-2);
-  /* 常驻底色，不依赖 hover——它是表头，鼠标不在这里时也要立得住。
-     左栏字是黑的，配中性灰底；右栏字是主色，配同色系浅底。 */
   background: rgb(2 2 2 / 0.05);
   padding: 12px 14px;
-  margin-bottom: 8px;
-  border-radius: 4px;
+  border-radius: 4px 0 0 4px;
 }
 .cs-shift-label.is-mine {
   color: var(--cs-accent-deep);
   background: rgb(var(--cs-accent-rgb) / 0.05);
+  border-radius: 0 4px 4px 0;
 }
 
 /* 左栏：问题清单 */
@@ -3145,7 +3149,14 @@
   .cs-layouts { grid-template-columns: 1fr; }
   /* .cs-shift 上下堆叠即可：左右两栏不是同级重复块，是「问题→解法」的
      单向关系，横向滚动反而会拆散这层因果。 */
-  .cs-shift { grid-template-columns: 1fr; gap: 32px; }
+  /* 单列时表头不再相邻，各自恢复完整圆角；DOM 顺序是「表头 表头 正文 正文」
+     （为了让两个表头在 PC 上连成一条带），所以这里必须用 order 重新交错，
+     否则手机上会变成两个表头挨在一起。 */
+  .cs-shift { grid-template-columns: 1fr; }
+  .cs-shift-label { order: 1; border-radius: 4px; }
+  .cs-shift-label.is-mine { order: 3; margin-top: 30px; border-radius: 4px; }
+  .cs-shift-body:first-of-type { order: 2; padding-right: 0; }
+  .cs-shift-body:last-of-type { order: 4; }
   .cs-shift-goals li { grid-template-columns: 1fr; gap: 4px; padding-right: 4px; }
   .cs-compare-col + .cs-compare-col,
   .cs-stage + .cs-stage,
