@@ -67,7 +67,7 @@
     const pips = [...dots.children];
     const n = pips.length;
 
-    const distance = () => Math.max(0, track.scrollWidth - wrap.clientWidth + 16);
+    const distance = () => Math.max(0, track.scrollWidth - wrap.clientWidth);
     if (distance() <= 0) { dots.remove(); return null; }
 
     const mode = wrap.dataset.hscroll;
@@ -115,17 +115,28 @@
     }
 
     /* ── 钉住模式：区块固定在视口，纵向滚动被换算成横向位移 ── */
-    // 每张卡分到约 0.62 屏的竖滑，读得完再走下一张；末尾再留一段
-    // 停住，最后一张完整停在导航下方后才把滚动交还给页面。
-    const hold = () => Math.min(240, Math.max(160, window.innerHeight * 0.24));
-    const navBottom = () => Math.ceil(document.querySelector('#nav')?.getBoundingClientRect().bottom || 64) + 10;
-    const slide = () => Math.max(distance(), Math.round(n * window.innerHeight * 0.62));
+    // 卡片走完后只短暂停留，立即把滚动交还正文。导航偏移使用固定布局值，
+    // 不读取 pin 过程中不断变化的 viewport rect，避免刷新时触发位置抖动。
+    const hold = () => Math.min(72, Math.max(48, window.innerHeight * 0.07));
+    const navBottom = () => {
+      const nav = document.querySelector('#nav');
+      if (!nav) return 74;
+      const css = getComputedStyle(nav);
+      return Math.ceil((parseFloat(css.top) || 0) + nav.offsetHeight + 10);
+    };
+    // 用轨道实际宽度定义滚动时长，避免卡片早已走完、页面却仍被 pin 住。
+    const slide = () => Math.max(
+      Math.round(distance() * 1.04),
+      Math.round(window.innerHeight * 0.42)
+    );
+    wrap.classList.add('is-auto-x');
+    wrap.scrollLeft = 0;
     const apply = progress => {
       const travel = distance();
       const horizontalProgress = travel <= 0
         ? 1
         : Math.min(1, progress * (slide() + hold()) / slide());
-      gsap.set(track, { x: -travel * horizontalProgress });
+      wrap.scrollLeft = Math.round(travel * horizontalProgress);
       const i = Math.min(n - 1, Math.round(horizontalProgress * (n - 1)));
       pips.forEach((p, k) => p.classList.toggle('is-on', k === i));
     };
@@ -136,7 +147,7 @@
       end: () => '+=' + (slide() + hold()),
       pin: true,
       pinSpacing: true,
-      anticipatePin: 1,
+      anticipatePin: 0.5,
       invalidateOnRefresh: true,
       onUpdate: self => apply(self.progress),
       onRefresh: self => apply(self.progress),
@@ -160,7 +171,8 @@
       cleanup: () => {
         if (painted) spacer.style.background = '';
         st.kill();
-        gsap.set(track, { clearProps: 'x' });
+        wrap.classList.remove('is-auto-x');
+        wrap.scrollLeft = 0;
         dots.remove();
       },
     };

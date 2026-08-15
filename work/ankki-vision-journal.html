@@ -11,8 +11,8 @@
   <link rel="preload" href="../fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="../css/style.css?v=80">
-  <link rel="stylesheet" href="../css/case.css?v=86">
+  <link rel="stylesheet" href="../css/style.css?v=81">
+  <link rel="stylesheet" href="../css/case.css?v=88">
 </head>
 <body class="case-page is-vision">
 <div class="site">
@@ -183,8 +183,9 @@
           <p class="cs-num">02 — 面向对象</p>
           <h2 class="cs-title">以内为主，<em>同时承担品牌外延传播</em></h2>
           <h3 class="cs-sub">同一本刊物，要对四类人说话</h3>
-          <div class="cs-audience-pin" data-hscroll="pin" data-pin-order="1">
-          <div class="cs-facets" data-hscroll-track>
+          <div class="cs-audience-stage" data-audience-stage data-pin-order="1">
+            <div class="cs-audience-pin" data-audience-rail>
+              <div class="cs-facets" data-hscroll-track>
             <div class="cs-facet">
               <div class="cs-facet-n">01</div>
               <h4>公司内部</h4>
@@ -205,12 +206,15 @@
               <h4>投资人</h4>
               <p>展现企业发展轨迹与文化底蕴。</p>
             </div>
+              </div>
+            </div>
+            <div class="cs-mobile-pin-preview is-stage-copy">
+              <h2 class="cs-title">面对陌生领域，<em>先把问题拆成能研究的模块</em></h2>
+              <p class="cs-lede">我此前没做过内刊。但「没做过」不等于只能凭感觉——我把这件陌生的事拆成七个可以逐项研究的模块，然后专门去深圳宝安图书馆，对馆内优秀的内刊与期刊逐本拍照、逐项比对。</p>
+              <p class="cs-lede">回来后逐项拆解、归纳共性，筛出其中优秀且符合昂楷企业文化的部分，落成一套可执行的规范。整个过程是 <strong>Research → Analysis → Pattern → System</strong>：先看清别人怎么做，再归纳出规律，最后变成自己能反复用的规则。</p>
+            </div>
           </div>
-          <div class="cs-mobile-pin-preview">
-            <h2 class="cs-title">面对陌生领域，<em>先把问题拆成能研究的模块</em></h2>
-            <p class="cs-lede">我此前没做过内刊。但「没做过」不等于只能凭感觉——我把这件陌生的事拆成七个可以逐项研究的模块，然后专门去深圳宝安图书馆，对馆内优秀的内刊与期刊逐本拍照、逐项比对。</p>
-            <p class="cs-lede">回来后逐项拆解、归纳共性，筛出其中优秀且符合昂楷企业文化的部分，落成一套可执行的规范。整个过程是 <strong>Research → Analysis → Pattern → System</strong>：先看清别人怎么做，再归纳出规律，最后变成自己能反复用的规则。</p>
-
+          <div class="cs-mobile-pin-preview is-follow-copy">
             <div class="cs-docs">
               <button class="cs-doc" type="button"
                       data-zoom="../assets/work/vision/research/library-1.webp"
@@ -241,7 +245,6 @@
                 <div class="cs-doc-cap"><b>页眉与页码</b>栏目标识怎么走、页码放哪、边距留多少</div>
               </button>
             </div>
-          </div>
           </div>
         </section>
 
@@ -374,7 +377,7 @@
             </article>
 
             <!-- 面板 3：封面与封底 -->
-            <article class="cs-panel is-mobile-cover">
+            <article class="cs-panel is-mobile-cover is-mobile-omit">
               <div class="cs-panel-fig is-pair">
                 <button class="cs-figure" type="button"
                         data-zoom="../assets/work/vision/cover/v3-cover.webp"
@@ -715,6 +718,7 @@
     </nav>
 
     <div class="cs-rd-book">
+      <div class="cs-rd-loading" aria-live="polite" aria-label="页面加载中"><span></span></div>
       <div class="cs-rd-pg is-left"><img alt=""></div>
       <div class="cs-rd-pg is-right"><img alt=""></div>
 
@@ -780,7 +784,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="../js/hscroll.js?v=6"></script>
-  <script src="../js/case.js?v=57"></script>
+<script src="../js/hscroll.js?v=8"></script>
+  <script src="../js/case.js?v=59"></script>
 </body>
 </html>

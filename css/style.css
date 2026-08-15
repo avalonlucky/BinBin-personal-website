@@ -2494,7 +2494,11 @@ main footer {
     width: max-content;
     gap: clamp(14px, 4vw, 20px);
     align-items: start;
-    will-change: transform;
+    will-change: auto;
+  }
+  [data-hscroll="pin"].is-auto-x [data-hscroll-track] {
+    transform: none !important;
+    will-change: auto;
   }
   [data-hscroll-track] > * {
     flex: 0 0 min(78vw, 300px);

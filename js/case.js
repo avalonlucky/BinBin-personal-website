@@ -474,11 +474,14 @@ function initDeck() {
 
 /* 手机端横向卡：用户只负责上下滑，卡片自己从右向左走。 */
 function navPinOffset() {
-  return Math.ceil(document.querySelector('#nav')?.getBoundingClientRect().bottom || 64) + 10;
+  const nav = document.querySelector('#nav');
+  if (!nav) return 74;
+  const css = getComputedStyle(nav);
+  return Math.ceil((parseFloat(css.top) || 0) + nav.offsetHeight + 10);
 }
 
 function railHold() {
-  return Math.min(240, Math.max(160, window.innerHeight * 0.24));
+  return Math.min(72, Math.max(48, window.innerHeight * 0.07));
 }
 
 function isClearColor(value) {
@@ -511,7 +514,7 @@ function paintPinSpacer(el) {
   return () => { spacer.style.background = ''; };
 }
 
-function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, useScrollLeft }) {
+function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, useScrollLeft, pinTarget }) {
   const cards = typeof items === 'function' ? items : () => items;
   const visible = () => cards().filter(card =>
     card && !card.classList.contains('hscroll-dots') && getComputedStyle(card).display !== 'none'
@@ -537,7 +540,12 @@ function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, u
   view.classList.add('is-auto-x');
   if (useScrollLeft) view.scrollLeft = 0;
 
-  const slide = () => Math.max(travel(), Math.round(n() * window.innerHeight * 0.62));
+  // 横向阶段的竖向长度应由轨道真正需要移动的像素决定。
+  // 按“卡片数 × 屏幕高度”估算会在小屏手机上产生大量空转距离。
+  const slide = () => Math.max(
+    Math.round(travel() * 1.04),
+    Math.round(window.innerHeight * 0.42)
+  );
 
   const apply = progress => {
     const t = travel();
@@ -546,7 +554,7 @@ function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, u
     const horizontalProgress = t <= 0
       ? 1
       : Math.min(1, progress * (slide() + railHold()) / slide());
-    if (useScrollLeft) view.scrollLeft = t * horizontalProgress;
+    if (useScrollLeft) view.scrollLeft = Math.round(t * horizontalProgress);
     else gsap.set(track, { x: -t * horizontalProgress });
     const i = Matheq(horizontalProgress, count);
     pips.forEach((pip, k) => pip.classList.toggle('is-on', k === i));
@@ -554,21 +562,22 @@ function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, u
     onIndex?.(i, list);
   };
 
+  const pinEl = pinTarget || view;
   const st = ScrollTrigger.create({
-    trigger: view,
+    trigger: pinEl,
     refreshPriority: refreshPriority || 90,
     start: () => `top ${navPinOffset()}px`,
     end: () => `+=${slide() + railHold()}`,
-    pin: true,
+    pin: pinEl,
     pinSpacing: true,
-    anticipatePin: 1,
+    anticipatePin: 0.5,
     invalidateOnRefresh: true,
     onUpdate: self => apply(self.progress),
     onRefresh: self => apply(self.progress),
   });
 
   apply(0);
-  const unpaint = paintPinSpacer(view);
+  const unpaint = paintPinSpacer(pinEl);
 
   return {
     cleanup: () => {
@@ -583,11 +592,12 @@ function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, u
 }
 
 function initMobileAutoRails() {
+  const audienceStage = document.querySelector('.case-page.is-vision [data-audience-stage]');
   const rails = [
     ...document.querySelectorAll('.case-page.is-vision .is-proofroom .cs-line'),
     ...document.querySelectorAll('.case-page.is-vision .is-outcome .cs-lessons'),
   ];
-  if (!rails.length) return;
+  if (!rails.length && !audienceStage) return;
 
   gsap.matchMedia().add('(max-width: 768px)', () => {
     const made = rails.map(view => driveMobileRail({
@@ -596,6 +606,22 @@ function initMobileAutoRails() {
       useScrollLeft: true,
       refreshPriority: view.closest('.is-proofroom') ? 97 : 96,
     })).filter(Boolean);
+
+    if (audienceStage) {
+      const view = audienceStage.querySelector('[data-audience-rail]');
+      const track = audienceStage.querySelector('[data-hscroll-track]');
+      if (view && track) {
+        const audienceRail = driveMobileRail({
+          view,
+          track,
+          items: () => [...track.children],
+          useScrollLeft: true,
+          pinTarget: audienceStage,
+          refreshPriority: 99,
+        });
+        if (audienceRail) made.unshift(audienceRail);
+      }
+    }
 
     return () => made.forEach(rail => rail.cleanup());
   });
@@ -746,6 +772,9 @@ function initReader() {
   let busy = false;
   let queuedTurns = 0;
   let readerHistoryActive = false;
+  let renderVersion = 0;
+  const pageCache = new Map();
+  const decodedPages = new Set();
   const single = () => window.innerWidth <= 768;
 
   const url = i => (i == null || i < 0 || i >= book.pages)
@@ -756,28 +785,61 @@ function initReader() {
   const rightIdx = p => single() ? p : 2 * p;
   const maxPos   = () => single() ? book.pages - 1 : Math.floor(book.pages / 2);
 
-  const setImg = (slot, i) => {
-    const src = url(i);
+  const setImgSrc = (slot, src) => {
     const img = slot.querySelector('img');
     slot.classList.toggle('is-blank', !src);
     if (src) { img.src = src; img.style.visibility = ''; }
     else { img.removeAttribute('src'); img.style.visibility = 'hidden'; }
   };
 
-  // 只预取前后几页，300 张图不能一次性拉
+  const loadPage = src => {
+    if (!src) return Promise.resolve(null);
+    if (decodedPages.has(src)) return Promise.resolve(src);
+    if (pageCache.has(src)) return pageCache.get(src);
+
+    const request = new Promise(resolve => {
+      let attempts = 0;
+      const requestImage = () => {
+        attempts += 1;
+        const img = new Image();
+        img.decoding = 'async';
+        img.onload = async () => {
+          try { await img.decode(); } catch (e) {}
+          decodedPages.add(src);
+          resolve(src);
+        };
+        img.onerror = () => {
+          if (attempts < 2) {
+            window.setTimeout(requestImage, 180);
+            return;
+          }
+          pageCache.delete(src);
+          resolve(null);
+        };
+        img.src = src;
+      };
+      requestImage();
+    });
+    pageCache.set(src, request);
+    return request;
+  };
+
+  // 只预取前后几页，300 张图不能一次性拉；预取也走同一解码缓存。
   const preload = () => {
     const base = single() ? pos : 2 * pos;
-    for (let d = -3; d <= 5; d++) {
+    for (let d = -4; d <= 7; d++) {
       const u = url(base + d);
-      if (u) { const im = new Image(); im.src = u; }
+      if (u) loadPage(u);
     }
   };
 
-  const render = () => {
+  const render = async () => {
+    const version = ++renderVersion;
+    const bookKey = book.key;
     stageBook.style.setProperty('--pg-ar', book.ar);
     stageBook.classList.toggle('is-single', single());
-    setImg(pgL, leftIdx(pos));
-    setImg(pgR, rightIdx(pos));
+    const leftSrc = url(leftIdx(pos));
+    const rightSrc = url(rightIdx(pos));
     // 页码直接用数组下标——它正好等于刊物上印的页码（下标 0 是封面、最后一张是封底），
     // 之前 +1 显示成 4–5、纸上却印着 3 和 4，对不上。
     const l = leftIdx(pos), r = rightIdx(pos);
@@ -794,6 +856,12 @@ function initReader() {
     btnPrev.disabled = hitPrev.disabled = atStart;
     btnNext.disabled = hitNext.disabled = atEnd;
     preload();
+    stageBook.classList.add('is-loading');
+    const [readyLeft, readyRight] = await Promise.all([loadPage(leftSrc), loadPage(rightSrc)]);
+    if (version !== renderVersion || book.key !== bookKey) return;
+    setImgSrc(pgL, readyLeft);
+    setImgSrc(pgR, readyRight);
+    stageBook.classList.remove('is-loading');
   };
 
   /* ── 翻页：一层绕书脊旋转的元素，正面是当前页、背面是翻过去看到的那页 ── */
@@ -805,7 +873,7 @@ function initReader() {
     if (remember) { try { localStorage.setItem(COACH_KEY, '1'); } catch (e) {} }
   };
 
-  const turn = dir => {
+  const turn = async dir => {
     /* 手机上快速连点时，不丢掉动画期间的输入，也不让多个 GSAP
        翻页同时改 pos。最多预排 4 页，防止连点把队列拖得太长。 */
     if (busy) {
@@ -819,6 +887,7 @@ function initReader() {
     }
     hideCoach(true);          // 翻过一次就说明学会了
     busy = true;
+    const bookKey = book.key;
 
     const continueQueuedTurn = () => {
       if (!queuedTurns) return;
@@ -829,7 +898,7 @@ function initReader() {
 
     if (prefersReducedMotion.matches) {
       pos = target;
-      render();
+      await render();
       busy = false;
       continueQueuedTurn();
       return;
@@ -846,12 +915,27 @@ function initReader() {
       underSlot = single() ? pgR : pgL; underI = single() ? rightIdx(target) : leftIdx(target);
     }
 
-    faceF.src = url(frontI) || '';
-    faceB.src = url(backI) || '';
-    faceF.style.visibility = url(frontI) ? '' : 'hidden';
-    faceB.style.visibility = url(backI) ? '' : 'hidden';
+    const frontSrc = url(frontI);
+    const backSrc = url(backI);
+    const underSrc = url(underI);
+    stageBook.classList.add('is-loading');
+    const [readyFront, readyBack, readyUnder] = await Promise.all([
+      loadPage(frontSrc), loadPage(backSrc), loadPage(underSrc),
+    ]);
+    if (book.key !== bookKey || (frontSrc && !readyFront) || (backSrc && !readyBack) || (underSrc && !readyUnder)) {
+      stageBook.classList.remove('is-loading');
+      busy = false;
+      queuedTurns = 0;
+      render();
+      return;
+    }
+    faceF.src = readyFront || '';
+    faceB.src = readyBack || '';
+    faceF.style.visibility = readyFront ? '' : 'hidden';
+    faceB.style.visibility = readyBack ? '' : 'hidden';
     // 翻页元素盖住的那一格，先换成翻完之后应该露出的页
-    setImg(underSlot, underI);
+    setImgSrc(underSlot, readyUnder);
+    stageBook.classList.remove('is-loading');
 
     flip.classList.add('is-on');
     flip.classList.toggle('to-left', dir > 0);
@@ -860,11 +944,11 @@ function initReader() {
       rotateY: dir > 0 ? -180 : 180,
       duration: 0.72,
       ease: 'power2.inOut',
-      onComplete: () => {
+      onComplete: async () => {
         pos = target;
         flip.classList.remove('is-on');
         gsap.set(flip, { rotateY: 0 });
-        render();
+        await render();
         busy = false;
         continueQueuedTurn();
       },
@@ -887,7 +971,10 @@ function initReader() {
       w: r.width / (single() ? 1 : 2),
       moved: 0,
       started: false,
+      deferred: false,
     };
+    loadPage(url(single() ? pos - 1 : leftIdx(pos - 1)));
+    loadPage(url(single() ? pos + 1 : rightIdx(pos + 1)));
   };
   const onMove = e => {
     if (!drag) return;
@@ -912,11 +999,20 @@ function initReader() {
       const d = drag.dir;
       const frontI = d > 0 ? rightIdx(pos) : (single() ? pos : leftIdx(pos));
       const backI  = d > 0 ? (single() ? pos + 1 : leftIdx(pos + 1)) : (single() ? pos - 1 : rightIdx(pos - 1));
-      faceF.src = url(frontI) || ''; faceB.src = url(backI) || '';
+      const frontSrc = url(frontI);
+      const backSrc = url(backI);
+      if ((frontSrc && !decodedPages.has(frontSrc)) || (backSrc && !decodedPages.has(backSrc))) {
+        drag.deferred = true;
+        loadPage(frontSrc);
+        loadPage(backSrc);
+        return;
+      }
+      faceF.src = frontSrc || ''; faceB.src = backSrc || '';
       flip.classList.add('is-on');
       flip.classList.toggle('to-left', d > 0);
       flip.classList.toggle('to-right', d < 0);
     }
+    if (drag.deferred) return;
     const p = Math.min(1, Math.max(0, (drag.dir > 0 ? -dx : dx) / drag.w));
     gsap.set(flip, { rotateY: drag.dir > 0 ? -180 * p : 180 * p });
     drag.p = p;
@@ -929,7 +1025,7 @@ function initReader() {
     if (!d.started) return;
     flip.classList.remove('is-on');
     gsap.set(flip, { rotateY: 0 });
-    if ((d.p || 0) > 0.28) turn(d.dir);
+    if (d.deferred || (d.p || 0) > 0.28) turn(d.dir);
   };
   stageBook.addEventListener('pointerdown', onDown);
   window.addEventListener('pointermove', onMove);

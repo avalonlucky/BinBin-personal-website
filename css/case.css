@@ -1235,6 +1235,7 @@
 }
 
 /* 移动端会把下一章节标题放进卡片的固定舞台，桌面仍显示原章节标题。 */
+.cs-audience-stage { display: contents; }
 .cs-mobile-pin-preview { display: none; }
 
 /* ────────────────────────────────────────
@@ -3112,6 +3113,7 @@
   gap: clamp(20px, 3vw, 44px);
   padding: 0 clamp(10px, 3vw, 48px);
   min-height: 0;
+  overflow: hidden;
 }
 .cs-rd-book {
   --pg-ar: 0.758;
@@ -3127,7 +3129,31 @@
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  overflow: hidden;
+  isolation: isolate;
 }
+.cs-rd-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.92);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .18s ease, visibility .18s ease;
+}
+.cs-rd-book.is-loading .cs-rd-loading { opacity: 1; visibility: visible; }
+.cs-rd-loading span {
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(24, 24, 21, .14);
+  border-top-color: var(--cs-accent);
+  border-radius: 50%;
+  animation: cs-rd-load .75s linear infinite;
+}
+@keyframes cs-rd-load { to { transform: rotate(360deg); } }
 .cs-rd-pg {
   width: 50%;
   height: 100%;
@@ -3337,8 +3363,9 @@
   .cs-rd-book {
     --rail: 0px;
     /* 窄屏一次只看一页，两页并排每页会小到看不清 */
-    --bh: min(calc(100vh - 210px), calc((100vw - 24px) / var(--pg-ar)));
-    width: calc(var(--bh) * var(--pg-ar));
+    --bh: min(calc(100dvh - 210px), calc((100vw - 32px) / var(--pg-ar)));
+    width: min(calc(var(--bh) * var(--pg-ar)), calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
   }
   .cs-rd-book.is-single .cs-rd-pg.is-left { display: none; }
   .cs-rd-book::after { display: none; }
@@ -4024,23 +4051,39 @@
   .case-page.is-vision .cs-shift-flaws li,
   .case-page.is-vision .cs-shift-goals span { font-size: 14px; line-height: 1.68; }
 
-  /* 面向对象：四张卡严格等高，序号和标题合并成一行。
-     下一章节标题留在同一个固定舞台里，卡片走完前不会独自上移。 */
-  .case-page.is-vision .cs-audience-pin { padding-bottom: 8px; }
+  /* 面向对象：外层舞台同时容纳横向卡片和下一段引言。
+     竖滑时只移动卡片，标题与引言留在卡片下方；四张走完后整个舞台才继续上移。 */
+  .case-page.is-vision .cs-audience-stage {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 4px;
+  }
+  .case-page.is-vision .cs-audience-pin {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    touch-action: pan-y;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    padding-bottom: 0;
+  }
+  .case-page.is-vision .cs-audience-pin::-webkit-scrollbar { display: none; }
   .case-page.is-vision .cs-audience-pin .cs-facets {
     margin-top: 18px;
     align-items: stretch;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
   }
   .case-page.is-vision .cs-audience-pin .cs-facet {
     box-sizing: border-box;
-    height: 228px;
-    padding: 22px 20px;
+    height: 168px;
+    padding: 18px;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
-    align-content: start;
+    grid-template-rows: auto auto;
+    align-content: center;
     column-gap: 10px;
-    row-gap: 18px;
+    row-gap: 14px;
   }
   .case-page.is-vision .cs-audience-pin .cs-facet-n {
     align-self: baseline;
@@ -4059,17 +4102,19 @@
   }
   .case-page.is-vision .cs-audience-pin .cs-facet p {
     grid-column: 1 / -1;
-    align-self: start;
+    align-self: center;
     margin: 0;
   }
   .case-page.is-vision .cs-audience-pin .hscroll-dots { display: none; }
   .case-page.is-vision .cs-mobile-pin-preview {
     display: block;
-    margin-top: 24px;
+    margin-top: clamp(28px, 8vw, 40px);
   }
+  .case-page.is-vision .cs-mobile-pin-preview.is-stage-copy { padding-bottom: 2px; }
+  .case-page.is-vision .cs-mobile-pin-preview.is-follow-copy { margin-top: 22px; }
   .case-page.is-vision .cs-mobile-pin-preview .cs-title { margin: 0; }
   .case-page.is-vision .cs-mobile-pin-preview .cs-lede { margin-bottom: 0; }
-  .case-page.is-vision .cs-mobile-pin-preview .cs-lede + .cs-lede { margin-top: 18px; }
+  .case-page.is-vision .cs-mobile-pin-preview .cs-lede + .cs-lede { margin-top: 12px; }
   .case-page.is-vision .cs-mobile-pin-preview .cs-docs { margin-bottom: 0; }
   .case-page.is-vision .cs-mobile-preview-source { display: none; }
   .case-page.is-vision .cs-mobile-research-source { display: none; }
@@ -4116,7 +4161,8 @@
     will-change: auto;
   }
   .case-page.is-vision .is-system-lab .cs-deck-view.is-auto-x .cs-deck-track {
-    will-change: transform;
+    transform: none !important;
+    will-change: auto;
   }
   .case-page.is-vision .is-system-lab .cs-panel {
     flex: 0 0 calc(100vw - 54px);
@@ -4174,7 +4220,7 @@
   .case-page.is-vision .is-proofroom .cs-line {
     position: relative;
     display: flex;
-    align-items: stretch;
+    align-items: flex-start;
     gap: 12px;
     max-width: none;
     margin: 32px calc(var(--gutter) * -1) 0;
@@ -4196,7 +4242,8 @@
     flex: 0 0 calc(100vw - 54px);
     width: calc(100vw - 54px);
     max-width: 352px;
-    max-height: calc(100svh - 136px);
+    height: 330px;
+    max-height: 330px;
     padding: 0;
     scroll-snap-align: start;
     scroll-snap-stop: always;
@@ -4205,14 +4252,15 @@
   .case-page.is-vision .is-proofroom .cs-line-item:last-child .cs-line-body {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    height: 100%;
+    justify-content: center;
+    height: 330px;
     min-height: 0;
-    max-height: calc(100svh - 136px);
+    max-height: 330px;
     padding: 16px;
     border: 1px solid var(--cs-hair);
     border-radius: 10px;
     background: var(--cs-paper-2);
+    overflow: hidden;
   }
   .case-page.is-vision .is-proofroom .cs-line-k { font-size: 20px; margin-bottom: 8px; }
   .case-page.is-vision .is-proofroom .cs-line-body p { font-size: 14px; line-height: 1.62; }
@@ -4223,12 +4271,16 @@
   .case-page.is-vision .is-proofroom .cs-shift-label.is-mine {
     background: var(--cs-paper-2);
   }
+  .case-page.is-vision .is-proofroom .cs-shift-body { display: none; }
+  .case-page.is-vision .is-proofroom .cs-plates { gap: 8px; margin-top: 10px; }
+  .case-page.is-vision .is-proofroom .cs-plate img { max-height: 112px; object-fit: cover; }
+  .case-page.is-vision .is-proofroom .cs-stats { margin-top: 12px; }
   /* 三点总结：同一组高度，上下滑换下一张。 */
   .case-page.is-vision .is-outcome { overflow: hidden; }
   .case-page.is-vision .is-outcome .cs-lessons {
     position: relative;
     display: flex;
-    align-items: stretch;
+    align-items: flex-start;
     gap: 12px;
     margin: 26px calc(var(--gutter) * -1) 0;
     padding: 0 var(--gutter) 28px;
@@ -4250,7 +4302,8 @@
     width: calc(100vw - 54px);
     max-width: 352px;
     min-height: 0;
-    max-height: calc(100svh - 136px);
+    height: 360px;
+    max-height: 360px;
     align-content: center;
     gap: 16px;
     padding: 22px;
