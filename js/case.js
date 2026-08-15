@@ -459,6 +459,7 @@ function initDeck() {
         items: () => panels.filter(panel => panel.offsetParent !== null),
         fill,
         refreshPriority: 98,
+        useScrollLeft: true,
         onIndex: (active, visible) => {
           activate(active, [], visible);
           if (sealPanel && window.__sealShow) {
@@ -872,22 +873,40 @@ function initReader() {
 
   /* ── 拖拽翻页 ── */
   let drag = null;
+  let suppressTapUntil = 0;
   const onDown = e => {
     if (busy || e.button === 1 || e.button === 2) return;
     const r = stageBook.getBoundingClientRect();
-    const half = single() ? 1 : 2;
-    const dir = (e.clientX - r.left) > r.width / half ? 1 : -1;
-    if (single() && (e.clientX - r.left) < r.width / 2) return;   // 窄屏左半边不接管
-    if (pos + dir < 0 || pos + dir > maxPos()) return;
-    drag = { x0: e.clientX, dir, w: r.width / (single() ? 1 : 2), moved: 0, started: false };
+    const dir = single() ? 0 : ((e.clientX - r.left) > r.width / 2 ? 1 : -1);
+    if (dir && (pos + dir < 0 || pos + dir > maxPos())) return;
+    drag = {
+      x0: e.clientX,
+      y0: e.clientY,
+      pointerId: e.pointerId,
+      dir,
+      w: r.width / (single() ? 1 : 2),
+      moved: 0,
+      started: false,
+    };
   };
   const onMove = e => {
     if (!drag) return;
     const dx = e.clientX - drag.x0;
+    const dy = e.clientY - drag.y0;
     drag.moved = Math.abs(dx);
     if (!drag.started) {
-      if (drag.moved < 8) return;
+      if (drag.moved < 10) return;
+      if (single()) {
+        if (Math.abs(dx) < Math.abs(dy)) return;
+        drag.dir = dx < 0 ? 1 : -1;
+        if (pos + drag.dir < 0 || pos + drag.dir > maxPos()) {
+          drag = null;
+          return;
+        }
+      }
       drag.started = true;
+      suppressTapUntil = performance.now() + 450;
+      try { stageBook.setPointerCapture(drag.pointerId); } catch (err) {}
       hideCoach(true);
       // 起手时才装配翻页元素，避免每次点击都闪一下
       const d = drag.dir;
@@ -906,6 +925,7 @@ function initReader() {
     if (!drag) return;
     const d = drag;
     drag = null;
+    try { stageBook.releasePointerCapture(d.pointerId); } catch (err) {}
     if (!d.started) return;
     flip.classList.remove('is-on');
     gsap.set(flip, { rotateY: 0 });
@@ -914,9 +934,17 @@ function initReader() {
   stageBook.addEventListener('pointerdown', onDown);
   window.addEventListener('pointermove', onMove);
   window.addEventListener('pointerup', onUp);
+  window.addEventListener('pointercancel', onUp);
 
-  hitPrev.addEventListener('click', () => turn(-1));
-  hitNext.addEventListener('click', () => turn(1));
+  const tapTurn = dir => event => {
+    if (performance.now() < suppressTapUntil) {
+      event.preventDefault();
+      return;
+    }
+    turn(dir);
+  };
+  hitPrev.addEventListener('click', tapTurn(-1));
+  hitNext.addEventListener('click', tapTurn(1));
   btnPrev.addEventListener('click', () => turn(-1));
   btnNext.addEventListener('click', () => turn(1));
   range.addEventListener('input', () => { if (busy) return; pos = Number(range.value); render(); });

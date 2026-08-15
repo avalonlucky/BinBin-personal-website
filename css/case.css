@@ -3124,6 +3124,9 @@
   display: flex;
   perspective: 2600px;
   filter: drop-shadow(0 24px 60px rgba(0, 0, 0, 0.6));
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .cs-rd-pg {
   width: 50%;
@@ -4018,6 +4021,7 @@
   .case-page.is-vision .cs-facet h4 { font-size: 20px; line-height: 1.35; }
   .case-page.is-vision .cs-facet p,
   .case-page.is-vision .cs-shift-body p,
+  .case-page.is-vision .cs-shift-flaws li,
   .case-page.is-vision .cs-shift-goals span { font-size: 14px; line-height: 1.68; }
 
   /* 面向对象：四张卡严格等高，序号和标题合并成一行。
@@ -4064,7 +4068,11 @@
     margin-top: 24px;
   }
   .case-page.is-vision .cs-mobile-pin-preview .cs-title { margin: 0; }
+  .case-page.is-vision .cs-mobile-pin-preview .cs-lede { margin-bottom: 0; }
+  .case-page.is-vision .cs-mobile-pin-preview .cs-lede + .cs-lede { margin-top: 18px; }
+  .case-page.is-vision .cs-mobile-pin-preview .cs-docs { margin-bottom: 0; }
   .case-page.is-vision .cs-mobile-preview-source { display: none; }
+  .case-page.is-vision .cs-mobile-research-source { display: none; }
 
   /* HERO 的四组履历信息在桌面承担快速扫读，手机会把黑色首屏拖得过长。 */
   .case-page.is-vision .cs-hero-meta { display: none; }
@@ -4124,14 +4132,20 @@
     border-radius: 8px;
     opacity: 1;
     transform: none;
+    transition: none;
+    contain: layout paint;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+  }
+  .case-page.is-vision .is-system-lab .cs-panel.is-active {
+    opacity: 1;
+    transform: none;
   }
   .case-page.is-vision .is-system-lab .cs-panel-fig .cs-figure img,
   .case-page.is-vision .is-system-lab .cs-panel-fig .cs-tocmap-fig img { max-height: 20svh; }
   .case-page.is-vision .is-system-lab .cs-figure-cap { padding: 7px 10px; }
-  .case-page.is-vision .is-system-lab .cs-panel-txt h3 { margin-bottom: 6px; }
-  .case-page.is-vision .is-system-lab .cs-panel-txt p { font-size: 14px; line-height: 1.6; }
+  .case-page.is-vision .is-system-lab .cs-panel-txt h3 { margin-bottom: 6px; font-size: 18px; line-height: 1.32; }
+  .case-page.is-vision .is-system-lab .cs-panel-txt p { font-size: 13.5px; line-height: 1.55; }
   .case-page.is-vision .is-system-lab .cs-specs-mini { margin-top: 6px; }
   .case-page.is-vision .is-system-lab .cs-specs-mini li { padding-block: 4px; }
   .case-page.is-vision .is-system-lab .cs-chain { font-size: 12px; line-height: 1.5; padding: 8px 10px; }
