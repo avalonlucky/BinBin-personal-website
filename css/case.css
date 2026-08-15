@@ -4232,6 +4232,7 @@
   background: var(--cs-paper);
 }
 .case-page.is-vision .is-capabilities .cs-title { color: var(--cs-ink); }
+.case-page.is-vision .cs-outro { border-top: 0; }
 .case-page.is-vision .cs-only-mobile { display: none; }
 
 /* 本页以纸面排版为主，图片和并列能力不再套独立卡片。 */
