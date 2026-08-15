@@ -3558,7 +3558,10 @@
 }
 
 @media (max-width: 768px) {
-  .case-page.is-vision .cs-body { --cs-mobile-flow-gap: 32px; }
+  .case-page.is-vision .cs-body {
+    --cs-mobile-section-gap: 64px;
+    --cs-mobile-content-gap: 32px;
+  }
   /* 窄屏没有左侧空间，导航回到顶部横排，但保留「选中=红、未选中=白」 */
   .cs-rd-stage { flex-direction: column; gap: 12px; padding-top: 8px; }
   .cs-rd-rail {
@@ -4043,19 +4046,18 @@
   padding: clamp(38px, 5vw, 64px) 0;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid var(--cs-hair);
+  border-bottom: 0;
   border-radius: 0;
   box-shadow: none;
   color: var(--cs-ink);
   opacity: 1;
   transform: none;
 }
-.case-page.is-vision .is-system-lab .cs-panel:first-child { border-top: 1px solid var(--cs-hair); }
+.case-page.is-vision .is-system-lab .cs-panel:not(:last-child) { border-bottom: 1px solid var(--cs-hair); }
 .case-page.is-vision .is-system-lab .cs-panel::before { display: none; }
 .case-page.is-vision .is-system-lab .cs-panel.is-active {
   opacity: 1;
   transform: none;
-  border-color: var(--cs-hair);
 }
 .case-page.is-vision .is-system-lab .cs-chain,
 .case-page.is-vision .is-system-lab .cs-seal.is-inline,
@@ -4206,8 +4208,7 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
   margin-top: clamp(28px, 3.5vw, 48px);
-  border-top: 1px solid var(--cs-hair);
-  border-bottom: 1px solid var(--cs-hair);
+  border: 0;
 }
 .case-page.is-vision .is-outcome .cs-lesson,
 .case-page.is-vision .is-outcome .cs-lesson:first-child {
@@ -4263,9 +4264,9 @@
 .case-page.is-vision .cs-capability-list .cs-facets {
   gap: 0;
   margin-top: clamp(28px, 3.5vw, 48px);
-  border-top: 1px solid var(--cs-hair);
+  border-top: 0;
   border-right: 0;
-  border-bottom: 1px solid var(--cs-hair);
+  border-bottom: 0;
   border-left: 0;
   border-radius: 0;
   overflow: visible;
@@ -4344,19 +4345,29 @@
 
   .case-page.is-vision .cs-hero-title { font-size: 29px; line-height: 1.2; margin-bottom: 16px; }
   .case-page.is-vision .cs-hero-sub { font-size: 15px; line-height: 1.72; margin-bottom: 22px; }
-  .case-page.is-vision .cs-title,
-  .case-page.is-vision .cs-deck-head .cs-title { font-size: 24px; line-height: 1.3; }
-  .case-page.is-vision .cs-title em { display: block; }
+  .case-page.is-vision .cs-body > .cs-section > .cs-title,
+  .case-page.is-vision .cs-deck-head > .cs-title,
+  .case-page.is-vision .cs-mobile-pin-preview > .cs-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--cs-ink);
+  }
+  .case-page.is-vision .cs-body .cs-title em {
+    display: block;
+    color: var(--cs-accent-deep);
+  }
   .case-page.is-vision .cs-lede { font-size: 15.5px; line-height: 1.72; margin-top: 14px; }
   .case-page.is-vision .cs-sub {
-    margin-top: var(--cs-mobile-flow-gap);
+    margin-top: var(--cs-mobile-content-gap);
     margin-bottom: 0;
     font-size: 16px;
   }
   .case-page.is-vision .cs-body .cs-num { display: none; }
   .case-page.is-vision .cs-body > .cs-section,
   .case-page.is-vision .cs-body > .cs-deck {
-    padding-top: var(--cs-mobile-flow-gap);
+    padding-top: var(--cs-mobile-section-gap);
     padding-bottom: 0;
   }
   .case-page.is-vision .cs-panel-txt h3,
@@ -4453,7 +4464,7 @@
     font-size: 13.5px;
     line-height: 1.62;
   }
-  /* 面向对象使用原生横滑，不钉住页面，也不生成任何纵向占位。 */
+  /* 面向对象是手机端唯一的纵向驱动横向轨道。 */
   .case-page.is-vision .cs-audience-stage {
     display: block;
     overflow: visible;
@@ -4474,10 +4485,15 @@
     -webkit-overflow-scrolling: touch;
   }
   .case-page.is-vision .cs-audience-pin::-webkit-scrollbar { display: none; }
+  .case-page.is-vision .cs-audience-pin.is-auto-x {
+    overflow-x: hidden;
+    touch-action: pan-y;
+    scroll-snap-type: none;
+  }
   .case-page.is-vision .cs-audience-pin .cs-facets {
     display: flex;
     width: max-content;
-    margin-top: var(--cs-mobile-flow-gap);
+    margin-top: var(--cs-mobile-content-gap);
     align-items: stretch;
     border: 0;
     border-radius: 0;
@@ -4527,10 +4543,10 @@
   .case-page.is-vision .cs-audience-pin .hscroll-dots { display: none; }
   .case-page.is-vision .cs-mobile-pin-preview {
     display: block;
-    margin-top: var(--cs-mobile-flow-gap);
+    margin-top: var(--cs-mobile-section-gap);
   }
   .case-page.is-vision .cs-mobile-pin-preview.is-stage-copy { padding-bottom: 0; }
-  .case-page.is-vision .cs-mobile-pin-preview.is-follow-copy { margin-top: var(--cs-mobile-flow-gap); }
+  .case-page.is-vision .cs-mobile-pin-preview.is-follow-copy { margin-top: var(--cs-mobile-content-gap); }
   .case-page.is-vision .cs-mobile-pin-preview .cs-title { margin: 0; }
   .case-page.is-vision .cs-mobile-pin-preview .cs-lede { margin-bottom: 0; }
   .case-page.is-vision .cs-mobile-pin-preview .cs-lede + .cs-lede { margin-top: 12px; }
@@ -4551,7 +4567,7 @@
 
   /* 视觉体系沿用同一套 16:9 图文规范，手机只收紧留白。 */
   .case-page.is-vision .is-system-lab {
-    padding-top: var(--cs-mobile-flow-gap);
+    padding-top: var(--cs-mobile-section-gap);
     padding-bottom: 0;
   }
   .case-page.is-vision .is-system-lab .cs-deck-view {
@@ -4562,7 +4578,7 @@
     display: grid;
     max-width: none;
     gap: 0;
-    padding: 30px var(--gutter) 0;
+    padding: var(--cs-mobile-content-gap) var(--gutter) 0;
   }
   .case-page.is-vision .is-system-lab .cs-panel {
     width: auto;
@@ -4576,6 +4592,8 @@
     transition: none;
     contain: none;
   }
+  .case-page.is-vision .is-system-lab .cs-panel:first-child { padding-top: 0; }
+  .case-page.is-vision .is-system-lab .cs-panel:last-child { padding-bottom: 0; }
   .case-page.is-vision .is-system-lab .cs-panel-fig {
     width: 100%;
     margin-inline: 0;
@@ -4652,7 +4670,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 0;
-    margin: 26px 0 0;
+    margin: var(--cs-mobile-content-gap) 0 0;
     padding: 0;
     overflow: visible;
   }
@@ -4672,12 +4690,14 @@
     background: transparent;
   }
   .case-page.is-vision .is-outcome .cs-lesson:last-child { border-bottom: 0; }
+  .case-page.is-vision .is-outcome .cs-lesson:first-child { padding-top: 0; }
+  .case-page.is-vision .is-outcome .cs-lesson:last-child { padding-bottom: 0; }
   .case-page.is-vision .is-outcome .cs-lesson p { font-size: 14px; line-height: 1.7; }
   .case-page.is-vision .cs-capability-list .cs-facets {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0;
-    margin-top: 24px;
+    margin-top: var(--cs-mobile-content-gap);
     width: auto;
   }
   .case-page.is-vision .cs-capability-list .cs-facet,
@@ -4687,4 +4707,6 @@
     border-bottom: 1px solid var(--cs-hair);
   }
   .case-page.is-vision .cs-capability-list .cs-facet:last-child { border-bottom: 0; }
+  .case-page.is-vision .cs-capability-list .cs-facet:first-child { padding-top: 0; }
+  .case-page.is-vision .cs-capability-list .cs-facet:last-child { padding-bottom: 0; }
 }

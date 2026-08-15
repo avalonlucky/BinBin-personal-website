@@ -251,13 +251,12 @@ function initScrubVideo() {
   if (!video) return;
 
   const scrollTrack = box.closest('.cs-reveal-scroll') || box;
-  const mobileScrub = window.matchMedia('(max-width: 768px)').matches || hasCoarsePointer;
-  if (mobileScrub) scrollTrack.classList.add('is-mobile-scrub');
+  const initialMobileScrub = window.matchMedia('(max-width: 768px)').matches || hasCoarsePointer;
   const scrollScreens = Math.max(1, Number(box.dataset.scrollScreens) || 3.2);
   const sourceFps = Math.max(1, Number(box.dataset.videoFps) || 30);
   const frameDuration = 1 / sourceFps;
   const reducedPoster = box.dataset.reducedPoster;
-  const sourceUrl = mobileScrub ? video.dataset.src : (video.dataset.srcHq || video.dataset.src);
+  const sourceUrl = initialMobileScrub ? video.dataset.src : (video.dataset.srcHq || video.dataset.src);
 
   let trigger;
   let targetTime = 0;
@@ -316,27 +315,39 @@ function initScrubVideo() {
   video.addEventListener('seeked', schedule);
   video.addEventListener('loadedmetadata', prepareVideo);
 
-  const triggerOptions = {
-    trigger: box,
-    start: mobileScrub ? 'top bottom' : 'top top',
-    scrub: true,
-    invalidateOnRefresh: true,
-    onUpdate: self => syncToProgress(self.progress),
-    onRefresh: self => syncToProgress(self.progress, true),
+  const buildTrigger = mobileScrub => {
+    scrollTrack.classList.toggle('is-mobile-scrub', mobileScrub);
+    const triggerOptions = {
+      trigger: box,
+      start: mobileScrub ? 'top bottom' : 'top top',
+      scrub: true,
+      invalidateOnRefresh: true,
+      onUpdate: self => syncToProgress(self.progress),
+      onRefresh: self => syncToProgress(self.progress, true),
+    };
+
+    if (mobileScrub) {
+      // 手机随自然页面滚动推进视频，不 pin，也不制造额外占位。
+      triggerOptions.end = 'top top';
+    } else {
+      triggerOptions.end = () => '+=' + Math.round(window.innerHeight * scrollScreens);
+      triggerOptions.pin = true;
+      triggerOptions.pinSpacing = true;
+      triggerOptions.anticipatePin = 1;
+    }
+
+    const created = ScrollTrigger.create(triggerOptions);
+    trigger = created;
+    return () => {
+      created.kill(true);
+      if (trigger === created) trigger = null;
+      if (mobileScrub) scrollTrack.classList.remove('is-mobile-scrub');
+    };
   };
 
-  if (mobileScrub) {
-    // The first frame starts moving as soon as the video enters from below.
-    // Finish when its top reaches the viewport top, without extra track space.
-    triggerOptions.end = 'top top';
-  } else {
-    triggerOptions.end = () => '+=' + Math.round(window.innerHeight * scrollScreens);
-    triggerOptions.pin = true;
-    triggerOptions.pinSpacing = true;
-    triggerOptions.anticipatePin = 1;
-  }
-
-  trigger = ScrollTrigger.create(triggerOptions);
+  const scrubMedia = gsap.matchMedia();
+  scrubMedia.add('(max-width: 768px)', () => buildTrigger(true));
+  scrubMedia.add('(min-width: 769px)', () => buildTrigger(hasCoarsePointer));
 
   // Cloudflare Pages 对部分 MP4 不返回 Range。直接让 <video> 请求时，浏览器每次
   // seek 都会被完整 200 响应夹回 0；先拉成同源 Blob 后，逐帧定位不再依赖服务器。
@@ -358,7 +369,7 @@ function initScrubVideo() {
   // 浏览器恢复滚动位置发生在 load/pageshow 附近；重新量尺寸并同步当前帧。
   window.addEventListener('pageshow', () => requestAnimationFrame(() => {
     ScrollTrigger.refresh();
-    syncToProgress(trigger.progress, true);
+    syncToProgress(trigger?.progress || 0, true);
   }));
 }
 
@@ -515,7 +526,17 @@ function paintPinSpacer(el) {
   return () => { spacer.style.background = ''; };
 }
 
-function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, useScrollLeft, pinTarget }) {
+function driveMobileRail({
+  view,
+  track,
+  items,
+  fill,
+  onIndex,
+  refreshPriority,
+  useScrollLeft,
+  pinTarget,
+  exactOverflow = false,
+}) {
   const cards = typeof items === 'function' ? items : () => items;
   const visible = () => cards().filter(card =>
     card && !card.classList.contains('hscroll-dots') && getComputedStyle(card).display !== 'none'
@@ -527,6 +548,7 @@ function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, u
     const list = visible();
     if (useScrollLeft) {
       if (list.length < 2) return 0;
+      if (exactOverflow) return Math.max(0, view.scrollWidth - view.clientWidth);
       return Math.max(0, list[list.length - 1].offsetLeft - list[0].offsetLeft);
     }
     const el = track || view;
@@ -543,17 +565,23 @@ function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, u
 
   // 横向阶段的竖向长度应由轨道真正需要移动的像素决定。
   // 按“卡片数 × 屏幕高度”估算会在小屏手机上产生大量空转距离。
-  const slide = () => Math.max(
-    Math.round(travel() * 1.04),
-    Math.round(window.innerHeight * 0.42)
-  );
+  const slide = () => exactOverflow
+    ? Math.max(1, Math.round(travel()))
+    : Math.max(
+      Math.round(travel() * 1.04),
+      Math.round(window.innerHeight * 0.42)
+    );
+  const hold = () => exactOverflow ? 0 : railHold();
   const apply = progress => {
     const t = travel();
     const list = visible();
     const count = list.length;
+    // 精确溢出模式把最后 8% 的既有路程留给末项，不额外增加滚动距离。
     const horizontalProgress = t <= 0
       ? 1
-      : Math.min(1, progress * (slide() + railHold()) / slide());
+      : exactOverflow
+        ? Math.min(1, progress / 0.92)
+        : Math.min(1, progress * (slide() + hold()) / slide());
     if (useScrollLeft) view.scrollLeft = Math.round(t * horizontalProgress);
     else gsap.set(track, { x: -t * horizontalProgress });
     const i = Matheq(horizontalProgress, count);
@@ -567,7 +595,7 @@ function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, u
     trigger: pinEl,
     refreshPriority: refreshPriority || 90,
     start: () => `top ${navPinOffset()}px`,
-    end: () => `+=${slide() + railHold()}`,
+    end: () => `+=${slide() + hold()}`,
     pin: pinEl,
     pinSpacing: true,
     anticipatePin: 0.5,
@@ -589,6 +617,24 @@ function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, u
       pips[0]?.parentElement?.remove();
     },
   };
+}
+
+function initAudienceRail() {
+  const view = document.querySelector('.case-page.is-vision .cs-audience-pin');
+  const track = view?.querySelector('.cs-facets');
+  if (!view || !track) return;
+
+  gsap.matchMedia().add('(max-width: 768px)', () => {
+    const rail = driveMobileRail({
+      view,
+      track,
+      items: () => [...track.querySelectorAll('.cs-facet')],
+      refreshPriority: 99,
+      useScrollLeft: true,
+      exactOverflow: true,
+    });
+    return () => rail?.cleanup();
+  });
 }
 
 /* 进度 → 第几步。步数少时四舍五入会让第一步一闪而过，用等分区间更稳。 */
@@ -1749,6 +1795,7 @@ initPalette();
 initSeal();
 initScrubVideo();
 initDeck();
+initAudienceRail();
 initLine();
 initTocMap();
 initReader();
