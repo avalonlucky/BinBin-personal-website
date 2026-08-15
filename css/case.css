@@ -733,6 +733,197 @@
 .cs-shift-goals.is-muted li:hover { background: rgb(2 2 2 / 0.035); }
 
 /* ────────────────────────────────────────
+   01 / 战略诊断
+   不把问题归结为表面样式，而是把刊物作为企业内容产品来审视：
+   先拆出系统断点，再给出一一对应的行动路径。
+──────────────────────────────────────── */
+.case-page.is-vision .cs-strategy {
+  margin-top: clamp(42px, 5vw, 68px);
+  border-top: 1px solid var(--cs-hair);
+}
+.case-page.is-vision .cs-strategy-head {
+  display: grid;
+  grid-template-columns: minmax(180px, .64fr) minmax(0, 1.36fr);
+  gap: clamp(34px, 6vw, 86px);
+  align-items: start;
+  padding: clamp(32px, 4vw, 52px) 0;
+}
+.case-page.is-vision .cs-strategy-kicker {
+  margin: 0;
+  font-family: var(--f-cjk);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: .06em;
+  color: var(--cs-accent-deep);
+}
+.case-page.is-vision .cs-strategy-kicker span {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--f-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--cs-ink-3);
+}
+.case-page.is-vision .cs-strategy-head h3,
+.case-page.is-vision .cs-strategy-brief-intro h3 {
+  margin: 0;
+  max-width: 19em;
+  font-family: var(--f-cjk);
+  font-size: clamp(24px, 2.55vw, 34px);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -.01em;
+  color: var(--cs-ink);
+}
+.case-page.is-vision .cs-strategy-head h3 + p,
+.case-page.is-vision .cs-strategy-brief-intro h3 + p {
+  margin: 14px 0 0;
+  max-width: 46em;
+  font-family: var(--f-cjk);
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--cs-ink-2);
+}
+.case-page.is-vision .cs-strategy-diagnosis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--cs-hair);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.case-page.is-vision .cs-strategy-card {
+  position: relative;
+  min-height: 300px;
+  padding: clamp(22px, 2.6vw, 34px);
+  display: flex;
+  flex-direction: column;
+  background: rgb(255 255 255 / .13);
+  border-right: 1px solid var(--cs-hair);
+  transition: background .35s var(--ease);
+}
+.case-page.is-vision .cs-strategy-card:last-child { border-right: 0; }
+.case-page.is-vision .cs-strategy-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: var(--cs-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .45s var(--ease);
+}
+.case-page.is-vision .cs-strategy-card:hover { background: var(--cs-paper-2); }
+.case-page.is-vision .cs-strategy-card:hover::before { transform: scaleX(1); }
+.case-page.is-vision .cs-strategy-card header {
+  display: flex;
+  align-items: baseline;
+  gap: 11px;
+  margin-bottom: 26px;
+}
+.case-page.is-vision .cs-strategy-card header span,
+.case-page.is-vision .cs-strategy-pillar > span {
+  flex: 0 0 auto;
+  font-family: var(--f-body);
+  font-size: 12px;
+  letter-spacing: .12em;
+  color: var(--cs-accent-deep);
+}
+.case-page.is-vision .cs-strategy-card h4,
+.case-page.is-vision .cs-strategy-pillar h4 {
+  margin: 0;
+  font-family: var(--f-cjk);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--cs-ink);
+}
+.case-page.is-vision .cs-strategy-card > p {
+  margin: 0;
+  font-family: var(--f-cjk);
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--cs-ink-2);
+}
+.case-page.is-vision .cs-strategy-card strong {
+  margin-top: auto;
+  padding-top: 24px;
+  font-family: var(--f-cjk);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--cs-ink);
+}
+.case-page.is-vision .cs-strategy-card strong::before {
+  content: '后果';
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--f-body);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: .16em;
+  color: var(--cs-ink-3);
+}
+.case-page.is-vision .cs-strategy-brief {
+  display: grid;
+  grid-template-columns: minmax(260px, .82fr) minmax(0, 1.18fr);
+  margin-top: clamp(50px, 6vw, 78px);
+  border-radius: 8px;
+  background: var(--cs-paper-2);
+  overflow: hidden;
+}
+.case-page.is-vision .cs-strategy-brief-intro {
+  padding: clamp(30px, 4vw, 54px);
+}
+.case-page.is-vision .cs-strategy-brief-intro h3 { margin-top: 46px; }
+.case-page.is-vision .cs-strategy-path {
+  border-left: 1px solid var(--cs-hair);
+}
+.case-page.is-vision .cs-strategy-pillar {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 18px;
+  padding: 24px clamp(24px, 3vw, 38px);
+  border-bottom: 1px solid var(--cs-hair);
+  transition: background .3s var(--ease);
+}
+.case-page.is-vision .cs-strategy-pillar:last-child { border-bottom: 0; }
+.case-page.is-vision .cs-strategy-pillar:hover { background: rgb(255 255 255 / .42); }
+.case-page.is-vision .cs-strategy-pillar p {
+  margin: 6px 0 0;
+  font-family: var(--f-cjk);
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--cs-ink-2);
+}
+.case-page.is-vision .cs-strategy-result {
+  display: grid;
+  grid-template-columns: minmax(100px, .34fr) minmax(0, 1.66fr);
+  gap: clamp(24px, 4vw, 58px);
+  align-items: baseline;
+  margin: 0;
+  padding: clamp(28px, 3vw, 40px) 0 0;
+  font-family: var(--f-cjk);
+  font-size: clamp(18px, 1.75vw, 23px);
+  line-height: 1.6;
+  color: var(--cs-ink);
+}
+.case-page.is-vision .cs-strategy-result span {
+  font-family: var(--f-body);
+  font-size: 11px;
+  letter-spacing: .16em;
+  color: var(--cs-accent-deep);
+}
+
+@media (max-width: 980px) and (min-width: 769px) {
+  .case-page.is-vision .cs-strategy-diagnosis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .case-page.is-vision .cs-strategy-card:nth-child(2) { border-right: 0; }
+  .case-page.is-vision .cs-strategy-card:nth-child(-n+2) { border-bottom: 1px solid var(--cs-hair); }
+}
+
+/* ────────────────────────────────────────
    礼盒开启（.cs-reveal）
    视频进度绑定滚轮：钉住区块，把滚动距离换算成 currentTime。
    滚多快动多快，往回滚就反着关上。视频是全关键帧编码的，
@@ -4050,6 +4241,104 @@
   .case-page.is-vision .cs-shift-body p,
   .case-page.is-vision .cs-shift-flaws li,
   .case-page.is-vision .cs-shift-goals span { font-size: 14px; line-height: 1.68; }
+
+  /* 01 战略诊断：手机按阅读顺序自然排布，不复制桌面的四栏矩阵。 */
+  .case-page.is-vision .is-strategy { padding-bottom: 48px; }
+  .case-page.is-vision .cs-strategy {
+    margin-top: 32px;
+  }
+  .case-page.is-vision .cs-strategy-head {
+    display: block;
+    padding: 26px 0 22px;
+  }
+  .case-page.is-vision .cs-strategy-kicker {
+    font-size: 12px;
+  }
+  .case-page.is-vision .cs-strategy-kicker span {
+    display: inline;
+    margin: 0 0 0 8px;
+    font-size: 9px;
+  }
+  .case-page.is-vision .cs-strategy-head h3,
+  .case-page.is-vision .cs-strategy-brief-intro h3 {
+    margin-top: 20px;
+    font-size: 21px;
+    line-height: 1.38;
+  }
+  .case-page.is-vision .cs-strategy-head h3 + p,
+  .case-page.is-vision .cs-strategy-brief-intro h3 + p {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.68;
+  }
+  .case-page.is-vision .cs-strategy-diagnosis {
+    grid-template-columns: 1fr;
+    border-radius: 7px;
+  }
+  .case-page.is-vision .cs-strategy-card {
+    min-height: 0;
+    padding: 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--cs-hair);
+    background: transparent;
+  }
+  .case-page.is-vision .cs-strategy-card:last-child { border-bottom: 0; }
+  .case-page.is-vision .cs-strategy-card::before { display: none; }
+  .case-page.is-vision .cs-strategy-card header {
+    gap: 9px;
+    margin-bottom: 12px;
+  }
+  .case-page.is-vision .cs-strategy-card h4,
+  .case-page.is-vision .cs-strategy-pillar h4 {
+    font-size: 17px;
+  }
+  .case-page.is-vision .cs-strategy-card > p {
+    font-size: 14px;
+    line-height: 1.68;
+  }
+  .case-page.is-vision .cs-strategy-card strong {
+    margin-top: 16px;
+    padding-top: 0;
+    font-size: 12.5px;
+  }
+  .case-page.is-vision .cs-strategy-card strong::before {
+    display: inline;
+    margin: 0 8px 0 0;
+  }
+  .case-page.is-vision .cs-strategy-brief {
+    grid-template-columns: 1fr;
+    margin-top: 34px;
+    border-radius: 7px;
+  }
+  .case-page.is-vision .cs-strategy-brief-intro {
+    padding: 22px 20px 24px;
+  }
+  .case-page.is-vision .cs-strategy-brief-intro h3 { margin-top: 20px; }
+  .case-page.is-vision .cs-strategy-path {
+    border-top: 1px solid var(--cs-hair);
+    border-left: 0;
+  }
+  .case-page.is-vision .cs-strategy-pillar {
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 10px;
+    padding: 18px 20px;
+  }
+  .case-page.is-vision .cs-strategy-pillar p {
+    margin-top: 5px;
+    font-size: 13.5px;
+    line-height: 1.62;
+  }
+  .case-page.is-vision .cs-strategy-result {
+    display: block;
+    padding-top: 24px;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .case-page.is-vision .cs-strategy-result span {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 9px;
+  }
 
   /* 面向对象：外层舞台同时容纳横向卡片和下一段引言。
      竖滑时只移动卡片，标题与引言留在卡片下方；四张走完后整个舞台才继续上移。 */
