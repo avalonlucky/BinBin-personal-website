@@ -732,6 +732,33 @@
 .cs-shift-goals.is-muted span { color: var(--cs-ink-2); }
 .cs-shift-goals.is-muted li:hover { background: rgb(2 2 2 / 0.035); }
 
+.cs-review-paths {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cs-review-paths li {
+  position: relative;
+  padding-left: 16px;
+  font-family: var(--f-cjk);
+  font-size: var(--fs-base);
+  line-height: 1.72;
+  color: var(--cs-ink);
+}
+.cs-review-paths li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgb(var(--cs-accent-rgb) / 0.68);
+}
+
 /* ────────────────────────────────────────
    01 / 战略诊断
    不把问题归结为表面样式，而是把刊物作为企业内容产品来审视：
@@ -739,7 +766,7 @@
 ──────────────────────────────────────── */
 .case-page.is-vision .cs-strategy {
   margin-top: clamp(42px, 5vw, 68px);
-  border-top: 1px solid var(--cs-hair);
+  border-top: 0;
 }
 .case-page.is-vision .cs-strategy-head {
   display: grid;
@@ -790,9 +817,9 @@
 .case-page.is-vision .cs-strategy-diagnosis {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  border: 1px solid var(--cs-hair);
-  border-radius: 8px;
-  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
 }
 .case-page.is-vision .cs-strategy-card {
   position: relative;
@@ -800,7 +827,7 @@
   padding: clamp(22px, 2.6vw, 34px);
   display: flex;
   flex-direction: column;
-  background: rgb(255 255 255 / .13);
+  background: transparent;
   border-right: 1px solid var(--cs-hair);
   transition: background .35s var(--ease);
 }
@@ -815,8 +842,8 @@
   transform-origin: left;
   transition: transform .45s var(--ease);
 }
-.case-page.is-vision .cs-strategy-card:hover { background: var(--cs-paper-2); }
-.case-page.is-vision .cs-strategy-card:hover::before { transform: scaleX(1); }
+.case-page.is-vision .cs-strategy-card:hover { background: transparent; }
+.case-page.is-vision .cs-strategy-card:hover::before { transform: scaleX(0); }
 .case-page.is-vision .cs-strategy-card header {
   display: flex;
   align-items: baseline;
@@ -870,17 +897,15 @@
   display: grid;
   grid-template-columns: minmax(260px, .82fr) minmax(0, 1.18fr);
   margin-top: clamp(50px, 6vw, 78px);
-  border-radius: 8px;
-  background: var(--cs-paper-2);
-  overflow: hidden;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
 }
 .case-page.is-vision .cs-strategy-brief-intro {
   padding: clamp(30px, 4vw, 54px);
 }
 .case-page.is-vision .cs-strategy-brief-intro h3 { margin-top: 46px; }
-.case-page.is-vision .cs-strategy-path {
-  border-left: 1px solid var(--cs-hair);
-}
+.case-page.is-vision .cs-strategy-path { border-left: 0; }
 .case-page.is-vision .cs-strategy-pillar {
   display: grid;
   grid-template-columns: 36px minmax(0, 1fr);
@@ -3533,6 +3558,7 @@
 }
 
 @media (max-width: 768px) {
+  .case-page.is-vision .cs-body { --cs-mobile-flow-gap: 32px; }
   /* 窄屏没有左侧空间，导航回到顶部横排，但保留「选中=红、未选中=白」 */
   .cs-rd-stage { flex-direction: column; gap: 12px; padding-top: 8px; }
   .cs-rd-rail {
@@ -3971,22 +3997,16 @@
    刊物红仅用于进度、编号与极少量强调。
    ============================================================ */
 
-/* 04 / 规则系统：像一组可横向翻阅的编辑样张 */
+/* 04 / 规则系统：统一为 16:9 媒体 + 正文 + 分割线的编辑流。 */
 .case-page.is-vision .is-system-lab {
-  --lab-bg: var(--cs-paper);
-  --lab-panel: var(--cs-paper-2);
   padding-top: clamp(64px, 6vw, 92px);
   padding-bottom: clamp(42px, 5vw, 72px);
+  overflow: visible;
   background: var(--cs-paper);
   color: var(--cs-ink);
 }
-.case-page.is-vision .is-system-lab::before {
-  content: 'SYSTEM / 01—05';
-  color: var(--cs-ink-3);
-  opacity: .45;
-}
+.case-page.is-vision .is-system-lab::before { display: none; }
 .case-page.is-vision .is-system-lab .cs-num,
-.case-page.is-vision .is-system-lab .cs-lede,
 .case-page.is-vision .is-system-lab .cs-panel-txt p,
 .case-page.is-vision .is-system-lab .cs-specs-mini span,
 .case-page.is-vision .is-system-lab .cs-prio p,
@@ -3999,47 +4019,79 @@
 .case-page.is-vision .is-system-lab .cs-title em,
 .case-page.is-vision .is-system-lab .cs-specs-mini b,
 .case-page.is-vision .is-system-lab .cs-seal-now { color: var(--cs-accent-deep) !important; }
-.case-page.is-vision .is-system-lab .cs-deck-step { color: var(--cs-ink-3); }
-.case-page.is-vision .is-system-lab .cs-deck-step.is-on { color: var(--cs-ink); }
-.case-page.is-vision .is-system-lab .cs-deck-step.is-on i { color: var(--cs-accent-deep); }
-.case-page.is-vision .is-system-lab .cs-deck-rail { background: var(--cs-hair); }
-.case-page.is-vision .is-system-lab .cs-deck-rail b { background: var(--cs-accent); }
-.case-page.is-vision .is-system-lab .cs-deck-track { padding-top: 32px; }
+.case-page.is-vision .is-system-lab .cs-deck-view {
+  overflow: visible;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.case-page.is-vision .is-system-lab .cs-deck-track {
+  display: grid;
+  width: auto;
+  max-width: var(--cs-max);
+  margin: 0 auto;
+  gap: 0;
+  padding: clamp(32px, 4vw, 52px) var(--gutter) 0;
+  transform: none !important;
+  will-change: auto;
+}
 .case-page.is-vision .is-system-lab .cs-panel {
-  min-height: min(63vh, 620px);
   grid-template-columns: minmax(0, 1.16fr) minmax(330px, .84fr);
-  background: var(--cs-paper-2);
+  gap: clamp(28px, 4vw, 58px);
+  width: auto;
+  max-width: none;
+  min-height: 0;
+  padding: clamp(38px, 5vw, 64px) 0;
+  background: transparent;
   border: 0;
-  border-radius: 10px;
-  box-shadow: inset 0 0 0 1px rgba(2,2,2,.045), 0 18px 55px rgba(44,35,27,.055);
+  border-bottom: 1px solid var(--cs-hair);
+  border-radius: 0;
+  box-shadow: none;
   color: var(--cs-ink);
-  opacity: .52;
-  transform: scale(.978);
+  opacity: 1;
+  transform: none;
 }
-.case-page.is-vision .is-system-lab .cs-panel::before {
-  top: -24px;
-  right: 18px;
-  color: rgba(2,2,2,.035);
-}
+.case-page.is-vision .is-system-lab .cs-panel:first-child { border-top: 1px solid var(--cs-hair); }
+.case-page.is-vision .is-system-lab .cs-panel::before { display: none; }
 .case-page.is-vision .is-system-lab .cs-panel.is-active {
   opacity: 1;
-  transform: scale(1);
-  border-color: transparent;
+  transform: none;
+  border-color: var(--cs-hair);
 }
 .case-page.is-vision .is-system-lab .cs-chain,
 .case-page.is-vision .is-system-lab .cs-seal.is-inline,
 .case-page.is-vision .is-system-lab .cs-prio {
-  background: rgba(255,255,255,.42);
-  border-color: var(--cs-hair);
+  padding-inline: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 .case-page.is-vision .is-system-lab .cs-prio.is-active {
-  background: rgba(255,255,255,.74);
-  border-color: rgba(168,74,18,.32);
+  background: transparent;
+  border-color: transparent;
 }
-.case-page.is-vision .is-system-lab .cs-specs-mini li { border-color: var(--cs-hair); }
+.case-page.is-vision .is-system-lab .cs-specs-mini li { border: 0; }
 .case-page.is-vision .is-system-lab .cs-figure,
-.case-page.is-vision .is-system-lab .cs-tocmap-fig { background: #fffdf7; }
-.case-page.is-vision .is-system-lab .cs-figure-cap { background: rgba(251,251,244,.95); color: var(--cs-ink); }
+.case-page.is-vision .is-system-lab .cs-tocmap-fig {
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.case-page.is-vision .is-system-lab .cs-panel-fig .cs-figure img,
+.case-page.is-vision .is-system-lab .cs-panel-fig .cs-tocmap-fig img {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  aspect-ratio: auto;
+  object-fit: cover;
+  object-position: center;
+  background: var(--cs-paper);
+}
+.case-page.is-vision .is-system-lab .cs-figure.is-trimmed img { transform: scale(1.012); }
+.case-page.is-vision .is-system-lab .cs-figure:hover { box-shadow: none; }
 .case-page.is-vision .is-system-lab .cs-pd-ctrl button { border-color: var(--cs-hair); color: var(--cs-ink-2); }
 .case-page.is-vision .is-system-lab .cs-pd-state { color: var(--cs-ink-3); }
 .case-page.is-vision .is-system-lab .cs-pd-state b { color: var(--cs-accent-deep); }
@@ -4096,11 +4148,18 @@
 }
 .case-page.is-vision .is-proofroom .cs-line { max-width: 1040px; margin: 54px auto 0; }
 .case-page.is-vision .is-proofroom .cs-line-rail { background: var(--cs-hair); }
-.case-page.is-vision .is-proofroom .cs-line-item { padding-bottom: clamp(24px, 3vw, 42px); }
+.case-page.is-vision .is-proofroom .cs-line-item {
+  margin-bottom: clamp(24px, 3vw, 42px);
+  padding-bottom: clamp(24px, 3vw, 42px);
+  border-bottom: 1px solid var(--cs-hair);
+}
+.case-page.is-vision .is-proofroom .cs-line-item:last-child {
+  margin-bottom: 0;
+  border-bottom: 0;
+}
 .case-page.is-vision .is-proofroom .cs-line-body {
   padding: 0 0 clamp(24px, 3vw, 38px);
   border: 0;
-  border-bottom: 1px solid var(--cs-hair);
   border-radius: 0;
   background: transparent;
   box-shadow: none;
@@ -4112,8 +4171,17 @@
   background: transparent;
 }
 .case-page.is-vision .is-proofroom .cs-line-body::after { display: none; }
-.case-page.is-vision .is-proofroom .cs-plate b { color: var(--cs-ink-2); }
-.case-page.is-vision .is-proofroom .cs-plate img { border-color: var(--cs-hair); }
+.case-page.is-vision .is-proofroom .cs-plate b {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--cs-ink-3);
+}
+.case-page.is-vision .is-proofroom .cs-plate img {
+  border: 0;
+  border-radius: 0;
+}
 .case-page.is-vision .is-proofroom .cs-stat-n { color: var(--cs-ink); }
 .case-page.is-vision .is-proofroom .cs-stat-l { color: var(--cs-ink-3); }
 .case-page.is-vision .is-proofroom .cs-shift-label { color: var(--cs-ink); background: var(--cs-paper-2); }
@@ -4122,7 +4190,7 @@
 .case-page.is-vision .is-proofroom .cs-shift-goals li { border-color: var(--cs-hair); }
 .case-page.is-vision .is-proofroom .cs-shift-goals b { color: var(--cs-accent-deep); }
 
-/* 06 / 总结：三个判断与一张能力图，在同一米白纸面上收束 */
+/* 06–07 / 总结与能力：统一为无底色的分割线列表。 */
 .case-page.is-vision .is-outcome {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
@@ -4134,7 +4202,6 @@
 }
 .case-page.is-vision .is-outcome .cs-num { color: var(--cs-ink-3); }
 .case-page.is-vision .is-outcome .cs-title { color: var(--cs-ink); }
-.case-page.is-vision .is-outcome .cs-title em { color: var(--cs-accent-deep); }
 .case-page.is-vision .is-outcome .cs-lessons {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
@@ -4144,32 +4211,82 @@
 }
 .case-page.is-vision .is-outcome .cs-lesson,
 .case-page.is-vision .is-outcome .cs-lesson:first-child {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 28px;
-  min-height: 430px;
-  padding: clamp(28px, 3vw, 44px);
+  min-height: 0;
+  padding: clamp(28px, 3vw, 42px);
   border: 0;
-  border-right: 1px solid var(--cs-hair);
+  border-left: 1px solid var(--cs-hair);
   border-radius: 0;
   background: transparent;
   box-shadow: none;
   color: var(--cs-ink);
 }
-.case-page.is-vision .is-outcome .cs-lesson:last-child { border-right: 0; }
-.case-page.is-vision .is-outcome .cs-lesson:hover { transform: none; background: rgba(255,255,255,.38); }
-.case-page.is-vision .is-outcome .cs-lesson-n { color: rgba(168,74,18,.18); }
+.case-page.is-vision .is-outcome .cs-lesson:first-child { border-left: 0; }
+.case-page.is-vision .is-outcome .cs-lesson:hover { transform: none; background: transparent; }
 .case-page.is-vision .is-outcome .cs-lesson h3,
 .case-page.is-vision .is-outcome .cs-lesson strong { color: var(--cs-ink); }
 .case-page.is-vision .is-outcome .cs-lesson p { color: var(--cs-ink-2); font-size: 17px; line-height: 1.82; }
+.case-page.is-vision .is-capabilities {
+  max-width: none;
+  padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
+  background: var(--cs-paper);
+}
+.case-page.is-vision .is-capabilities .cs-title { color: var(--cs-ink); }
 .case-page.is-vision .cs-only-mobile { display: none; }
+
+/* 本页以纸面排版为主，图片和并列能力不再套独立卡片。 */
+.case-page.is-vision .cs-doc {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.case-page.is-vision .cs-doc:hover {
+  transform: none;
+  box-shadow: none;
+}
+.case-page.is-vision .cs-doc-cap {
+  padding-inline: 0;
+  border-top: 0;
+}
+.case-page.is-vision .cs-audience-pin .cs-facets {
+  gap: clamp(28px, 4vw, 64px);
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+}
+.case-page.is-vision .cs-audience-pin .cs-facet,
+.case-page.is-vision .cs-audience-pin .cs-facet + .cs-facet {
+  padding-inline: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.case-page.is-vision .cs-capability-list .cs-facets {
+  gap: 0;
+  margin-top: clamp(28px, 3.5vw, 48px);
+  border-top: 1px solid var(--cs-hair);
+  border-right: 0;
+  border-bottom: 1px solid var(--cs-hair);
+  border-left: 0;
+  border-radius: 0;
+  overflow: visible;
+}
+.case-page.is-vision .cs-capability-list .cs-facet {
+  padding: clamp(26px, 3vw, 40px);
+  border-radius: 0;
+  background: transparent;
+}
+.case-page.is-vision .cs-capability-list .cs-facet,
+.case-page.is-vision .cs-capability-list .cs-facet + .cs-facet {
+  border-left: 1px solid var(--cs-hair);
+}
+.case-page.is-vision .cs-capability-list .cs-facet:first-child { border-left: 0; }
 
 @media (max-width: 900px) {
   .case-page.is-vision .is-outcome .cs-lessons { grid-template-columns: 1fr; }
   .case-page.is-vision .is-outcome .cs-lesson,
   .case-page.is-vision .is-outcome .cs-lesson:first-child {
     min-height: 0;
-    border-right: 0;
+    border-left: 0;
     border-bottom: 1px solid var(--cs-hair);
   }
   .case-page.is-vision .is-outcome .cs-lesson:last-child { border-bottom: 0; }
@@ -4231,9 +4348,17 @@
   .case-page.is-vision .cs-deck-head .cs-title { font-size: 24px; line-height: 1.3; }
   .case-page.is-vision .cs-title em { display: block; }
   .case-page.is-vision .cs-lede { font-size: 15.5px; line-height: 1.72; margin-top: 14px; }
-  .case-page.is-vision .cs-sub { font-size: 16px; margin-top: 28px; }
+  .case-page.is-vision .cs-sub {
+    margin-top: var(--cs-mobile-flow-gap);
+    margin-bottom: 0;
+    font-size: 16px;
+  }
   .case-page.is-vision .cs-body .cs-num { display: none; }
-  .case-page.is-vision .cs-section { padding-top: 42px; padding-bottom: 42px; }
+  .case-page.is-vision .cs-body > .cs-section,
+  .case-page.is-vision .cs-body > .cs-deck {
+    padding-top: var(--cs-mobile-flow-gap);
+    padding-bottom: 0;
+  }
   .case-page.is-vision .cs-panel-txt h3,
   .case-page.is-vision .cs-lesson h3,
   .case-page.is-vision .cs-facet h4 { font-size: 20px; line-height: 1.35; }
@@ -4243,7 +4368,7 @@
   .case-page.is-vision .cs-shift-goals span { font-size: 14px; line-height: 1.68; }
 
   /* 01 战略诊断：手机按阅读顺序自然排布，不复制桌面的四栏矩阵。 */
-  .case-page.is-vision .is-strategy { padding-bottom: 48px; }
+  .case-page.is-vision .is-strategy { padding-bottom: 0; }
   .case-page.is-vision .cs-strategy {
     margin-top: 32px;
   }
@@ -4311,11 +4436,11 @@
     border-radius: 7px;
   }
   .case-page.is-vision .cs-strategy-brief-intro {
-    padding: 22px 20px 24px;
+    padding: 22px 0 24px;
   }
   .case-page.is-vision .cs-strategy-brief-intro h3 { margin-top: 20px; }
   .case-page.is-vision .cs-strategy-path {
-    border-top: 1px solid var(--cs-hair);
+    border-top: 0;
     border-left: 0;
   }
   .case-page.is-vision .cs-strategy-pillar {
@@ -4328,52 +4453,57 @@
     font-size: 13.5px;
     line-height: 1.62;
   }
-  .case-page.is-vision .cs-strategy-result {
-    display: block;
-    padding-top: 24px;
-    font-size: 16px;
-    line-height: 1.65;
-  }
-  .case-page.is-vision .cs-strategy-result span {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 9px;
-  }
-
-  /* 面向对象：外层舞台同时容纳横向卡片和下一段引言。
-     竖滑时只移动卡片，标题与引言留在卡片下方；四张走完后整个舞台才继续上移。 */
+  /* 面向对象使用原生横滑，不钉住页面，也不生成任何纵向占位。 */
   .case-page.is-vision .cs-audience-stage {
     display: block;
-    overflow: hidden;
-    padding-bottom: 4px;
+    overflow: visible;
+    padding-bottom: 0;
   }
   .case-page.is-vision .cs-audience-pin {
-    overflow-x: hidden;
+    width: calc(100% + 2 * var(--gutter));
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    overflow-x: auto;
     overflow-y: hidden;
-    touch-action: pan-y;
+    touch-action: pan-x pan-y;
     overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
     scrollbar-width: none;
     padding-bottom: 0;
+    -webkit-overflow-scrolling: touch;
   }
   .case-page.is-vision .cs-audience-pin::-webkit-scrollbar { display: none; }
   .case-page.is-vision .cs-audience-pin .cs-facets {
-    margin-top: 18px;
+    display: flex;
+    width: max-content;
+    margin-top: var(--cs-mobile-flow-gap);
     align-items: stretch;
     border: 0;
     border-radius: 0;
     overflow: visible;
+    gap: 20px;
+    padding-right: var(--gutter);
   }
   .case-page.is-vision .cs-audience-pin .cs-facet {
     box-sizing: border-box;
-    height: 168px;
-    padding: 18px;
+    flex: 0 0 min(82vw, 320px);
+    width: min(82vw, 320px);
+    max-width: none;
+    padding: 0;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     grid-template-rows: auto auto;
-    align-content: center;
+    align-content: start;
     column-gap: 10px;
     row-gap: 14px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
+  .case-page.is-vision .cs-audience-pin .cs-facet + .cs-facet { border-left: 0; }
   .case-page.is-vision .cs-audience-pin .cs-facet-n {
     align-self: baseline;
     margin: 0;
@@ -4391,16 +4521,16 @@
   }
   .case-page.is-vision .cs-audience-pin .cs-facet p {
     grid-column: 1 / -1;
-    align-self: center;
+    align-self: start;
     margin: 0;
   }
   .case-page.is-vision .cs-audience-pin .hscroll-dots { display: none; }
   .case-page.is-vision .cs-mobile-pin-preview {
     display: block;
-    margin-top: clamp(28px, 8vw, 40px);
+    margin-top: var(--cs-mobile-flow-gap);
   }
-  .case-page.is-vision .cs-mobile-pin-preview.is-stage-copy { padding-bottom: 2px; }
-  .case-page.is-vision .cs-mobile-pin-preview.is-follow-copy { margin-top: 22px; }
+  .case-page.is-vision .cs-mobile-pin-preview.is-stage-copy { padding-bottom: 0; }
+  .case-page.is-vision .cs-mobile-pin-preview.is-follow-copy { margin-top: var(--cs-mobile-flow-gap); }
   .case-page.is-vision .cs-mobile-pin-preview .cs-title { margin: 0; }
   .case-page.is-vision .cs-mobile-pin-preview .cs-lede { margin-bottom: 0; }
   .case-page.is-vision .cs-mobile-pin-preview .cs-lede + .cs-lede { margin-top: 12px; }
@@ -4418,69 +4548,41 @@
   .case-page.is-vision .is-mobile-omit { display: none !important; }
   .case-page.is-vision .cs-only-desktop { display: none; }
   .case-page.is-vision .cs-only-mobile { display: inline; }
-  .case-page.is-vision .is-system-lab .is-mobile-cover .cs-panel-fig { display: none; }
 
-  .case-page.is-vision .is-system-lab { padding-top: 52px; }
-  /* 手机横向卡不靠手指左右滑：钉在导航下，上下滑自己从右往左走。
-     下一张露出一角，是「后面还有」而不是滑动暗示。 */
+  /* 视觉体系沿用同一套 16:9 图文规范，手机只收紧留白。 */
   .case-page.is-vision .is-system-lab {
-    overflow: hidden;
-    padding-bottom: 36px;
+    padding-top: var(--cs-mobile-flow-gap);
+    padding-bottom: 0;
   }
   .case-page.is-vision .is-system-lab .cs-deck-view {
     position: relative;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    scroll-snap-type: none;
-    scroll-padding-inline: var(--gutter);
-    overscroll-behavior-inline: contain;
-    touch-action: pan-y;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 28px;
+    padding-bottom: 0;
   }
-  .case-page.is-vision .is-system-lab .cs-deck-view::-webkit-scrollbar { display: none; }
   .case-page.is-vision .is-system-lab .cs-deck-track {
-    width: max-content;
-    flex-direction: row;
-    align-items: stretch;
-    gap: 12px;
-    padding: 16px var(--gutter) 8px;
-    transform: none;
-    will-change: auto;
-  }
-  .case-page.is-vision .is-system-lab .cs-deck-view.is-auto-x .cs-deck-track {
-    transform: none !important;
-    will-change: auto;
+    display: grid;
+    max-width: none;
+    gap: 0;
+    padding: 30px var(--gutter) 0;
   }
   .case-page.is-vision .is-system-lab .cs-panel {
-    flex: 0 0 calc(100vw - 54px);
-    width: calc(100vw - 54px);
-    max-width: 352px;
-    min-height: 0;
-    max-height: calc(100svh - 136px);
+    width: auto;
+    max-width: none;
+    max-height: none;
     height: auto;
     grid-template-columns: 1fr;
     align-content: start;
-    gap: 10px;
-    padding: 14px;
-    border-radius: 8px;
-    opacity: 1;
-    transform: none;
+    gap: 18px;
+    padding: 30px 0;
     transition: none;
-    contain: layout paint;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    contain: none;
   }
-  .case-page.is-vision .is-system-lab .cs-panel.is-active {
-    opacity: 1;
-    transform: none;
+  .case-page.is-vision .is-system-lab .cs-panel-fig {
+    width: 100%;
+    margin-inline: 0;
   }
-  .case-page.is-vision .is-system-lab .cs-panel-fig .cs-figure img,
-  .case-page.is-vision .is-system-lab .cs-panel-fig .cs-tocmap-fig img { max-height: 20svh; }
-  .case-page.is-vision .is-system-lab .cs-figure-cap { padding: 7px 10px; }
-  .case-page.is-vision .is-system-lab .cs-panel-txt h3 { margin-bottom: 6px; font-size: 18px; line-height: 1.32; }
-  .case-page.is-vision .is-system-lab .cs-panel-txt p { font-size: 13.5px; line-height: 1.55; }
+  .case-page.is-vision .is-system-lab .cs-panel-txt { padding-inline: 0; }
+  .case-page.is-vision .is-system-lab .cs-panel-txt h3 { margin-bottom: 10px; font-size: 19px; line-height: 1.38; }
+  .case-page.is-vision .is-system-lab .cs-panel-txt p { font-size: 14px; line-height: 1.68; }
   .case-page.is-vision .is-system-lab .cs-specs-mini { margin-top: 6px; }
   .case-page.is-vision .is-system-lab .cs-specs-mini li { padding-block: 4px; }
   .case-page.is-vision .is-system-lab .cs-chain { font-size: 12px; line-height: 1.5; padding: 8px 10px; }
@@ -4493,7 +4595,6 @@
   .case-page.is-vision .is-system-lab .cs-seal.is-inline .cs-seal-stage { padding: 8%; }
   .case-page.is-vision .is-system-lab .cs-prio { padding: 8px 10px; }
   .case-page.is-vision .is-system-lab .cs-prio p { display: none; }
-  .case-page.is-vision .is-system-lab .cs-deck-rail { display: none; }
   .case-page.is-vision .hscroll-dots { display: flex; }
   .case-page.is-vision .hscroll-dots.is-in-rail {
     position: absolute;
@@ -4504,103 +4605,86 @@
     margin: 0;
   }
 
-  /* 05 的四个环节同样由上下滑驱动横向走完。 */
-  .case-page.is-vision .is-proofroom { overflow: hidden; }
+  /* 05 回到竖向自然阅读，卡片高度由内容撑开。 */
+  .case-page.is-vision .is-proofroom { overflow: visible; }
   .case-page.is-vision .is-proofroom .cs-line {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    display: block;
     max-width: none;
-    margin: 32px calc(var(--gutter) * -1) 0;
-    padding: 0 var(--gutter) 28px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    scroll-snap-type: none;
-    scroll-padding-inline: var(--gutter);
-    overscroll-behavior-inline: contain;
-    touch-action: pan-y;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+    margin: 32px 0 0;
+    padding: 0 0 0 32px;
+    overflow: visible;
   }
-  .case-page.is-vision .is-proofroom .cs-line::-webkit-scrollbar { display: none; }
-  .case-page.is-vision .is-proofroom .cs-line-rail,
-  .case-page.is-vision .is-proofroom .cs-line-dot { display: none; }
   .case-page.is-vision .is-proofroom .cs-line-item,
   .case-page.is-vision .is-proofroom .cs-line-item:last-child {
-    flex: 0 0 calc(100vw - 54px);
-    width: calc(100vw - 54px);
-    max-width: 352px;
-    height: 330px;
-    max-height: 330px;
-    padding: 0;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    width: auto;
+    max-width: none;
+    height: auto;
+    max-height: none;
+    margin-bottom: 26px;
+    padding: 0 0 26px;
   }
+  .case-page.is-vision .is-proofroom .cs-line-item:last-child { margin-bottom: 0; padding-bottom: 0; }
   .case-page.is-vision .is-proofroom .cs-line-body,
   .case-page.is-vision .is-proofroom .cs-line-item:last-child .cs-line-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 330px;
+    display: block;
+    height: auto;
     min-height: 0;
-    max-height: 330px;
-    padding: 16px;
-    border: 1px solid var(--cs-hair);
-    border-radius: 10px;
-    background: var(--cs-paper-2);
-    overflow: hidden;
+    max-height: none;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    overflow: visible;
   }
-  .case-page.is-vision .is-proofroom .cs-line-k { font-size: 20px; margin-bottom: 8px; }
+  .case-page.is-vision .is-proofroom .cs-line-k { font-size: 18px; margin-bottom: 8px; }
   .case-page.is-vision .is-proofroom .cs-line-body p { font-size: 14px; line-height: 1.62; }
-  .case-page.is-vision .is-proofroom .cs-shift-label { padding: 8px 12px; }
-  .case-page.is-vision .is-proofroom .cs-shift-label:nth-of-type(2) { margin-top: 14px; }
-  .case-page.is-vision .is-proofroom .cs-shift-goals li { padding: 6px 4px; }
-  .case-page.is-vision .is-proofroom .cs-shift-label,
-  .case-page.is-vision .is-proofroom .cs-shift-label.is-mine {
-    background: var(--cs-paper-2);
-  }
-  .case-page.is-vision .is-proofroom .cs-shift-body { display: none; }
+  .case-page.is-vision .is-proofroom .cs-review-paths { margin-top: 10px; gap: 4px; }
+  .case-page.is-vision .is-proofroom .cs-review-paths li { font-size: 14px; line-height: 1.62; }
   .case-page.is-vision .is-proofroom .cs-plates { gap: 8px; margin-top: 10px; }
   .case-page.is-vision .is-proofroom .cs-plate img { max-height: 112px; object-fit: cover; }
+  .case-page.is-vision .is-proofroom .cs-plate b { margin-top: 6px; font-size: 13px; }
   .case-page.is-vision .is-proofroom .cs-stats { margin-top: 12px; }
-  /* 三点总结：同一组高度，上下滑换下一张。 */
-  .case-page.is-vision .is-outcome { overflow: hidden; }
+  .case-page.is-vision .is-proofroom { padding-bottom: 0; }
+  /* 总结与能力共用无底色、细分割线的单列规范。 */
+  .case-page.is-vision .is-outcome { overflow: visible; }
   .case-page.is-vision .is-outcome .cs-lessons {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin: 26px calc(var(--gutter) * -1) 0;
-    padding: 0 var(--gutter) 28px;
-    border: 0;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    scroll-snap-type: none;
-    scroll-padding-inline: var(--gutter);
-    overscroll-behavior-inline: contain;
-    touch-action: pan-y;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 26px 0 0;
+    padding: 0;
+    overflow: visible;
   }
-  .case-page.is-vision .is-outcome .cs-lessons::-webkit-scrollbar { display: none; }
   .case-page.is-vision .is-outcome .cs-lesson,
   .case-page.is-vision .is-outcome .cs-lesson:first-child,
   .case-page.is-vision .is-outcome .cs-lesson:last-child {
-    flex: 0 0 calc(100vw - 54px);
-    width: calc(100vw - 54px);
-    max-width: 352px;
+    width: auto;
+    max-width: none;
     min-height: 0;
-    height: 360px;
-    max-height: 360px;
-    align-content: center;
-    gap: 16px;
-    padding: 22px;
-    border: 1px solid var(--cs-hair);
-    border-radius: 10px;
-    background: var(--cs-paper-2);
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    height: auto;
+    max-height: none;
+    align-content: start;
+    padding: 24px 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--cs-hair);
+    border-radius: 0;
+    background: transparent;
   }
+  .case-page.is-vision .is-outcome .cs-lesson:last-child { border-bottom: 0; }
   .case-page.is-vision .is-outcome .cs-lesson p { font-size: 14px; line-height: 1.7; }
+  .case-page.is-vision .cs-capability-list .cs-facets {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 24px;
+    width: auto;
+  }
+  .case-page.is-vision .cs-capability-list .cs-facet,
+  .case-page.is-vision .cs-capability-list .cs-facet + .cs-facet {
+    padding: 24px 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--cs-hair);
+  }
+  .case-page.is-vision .cs-capability-list .cs-facet:last-child { border-bottom: 0; }
 }

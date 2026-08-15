@@ -451,6 +451,7 @@ function initDeck() {
     // 手机端只吃上下滑：卡片组钉在导航下方，竖滑距离换成横向位移，
     // 从右往左一张张走完，最后一张停稳后再把页面交还给下面的内容。
     gsap.matchMedia().add('(max-width: 768px)', () => {
+      if (deck.closest('.case-page.is-vision')) return;
       const view = deck.querySelector('.cs-deck-view');
       if (!view) return;
       const rail = driveMobileRail({
@@ -546,7 +547,6 @@ function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, u
     Math.round(travel() * 1.04),
     Math.round(window.innerHeight * 0.42)
   );
-
   const apply = progress => {
     const t = travel();
     const list = visible();
@@ -589,42 +589,6 @@ function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, u
       pips[0]?.parentElement?.remove();
     },
   };
-}
-
-function initMobileAutoRails() {
-  const audienceStage = document.querySelector('.case-page.is-vision [data-audience-stage]');
-  const rails = [
-    ...document.querySelectorAll('.case-page.is-vision .is-proofroom .cs-line'),
-    ...document.querySelectorAll('.case-page.is-vision .is-outcome .cs-lessons'),
-  ];
-  if (!rails.length && !audienceStage) return;
-
-  gsap.matchMedia().add('(max-width: 768px)', () => {
-    const made = rails.map(view => driveMobileRail({
-      view,
-      items: () => [...view.children],
-      useScrollLeft: true,
-      refreshPriority: view.closest('.is-proofroom') ? 97 : 96,
-    })).filter(Boolean);
-
-    if (audienceStage) {
-      const view = audienceStage.querySelector('[data-audience-rail]');
-      const track = audienceStage.querySelector('[data-hscroll-track]');
-      if (view && track) {
-        const audienceRail = driveMobileRail({
-          view,
-          track,
-          items: () => [...track.children],
-          useScrollLeft: true,
-          pinTarget: audienceStage,
-          refreshPriority: 99,
-        });
-        if (audienceRail) made.unshift(audienceRail);
-      }
-    }
-
-    return () => made.forEach(rail => rail.cleanup());
-  });
 }
 
 /* 进度 → 第几步。步数少时四舍五入会让第一步一闪而过，用等分区间更稳。 */
@@ -1785,7 +1749,6 @@ initPalette();
 initSeal();
 initScrubVideo();
 initDeck();
-initMobileAutoRails();
 initLine();
 initTocMap();
 initReader();
