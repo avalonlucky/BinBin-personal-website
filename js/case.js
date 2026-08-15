@@ -535,7 +535,6 @@ function driveMobileRail({
   refreshPriority,
   useScrollLeft,
   pinTarget,
-  exactOverflow = false,
 }) {
   const cards = typeof items === 'function' ? items : () => items;
   const visible = () => cards().filter(card =>
@@ -548,7 +547,6 @@ function driveMobileRail({
     const list = visible();
     if (useScrollLeft) {
       if (list.length < 2) return 0;
-      if (exactOverflow) return Math.max(0, view.scrollWidth - view.clientWidth);
       return Math.max(0, list[list.length - 1].offsetLeft - list[0].offsetLeft);
     }
     const el = track || view;
@@ -565,23 +563,17 @@ function driveMobileRail({
 
   // 横向阶段的竖向长度应由轨道真正需要移动的像素决定。
   // 按“卡片数 × 屏幕高度”估算会在小屏手机上产生大量空转距离。
-  const slide = () => exactOverflow
-    ? Math.max(1, Math.round(travel()))
-    : Math.max(
-      Math.round(travel() * 1.04),
-      Math.round(window.innerHeight * 0.42)
-    );
-  const hold = () => exactOverflow ? 0 : railHold();
+  const slide = () => Math.max(
+    Math.round(travel() * 1.04),
+    Math.round(window.innerHeight * 0.42)
+  );
   const apply = progress => {
     const t = travel();
     const list = visible();
     const count = list.length;
-    // 精确溢出模式把最后 8% 的既有路程留给末项，不额外增加滚动距离。
     const horizontalProgress = t <= 0
       ? 1
-      : exactOverflow
-        ? Math.min(1, progress / 0.92)
-        : Math.min(1, progress * (slide() + hold()) / slide());
+      : Math.min(1, progress * (slide() + railHold()) / slide());
     if (useScrollLeft) view.scrollLeft = Math.round(t * horizontalProgress);
     else gsap.set(track, { x: -t * horizontalProgress });
     const i = Matheq(horizontalProgress, count);
@@ -595,7 +587,7 @@ function driveMobileRail({
     trigger: pinEl,
     refreshPriority: refreshPriority || 90,
     start: () => `top ${navPinOffset()}px`,
-    end: () => `+=${slide() + hold()}`,
+    end: () => `+=${slide() + railHold()}`,
     pin: pinEl,
     pinSpacing: true,
     anticipatePin: 0.5,
@@ -619,20 +611,104 @@ function driveMobileRail({
   };
 }
 
+/* 受众轨道不使用 pin：纵向手势在轨道抵达导航下方时直接推进 scrollLeft，
+   最后一张走完后放行页面。没有 pin 就没有额外纵向占位。 */
+function driveAudienceGestureRail(view) {
+  const maxScroll = () => Math.max(0, view.scrollWidth - view.clientWidth);
+  const clamp = value => Math.max(0, Math.min(maxScroll(), value));
+  const drive = delta => {
+    view.scrollLeft = clamp(view.scrollLeft + delta);
+  };
+  const halt = event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  };
+  const movePage = delta => {
+    const next = scroller.scrollTop + delta;
+    lenis.scrollTo(next, { immediate: true, force: true });
+    scroller.scrollTop = next;
+  };
+  const consume = (event, delta, multiplier) => {
+    const forward = delta > 0 && view.scrollLeft < maxScroll() - 1;
+    const backward = delta < 0 && view.scrollLeft > 1;
+    if (!forward && !backward) return false;
+
+    const rect = view.getBoundingClientRect();
+    const line = navPinOffset();
+    const tolerance = Math.min(72, Math.max(28, rect.height * 0.5));
+    const offset = rect.top - line;
+
+    // 单次大幅滚动也不能越过轨道：先走到闸门，再把剩余量交给横移。
+    if (forward && offset > tolerance) {
+      if (delta < offset) return false;
+      halt(event);
+      movePage(offset);
+      drive((delta - offset) * multiplier);
+      return true;
+    }
+    if (backward && offset < -tolerance) {
+      if (delta > offset) return false;
+      halt(event);
+      movePage(offset);
+      drive((delta - offset) * multiplier);
+      return true;
+    }
+
+    if (rect.top > line + tolerance || rect.bottom < line - tolerance) return false;
+    halt(event);
+    drive(delta * multiplier);
+    return true;
+  };
+
+  view.classList.add('is-auto-x');
+  view.scrollLeft = 0;
+
+  const onWheel = event => {
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+    const delta = event.deltaY * unit;
+    consume(event, delta, 1.15);
+  };
+
+  let lastTouchX = 0;
+  let lastTouchY = 0;
+  const onTouchStart = event => {
+    const touch = event.touches[0];
+    if (!touch) return;
+    lastTouchX = touch.clientX;
+    lastTouchY = touch.clientY;
+  };
+  const onTouchMove = event => {
+    const touch = event.touches[0];
+    if (!touch) return;
+    const deltaX = lastTouchX - touch.clientX;
+    const deltaY = lastTouchY - touch.clientY;
+    lastTouchX = touch.clientX;
+    lastTouchY = touch.clientY;
+    if (Math.abs(deltaY) <= Math.abs(deltaX)) return;
+    consume(event, deltaY, 2.2);
+  };
+
+  scroller.addEventListener('wheel', onWheel, { passive: false, capture: true });
+  scroller.addEventListener('touchstart', onTouchStart, { passive: true, capture: true });
+  scroller.addEventListener('touchmove', onTouchMove, { passive: false, capture: true });
+
+  return {
+    cleanup: () => {
+      scroller.removeEventListener('wheel', onWheel, true);
+      scroller.removeEventListener('touchstart', onTouchStart, true);
+      scroller.removeEventListener('touchmove', onTouchMove, true);
+      view.classList.remove('is-auto-x');
+      view.scrollLeft = 0;
+    },
+  };
+}
+
 function initAudienceRail() {
   const view = document.querySelector('.case-page.is-vision .cs-audience-pin');
-  const track = view?.querySelector('.cs-facets');
-  if (!view || !track) return;
+  if (!view) return;
 
   gsap.matchMedia().add('(max-width: 768px)', () => {
-    const rail = driveMobileRail({
-      view,
-      track,
-      items: () => [...track.querySelectorAll('.cs-facet')],
-      refreshPriority: 99,
-      useScrollLeft: true,
-      exactOverflow: true,
-    });
+    const rail = driveAudienceGestureRail(view);
     return () => rail?.cleanup();
   });
 }

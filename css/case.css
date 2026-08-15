@@ -4464,7 +4464,7 @@
     font-size: 13.5px;
     line-height: 1.62;
   }
-  /* 面向对象是手机端唯一的纵向驱动横向轨道。 */
+  /* 面向对象由纵向手势直接驱动横移，不 pin，也不生成纵向占位。 */
   .case-page.is-vision .cs-audience-stage {
     display: block;
     overflow: visible;
