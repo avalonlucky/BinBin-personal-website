@@ -448,53 +448,139 @@ function initDeck() {
       return () => { st.kill(); tween.kill(); gsap.set(track, { clearProps: 'x' }); };
     });
 
-    // 手机端先把卡片组固定在导航下方，纵向滚动只负责推进横向卡片；
-    // 最后一张完整出现后才释放页面进入下一段。
+    // 手机端只吃上下滑：卡片组钉在导航下方，竖滑距离换成横向位移，
+    // 从右往左一张张走完，最后一张停稳后再把页面交还给下面的内容。
     gsap.matchMedia().add('(max-width: 768px)', () => {
       const view = deck.querySelector('.cs-deck-view');
       if (!view) return;
-      const visiblePanels = panels.filter(panel => panel.offsetParent !== null);
-      const distance = () => Math.max(0, track.scrollWidth - view.clientWidth);
-      if (distance() <= 0) return;
-
-      view.classList.add('is-auto-x');
-      const navBottom = () => Math.ceil(document.querySelector('#nav')?.getBoundingClientRect().bottom || 64) + 10;
-      const hold = () => Math.min(220, Math.max(150, window.innerHeight * 0.22));
-      const st = ScrollTrigger.create({
-        trigger: view,
+      const rail = driveMobileRail({
+        view,
+        track,
+        items: () => panels.filter(panel => panel.offsetParent !== null),
+        fill,
         refreshPriority: 98,
-        start: () => `top ${navBottom()}px`,
-        end: () => `+=${distance() + hold()}`,
-        pin: true,
-        pinSpacing: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: self => {
-          const travel = distance();
-          const horizontalProgress = travel <= 0
-            ? 1
-            : Math.min(1, self.progress * (travel + hold()) / travel);
-          gsap.set(track, { x: -travel * horizontalProgress });
-          const active = Math.min(visiblePanels.length - 1, Matheq(horizontalProgress, visiblePanels.length));
-          activate(active, [], visiblePanels);
-          if (fill) fill.style.width = `${(horizontalProgress * 100).toFixed(2)}%`;
+        onIndex: (active, visible) => {
+          activate(active, [], visible);
           if (sealPanel && window.__sealShow) {
-            window.__sealShow(visiblePanels[active] === sealPanel ? 'inverse' : 'relief');
+            window.__sealShow(visible[active] === sealPanel ? 'inverse' : 'relief');
           }
         },
       });
-
-      return () => {
-        st.kill();
-        view.classList.remove('is-auto-x');
-        gsap.set(track, { clearProps: 'x' });
-      };
+      return () => rail?.cleanup();
     });
   });
 }
 
-/* 手机端同类横向卡片统一由纵向滚动驱动。卡片组固定在导航下方，
-   横向内容全部走完后才把纵向滚动交还给页面。 */
+/* 手机端横向卡：用户只负责上下滑，卡片自己从右向左走。 */
+function navPinOffset() {
+  return Math.ceil(document.querySelector('#nav')?.getBoundingClientRect().bottom || 64) + 10;
+}
+
+function railHold() {
+  return Math.min(240, Math.max(160, window.innerHeight * 0.24));
+}
+
+function isClearColor(value) {
+  return !value || /rgba?\(0,\s*0,\s*0,\s*0\)|transparent/.test(value);
+}
+
+function ensureRailDots(view, count) {
+  let dots = view.querySelector(':scope > .hscroll-dots');
+  if (!dots) {
+    dots = document.createElement('div');
+    dots.className = 'hscroll-dots is-in-rail';
+    dots.setAttribute('aria-hidden', 'true');
+    view.appendChild(dots);
+  }
+  dots.replaceChildren();
+  for (let i = 0; i < count; i++) dots.appendChild(document.createElement('i'));
+  return [...dots.children];
+}
+
+function paintPinSpacer(el) {
+  const spacer = el.parentElement;
+  if (!spacer?.classList.contains('pin-spacer')) return () => {};
+  let bg = getComputedStyle(el).backgroundColor;
+  if (isClearColor(bg)) {
+    const host = el.closest('section, .cs-section, .cs-deck, .is-system-lab, .is-proofroom, .is-outcome, .cs-body');
+    if (host) bg = getComputedStyle(host).backgroundColor;
+  }
+  if (isClearColor(bg)) return () => {};
+  spacer.style.background = bg;
+  return () => { spacer.style.background = ''; };
+}
+
+function driveMobileRail({ view, track, items, fill, onIndex, refreshPriority, useScrollLeft }) {
+  const cards = typeof items === 'function' ? items : () => items;
+  const visible = () => cards().filter(card =>
+    card && !card.classList.contains('hscroll-dots') && getComputedStyle(card).display !== 'none'
+  );
+  const n = () => Math.max(1, visible().length);
+  const pips = ensureRailDots(view, n());
+
+  const travel = () => {
+    const list = visible();
+    if (useScrollLeft) {
+      if (list.length < 2) return 0;
+      return Math.max(0, list[list.length - 1].offsetLeft - list[0].offsetLeft);
+    }
+    const el = track || view;
+    return Math.max(0, el.scrollWidth - view.clientWidth);
+  };
+
+  if (travel() <= 0) {
+    pips[0]?.parentElement?.remove();
+    return null;
+  }
+
+  view.classList.add('is-auto-x');
+  if (useScrollLeft) view.scrollLeft = 0;
+
+  const slide = () => Math.max(travel(), Math.round(n() * window.innerHeight * 0.62));
+
+  const apply = progress => {
+    const t = travel();
+    const list = visible();
+    const count = list.length;
+    const horizontalProgress = t <= 0
+      ? 1
+      : Math.min(1, progress * (slide() + railHold()) / slide());
+    if (useScrollLeft) view.scrollLeft = t * horizontalProgress;
+    else gsap.set(track, { x: -t * horizontalProgress });
+    const i = Matheq(horizontalProgress, count);
+    pips.forEach((pip, k) => pip.classList.toggle('is-on', k === i));
+    if (fill) fill.style.width = `${(horizontalProgress * 100).toFixed(2)}%`;
+    onIndex?.(i, list);
+  };
+
+  const st = ScrollTrigger.create({
+    trigger: view,
+    refreshPriority: refreshPriority || 90,
+    start: () => `top ${navPinOffset()}px`,
+    end: () => `+=${slide() + railHold()}`,
+    pin: true,
+    pinSpacing: true,
+    anticipatePin: 1,
+    invalidateOnRefresh: true,
+    onUpdate: self => apply(self.progress),
+    onRefresh: self => apply(self.progress),
+  });
+
+  apply(0);
+  const unpaint = paintPinSpacer(view);
+
+  return {
+    cleanup: () => {
+      st.kill();
+      unpaint();
+      view.classList.remove('is-auto-x');
+      if (useScrollLeft) view.scrollLeft = 0;
+      else if (track) gsap.set(track, { clearProps: 'x' });
+      pips[0]?.parentElement?.remove();
+    },
+  };
+}
+
 function initMobileAutoRails() {
   const rails = [
     ...document.querySelectorAll('.case-page.is-vision .is-proofroom .cs-line'),
@@ -503,51 +589,14 @@ function initMobileAutoRails() {
   if (!rails.length) return;
 
   gsap.matchMedia().add('(max-width: 768px)', () => {
-    const made = rails.map(view => {
-      const visibleCards = () => [...view.children].filter(card =>
-        getComputedStyle(card).display !== 'none'
-      );
-      const distance = () => {
-        const cards = visibleCards();
-        const first = cards[0];
-        const last = cards[cards.length - 1];
-        if (!first || !last) return 0;
+    const made = rails.map(view => driveMobileRail({
+      view,
+      items: () => [...view.children],
+      useScrollLeft: true,
+      refreshPriority: view.closest('.is-proofroom') ? 97 : 96,
+    })).filter(Boolean);
 
-        // Align the final card with the same gutter as the first card instead
-        // of overscrolling it to the container's absolute maximum.
-        return Math.max(0, last.offsetLeft - first.offsetLeft);
-      };
-      if (distance() <= 0) return null;
-
-      view.classList.add('is-auto-x');
-      view.scrollLeft = 0;
-      const navBottom = () => Math.ceil(document.querySelector('#nav')?.getBoundingClientRect().bottom || 64) + 10;
-      const hold = () => Math.min(220, Math.max(150, window.innerHeight * 0.22));
-      const st = ScrollTrigger.create({
-        trigger: view,
-        refreshPriority: view.closest('.is-proofroom') ? 97 : 96,
-        start: () => `top ${navBottom()}px`,
-        end: () => `+=${distance() + hold()}`,
-        pin: true,
-        pinSpacing: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: self => {
-          const travel = distance();
-          const horizontalProgress = travel <= 0
-            ? 1
-            : Math.min(1, self.progress * (travel + hold()) / travel);
-          view.scrollLeft = travel * horizontalProgress;
-        },
-      });
-      return { view, st };
-    }).filter(Boolean);
-
-    return () => made.forEach(({ view, st }) => {
-      st.kill();
-      view.classList.remove('is-auto-x');
-      view.scrollLeft = 0;
-    });
+    return () => made.forEach(rail => rail.cleanup());
   });
 }
 

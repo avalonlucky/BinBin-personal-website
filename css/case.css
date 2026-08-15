@@ -1234,6 +1234,9 @@
   margin: 0;
 }
 
+/* 移动端会把下一章节标题放进卡片的固定舞台，桌面仍显示原章节标题。 */
+.cs-mobile-pin-preview { display: none; }
+
 /* ────────────────────────────────────────
    区块填写法（PPT 协作）
 ──────────────────────────────────────── */
@@ -3938,6 +3941,7 @@
 .case-page.is-vision .is-outcome .cs-lesson h3,
 .case-page.is-vision .is-outcome .cs-lesson strong { color: var(--cs-ink); }
 .case-page.is-vision .is-outcome .cs-lesson p { color: var(--cs-ink-2); font-size: 17px; line-height: 1.82; }
+.case-page.is-vision .cs-only-mobile { display: none; }
 
 @media (max-width: 900px) {
   .case-page.is-vision .is-outcome .cs-lessons { grid-template-columns: 1fr; }
@@ -4016,6 +4020,52 @@
   .case-page.is-vision .cs-shift-body p,
   .case-page.is-vision .cs-shift-goals span { font-size: 14px; line-height: 1.68; }
 
+  /* 面向对象：四张卡严格等高，序号和标题合并成一行。
+     下一章节标题留在同一个固定舞台里，卡片走完前不会独自上移。 */
+  .case-page.is-vision .cs-audience-pin { padding-bottom: 8px; }
+  .case-page.is-vision .cs-audience-pin .cs-facets {
+    margin-top: 18px;
+    align-items: stretch;
+  }
+  .case-page.is-vision .cs-audience-pin .cs-facet {
+    box-sizing: border-box;
+    height: 228px;
+    padding: 22px 20px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    align-content: start;
+    column-gap: 10px;
+    row-gap: 18px;
+  }
+  .case-page.is-vision .cs-audience-pin .cs-facet-n {
+    align-self: baseline;
+    margin: 0;
+    font-family: var(--f-body);
+    font-size: 13px;
+    line-height: 1.35;
+    letter-spacing: .08em;
+    color: rgb(var(--cs-accent-rgb) / .68);
+  }
+  .case-page.is-vision .cs-audience-pin .cs-facet h4 {
+    align-self: baseline;
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.35;
+  }
+  .case-page.is-vision .cs-audience-pin .cs-facet p {
+    grid-column: 1 / -1;
+    align-self: start;
+    margin: 0;
+  }
+  .case-page.is-vision .cs-audience-pin .hscroll-dots { display: none; }
+  .case-page.is-vision .cs-mobile-pin-preview {
+    display: block;
+    margin-top: 24px;
+  }
+  .case-page.is-vision .cs-mobile-pin-preview .cs-title { margin: 0; }
+  .case-page.is-vision .cs-mobile-preview-source { display: none; }
+
   /* HERO 的四组履历信息在桌面承担快速扫读，手机会把黑色首屏拖得过长。 */
   .case-page.is-vision .cs-hero-meta { display: none; }
 
@@ -4024,16 +4074,19 @@
 
   /* 手机删去的细节卡与补充句；桌面仍完整保留。 */
   .case-page.is-vision .is-mobile-omit { display: none !important; }
+  .case-page.is-vision .cs-only-desktop { display: none; }
+  .case-page.is-vision .cs-only-mobile { display: inline; }
   .case-page.is-vision .is-system-lab .is-mobile-cover .cs-panel-fig { display: none; }
 
   .case-page.is-vision .is-system-lab { padding-top: 52px; }
-  /* 手机不是把桌面的五张面板纵向摊开，而是保留同级内容的横向关系。
-     下一张露出一角，既是滑动提示，也把 04 从五屏压缩成一组。 */
+  /* 手机横向卡不靠手指左右滑：钉在导航下，上下滑自己从右往左走。
+     下一张露出一角，是「后面还有」而不是滑动暗示。 */
   .case-page.is-vision .is-system-lab {
     overflow: hidden;
     padding-bottom: 36px;
   }
   .case-page.is-vision .is-system-lab .cs-deck-view {
+    position: relative;
     overflow-x: hidden;
     overflow-y: hidden;
     scroll-snap-type: none;
@@ -4042,14 +4095,15 @@
     touch-action: pan-y;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
+    padding-bottom: 28px;
   }
   .case-page.is-vision .is-system-lab .cs-deck-view::-webkit-scrollbar { display: none; }
   .case-page.is-vision .is-system-lab .cs-deck-track {
     width: max-content;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 12px;
-    padding: 20px var(--gutter) 6px;
+    padding: 16px var(--gutter) 8px;
     transform: none;
     will-change: auto;
   }
@@ -4061,11 +4115,12 @@
     width: calc(100vw - 54px);
     max-width: 352px;
     min-height: 0;
+    max-height: calc(100svh - 136px);
     height: auto;
     grid-template-columns: 1fr;
     align-content: start;
-    gap: 16px;
-    padding: 18px;
+    gap: 10px;
+    padding: 14px;
     border-radius: 8px;
     opacity: 1;
     transform: none;
@@ -4073,22 +4128,43 @@
     scroll-snap-stop: always;
   }
   .case-page.is-vision .is-system-lab .cs-panel-fig .cs-figure img,
-  .case-page.is-vision .is-system-lab .cs-panel-fig .cs-tocmap-fig img { max-height: 29svh; }
-  .case-page.is-vision .is-system-lab .cs-panel-txt h3 { margin-bottom: 9px; }
-  .case-page.is-vision .is-system-lab .cs-panel-txt p { font-size: 14px; line-height: 1.66; }
-  .case-page.is-vision .is-system-lab .cs-specs-mini li { padding-block: 7px; }
-  .case-page.is-vision .is-system-lab .cs-prio { padding: 9px 10px; }
-  .case-page.is-vision .is-system-lab .cs-deck-rail { margin-inline: 0; }
+  .case-page.is-vision .is-system-lab .cs-panel-fig .cs-tocmap-fig img { max-height: 20svh; }
+  .case-page.is-vision .is-system-lab .cs-figure-cap { padding: 7px 10px; }
+  .case-page.is-vision .is-system-lab .cs-panel-txt h3 { margin-bottom: 6px; }
+  .case-page.is-vision .is-system-lab .cs-panel-txt p { font-size: 14px; line-height: 1.6; }
+  .case-page.is-vision .is-system-lab .cs-specs-mini { margin-top: 6px; }
+  .case-page.is-vision .is-system-lab .cs-specs-mini li { padding-block: 4px; }
+  .case-page.is-vision .is-system-lab .cs-chain { font-size: 12px; line-height: 1.5; padding: 8px 10px; }
+  .case-page.is-vision .is-system-lab .cs-seal.is-inline {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 8px;
+    padding: 8px 10px;
+  }
+  .case-page.is-vision .is-system-lab .cs-seal.is-inline .cs-seal-stage { padding: 8%; }
+  .case-page.is-vision .is-system-lab .cs-prio { padding: 8px 10px; }
+  .case-page.is-vision .is-system-lab .cs-prio p { display: none; }
+  .case-page.is-vision .is-system-lab .cs-deck-rail { display: none; }
+  .case-page.is-vision .hscroll-dots { display: flex; }
+  .case-page.is-vision .hscroll-dots.is-in-rail {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 2px;
+    z-index: 3;
+    margin: 0;
+  }
 
-  /* 05 的四个环节同样是并列步骤。手机上横向吸附，时间轴主线退场。 */
+  /* 05 的四个环节同样由上下滑驱动横向走完。 */
   .case-page.is-vision .is-proofroom { overflow: hidden; }
   .case-page.is-vision .is-proofroom .cs-line {
+    position: relative;
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 12px;
     max-width: none;
     margin: 32px calc(var(--gutter) * -1) 0;
-    padding: 0 var(--gutter) 10px;
+    padding: 0 var(--gutter) 28px;
     overflow-x: hidden;
     overflow-y: hidden;
     scroll-snap-type: none;
@@ -4106,6 +4182,7 @@
     flex: 0 0 calc(100vw - 54px);
     width: calc(100vw - 54px);
     max-width: 352px;
+    max-height: calc(100svh - 136px);
     padding: 0;
     scroll-snap-align: start;
     scroll-snap-stop: always;
@@ -4114,28 +4191,33 @@
   .case-page.is-vision .is-proofroom .cs-line-item:last-child .cs-line-body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: auto;
-    min-height: 330px;
-    padding: 20px;
+    justify-content: flex-start;
+    height: 100%;
+    min-height: 0;
+    max-height: calc(100svh - 136px);
+    padding: 16px;
     border: 1px solid var(--cs-hair);
     border-radius: 10px;
     background: var(--cs-paper-2);
   }
-  .case-page.is-vision .is-proofroom .cs-line-k { font-size: 20px; margin-bottom: 10px; }
-  .case-page.is-vision .is-proofroom .cs-line-body p { font-size: 14px; line-height: 1.68; }
+  .case-page.is-vision .is-proofroom .cs-line-k { font-size: 20px; margin-bottom: 8px; }
+  .case-page.is-vision .is-proofroom .cs-line-body p { font-size: 14px; line-height: 1.62; }
+  .case-page.is-vision .is-proofroom .cs-shift-label { padding: 8px 12px; }
+  .case-page.is-vision .is-proofroom .cs-shift-label:nth-of-type(2) { margin-top: 14px; }
+  .case-page.is-vision .is-proofroom .cs-shift-goals li { padding: 6px 4px; }
   .case-page.is-vision .is-proofroom .cs-shift-label,
   .case-page.is-vision .is-proofroom .cs-shift-label.is-mine {
     background: var(--cs-paper-2);
   }
-  /* 三点总结在手机上只占一组卡片高度，下一张保留可见边缘。 */
+  /* 三点总结：同一组高度，上下滑换下一张。 */
   .case-page.is-vision .is-outcome { overflow: hidden; }
   .case-page.is-vision .is-outcome .cs-lessons {
+    position: relative;
     display: flex;
     align-items: stretch;
     gap: 12px;
     margin: 26px calc(var(--gutter) * -1) 0;
-    padding: 0 var(--gutter) 10px;
+    padding: 0 var(--gutter) 28px;
     border: 0;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -4153,10 +4235,11 @@
     flex: 0 0 calc(100vw - 54px);
     width: calc(100vw - 54px);
     max-width: 352px;
-    min-height: 380px;
+    min-height: 0;
+    max-height: calc(100svh - 136px);
     align-content: center;
-    gap: 18px;
-    padding: 24px;
+    gap: 16px;
+    padding: 22px;
     border: 1px solid var(--cs-hair);
     border-radius: 10px;
     background: var(--cs-paper-2);

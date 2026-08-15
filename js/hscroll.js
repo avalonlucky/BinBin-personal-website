@@ -115,38 +115,45 @@
     }
 
     /* ── 钉住模式：区块固定在视口，纵向滚动被换算成横向位移 ── */
-    // 末尾留一小段真实滚动距离：最后一张先完整停在导航下方，
-    // 再把纵向滚动交还给页面。直接按进度 set，避免 scrub 惯性在
-    // pin 已释放后仍追赶，导致最后一张被导航压住。
-    const hold = () => Math.min(220, Math.max(150, window.innerHeight * 0.22));
+    // 每张卡分到约 0.62 屏的竖滑，读得完再走下一张；末尾再留一段
+    // 停住，最后一张完整停在导航下方后才把滚动交还给页面。
+    const hold = () => Math.min(240, Math.max(160, window.innerHeight * 0.24));
     const navBottom = () => Math.ceil(document.querySelector('#nav')?.getBoundingClientRect().bottom || 64) + 10;
+    const slide = () => Math.max(distance(), Math.round(n * window.innerHeight * 0.62));
+    const apply = progress => {
+      const travel = distance();
+      const horizontalProgress = travel <= 0
+        ? 1
+        : Math.min(1, progress * (slide() + hold()) / slide());
+      gsap.set(track, { x: -travel * horizontalProgress });
+      const i = Math.min(n - 1, Math.round(horizontalProgress * (n - 1)));
+      pips.forEach((p, k) => p.classList.toggle('is-on', k === i));
+    };
     const st = ScrollTrigger.create({
       trigger: wrap,
       refreshPriority: 100 - (Number(wrap.dataset.pinOrder) || 50),
       start: () => `top ${navBottom()}px`,
-      end: () => '+=' + (distance() + hold()),
+      end: () => '+=' + (slide() + hold()),
       pin: true,
       pinSpacing: true,
       anticipatePin: 1,
       invalidateOnRefresh: true,
-      onUpdate: self => {
-        const travel = distance();
-        const horizontalProgress = travel <= 0
-          ? 1
-          : Math.min(1, self.progress * (travel + hold()) / travel);
-        gsap.set(track, { x: -travel * horizontalProgress });
-        const i = Math.min(n - 1, Math.round(horizontalProgress * (n - 1)));
-        pips.forEach((p, k) => p.classList.toggle('is-on', k === i));
-      },
+      onUpdate: self => apply(self.progress),
+      onRefresh: self => apply(self.progress),
     });
-    pips[0]?.classList.add('is-on');
+    apply(0);
 
     // 钉住后 ScrollTrigger 会把元素包进 .pin-spacer。钉的位置在导航下方，
     // 元素上方留出一条空隙——深色区块会从这条空隙里透出页面的浅色底。
     // 把区块自己的底色刷到占位层上，接缝就看不出来了。
     const spacer = wrap.parentElement;
-    const bg = getComputedStyle(wrap).backgroundColor;
-    const painted = spacer?.classList.contains('pin-spacer') && bg && !/rgba?\(0, 0, 0, 0\)|transparent/.test(bg);
+    const isClear = value => !value || /rgba?\(0,\s*0,\s*0,\s*0\)|transparent/.test(value);
+    let bg = getComputedStyle(wrap).backgroundColor;
+    if (isClear(bg)) {
+      const host = wrap.closest('section, .cs-section, .cs-deck, .cs-body');
+      if (host) bg = getComputedStyle(host).backgroundColor;
+    }
+    const painted = spacer?.classList.contains('pin-spacer') && !isClear(bg);
     if (painted) spacer.style.background = bg;
 
     return {

@@ -2557,4 +2557,6 @@ main footer {
   .s-work .hscroll-dots i.is-on,
   .s-design-view .hscroll-dots i.is-on { background: var(--cs-accent, var(--c-orange)); }
 }
-.hscroll-dots { display: none; }
+@media (min-width: 769px) {
+  .hscroll-dots { display: none; }
+}

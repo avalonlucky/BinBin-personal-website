@@ -11,8 +11,8 @@
   <link rel="preload" href="../fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="../css/style.css?v=79">
-  <link rel="stylesheet" href="../css/case.css?v=81">
+  <link rel="stylesheet" href="../css/style.css?v=80">
+  <link rel="stylesheet" href="../css/case.css?v=83">
 </head>
 <body class="case-page is-vision">
 <div class="site">
@@ -184,7 +184,7 @@
           <p class="cs-num">02 — 面向对象</p>
           <h2 class="cs-title">以内为主，<em>同时承担品牌外延传播</em></h2>
           <h3 class="cs-sub">同一本刊物，要对四类人说话</h3>
-          <div data-hscroll="pin" data-pin-order="1">
+          <div class="cs-audience-pin" data-hscroll="pin" data-pin-order="1">
           <div class="cs-facets" data-hscroll-track>
             <div class="cs-facet">
               <div class="cs-facet-n">01</div>
@@ -204,8 +204,11 @@
             <div class="cs-facet">
               <div class="cs-facet-n">04</div>
               <h4>投资人</h4>
-              <p>它要在有限页数里，同时讲清轨迹、文化，和这家公司为什么值得被相信。</p>
+              <p>展现企业发展轨迹与文化底蕴。</p>
             </div>
+          </div>
+          <div class="cs-mobile-pin-preview">
+            <h2 class="cs-title">面对陌生领域，<em>先把问题拆成能研究的模块</em></h2>
           </div>
           </div>
         </section>
@@ -213,7 +216,7 @@
         <!-- ── 03 调研 ── -->
         <section class="cs-section" data-toc="图书馆调研">
           <p class="cs-num">03 — 从图书馆开始的调研</p>
-          <h2 class="cs-title">面对陌生领域，<em>先把问题拆成能研究的模块</em></h2>
+          <h2 class="cs-title cs-mobile-preview-source">面对陌生领域，<em>先把问题拆成能研究的模块</em></h2>
 
           <p class="cs-lede">我此前没做过内刊。但「没做过」不等于只能凭感觉——我把这件陌生的事拆成七个可以逐项研究的模块，然后专门去深圳宝安图书馆，对馆内优秀的内刊与期刊逐本拍照、逐项比对。</p>
 
@@ -277,7 +280,7 @@
             <div class="cs-deck-rail"><b data-deck-fill></b></div>
           </div>
 
-          <div class="cs-deck-view" tabindex="0" aria-label="视觉体系，左右滑动查看五个设计环节">
+          <div class="cs-deck-view" tabindex="0" aria-label="视觉体系，继续上滑查看设计环节">
           <div class="cs-deck-track" data-deck-track>
 
             <!-- 面板 1：视觉规范 -->
@@ -414,7 +417,7 @@
               </div>
               <div class="cs-panel-txt">
                 <h3>做目录之前，先做一次信息架构</h3>
-                <p>二十多篇文章，读者该先读哪一篇？我把目录分成三个优先级，用版面面积、配图和留白表达这个判断。<strong>鼠标移到任意一级，左边真实跨页上会亮出它的位置。</strong></p>
+                <p>二十多篇文章，读者该先读哪一篇？我把目录分成三个优先级，用版面面积、配图和留白表达这个判断。<strong class="cs-only-desktop">鼠标移到任意一级，左边真实跨页上会亮出它的位置。</strong><strong class="cs-only-mobile">点某一级，跨页上会亮出它的位置。</strong></p>
                 <div class="cs-prios">
                   <button class="cs-prio" type="button" data-prio-label="01 最瞩目">
                     <div class="cs-prio-n">01<small>最瞩目</small></div>
@@ -451,7 +454,7 @@
           <p class="cs-num">05 — 从校对到印刷</p>
           <h2 class="cs-title">设计师，<em>也要自己把好编辑这道关</em></h2>
 
-          <div class="cs-line" data-line tabindex="0" aria-label="从校对到印刷，左右滑动查看四个环节">
+          <div class="cs-line" data-line tabindex="0" aria-label="从校对到印刷，继续上滑查看四个环节">
             <span class="cs-line-rail" aria-hidden="true"><b data-line-fill></b></span>
 
             <article class="cs-line-item" data-line-item>
@@ -528,7 +531,7 @@
                     </ul>
                   </div>
                 </div>
-                <p>决策人可以先看到实体效果并及时反馈，线上流程同步留痕；修改完成后即可衔接印刷与发布，缩短整体交付周期。</p>
+                <p class="is-mobile-omit">决策人可以先看到实体效果并及时反馈，线上流程同步留痕；修改完成后即可衔接印刷与发布，缩短整体交付周期。</p>
               </div>
             </article>
           </div>
@@ -538,7 +541,7 @@
         <section class="cs-section is-outcome" data-toc="学习与总结">
           <p class="cs-num">06 — 学习与总结</p>
 
-          <ol class="cs-lessons" tabindex="0" aria-label="学习与总结，左右滑动查看三点">
+          <ol class="cs-lessons" tabindex="0" aria-label="学习与总结，继续上滑查看三点">
             <li class="cs-lesson">
               <span class="cs-lesson-n" aria-hidden="true">01</span>
               <div>
@@ -744,7 +747,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="../js/hscroll.js?v=5"></script>
-  <script src="../js/case.js?v=55"></script>
+<script src="../js/hscroll.js?v=6"></script>
+  <script src="../js/case.js?v=56"></script>
 </body>
 </html>
