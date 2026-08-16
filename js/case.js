@@ -611,11 +611,12 @@ function driveMobileRail({
   };
 }
 
-/* 受众轨道不使用 pin：纵向手势在轨道抵达导航下方时直接推进 scrollLeft，
+/* 受众轨道不使用 pin：纵向手势在轨道抵达视口中部偏下时直接推进 scrollLeft，
    最后一张走完后放行页面。没有 pin 就没有额外纵向占位。 */
 function driveAudienceGestureRail(view) {
   const maxScroll = () => Math.max(0, view.scrollWidth - view.clientWidth);
   const clamp = value => Math.max(0, Math.min(maxScroll(), value));
+  const gateLine = () => Math.max(navPinOffset(), Math.round(scroller.clientHeight * 0.48));
   const drive = delta => {
     view.scrollLeft = clamp(view.scrollLeft + delta);
   };
@@ -634,7 +635,7 @@ function driveAudienceGestureRail(view) {
     if (!forward && !backward) return false;
 
     const rect = view.getBoundingClientRect();
-    const line = navPinOffset();
+    const line = gateLine();
     const tolerance = Math.min(72, Math.max(28, rect.height * 0.5));
     const offset = rect.top - line;
 
