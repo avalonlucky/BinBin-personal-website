@@ -1732,6 +1732,7 @@ function initOutro() {
   /* ── 问问 AI ── */
   const row = outro.querySelector('[data-ai-row]');
   if (row) {
+    const buttons = [];
     AI_TARGETS.forEach(t => {
       const a = document.createElement('a');
       a.className = 'cs-ai-btn';
@@ -1746,7 +1747,68 @@ function initOutro() {
         if (ok) toast('提示词已带上，也已复制到剪贴板');
       });
       row.appendChild(a);
+      buttons.push(a);
     });
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion && window.gsap && buttons.length) {
+      row.classList.add('is-ai-roll-ready');
+      gsap.set(buttons, {
+        x: -160,
+        rotation: -360,
+        opacity: 0,
+        willChange: 'transform, opacity',
+      });
+
+      let played = false;
+      const playRollIn = () => {
+        if (played) return;
+        played = true;
+
+        const sequence = [...buttons].reverse();
+        const timeline = gsap.timeline({
+          onComplete: () => {
+            gsap.set(buttons, { clearProps: 'transform,opacity,willChange' });
+            row.classList.remove('is-ai-roll-ready');
+          },
+        });
+
+        sequence.forEach((button, index) => {
+          const start = index * 0.32;
+          timeline.to(button, {
+            x: 0,
+            rotation: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: 'power2.out',
+          }, start);
+
+          if (index > 0) {
+            const settledButton = sequence[index - 1];
+            timeline.to(settledButton, {
+              x: 1,
+              duration: 0.08,
+              ease: 'sine.out',
+            }, start + 0.63).to(settledButton, {
+              x: 0,
+              duration: 0.22,
+              ease: 'power2.out',
+            }, '>');
+          }
+        });
+      };
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+          if (!entries.some(entry => entry.intersectionRatio >= 0.5)) return;
+          observer.disconnect();
+          playRollIn();
+        }, { threshold: 0.5 });
+        observer.observe(row);
+      } else {
+        playRollIn();
+      }
+    }
   }
 
   /* ── 项目总结：贴着按钮的 popover，不锁滚动、不做全屏遮罩 ── */

@@ -2469,7 +2469,6 @@
   justify-items: center;
 }
 .cs-ai-title { align-self: end; margin-bottom: 14px; }
-.cs-ai-hint  { align-self: start; margin-top: 14px; }
 
 /* ── 项目总结按钮 ── */
 .cs-summary-btn {
@@ -2673,9 +2672,11 @@
   gap: 4px;
   padding: 4px;
   border-radius: 1000px;
+  overflow: hidden;
   background: rgba(2, 2, 2, 0.05);
   box-shadow: inset 0 1.5px 0 0 rgba(255, 255, 255, 0.7);
 }
+.cs-ai-pill.is-ai-roll-ready .cs-ai-btn { pointer-events: none; }
 .cs-ai-btn {
   width: 46px; height: 46px;
   border-radius: 50%;
@@ -2707,16 +2708,6 @@
   -webkit-mask: var(--ai-icon) center / contain no-repeat;
           mask: var(--ai-icon) center / contain no-repeat;
 }
-.cs-ai-hint {
-  font-family: var(--f-cjk);
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: var(--cs-ink-3);
-  text-align: center;
-  margin: 0;
-  max-width: 20em;
-}
-
 /* ── 复制提示 ── */
 .cs-toast {
   position: fixed;
