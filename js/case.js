@@ -1242,36 +1242,81 @@ function initFlip() {
   const front = document.querySelector('[data-flip-side="front"]');
   const back  = document.querySelector('[data-flip-side="back"]');
   const hint  = document.querySelector('.cs-flip-hint');
+  const hintLabel = hint?.querySelector('[data-flip-hint]');
 
-  back?.classList.add('is-out');
+  const syncCopy = flipped => {
+    front?.classList.toggle('is-out', flipped);
+    back?.classList.toggle('is-out', !flipped);
+    wrap.setAttribute('aria-pressed', String(flipped));
+    if (hintLabel) hintLabel.textContent = flipped ? '点击查看正面' : '点击查看背面';
+  };
+  syncCopy(false);
 
-  if (prefersReducedMotion.matches) return;
+  const flipMedia = gsap.matchMedia();
+  flipMedia.add('(max-width: 768px)', () => {
+    let flipped = false;
+    wrap.tabIndex = 0;
 
-  // rotateY 用 power1.inOut：中点角速度最快，正侧面（90°）一闪而过，
-  // 不会停在“纸变成一条线”的那一帧。中途略微缩小，读起来像真的在翻。
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: wrap,
-      // 用 center 而不是 top/bottom：翻面区间对视口中线左右对称，
-      // 进度 0（正面）和进度 1（反面）都发生在单页基本完整可见的时候。
-      // 原来写 top 68% → bottom 42%，进度 1 时单页顶部已经滚出屏幕 188px，
-      // 于是「翻到反面」和「翻回正面」都看不到，只剩中间 90° 那一帧一直在眼前。
-      // 区间长度 = 44% 视口高，短屏上会等比缩短，不会像百分比端点那样退化成 0。
-      start: 'center 72%',
-      end: 'center 28%',
-      scrub: 0.5,
-      onUpdate: self => {
-        hint?.style.setProperty('--flip-progress', self.progress.toFixed(3));
-        const flipped = self.progress > 0.5;
-        front?.classList.toggle('is-out', flipped);
-        back?.classList.toggle('is-out', !flipped);
-      },
-    },
+    const toggle = () => {
+      flipped = !flipped;
+      const target = flipped ? 180 : 0;
+      if (prefersReducedMotion.matches) {
+        gsap.set(inner, { rotationY: target });
+        syncCopy(flipped);
+        return;
+      }
+
+      gsap.to(inner, {
+        rotationY: target,
+        duration: 0.72,
+        ease: 'power2.inOut',
+        overwrite: true,
+        onUpdate: () => {
+          const angle = Math.abs(Number(gsap.getProperty(inner, 'rotationY'))) % 360;
+          syncCopy(angle > 90 && angle < 270);
+        },
+        onComplete: () => syncCopy(flipped),
+      });
+    };
+
+    wrap.addEventListener('click', toggle);
+    return () => {
+      wrap.removeEventListener('click', toggle);
+      gsap.killTweensOf(inner);
+      gsap.set(inner, { clearProps: 'transform' });
+      syncCopy(false);
+    };
   });
 
-  tl.to(inner, { rotateY: 180, ease: 'power1.inOut', duration: 1 }, 0)
-    .to(inner, { scale: 0.94, ease: 'sine.inOut', duration: 0.5 }, 0)
-    .to(inner, { scale: 1,    ease: 'sine.inOut', duration: 0.5 }, 0.5);
+  flipMedia.add('(min-width: 769px)', () => {
+    wrap.tabIndex = -1;
+    if (prefersReducedMotion.matches) return;
+
+    // 桌面继续由阅读进度驱动翻面，手机则改为明确的点击交互。
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: wrap,
+        start: 'center 72%',
+        end: 'center 28%',
+        scrub: 0.5,
+        onUpdate: self => {
+          hint?.style.setProperty('--flip-progress', self.progress.toFixed(3));
+          syncCopy(self.progress > 0.5);
+        },
+      },
+    });
+
+    tl.to(inner, { rotateY: 180, ease: 'power1.inOut', duration: 1 }, 0)
+      .to(inner, { scale: 0.94, ease: 'sine.inOut', duration: 0.5 }, 0)
+      .to(inner, { scale: 1, ease: 'sine.inOut', duration: 0.5 }, 0.5);
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+      gsap.set(inner, { clearProps: 'transform' });
+      syncCopy(false);
+    };
+  });
 }
 
 /* ─────────────────────────────────────────
