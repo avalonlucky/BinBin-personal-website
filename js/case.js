@@ -169,9 +169,11 @@ function initPalette() {
   const fig  = preview.querySelector('.cs-palette-fig');
 
   let activeIndex = 0;
+  let hasRendered = false;
 
   const show = i => {
     const p = PRODUCTS[i];
+    const changed = hasRendered && i !== activeIndex;
     activeIndex = i;
     img.src = sheet(p, 'front');
     img.alt = `${p.name}单页正面`;
@@ -179,6 +181,13 @@ function initPalette() {
     slog.textContent = p.slogan;
     code.textContent = `${p.code}　·　${p.color.toUpperCase()}`;
     list.querySelectorAll('.cs-swatch').forEach((s, si) => s.classList.toggle('is-active', si === i));
+
+    if (changed && !prefersReducedMotion.matches) {
+      gsap.fromTo(preview,
+        { opacity: 0.58, y: 6 },
+        { opacity: 1, y: 0, duration: 0.34, ease: 'power2.out', overwrite: true });
+    }
+    hasRendered = true;
   };
 
   PRODUCTS.forEach((p, i) => {
@@ -1467,6 +1476,99 @@ function initReveal() {
 }
 
 /* ─────────────────────────────────────────
+   产品单页手机动态 — 只使用真实内容高度，不 pin、不创建 spacer
+───────────────────────────────────────── */
+function initProductMobileMotion() {
+  if (!document.body.classList.contains('is-product-sheets')) return;
+
+  const motionMedia = gsap.matchMedia();
+  motionMedia.add('(max-width: 768px)', () => {
+    if (prefersReducedMotion.matches) return;
+
+    const animations = [];
+    const triggers = [];
+    const animatedTargets = new Set();
+    const revealGroup = (root, items, vars = {}) => {
+      document.querySelectorAll(root).forEach(box => {
+        const targets = box.querySelectorAll(items);
+        if (!targets.length) return;
+        targets.forEach(target => animatedTargets.add(target));
+        triggers.push(ScrollTrigger.create({
+          trigger: box,
+          start: vars.start ?? 'top 86%',
+          once: true,
+          onEnter: () => {
+            animations.push(gsap.fromTo(targets, {
+              opacity: vars.opacity ?? 0.42,
+              y: vars.y ?? 18,
+              x: vars.x ?? 0,
+              scale: vars.scale ?? 1,
+            }, {
+              opacity: 1,
+              y: 0,
+              x: 0,
+              scale: 1,
+              duration: vars.duration ?? 0.58,
+              stagger: vars.stagger ?? 0.075,
+              ease: 'power2.out',
+              overwrite: true,
+            }));
+          },
+        }));
+      });
+    };
+
+    revealGroup('.cs-compare', '.cs-compare-head, .cs-compare-row', { stagger: 0.09 });
+    revealGroup('.cs-stages', '.cs-stage', { x: -14, y: 0, stagger: 0.11 });
+    revealGroup('.cs-minutes', '.cs-minutes-head, .cs-minutes-prod', { stagger: 0.1 });
+    revealGroup('.cs-layouts', '.cs-layout', { stagger: 0.16 });
+    revealGroup('.cs-figure-pair', '.cs-figure', { scale: 0.98, stagger: 0.13 });
+    revealGroup('.cs-grid13', '.cs-sheet', { y: 14, scale: 0.965, stagger: 0.045, start: 'top 90%' });
+    revealGroup('.cs-lessons', '.cs-lesson', { stagger: 0.12 });
+
+    // 翻面区进入视口时轻摆一次，提示它可以点击，不替用户自动翻走内容。
+    const flip = document.querySelector('[data-flip]');
+    if (flip) {
+      animatedTargets.add(flip);
+      const cue = gsap.timeline({
+        scrollTrigger: { trigger: flip, start: 'top 76%', once: true },
+      });
+      cue.to(flip, { y: -5, rotationZ: 0.8, duration: 0.24, ease: 'power2.out' })
+        .to(flip, { y: 0, rotationZ: 0, duration: 0.46, ease: 'elastic.out(1, .55)' });
+      animations.push(cue);
+    }
+
+    // 色彩系统跟随正常纵向阅读自动推进；距离来自现有内容本身，不额外占位。
+    const palette = document.querySelector('.cs-palette');
+    const swatches = palette?.querySelectorAll('.cs-swatch');
+    if (palette && swatches?.length) {
+      let lastIndex = -1;
+      const paletteTrigger = ScrollTrigger.create({
+        trigger: palette,
+        start: 'top 72%',
+        end: 'bottom 30%',
+        onUpdate: self => {
+          const nextIndex = Math.min(swatches.length - 1, Math.floor(self.progress * swatches.length));
+          if (nextIndex === lastIndex) return;
+          lastIndex = nextIndex;
+          swatches[nextIndex].click();
+        },
+      });
+      triggers.push(paletteTrigger);
+    }
+
+    return () => {
+      triggers.forEach(trigger => trigger.kill());
+      animations.forEach(animation => {
+        animation.scrollTrigger?.kill();
+        animation.kill();
+      });
+      gsap.set([...animatedTargets], { clearProps: 'opacity,transform' });
+    };
+  });
+}
+
+/* ─────────────────────────────────────────
    页内导航 — 按正文板块自动生成
    板块标题取自各段的 .cs-num（「01 — 项目背景」），
    过长的可在 section 上用 data-toc 覆盖。
@@ -1991,6 +2093,7 @@ initCounters();
 initGantt();
 initTimeline();
 initReveal();
+initProductMobileMotion();
 initToc();
 initNavTheme();
 initLightbox();
