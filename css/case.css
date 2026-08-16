@@ -5255,3 +5255,28 @@
   .case-page.is-vision .cs-capability-list .cs-facet:first-child { padding-top: 0; }
   .case-page.is-vision .cs-capability-list .cs-facet:last-child { padding-bottom: 0; }
 }
+
+/* ============================================================
+   作品详情手机首屏规范
+   产品单页与企业内刊使用同一组标题和导语参数，避免各页面单独漂移。
+   ============================================================ */
+@media (max-width: 768px) {
+  .case-page:is(.is-vision, .is-product-sheets) .cs-hero {
+    padding: 120px var(--gutter) 0;
+  }
+  .case-page:is(.is-vision, .is-product-sheets) .cs-hero-title {
+    margin: 0 0 16px;
+    font-size: 29px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -.02em;
+  }
+  .case-page:is(.is-vision, .is-product-sheets) .cs-hero-title em {
+    display: block;
+  }
+  .case-page:is(.is-vision, .is-product-sheets) .cs-hero-sub {
+    margin: 0 0 22px;
+    font-size: 15px;
+    line-height: 1.72;
+  }
+}
