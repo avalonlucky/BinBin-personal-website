@@ -5280,3 +5280,273 @@
     line-height: 1.72;
   }
 }
+
+/* ============================================================
+   产品单页手机正文规范
+   不使用卡片、描边和容器阴影；层级只由留白、字重与强调色建立。
+   ============================================================ */
+@media (max-width: 768px) {
+  .case-page.is-product-sheets .cs-body {
+    --ps-space-xs: 8px;
+    --ps-space-sm: 16px;
+    --ps-space-md: 28px;
+    --ps-space-lg: 40px;
+    --ps-section-gap: 64px;
+    --ps-content-gap: 32px;
+  }
+
+  /* 五级文字体系：章节、小节、导语、正文、注释。 */
+  .case-page.is-product-sheets .cs-body > .cs-section > .cs-title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -.01em;
+  }
+  .case-page.is-product-sheets .cs-body .cs-sub,
+  .case-page.is-product-sheets .cs-body .cs-inst-title,
+  .case-page.is-product-sheets .cs-body .cs-flip-copy h4,
+  .case-page.is-product-sheets .cs-body .cs-stage h4,
+  .case-page.is-product-sheets .cs-body .cs-spec h4,
+  .case-page.is-product-sheets .cs-body .cs-phase h4,
+  .case-page.is-product-sheets .cs-body .cs-phase.is-dark h4,
+  .case-page.is-product-sheets .cs-body .cs-ms-body h4,
+  .case-page.is-product-sheets .cs-body .cs-lessons h3 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+  .case-page.is-product-sheets .cs-body .cs-sub {
+    margin-top: var(--ps-content-gap);
+    margin-bottom: 0;
+  }
+  .case-page.is-product-sheets .cs-body .cs-lede {
+    margin-top: 14px;
+    font-size: 15.5px;
+    font-weight: 400;
+    line-height: 1.72;
+  }
+  .case-page.is-product-sheets .cs-body :is(
+    .cs-card-text,
+    .cs-hub-node p,
+    .cs-block-v,
+    .cs-compare-v,
+    .cs-stage li,
+    .cs-note,
+    .cs-flip-copy p,
+    .cs-pill,
+    .cs-flow-step small,
+    .cs-spec p,
+    .cs-phase > p,
+    .cs-phase.is-dark > p,
+    .cs-phase li,
+    .cs-phase.is-dark li,
+    .cs-ms-body p,
+    .cs-lessons p,
+    .cs-cap
+  ) {
+    font-size: 14px;
+    line-height: 1.68;
+    letter-spacing: 0;
+  }
+  .case-page.is-product-sheets .cs-body :is(
+    .cs-card-label,
+    .cs-block-k,
+    .cs-compare-k,
+    .cs-badge,
+    .cs-redacted,
+    .cs-doc-cap,
+    .cs-figure-cap,
+    .cs-flip-side-k
+  ) {
+    font-size: 12.5px;
+    line-height: 1.5;
+    letter-spacing: .06em;
+  }
+  .case-page.is-product-sheets .cs-body .cs-question {
+    margin-top: var(--ps-content-gap);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-size: 16px !important;
+    font-weight: 600;
+    line-height: 1.62;
+  }
+  .case-page.is-product-sheets .cs-body :is(.cs-quote-dark, .cs-quote-soft) {
+    margin-top: var(--ps-content-gap);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--cs-ink-2);
+    font-size: 15.5px;
+    font-weight: 400;
+    line-height: 1.72;
+  }
+  .case-page.is-product-sheets .cs-body :is(.cs-quote-dark, .cs-quote-soft) em {
+    color: var(--cs-accent-deep);
+    font-weight: 600;
+  }
+
+  /* 内容组只靠留白分段，不再画横线或包进卡片。 */
+  .case-page.is-product-sheets .cs-body :is(
+    .cs-card,
+    .cs-hub-core,
+    .cs-hub-node,
+    .cs-compare-head,
+    .cs-compare-row,
+    .cs-block,
+    .cs-block.is-filled,
+    .cs-stage,
+    .cs-doc,
+    .cs-minutes,
+    .cs-minutes-head,
+    .cs-layout,
+    .cs-pill,
+    .cs-flow-step,
+    .cs-palette-preview,
+    .cs-swatch,
+    .cs-spec,
+    .cs-phase,
+    .cs-phase.is-dark,
+    .cs-figure,
+    .cs-deliver,
+    .cs-lesson
+  ) {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .case-page.is-product-sheets .cs-card { padding: 0; }
+  .case-page.is-product-sheets .cs-card + .cs-card { margin-top: var(--ps-space-md); }
+  .case-page.is-product-sheets .cs-card-label { display: block; margin-bottom: var(--ps-space-xs); }
+
+  .case-page.is-product-sheets .cs-hub { gap: 0; }
+  .case-page.is-product-sheets .cs-hub-core { padding: 0; margin-bottom: var(--ps-space-md); }
+  .case-page.is-product-sheets .cs-hub-node { padding: 0; }
+  .case-page.is-product-sheets .cs-hub-node + .cs-hub-node { margin-top: 22px; }
+  .case-page.is-product-sheets .cs-hub-node h4 { margin: 0 0 6px; font-size: 16px; line-height: 1.5; }
+
+  .case-page.is-product-sheets .cs-compare { gap: var(--ps-space-lg); }
+  .case-page.is-product-sheets .cs-compare-head {
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+  .case-page.is-product-sheets .cs-body .cs-compare-col.is-mine .cs-compare-head {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+  .case-page.is-product-sheets .cs-compare-row { padding: 0; }
+  .case-page.is-product-sheets .cs-compare-row + .cs-compare-row { margin-top: 22px; }
+  .case-page.is-product-sheets .cs-blocks { gap: 22px; }
+  .case-page.is-product-sheets .cs-block,
+  .case-page.is-product-sheets .cs-block.is-filled { padding: 0; }
+  .case-page.is-product-sheets .cs-block-k { margin-bottom: 5px; }
+
+  .case-page.is-product-sheets .cs-inst-head { margin-bottom: var(--ps-space-md); }
+  .case-page.is-product-sheets .cs-members { gap: 10px 18px; margin-bottom: var(--ps-space-md); }
+  .case-page.is-product-sheets .cs-member { font-size: 14px; line-height: 1.5; }
+  .case-page.is-product-sheets .cs-member i { display: none; }
+  .case-page.is-product-sheets .cs-stages { gap: var(--ps-space-md); margin-top: var(--ps-space-md); }
+  .case-page.is-product-sheets .cs-stage { padding: 0; }
+  .case-page.is-product-sheets .cs-stage ul { margin-top: 10px; }
+  .case-page.is-product-sheets .cs-note {
+    margin-top: var(--ps-space-md);
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  .case-page.is-product-sheets .cs-note b { color: var(--cs-accent-deep); }
+
+  .case-page.is-product-sheets .cs-docs { gap: 24px 10px; }
+  .case-page.is-product-sheets .cs-doc { padding: 0; overflow: visible; }
+  .case-page.is-product-sheets .cs-doc-fig,
+  .case-page.is-product-sheets .cs-palette-fig {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  .case-page.is-product-sheets .cs-minutes { margin-top: var(--ps-content-gap); padding: 0; }
+  .case-page.is-product-sheets .cs-minutes-head { padding: 0; font-size: 15.5px; line-height: 1.5; }
+  .case-page.is-product-sheets .cs-minutes-head span { display: block; margin-top: 6px; }
+  .case-page.is-product-sheets .cs-minutes-body { padding-top: 22px; }
+  .case-page.is-product-sheets .cs-minutes-prod h5 { font-size: 16px; line-height: 1.5; }
+  .case-page.is-product-sheets .cs-minutes-prod li { font-size: 14px; line-height: 1.68; }
+  .case-page.is-product-sheets .cs-body :is(.cs-redacted, .cs-doc-cap, .cs-figure-cap) { letter-spacing: 0; }
+
+  /* 图片和交互本身可以存在，但不再伪装成悬浮卡片。 */
+  .case-page.is-product-sheets .cs-flip-face,
+  .case-page.is-product-sheets .cs-wall .cs-sheet,
+  .case-page.is-product-sheets .cs-grid13 .cs-sheet {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .case-page.is-product-sheets .cs-figure img { border-radius: 0; }
+  .case-page.is-product-sheets .cs-layouts { gap: 20px; }
+  .case-page.is-product-sheets .cs-layout { padding-top: 0; }
+  .case-page.is-product-sheets .cs-layout-k { min-height: 0; margin-bottom: 12px; font-size: 14px; }
+  .case-page.is-product-sheets .cs-pills { gap: 14px; }
+  .case-page.is-product-sheets .cs-pill { padding: 0 0 0 16px; }
+  .case-page.is-product-sheets .cs-pill::before { top: 8px; width: 6px; height: 6px; }
+
+  .case-page.is-product-sheets .cs-flow.is-steps { gap: 24px; }
+  .case-page.is-product-sheets .cs-flow.is-steps .cs-flow-step { padding: 0; }
+  .case-page.is-product-sheets .cs-flow.is-steps b { font-size: 16px; line-height: 1.5; }
+  .case-page.is-product-sheets .cs-flow.is-steps b i { font-size: 12.5px; }
+  .case-page.is-product-sheets .cs-flow.is-steps small { margin: 5px 0 0 31px; }
+
+  .case-page.is-product-sheets .cs-swatches { gap: 10px 7px; }
+  .case-page.is-product-sheets .cs-swatch {
+    padding: 4px 0;
+    opacity: .34;
+    transition: opacity .25s var(--ease), transform .25s var(--ease);
+  }
+  .case-page.is-product-sheets .cs-swatch:hover,
+  .case-page.is-product-sheets .cs-swatch.is-active {
+    background: transparent;
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+  .case-page.is-product-sheets .cs-swatch i { border-radius: 0; }
+  .case-page.is-product-sheets .cs-palette-meta small { font-size: 12.5px; line-height: 1.5; letter-spacing: 0; }
+  .case-page.is-product-sheets .cs-specs { gap: var(--ps-space-md); }
+  .case-page.is-product-sheets .cs-spec { padding: 0; }
+  .case-page.is-product-sheets .cs-phases { gap: var(--ps-content-gap); }
+  .case-page.is-product-sheets .cs-phase,
+  .case-page.is-product-sheets .cs-phase.is-dark { padding: 0; }
+
+  .case-page.is-product-sheets .cs-gain {
+    display: inline;
+    margin-left: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--cs-accent-deep);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  /* 里程碑改成普通时间清单，不再用描边圆点和轨道。 */
+  .case-page.is-product-sheets .cs-timeline::before,
+  .case-page.is-product-sheets .cs-timeline-line,
+  .case-page.is-product-sheets .cs-ms-dot { display: none; }
+  .case-page.is-product-sheets .cs-ms { display: block; padding: 0; }
+  .case-page.is-product-sheets .cs-ms + .cs-ms { margin-top: var(--ps-space-md); }
+  .case-page.is-product-sheets .cs-ms-body h4 { margin-bottom: 6px; }
+
+  .case-page.is-product-sheets .cs-lessons { display: grid; gap: var(--ps-content-gap); }
+  .case-page.is-product-sheets .cs-lesson,
+  .case-page.is-product-sheets .cs-lesson:first-child,
+  .case-page.is-product-sheets .cs-lesson:last-child { padding: 0; }
+  .case-page.is-product-sheets .cs-lesson h3 { margin-bottom: 8px; }
+  .case-page.is-product-sheets .cs-deliver-l { font-size: 12.5px; line-height: 1.5; }
+}
