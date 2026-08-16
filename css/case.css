@@ -1729,6 +1729,8 @@
    但保留产品体系自己的橙色识别与色彩切换。
    ============================================================ */
 @media (max-width: 768px) {
+  .case-page.is-product-sheets .cs-eyebrow { display: none; }
+
   .case-page.is-product-sheets .cs-body {
     --ps-section-gap: 64px;
     --ps-content-gap: 28px;
