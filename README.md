@@ -21,6 +21,7 @@
 │   ├── PPMigra-Italic.woff2      # 标题字体（斜体，用于 exp 区块橙色字）
 │   └── PPNeueMontreal-Regular.woff2  # 正文字体
 ├── README.md           # 本文件
+├── CASE-STUDY-GUIDE.md # 后续作品详情页的叙事、视觉与交互基准
 └── HANDOFF.md          # AI 交接文档（技术细节 + 待办）
 ```
 
