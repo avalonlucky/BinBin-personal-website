@@ -54,20 +54,10 @@
 
 .cs-hall .hall-title p {
   margin: 0;
-  color: rgb(26 26 26 / 52%);
-  font-size: clamp(12px, 0.9vw, 14px);
-  letter-spacing: 0.05em;
+  color: rgb(26 26 26 / 46%);
+  font-size: 13px;
+  letter-spacing: 0.04em;
   white-space: nowrap;
-}
-
-.cs-hall .hall-title span {
-  display: inline-block;
-  padding-bottom: 3px;
-  border-bottom: 2px solid #5aaee0;
-  color: rgb(26 26 26 / 40%);
-  font-family: "Neue Montreal", "PP Neue Montreal", sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.16em;
 }
 
 .cs-hall .hall-wall {
@@ -265,7 +255,6 @@
   }
 
   .cs-hall .hall-title h1 { font-size: 20px; }
-  .cs-hall .hall-title p { display: none; }
 
   .cs-hall .hall-wall {
     top: 12%;
