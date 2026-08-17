@@ -1574,10 +1574,11 @@ function initProductMobileMotion() {
    过长的可在 section 上用 data-toc 覆盖。
 ───────────────────────────────────────── */
 function initToc() {
-  const body = document.querySelector('.cs-body');
+  const body = document.querySelector('[data-ps-story]') || document.querySelector('.cs-body');
   if (!body) return;
 
-  const sections = [...body.querySelectorAll('.cs-section, .cs-deck')];
+  const sections = [...body.querySelectorAll('.cs-section, .cs-deck')]
+    .filter(section => section.offsetParent !== null);
   if (sections.length < 3) return;
 
   const nav = document.createElement('nav');
@@ -1672,6 +1673,7 @@ function initNavTheme() {
   const reveal = document.querySelector('[data-scrub-video]');
   const body = document.querySelector('.cs-body');
   const closing = document.querySelector('.cs-closing');
+  const themedSections = [...document.querySelectorAll('[data-nav-theme]')];
 
   if (reveal) ScrollTrigger.create({
     trigger: reveal, start: 'top 60px', end: 'bottom 60px',
@@ -1689,6 +1691,17 @@ function initNavTheme() {
     onEnter:     () => nav.dataset.theme = 'dark',
     onLeaveBack: () => nav.dataset.theme = 'light',
   });
+
+  themedSections.forEach((section, index) => ScrollTrigger.create({
+    trigger: section,
+    start: 'top 60px',
+    end: 'bottom 60px',
+    onEnter: () => { nav.dataset.theme = section.dataset.navTheme; },
+    onEnterBack: () => { nav.dataset.theme = section.dataset.navTheme; },
+    onLeaveBack: () => {
+      nav.dataset.theme = index > 0 ? themedSections[index - 1].dataset.navTheme : 'dark';
+    },
+  }));
 
 }
 

@@ -20,26 +20,36 @@
     const wraps = [...document.querySelectorAll('[data-hscroll]')];
     if (!wraps.length) return;
 
-    const hasGsap = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
-    if (!hasGsap) { simpleOnly(wraps); return; }
+    const mobileWraps = wraps.filter(wrap => wrap.dataset.hscroll !== 'desktop');
+    const desktopWraps = wraps.filter(wrap => wrap.dataset.hscroll === 'desktop');
 
-    gsap.matchMedia().add('(max-width: 768px)', () => {
+    const hasGsap = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
+    if (!hasGsap) { simpleOnly(mobileWraps, desktopWraps); return; }
+
+    const media = gsap.matchMedia();
+    media.add('(max-width: 768px)', () => {
       // Array.map 会额外传入 index；直接传 build 会让第二项起的 index
       // 被误当成 forceSwipe，从而意外退回手动滑动模式。
-      const made = wraps.map(wrap => build(wrap)).filter(Boolean);
+      const made = mobileWraps.map(wrap => build(wrap)).filter(Boolean);
+      return () => made.forEach(m => m.cleanup());
+    });
+    media.add('(min-width: 769px)', () => {
+      const made = desktopWraps.map(wrap => build(wrap, true)).filter(Boolean);
       return () => made.forEach(m => m.cleanup());
     });
   }
 
   /* 没有 GSAP 时（理论上不会发生）只跑滑动模式，用 matchMedia 自己管开关 */
-  function simpleOnly(wraps) {
-    const mq = window.matchMedia('(max-width: 768px)');
+  function simpleOnly(mobileWraps, desktopWraps) {
+    const mobileMq = window.matchMedia('(max-width: 768px)');
     let made = [];
     const sync = () => {
       made.forEach(m => m.cleanup());
-      made = mq.matches ? wraps.map(w => build(w, true)).filter(Boolean) : [];
+      made = mobileMq.matches
+        ? mobileWraps.map(w => build(w, true)).filter(Boolean)
+        : desktopWraps.map(w => build(w, true)).filter(Boolean);
     };
-    mq.addEventListener('change', sync);
+    mobileMq.addEventListener('change', sync);
     sync();
   }
 
