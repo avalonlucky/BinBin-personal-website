@@ -474,9 +474,11 @@
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-rows: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, auto);
   gap: clamp(18px, 2.2vw, 28px);
+  width: 100vw;
   min-height: clamp(720px, 64vw, 880px);
+  margin-left: calc(50% - 50vw);
   padding: clamp(72px, 7vw, 98px) clamp(44px, 5vw, 78px) clamp(142px, 13vw, 188px);
   overflow: hidden;
   background: #ece9e2 url('../assets/work/ankki/archive-gallery-space.webp') center / cover no-repeat;
@@ -490,7 +492,8 @@
   content: '';
   pointer-events: none;
 }
-.ps-archive-row { position: relative; z-index: 1; display: flex; align-items: end; justify-content: space-around; gap: clamp(14px, 2vw, 26px); min-height: 0; padding: 0 10px 12px; }
+.ps-archive-row { position: relative; z-index: 1; display: flex; align-items: end; justify-content: space-between; gap: clamp(14px, 2vw, 26px); min-height: 0; padding: 0 10px 12px; }
+.ps-archive-row:last-child { justify-content: space-around; }
 .ps-archive-row:not(:last-child)::after {
   position: absolute;
   z-index: 0;
@@ -503,14 +506,15 @@
   box-shadow: 0 1px 0 rgb(255 255 255 / 78%) inset, 0 8px 16px rgb(62 57 49 / 9%);
   content: '';
 }
-.ps-archive-slot { position: relative; z-index: 1; display: flex; align-items: end; justify-content: center; width: min(18%, 190px); height: 100%; transition: opacity .38s var(--ease), filter .38s var(--ease); }
-.ps-archive-row:last-child .ps-archive-slot { width: min(16%, 170px); }
+.ps-archive-slot { position: relative; z-index: 1; display: flex; align-items: end; justify-content: center; width: min(17%, 220px); transition: opacity .38s var(--ease), filter .38s var(--ease); }
+.ps-archive-row:last-child .ps-archive-slot { width: min(17%, 220px); }
 .ps-archive-acrylic {
   position: relative;
   display: flex;
   align-items: end;
   justify-content: center;
-  height: calc(100% - 3px);
+  width: 100%;
+  height: auto;
   aspect-ratio: 2611 / 3378;
   padding: 5px 5px 0;
   border: 1px solid rgb(255 255 255 / 72%);
@@ -564,7 +568,6 @@
   border-radius: 5px;
   background: #fff;
   box-shadow: 0 0 0 2px rgb(110 200 245 / 48%), 0 0 28px rgb(90 190 245 / 34%), 0 24px 54px rgb(50 60 70 / 18%);
-  cursor: zoom-out;
 }
 .ps-archive-focus-card img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center top; }
 .ps-archive-focus-controls {
@@ -726,9 +729,10 @@
   .ps-archive-hint { margin-top: 7px; font-size: 12.5px; }
   .ps-archive-wall { gap: 14px; width: calc(100% + 40px); min-height: 650px; margin-left: -20px; padding: 54px 16px 76px; background-position: 45% center; }
   .ps-archive-row { justify-content: space-between; gap: 7px; padding: 0 2px 10px; }
+  .ps-archive-row:last-child { justify-content: space-between; }
   .ps-archive-slot { width: 22%; }
   .ps-archive-row:last-child .ps-archive-slot { width: 18%; }
-  .ps-archive-acrylic { height: calc(100% - 2px); padding: 3px 3px 0; }
+  .ps-archive-acrylic { padding: 3px 3px 0; }
   .ps-archive-acrylic::after { right: 4px; bottom: -4px; left: 4px; height: 4px; }
   .ps-archive-sheet { height: 92%; }
   .ps-archive-empty { inset: 3px 3px 5px; font-size: 24px; }

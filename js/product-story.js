@@ -183,25 +183,24 @@
     focus.hidden = true;
     focus.setAttribute('aria-live', 'polite');
     focus.innerHTML = `
-      <button class="ps-archive-focus-card" type="button">
+      <div class="ps-archive-focus-card">
         <img alt="" width="2611" height="3378" decoding="async">
-      </button>
+      </div>
       <div class="ps-archive-focus-controls">
         <strong data-archive-name></strong>
         <button type="button" data-archive-flip>看背面</button>
-        <button type="button" data-archive-return>放回展位</button>
       </div>`;
     wall.appendChild(focus);
 
-    const focusCard = focus.querySelector('.ps-archive-focus-card');
     const focusImage = focus.querySelector('img');
     const focusName = focus.querySelector('[data-archive-name]');
     const flipButton = focus.querySelector('[data-archive-flip]');
-    const returnButton = focus.querySelector('[data-archive-return]');
     let selectedIndex = -1;
     let sourceButton = null;
     let side = 'front';
     let busy = false;
+    let layoutMode = window.innerWidth <= 768 ? 'mobile' : 'desktop';
+    let buildRows;
 
     const clearFocusTransform = () => {
       focus.style.removeProperty('transform');
@@ -215,21 +214,21 @@
       const mobile = window.innerWidth <= 768;
       const aspect = 2611 / 3378;
       let height = Math.min(
-        window.innerHeight * (mobile ? .54 : .62),
-        wall.clientHeight * (mobile ? .64 : .58),
-        mobile ? 460 : 620,
+        window.innerHeight * (mobile ? .54 : .72),
+        wall.clientHeight * (mobile ? .64 : .68),
+        mobile ? 460 : 760,
       );
       let width = height * aspect;
       const maxWidth = Math.min(
-        window.innerWidth * (mobile ? .8 : .38),
-        wall.clientWidth * (mobile ? .82 : .42),
+        window.innerWidth * (mobile ? .8 : .44),
+        wall.clientWidth * (mobile ? .82 : .48),
       );
       if (width > maxWidth) {
         width = maxWidth;
         height = width / aspect;
       }
 
-      const controlsRoom = mobile ? 76 : 66;
+      const controlsRoom = mobile ? 76 : 58;
       const viewportCenter = window.innerHeight * .5 - wallRect.top;
       const maxTop = Math.max(18, wall.clientHeight - height - controlsRoom - 20);
       const top = Math.min(maxTop, Math.max(20, viewportCenter - height / 2));
@@ -293,6 +292,11 @@
         side = 'front';
         busy = false;
         targetButton.focus({ preventScroll: true });
+        const nextLayoutMode = window.innerWidth <= 768 ? 'mobile' : 'desktop';
+        if (nextLayoutMode !== layoutMode) {
+          layoutMode = nextLayoutMode;
+          buildRows();
+        }
       };
 
       if (reducedMotion || typeof gsap === 'undefined') {
@@ -326,7 +330,6 @@
       wall.classList.add('is-focused');
       focus.hidden = false;
       focusName.textContent = product.name;
-      focusCard.setAttribute('aria-label', `将${product.name}放回展位`);
       focusImage.src = thumbUrl(product);
       focusImage.alt = `${product.name}单页正面`;
       flipButton.textContent = '看背面';
@@ -340,44 +343,58 @@
       requestAnimationFrame(() => placeFocus(true));
     };
 
-    let cursor = 0;
-    [4, 4, 5].forEach(count => {
-      const row = document.createElement('div');
-      row.className = 'ps-archive-row';
-      products.slice(cursor, cursor + count).forEach(product => {
-        const index = products.indexOf(product);
-        const slot = document.createElement('article');
-        slot.className = 'ps-archive-slot';
-        const acrylic = document.createElement('div');
-        acrylic.className = 'ps-archive-acrylic';
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'ps-archive-sheet';
-        button.setAttribute('aria-label', `从展墙查看${product.name}`);
-        button.innerHTML = `<img src="${thumbUrl(product)}" alt="${product.name}单页正面" width="420" height="543" loading="lazy" decoding="async">`;
-        button.addEventListener('click', () => selectProduct(button, index));
-        const emptyButton = document.createElement('button');
-        emptyButton.type = 'button';
-        emptyButton.className = 'ps-archive-empty';
-        emptyButton.setAttribute('aria-label', `将${product.name}放回展位`);
-        emptyButton.textContent = '+';
-        emptyButton.addEventListener('click', returnToWall);
-        acrylic.appendChild(button);
-        acrylic.appendChild(emptyButton);
-        slot.appendChild(acrylic);
-        row.appendChild(slot);
+    buildRows = () => {
+      wall.querySelectorAll('.ps-archive-row').forEach(row => row.remove());
+      const rowCounts = layoutMode === 'mobile' ? [4, 4, 5] : [5, 5, 3];
+      let cursor = 0;
+      rowCounts.forEach(count => {
+        const row = document.createElement('div');
+        row.className = 'ps-archive-row';
+        products.slice(cursor, cursor + count).forEach((product, offset) => {
+          const index = cursor + offset;
+          const slot = document.createElement('article');
+          slot.className = 'ps-archive-slot';
+          const acrylic = document.createElement('div');
+          acrylic.className = 'ps-archive-acrylic';
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'ps-archive-sheet';
+          button.setAttribute('aria-label', `从展墙查看${product.name}`);
+          button.innerHTML = `<img src="${thumbUrl(product)}" alt="${product.name}单页正面" width="420" height="543" loading="lazy" decoding="async">`;
+          button.addEventListener('click', () => selectProduct(button, index));
+          const emptyButton = document.createElement('button');
+          emptyButton.type = 'button';
+          emptyButton.className = 'ps-archive-empty';
+          emptyButton.setAttribute('aria-label', `将${product.name}放回展位`);
+          emptyButton.textContent = '+';
+          emptyButton.addEventListener('click', returnToWall);
+          acrylic.appendChild(button);
+          acrylic.appendChild(emptyButton);
+          slot.appendChild(acrylic);
+          row.appendChild(slot);
+        });
+        cursor += count;
+        wall.appendChild(row);
       });
-      cursor += count;
-      wall.appendChild(row);
-    });
+    };
+    buildRows();
 
-    focusCard.addEventListener('click', returnToWall);
-    returnButton.addEventListener('click', returnToWall);
     flipButton.addEventListener('click', () => setSide(side === 'front' ? 'back' : 'front'));
+    document.addEventListener('pointerdown', event => {
+      if (selectedIndex < 0 || focus.contains(event.target)) return;
+      returnToWall();
+    });
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape' && selectedIndex >= 0) returnToWall();
     });
-    window.addEventListener('resize', () => placeFocus(false));
+    window.addEventListener('resize', () => {
+      const nextLayoutMode = window.innerWidth <= 768 ? 'mobile' : 'desktop';
+      if (nextLayoutMode !== layoutMode && selectedIndex < 0) {
+        layoutMode = nextLayoutMode;
+        buildRows();
+      }
+      placeFocus(false);
+    });
   }
 
   function initTimelineDrag() {
