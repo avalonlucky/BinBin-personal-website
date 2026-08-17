@@ -6,16 +6,16 @@
   z-index: 5;
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: clamp(42px, 5.5vw, 76px) var(--gutter) clamp(30px, 4vw, 56px);
   background: var(--cs-ink);
 }
 
 .cs-hall .hall {
   position: relative;
   width: 100%;
-  max-width: none;
+  max-width: var(--cs-max);
   height: min(78vh, 760px);
-  margin: 0;
+  margin: 0 auto;
   overflow: hidden;
   background: #ebe8e2;
 }
@@ -360,7 +360,7 @@
 
 @media (max-width: 700px) {
   .cs-hall {
-    padding: 0;
+    padding: 30px 0 44px;
   }
 
   .cs-hall .hall {
