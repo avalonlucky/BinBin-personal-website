@@ -159,7 +159,7 @@
     });
   });
 
-  root.addEventListener("click", () => {
+  document.addEventListener("click", () => {
     if (selected !== null) returnWork();
   });
 
