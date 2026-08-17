@@ -85,6 +85,18 @@
   line-height: 1.8;
 }
 
+.ps-context {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(36px, 6vw, 88px);
+  margin-bottom: clamp(64px, 8vw, 108px);
+}
+
+.ps-context article { min-width: 0; }
+.ps-context span { color: var(--ps-orange); font-family: var(--f-body); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+.ps-context h3 { margin: 13px 0 15px; font-family: var(--f-cjk); font-size: 24px; font-weight: 600; line-height: 1.3; }
+.ps-context p { max-width: 28em; margin: 0; color: var(--ps-muted); font-family: var(--f-cjk); font-size: 15.5px; line-height: 1.8; }
+
 /* 第一幕：一处足够明确的 Before / After */
 .ps-before-after { margin-top: 0; }
 
@@ -100,9 +112,11 @@
 
 .ps-ba-layer {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
   display: grid;
   place-items: center;
+  overflow: hidden;
 }
 
 .ps-ba-layer > span {
@@ -117,27 +131,33 @@
 }
 
 .ps-ba-layer.is-after {
+  right: 0;
+  left: var(--split);
+  width: calc(100% - var(--split));
   background:
     radial-gradient(circle at 72% 28%, rgb(35 77 161 / 14%), transparent 38%),
     #d8dce3;
 }
 
 .ps-ba-layer.is-after img {
-  width: auto;
-  height: 88%;
+  width: min(474px, calc(100% - 56px));
+  height: auto;
   object-fit: contain;
   filter: drop-shadow(0 24px 34px rgb(32 40 52 / 18%));
 }
 
 .ps-ba-layer.is-before {
-  z-index: 2;
-  clip-path: inset(0 calc(100% - var(--split)) 0 0);
+  right: auto;
+  left: 0;
+  width: var(--split);
   background: #d5d0c7;
 }
 
 .ps-legacy-sheet {
-  width: min(42%, 390px);
+  width: min(474px, calc(100% - 56px));
+  height: auto;
   aspect-ratio: 2611 / 3378;
+  box-sizing: border-box;
   padding: 34px 30px;
   overflow: hidden;
   background: #f7f5ef;
@@ -419,6 +439,7 @@
 
 /* 第四幕：横向时间轴、完整档案与现场 */
 .ps-chapter.is-delivery { background: #f7f4ed; }
+.ps-chapter.is-delivery .cs-title { font-size: clamp(60px, 6.6vw, 84px); }
 
 .ps-timeline-wrap {
   position: relative;
@@ -437,7 +458,7 @@
 .ps-milestone time { color: var(--ps-orange); font-family: var(--f-body); font-size: 11px; letter-spacing: .08em; }
 .ps-milestone h3 { margin: 13px 0 10px; font-family: var(--f-cjk); font-size: 22px; font-weight: 600; line-height: 1.35; }
 .ps-milestone p { min-height: 78px; margin: 0; color: var(--ps-muted); font-size: 14.5px; line-height: 1.7; }
-.ps-evidence-thumb { position: relative; display: block; width: 100%; height: 150px; margin-top: 26px; overflow: hidden; cursor: zoom-in; }
+.ps-evidence-thumb { position: relative; display: block; width: 120%; height: 180px; margin: 26px -10% 0; overflow: hidden; cursor: zoom-in; }
 .ps-evidence-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; filter: saturate(.88); transition: transform .4s var(--ease); }
 .ps-evidence-thumb.is-wide img { object-position: center; }
 .ps-evidence-thumb:hover img { transform: scale(1.025); }
@@ -447,6 +468,8 @@
 .ps-archive-head { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-bottom: 34px; }
 .ps-archive-head .ps-minor-label { margin: 0; color: var(--ps-muted); }
 .ps-archive-head h3 { margin: 0; font-family: var(--f-cjk); font-size: 30px; font-weight: 600; }
+.ps-archive-head > div { text-align: right; }
+.ps-archive-hint { margin: 8px 0 0; color: var(--ps-muted); font-family: var(--f-cjk); font-size: 13px; }
 .ps-archive-wall { display: grid; gap: 26px; padding: clamp(30px, 4vw, 52px); background: #e5e1d9; }
 .ps-archive-row { position: relative; display: flex; align-items: end; justify-content: space-around; gap: 26px; min-height: 190px; padding: 0 20px 13px; }
 .ps-archive-row::after { position: absolute; right: 0; bottom: 0; left: 0; height: 3px; background: linear-gradient(#fff, #bec0bd); box-shadow: 0 8px 14px rgb(62 57 49 / 9%); content: ''; }
@@ -460,6 +483,12 @@
 .ps-field-image > span { position: absolute; right: 0; bottom: 0; left: 0; padding: 120px 84px 42px 42px; background: linear-gradient(transparent, rgb(8 11 15 / 88%)); color: rgb(255 255 255 / 70%); font-family: var(--f-cjk); font-size: 15px; line-height: 1.6; }
 .ps-field-image > span b { display: block; margin-bottom: 5px; color: #fff; font-size: 28px; }
 .ps-field-image > .ps-zoom-icon { font-style: normal; }
+
+.ps-reflections { margin-top: clamp(96px, 12vw, 160px); }
+.ps-reflections > .ps-minor-label { margin: 0 0 28px; color: var(--ps-orange); }
+.ps-reflection-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(56px, 9vw, 140px); }
+.ps-reflection-grid h3 { margin: 0 0 18px; font-family: var(--f-cjk); font-size: clamp(25px, 2.5vw, 34px); font-weight: 600; line-height: 1.3; }
+.ps-reflection-grid p { max-width: 34em; margin: 0; color: var(--ps-muted); font-family: var(--f-cjk); font-size: 17px; line-height: 1.8; }
 
 .ps-final-statement { max-width: 1000px; margin-top: clamp(96px, 12vw, 170px); margin-bottom: 0; padding: 0; border: 0; color: var(--ps-ink); font-family: var(--f-cjk); font-size: clamp(36px, 5vw, 64px); font-weight: 600; line-height: 1.25; letter-spacing: -.025em; }
 
@@ -506,17 +535,22 @@
   .ps-thesis strong { font-size: 19px; line-height: 1.55; }
   .ps-thesis p { font-size: 16.5px; line-height: 1.8; }
 
+  .ps-context { grid-template-columns: 1fr; gap: 32px; margin-bottom: 62px; }
+  .ps-context h3 { margin: 9px 0 10px; font-size: 21px; }
+  .ps-context p { font-size: 15px; line-height: 1.75; }
+
   .ps-ba-stage { aspect-ratio: 4 / 5; min-height: 0; cursor: default; }
   .ps-ba-stage input,
   .ps-ba-divider { display: none; }
-  .ps-ba-layer.is-before { clip-path: none; }
+  .ps-ba-layer.is-before,
+  .ps-ba-layer.is-after { inset: 0; width: 100%; }
   .ps-before-after[data-mode="before"] .ps-ba-layer.is-before { z-index: 3; opacity: 1; }
   .ps-before-after[data-mode="before"] .ps-ba-layer.is-after { opacity: 0; }
   .ps-before-after[data-mode="after"] .ps-ba-layer.is-before { opacity: 0; }
   .ps-before-after[data-mode="after"] .ps-ba-layer.is-after { z-index: 3; opacity: 1; }
   .ps-ba-layer { transition: opacity .3s var(--ease); }
-  .ps-ba-layer.is-after img { width: 88%; height: 88%; }
-  .ps-legacy-sheet { width: 70%; }
+  .ps-ba-layer.is-after img,
+  .ps-legacy-sheet { width: auto; max-width: calc(100% - 48px); height: 84%; }
   .ps-ba-layer > span { bottom: 16px; left: 16px; font-size: 10px; }
   .ps-ba-tabs { display: grid; grid-template-columns: 1fr 1fr; margin-top: 16px; }
   .ps-ba-tabs button { padding: 12px 0; border: 0; border-bottom: 1px solid rgb(23 23 23 / 14%); background: none; color: var(--ps-muted); font-family: var(--f-cjk); font-size: 14px; }
@@ -573,13 +607,16 @@
   .ps-timeline-track::before { position: absolute; top: 8px; bottom: 10px; left: 5px; width: 1px; background: rgb(23 23 23 / 18%); content: ''; }
   .ps-milestone { width: auto; padding: 0 0 54px 20px; border: 0; }
   .ps-milestone::before { top: 5px; left: -27px; }
+  .ps-chapter.is-delivery .cs-title { font-size: clamp(40px, 11vw, 48px); }
   .ps-milestone h3 { font-size: 20px; }
   .ps-milestone p { min-height: 0; font-size: 14px; }
-  .ps-evidence-thumb { width: 82%; height: 124px; margin-top: 20px; }
+  .ps-evidence-thumb { width: 98%; height: 148px; margin: 20px auto 0; }
 
   .ps-archive { margin-top: 74px; }
   .ps-archive-head { display: block; }
   .ps-archive-head h3 { margin-top: 8px; font-size: 26px; }
+  .ps-archive-head > div { margin-top: 8px; text-align: left; }
+  .ps-archive-hint { margin-top: 7px; font-size: 12.5px; }
   .ps-archive-wall { gap: 18px; width: calc(100% + 40px); margin-left: -20px; padding: 28px 20px; overflow: hidden; }
   .ps-archive-row { justify-content: space-between; gap: 10px; min-height: 132px; padding: 0 4px 10px; }
   .ps-archive-sheet { width: auto; height: 100px; }
@@ -587,7 +624,12 @@
   .ps-field-image { width: calc(100% + 40px); aspect-ratio: 4 / 3; margin: 80px -20px 0; }
   .ps-field-image > span { padding: 80px 68px 24px 20px; font-size: 13px; }
   .ps-field-image > span b { font-size: 22px; }
-  .ps-final-statement { margin-top: 82px; font-size: 34px; line-height: 1.32; }
+  .ps-reflections { margin-top: 82px; }
+  .ps-reflections > .ps-minor-label { margin-bottom: 24px; }
+  .ps-reflection-grid { grid-template-columns: 1fr; gap: 48px; }
+  .ps-reflection-grid h3 { margin-bottom: 14px; font-size: 25px; }
+  .ps-reflection-grid p { font-size: 16px; line-height: 1.8; }
+  .ps-final-statement { margin-top: 82px; font-size: 32px; line-height: 1.36; }
 }
 
 @media (prefers-reduced-motion: reduce) {
