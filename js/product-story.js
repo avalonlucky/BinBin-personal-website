@@ -55,6 +55,37 @@
     });
   }
 
+  function initReflections() {
+    const accordion = story.querySelector('[data-ps-reflections]');
+    if (!accordion) return;
+
+    const items = [...accordion.querySelectorAll('.ps-reflection-item')];
+    const triggers = items.map(item => item.querySelector('.ps-reflection-trigger'));
+
+    const openItem = activeItem => {
+      items.forEach(item => {
+        const active = item === activeItem;
+        item.classList.toggle('is-open', active);
+        item.querySelector('.ps-reflection-trigger').setAttribute('aria-expanded', String(active));
+        item.querySelector('.ps-reflection-panel').setAttribute('aria-hidden', String(!active));
+      });
+    };
+
+    triggers.forEach((trigger, index) => {
+      trigger.addEventListener('click', () => openItem(items[index]));
+      trigger.addEventListener('keydown', event => {
+        let nextIndex = null;
+        if (event.key === 'ArrowDown') nextIndex = (index + 1) % triggers.length;
+        if (event.key === 'ArrowUp') nextIndex = (index - 1 + triggers.length) % triggers.length;
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = triggers.length - 1;
+        if (nextIndex === null) return;
+        event.preventDefault();
+        triggers[nextIndex].focus();
+      });
+    });
+  }
+
   function initColorSystem() {
     const lab = story.querySelector('[data-ps-system]');
     const list = lab?.querySelector('[data-ps-color-list]');
@@ -458,6 +489,7 @@
 
   initBeforeAfter();
   initInfoTip();
+  initReflections();
   initColorSystem();
   initScrollFlip();
   initArchive();

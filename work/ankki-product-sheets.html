@@ -13,7 +13,7 @@
 
   <link rel="stylesheet" href="../css/style.css?v=81">
   <link rel="stylesheet" href="../css/case.css?v=103">
-  <link rel="stylesheet" href="../css/product-story.css?v=9">
+  <link rel="stylesheet" href="../css/product-story.css?v=10">
 </head>
 <body class="case-page is-product-sheets">
 <div class="site">
@@ -381,18 +381,39 @@
 
           <div class="ps-reflections">
             <p class="ps-minor-label">Reflection / 项目反思</p>
-            <div class="ps-reflection-grid">
-              <article>
-                <h3>设计师介入越早，能做的事就越多</h3>
-                <p>设计师不该只在最后接收需求。从定位框架和文案策略开始介入，理解业务与销售现场，最终交付的才是能帮助客户理解产品的营销工具。</p>
+            <div class="ps-reflection-accordion" data-ps-reflections>
+              <article class="ps-reflection-item is-open">
+                <h3>
+                  <button class="ps-reflection-trigger" id="ps-reflection-trigger-1" type="button" aria-expanded="true" aria-controls="ps-reflection-panel-1">
+                    <span>设计师介入越早，能做的事就越多</span>
+                    <i aria-hidden="true"></i>
+                  </button>
+                </h3>
+                <div class="ps-reflection-panel" id="ps-reflection-panel-1" role="region" aria-labelledby="ps-reflection-trigger-1" aria-hidden="false">
+                  <div><p>设计师不该只在最后接收需求。从定位框架和文案策略开始介入，理解业务与销售现场，最终交付的才是能帮助客户理解产品的营销工具。</p></div>
+                </div>
               </article>
-              <article>
-                <h3>跨部门协作靠制度，不是靠个人加班</h3>
-                <p>先明确成员、节点、评审路径和交付标准，再让协作进入可视、可追踪的流程。制度减少了反复催促，也让销售与研发的业务判断真正进入设计。</p>
+              <article class="ps-reflection-item">
+                <h3>
+                  <button class="ps-reflection-trigger" id="ps-reflection-trigger-2" type="button" aria-expanded="false" aria-controls="ps-reflection-panel-2">
+                    <span>跨部门协作靠制度，不是靠个人加班</span>
+                    <i aria-hidden="true"></i>
+                  </button>
+                </h3>
+                <div class="ps-reflection-panel" id="ps-reflection-panel-2" role="region" aria-labelledby="ps-reflection-trigger-2" aria-hidden="true">
+                  <div><p>先明确成员、节点、评审路径和交付标准，再让协作进入可视、可追踪的流程。制度减少了反复催促，也让销售与研发的业务判断真正进入设计。</p></div>
+                </div>
               </article>
-              <article>
-                <h3>保持对 AI 工具的敏感</h3>
-                <p>项目启动时 AI 尚未普及，我已经把它用于文案优化、插画方向和初稿生成。工具负责发散与提速，判断、取舍和品牌一致性仍由设计师负责。</p>
+              <article class="ps-reflection-item">
+                <h3>
+                  <button class="ps-reflection-trigger" id="ps-reflection-trigger-3" type="button" aria-expanded="false" aria-controls="ps-reflection-panel-3">
+                    <span>保持对 AI 工具的敏感</span>
+                    <i aria-hidden="true"></i>
+                  </button>
+                </h3>
+                <div class="ps-reflection-panel" id="ps-reflection-panel-3" role="region" aria-labelledby="ps-reflection-trigger-3" aria-hidden="true">
+                  <div><p>项目启动时 AI 尚未普及，我已经把它用于文案优化、插画方向和初稿生成。工具负责发散与提速，判断、取舍和品牌一致性仍由设计师负责。</p></div>
+                </div>
               </article>
             </div>
           </div>
@@ -499,6 +520,6 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="../js/hscroll.js?v=9"></script>
 <script src="../js/case.js?v=73"></script>
-<script src="../js/product-story.js?v=5"></script>
+<script src="../js/product-story.js?v=6"></script>
 </body>
 </html>
