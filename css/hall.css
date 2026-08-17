@@ -1,0 +1,277 @@
+/* 产品单页案例：数字档案墙 */
+.cs-hall {
+  --sheet: 2611 / 3378;
+  --cyan: #6ec8f5;
+  position: relative;
+  width: 100%;
+  height: min(90vh, 920px);
+  overflow: hidden;
+  background: #ebe8e2;
+}
+
+.cs-hall .hall {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.cs-hall .hall-space {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 42% 50%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cs-hall .hall-title {
+  position: absolute;
+  z-index: 6;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 18px 28px 0;
+}
+
+.cs-hall .hall-title h1 {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: clamp(22px, 2.1vw, 34px);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.cs-hall .hall-title p {
+  margin: 0;
+  color: rgb(26 26 26 / 52%);
+  font-size: clamp(12px, 0.9vw, 14px);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.cs-hall .hall-title span {
+  display: inline-block;
+  padding-bottom: 3px;
+  border-bottom: 2px solid #5aaee0;
+  color: rgb(26 26 26 / 40%);
+  font-family: "Neue Montreal", "PP Neue Montreal", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+
+.cs-hall .hall-wall {
+  position: absolute;
+  z-index: 4;
+  top: 9%;
+  right: 6%;
+  bottom: 23%;
+  left: 24%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cs-hall .hall-row {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 31%;
+}
+
+.cs-hall .hall-row.is-floor {
+  justify-content: center;
+  gap: 7%;
+  height: 33%;
+}
+
+.cs-hall .hall-shelf {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 5px;
+  border-radius: 1px;
+  background: linear-gradient(180deg, rgb(255 255 255 / 92%), rgb(206 214 220 / 70%));
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 80%) inset,
+    0 7px 14px rgb(70 64 56 / 8%);
+  pointer-events: none;
+}
+
+.cs-hall .hall-slot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 17.4%;
+  height: 100%;
+}
+
+.cs-hall .hall-row.is-floor .hall-slot { width: 17.4%; }
+
+.cs-hall .hall-acrylic {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: auto;
+  height: calc(100% - 6px);
+  padding: 5px 5px 0;
+  border: 1px solid rgb(255 255 255 / 70%);
+  border-radius: 2px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 28%) 0%, rgb(255 255 255 / 6%) 40%, rgb(220 230 236 / 10%) 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 80%),
+    0 10px 20px -12px rgb(70 64 56 / 18%);
+}
+
+.cs-hall .hall-acrylic::after {
+  position: absolute;
+  right: 8px;
+  bottom: -5px;
+  left: 8px;
+  height: 5px;
+  border-radius: 1px;
+  background: rgb(255 255 255 / 42%);
+  box-shadow: 0 5px 10px rgb(70 64 56 / 10%);
+  content: "";
+}
+
+.cs-hall .hall-sheet,
+.cs-hall .hall-empty,
+.cs-hall .hall-focus {
+  padding: 0;
+  border: 0;
+  background: #fff;
+  cursor: zoom-in;
+  font: inherit;
+}
+
+.cs-hall .hall-sheet {
+  display: block;
+  width: auto;
+  height: 90%;
+  aspect-ratio: var(--sheet);
+  overflow: hidden;
+  box-shadow: 0 6px 14px rgb(50 46 40 / 8%);
+}
+
+.cs-hall .hall-sheet.is-away {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.cs-hall .hall-sheet img,
+.cs-hall .hall-focus img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center top;
+  pointer-events: none;
+}
+
+.cs-hall .hall-empty {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  bottom: 12px;
+  left: 5px;
+  display: grid;
+  place-items: center;
+  background: rgb(248 252 255 / 16%);
+  cursor: pointer;
+}
+
+.cs-hall .hall-empty i {
+  color: rgb(110 190 235 / 80%);
+  font-style: normal;
+  font-size: clamp(22px, 2vw, 32px);
+  font-weight: 300;
+}
+
+.cs-hall .hall-slot.is-empty .hall-acrylic {
+  border-color: rgb(110 196 240 / 82%);
+  background: rgb(230 244 252 / 14%);
+  box-shadow:
+    0 0 0 1.5px rgb(110 196 240 / 68%),
+    0 0 20px rgb(110 196 240 / 22%);
+}
+
+.cs-hall.is-focused .hall-slot:not(.is-empty) { opacity: 0.72; }
+.cs-hall.is-focused .hall-slot:not(.is-empty) .hall-sheet { pointer-events: none; }
+
+.cs-hall .hall-focus {
+  position: absolute;
+  z-index: 20;
+  overflow: hidden;
+  border: 1px solid rgb(154 216 246 / 90%);
+  border-radius: 6px;
+  background: #fff;
+  box-shadow:
+    0 0 0 2px rgb(110 200 245 / 50%),
+    0 0 26px rgb(90 190 245 / 36%),
+    0 22px 50px rgb(50 60 70 / 16%);
+  cursor: zoom-out;
+  transform-origin: center center;
+}
+
+.cs-hall .hall-hint {
+  position: absolute;
+  z-index: 21;
+  top: 42%;
+  right: 1.5%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 94%);
+  box-shadow: 0 8px 20px rgb(50 50 50 / 8%);
+  color: #2a2a2a;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.cs-hall .hall-hint i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4aa6de;
+}
+
+@media (max-width: 900px) {
+  .cs-hall { height: min(80vh, 720px); }
+
+  .cs-hall .hall-title {
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    padding: 12px 16px 0;
+  }
+
+  .cs-hall .hall-title h1 { font-size: 20px; }
+  .cs-hall .hall-title p { display: none; }
+
+  .cs-hall .hall-wall {
+    top: 12%;
+    right: 4%;
+    bottom: 10%;
+    left: 4%;
+  }
+
+  .cs-hall .hall-hint { display: none; }
+}
