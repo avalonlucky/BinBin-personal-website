@@ -85,7 +85,7 @@
   };
 
   const returnWork = () => {
-    if (selected === null) return;
+    if (selected === null || busy) return;
     const sheet = sheets[selected];
     if (!focusEl || !sheet || !window.gsap || reduced()) {
       clearFocus();
@@ -141,7 +141,7 @@
 
     hintEl = document.createElement("p");
     hintEl.className = "hall-hint";
-    hintEl.innerHTML = "<i></i>点击查看 · 再次点击归档";
+    hintEl.innerHTML = "<i></i>点击任意处归档";
     wall.append(hintEl);
 
     loadHi(src, (hi) => {
@@ -153,7 +153,14 @@
   };
 
   sheets.forEach((sheet, index) => {
-    sheet.addEventListener("click", () => selectWork(index));
+    sheet.addEventListener("click", (event) => {
+      event.stopPropagation();
+      selectWork(index);
+    });
+  });
+
+  root.addEventListener("click", () => {
+    if (selected !== null) returnWork();
   });
 
   window.addEventListener("keydown", (event) => {
