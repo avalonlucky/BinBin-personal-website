@@ -452,7 +452,7 @@
   scrollbar-color: rgb(23 23 23 / 26%) transparent;
 }
 
-.ps-timeline-track { display: flex; width: max-content; min-width: 100%; gap: clamp(24px, 2.4vw, 36px); padding: 0 clamp(16px, 2vw, 28px) 20px; }
+.ps-timeline-track { display: flex; width: max-content; min-width: 100%; justify-content: center; gap: clamp(24px, 2.4vw, 36px); padding: 0 clamp(16px, 2vw, 28px) 20px; }
 .ps-milestone { position: relative; width: clamp(280px, 23vw, 320px); flex: 0 0 auto; padding: 42px 0 0; border-top: 1px solid rgb(23 23 23 / 18%); scroll-snap-align: start; }
 .ps-milestone::before { position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--ps-orange); content: ''; }
 .ps-milestone time { color: var(--ps-orange); font-family: var(--f-body); font-size: 11px; letter-spacing: .08em; }
@@ -602,7 +602,7 @@
   .ps-timeline-wrap { overflow: visible; padding: 0; }
   .ps-timeline-wrap[data-hscroll="desktop"] { overflow: visible; scroll-snap-type: none; }
   .ps-timeline-track,
-  .ps-timeline-track[data-hscroll-track] { position: relative; display: grid !important; width: auto !important; min-width: 0; flex-direction: initial !important; flex-wrap: initial !important; grid-template-columns: 1fr !important; gap: 0; padding: 0 0 0 28px; }
+  .ps-timeline-track[data-hscroll-track] { position: relative; display: grid !important; width: auto !important; min-width: 0; justify-content: stretch; flex-direction: initial !important; flex-wrap: initial !important; grid-template-columns: 1fr !important; gap: 0; padding: 0 0 0 28px; }
   .ps-timeline-track[data-hscroll-track] > * { width: auto; max-width: 100%; flex: none; }
   .ps-timeline-track::before { position: absolute; top: 8px; bottom: 10px; left: 5px; width: 1px; background: rgb(23 23 23 / 18%); content: ''; }
   .ps-milestone { width: auto; padding: 0 0 54px 20px; border: 0; }
