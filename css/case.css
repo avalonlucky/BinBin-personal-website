@@ -27,14 +27,27 @@
   --cs-hair-dark: rgba(251, 251, 244, 0.14);
   --cs-max:       1240px;
 }
-/* 《昂楷视界》内刊案例：整页换成期刊自己的主色（规范里的 #E60012 / #222222）。
-   刊物本身就带一套色彩规范，详情页用它自己的颜色讲它自己的事。
-   撤销只需去掉 body 上的 is-vision。 */
+/* 版式作用域与主色是两件事，分成两组类：
+   `is-editorial` 只管版式——从内刊案例长出来的那一套板块（cs-map-list /
+   cs-deck / cs-tocmap / cs-delivery-* / cs-reflection-list …）。想复用这套
+   版式的新案例页，body 上加 `is-editorial` 就行，不必再抄一遍 CSS。
+   `is-vision` / `is-culture` 只管颜色，各自定义一组强调色变量。 */
+
+/* 《昂楷视界》内刊案例：整页换成期刊自己的主色（规范里的 #E60012 / #222222）。 */
 .case-page.is-vision {
   --cs-accent:      #E60012;
   --cs-accent-rgb:  230 0 18;
   --cs-accent-deep: #A8000D;
   --cs-accent-lift: #FF3B47;   /* 黑底上约 5.8:1 */
+}
+
+/* 文化墙 / 展厅案例：取企业标识与展厅背光字的那支蓝。
+   #4265F5 压在 #020202 上只有 4.1:1，所以深底另给一版更亮的 lift。 */
+.case-page.is-culture {
+  --cs-accent:      #4265F5;
+  --cs-accent-rgb:  66 101 245;
+  --cs-accent-deep: #2A46B8;   /* 浅底上压深字 */
+  --cs-accent-lift: #8CA4FF;   /* 黑底上约 7.1:1 */
 }
 
 /* 全局 img 规则是 cover + 100% 高，详情页的图需要按原比例显示 */
@@ -763,18 +776,18 @@
    不把问题归结为表面样式，而是把刊物作为企业内容产品来审视：
    先拆出系统断点，再给出一一对应的行动路径。
 ──────────────────────────────────────── */
-.case-page.is-vision .cs-strategy {
+.case-page.is-editorial .cs-strategy {
   margin-top: clamp(42px, 5vw, 68px);
   border-top: 0;
 }
-.case-page.is-vision .cs-strategy-head {
+.case-page.is-editorial .cs-strategy-head {
   display: grid;
   grid-template-columns: minmax(180px, .64fr) minmax(0, 1.36fr);
   gap: clamp(34px, 6vw, 86px);
   align-items: start;
   padding: clamp(32px, 4vw, 52px) 0;
 }
-.case-page.is-vision .cs-strategy-kicker {
+.case-page.is-editorial .cs-strategy-kicker {
   margin: 0;
   font-family: var(--f-cjk);
   font-size: 14px;
@@ -783,7 +796,7 @@
   letter-spacing: .06em;
   color: var(--cs-accent-deep);
 }
-.case-page.is-vision .cs-strategy-kicker span {
+.case-page.is-editorial .cs-strategy-kicker span {
   display: block;
   margin-top: 5px;
   font-family: var(--f-body);
@@ -793,8 +806,8 @@
   text-transform: uppercase;
   color: var(--cs-ink-3);
 }
-.case-page.is-vision .cs-strategy-head h3,
-.case-page.is-vision .cs-strategy-brief-intro h3 {
+.case-page.is-editorial .cs-strategy-head h3,
+.case-page.is-editorial .cs-strategy-brief-intro h3 {
   margin: 0;
   max-width: 19em;
   font-family: var(--f-cjk);
@@ -804,8 +817,8 @@
   letter-spacing: -.01em;
   color: var(--cs-ink);
 }
-.case-page.is-vision .cs-strategy-head h3 + p,
-.case-page.is-vision .cs-strategy-brief-intro h3 + p {
+.case-page.is-editorial .cs-strategy-head h3 + p,
+.case-page.is-editorial .cs-strategy-brief-intro h3 + p {
   margin: 14px 0 0;
   max-width: 46em;
   font-family: var(--f-cjk);
@@ -813,14 +826,14 @@
   line-height: 1.75;
   color: var(--cs-ink-2);
 }
-.case-page.is-vision .cs-strategy-diagnosis {
+.case-page.is-editorial .cs-strategy-diagnosis {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   border: 0;
   border-radius: 0;
   overflow: visible;
 }
-.case-page.is-vision .cs-strategy-card {
+.case-page.is-editorial .cs-strategy-card {
   position: relative;
   min-height: 300px;
   padding: clamp(22px, 2.6vw, 34px);
@@ -830,8 +843,8 @@
   border-right: 1px solid var(--cs-hair);
   transition: background .35s var(--ease);
 }
-.case-page.is-vision .cs-strategy-card:last-child { border-right: 0; }
-.case-page.is-vision .cs-strategy-card::before {
+.case-page.is-editorial .cs-strategy-card:last-child { border-right: 0; }
+.case-page.is-editorial .cs-strategy-card::before {
   content: '';
   position: absolute;
   inset: 0 0 auto;
@@ -841,24 +854,24 @@
   transform-origin: left;
   transition: transform .45s var(--ease);
 }
-.case-page.is-vision .cs-strategy-card:hover { background: transparent; }
-.case-page.is-vision .cs-strategy-card:hover::before { transform: scaleX(0); }
-.case-page.is-vision .cs-strategy-card header {
+.case-page.is-editorial .cs-strategy-card:hover { background: transparent; }
+.case-page.is-editorial .cs-strategy-card:hover::before { transform: scaleX(0); }
+.case-page.is-editorial .cs-strategy-card header {
   display: flex;
   align-items: baseline;
   gap: 11px;
   margin-bottom: 26px;
 }
-.case-page.is-vision .cs-strategy-card header span,
-.case-page.is-vision .cs-strategy-pillar > span {
+.case-page.is-editorial .cs-strategy-card header span,
+.case-page.is-editorial .cs-strategy-pillar > span {
   flex: 0 0 auto;
   font-family: var(--f-body);
   font-size: 12px;
   letter-spacing: .12em;
   color: var(--cs-accent-deep);
 }
-.case-page.is-vision .cs-strategy-card h4,
-.case-page.is-vision .cs-strategy-pillar h4 {
+.case-page.is-editorial .cs-strategy-card h4,
+.case-page.is-editorial .cs-strategy-pillar h4 {
   margin: 0;
   font-family: var(--f-cjk);
   font-size: 19px;
@@ -866,14 +879,14 @@
   line-height: 1.4;
   color: var(--cs-ink);
 }
-.case-page.is-vision .cs-strategy-card > p {
+.case-page.is-editorial .cs-strategy-card > p {
   margin: 0;
   font-family: var(--f-cjk);
   font-size: 15px;
   line-height: 1.75;
   color: var(--cs-ink-2);
 }
-.case-page.is-vision .cs-strategy-card strong {
+.case-page.is-editorial .cs-strategy-card strong {
   margin-top: auto;
   padding-top: 24px;
   font-family: var(--f-cjk);
@@ -882,7 +895,7 @@
   line-height: 1.55;
   color: var(--cs-ink);
 }
-.case-page.is-vision .cs-strategy-card strong::before {
+.case-page.is-editorial .cs-strategy-card strong::before {
   content: '后果';
   display: block;
   margin-bottom: 6px;
@@ -892,7 +905,7 @@
   letter-spacing: .16em;
   color: var(--cs-ink-3);
 }
-.case-page.is-vision .cs-strategy-brief {
+.case-page.is-editorial .cs-strategy-brief {
   display: grid;
   grid-template-columns: minmax(260px, .82fr) minmax(0, 1.18fr);
   margin-top: clamp(50px, 6vw, 78px);
@@ -900,12 +913,12 @@
   background: transparent;
   overflow: visible;
 }
-.case-page.is-vision .cs-strategy-brief-intro {
+.case-page.is-editorial .cs-strategy-brief-intro {
   padding: clamp(30px, 4vw, 54px);
 }
-.case-page.is-vision .cs-strategy-brief-intro h3 { margin-top: 46px; }
-.case-page.is-vision .cs-strategy-path { border-left: 0; }
-.case-page.is-vision .cs-strategy-pillar {
+.case-page.is-editorial .cs-strategy-brief-intro h3 { margin-top: 46px; }
+.case-page.is-editorial .cs-strategy-path { border-left: 0; }
+.case-page.is-editorial .cs-strategy-pillar {
   display: grid;
   grid-template-columns: 36px minmax(0, 1fr);
   gap: 18px;
@@ -913,16 +926,16 @@
   border-bottom: 1px solid var(--cs-hair);
   transition: background .3s var(--ease);
 }
-.case-page.is-vision .cs-strategy-pillar:last-child { border-bottom: 0; }
-.case-page.is-vision .cs-strategy-pillar:hover { background: rgb(255 255 255 / .42); }
-.case-page.is-vision .cs-strategy-pillar p {
+.case-page.is-editorial .cs-strategy-pillar:last-child { border-bottom: 0; }
+.case-page.is-editorial .cs-strategy-pillar:hover { background: rgb(255 255 255 / .42); }
+.case-page.is-editorial .cs-strategy-pillar p {
   margin: 6px 0 0;
   font-family: var(--f-cjk);
   font-size: 14.5px;
   line-height: 1.65;
   color: var(--cs-ink-2);
 }
-.case-page.is-vision .cs-strategy-result {
+.case-page.is-editorial .cs-strategy-result {
   display: grid;
   grid-template-columns: minmax(100px, .34fr) minmax(0, 1.66fr);
   gap: clamp(24px, 4vw, 58px);
@@ -934,7 +947,7 @@
   line-height: 1.6;
   color: var(--cs-ink);
 }
-.case-page.is-vision .cs-strategy-result span {
+.case-page.is-editorial .cs-strategy-result span {
   font-family: var(--f-body);
   font-size: 11px;
   letter-spacing: .16em;
@@ -942,9 +955,9 @@
 }
 
 @media (max-width: 980px) and (min-width: 769px) {
-  .case-page.is-vision .cs-strategy-diagnosis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .case-page.is-vision .cs-strategy-card:nth-child(2) { border-right: 0; }
-  .case-page.is-vision .cs-strategy-card:nth-child(-n+2) { border-bottom: 1px solid var(--cs-hair); }
+  .case-page.is-editorial .cs-strategy-diagnosis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .case-page.is-editorial .cs-strategy-card:nth-child(2) { border-right: 0; }
+  .case-page.is-editorial .cs-strategy-card:nth-child(-n+2) { border-bottom: 1px solid var(--cs-hair); }
 }
 
 /* ────────────────────────────────────────
@@ -3574,7 +3587,7 @@
   background: #fff;
   cursor: zoom-in;
 }
-.cs-tocmap-fig img { width: 100%; display: block; aspect-ratio: 1800 / 1187; }
+.cs-tocmap-fig img { width: 100%; display: block; aspect-ratio: var(--fig-ar, 1800 / 1187); }
 /* 未高亮时压一层灰，让被点亮的区块跳出来 */
 .cs-tocmap-fig::after {
   content: '';
@@ -4114,7 +4127,7 @@
 }
 
 @media (max-width: 768px) {
-  .case-page.is-vision .cs-body {
+  .case-page.is-editorial .cs-body {
     --cs-mobile-section-gap: 64px;
     --cs-mobile-content-gap: 32px;
   }
@@ -4557,33 +4570,33 @@
    ============================================================ */
 
 /* 04 / 规则系统：统一为 16:9 媒体 + 正文 + 分割线的编辑流。 */
-.case-page.is-vision .is-system-lab {
+.case-page.is-editorial .is-system-lab {
   padding-top: clamp(64px, 6vw, 92px);
   padding-bottom: clamp(42px, 5vw, 72px);
   overflow: visible;
   background: var(--cs-paper);
   color: var(--cs-ink);
 }
-.case-page.is-vision .is-system-lab::before { display: none; }
-.case-page.is-vision .is-system-lab .cs-num,
-.case-page.is-vision .is-system-lab .cs-panel-txt p,
-.case-page.is-vision .is-system-lab .cs-specs-mini span,
-.case-page.is-vision .is-system-lab .cs-prio p,
-.case-page.is-vision .is-system-lab .cs-chain { color: var(--cs-ink-2) !important; }
-.case-page.is-vision .is-system-lab .cs-title,
-.case-page.is-vision .is-system-lab .cs-panel-txt h3,
-.case-page.is-vision .is-system-lab .cs-panel-txt strong,
-.case-page.is-vision .is-system-lab .cs-prio h4,
-.case-page.is-vision .is-system-lab .cs-specs-mini.is-block b { color: var(--cs-ink); }
-.case-page.is-vision .is-system-lab .cs-title em,
-.case-page.is-vision .is-system-lab .cs-specs-mini b,
-.case-page.is-vision .is-system-lab .cs-seal-now { color: var(--cs-accent-deep) !important; }
-.case-page.is-vision .is-system-lab .cs-deck-view {
+.case-page.is-editorial .is-system-lab::before { display: none; }
+.case-page.is-editorial .is-system-lab .cs-num,
+.case-page.is-editorial .is-system-lab .cs-panel-txt p,
+.case-page.is-editorial .is-system-lab .cs-specs-mini span,
+.case-page.is-editorial .is-system-lab .cs-prio p,
+.case-page.is-editorial .is-system-lab .cs-chain { color: var(--cs-ink-2) !important; }
+.case-page.is-editorial .is-system-lab .cs-title,
+.case-page.is-editorial .is-system-lab .cs-panel-txt h3,
+.case-page.is-editorial .is-system-lab .cs-panel-txt strong,
+.case-page.is-editorial .is-system-lab .cs-prio h4,
+.case-page.is-editorial .is-system-lab .cs-specs-mini.is-block b { color: var(--cs-ink); }
+.case-page.is-editorial .is-system-lab .cs-title em,
+.case-page.is-editorial .is-system-lab .cs-specs-mini b,
+.case-page.is-editorial .is-system-lab .cs-seal-now { color: var(--cs-accent-deep) !important; }
+.case-page.is-editorial .is-system-lab .cs-deck-view {
   overflow: visible;
   -webkit-mask-image: none;
   mask-image: none;
 }
-.case-page.is-vision .is-system-lab .cs-deck-track {
+.case-page.is-editorial .is-system-lab .cs-deck-track {
   display: grid;
   width: auto;
   max-width: var(--cs-max);
@@ -4593,7 +4606,7 @@
   transform: none !important;
   will-change: auto;
 }
-.case-page.is-vision .is-system-lab .cs-panel {
+.case-page.is-editorial .is-system-lab .cs-panel {
   grid-template-columns: minmax(0, 1.16fr) minmax(330px, .84fr);
   gap: clamp(28px, 4vw, 58px);
   width: auto;
@@ -4609,27 +4622,27 @@
   opacity: 1;
   transform: none;
 }
-.case-page.is-vision .is-system-lab .cs-panel:not(:last-child) { border-bottom: 1px solid var(--cs-hair); }
-.case-page.is-vision .is-system-lab .cs-panel::before { display: none; }
-.case-page.is-vision .is-system-lab .cs-panel.is-active {
+.case-page.is-editorial .is-system-lab .cs-panel:not(:last-child) { border-bottom: 1px solid var(--cs-hair); }
+.case-page.is-editorial .is-system-lab .cs-panel::before { display: none; }
+.case-page.is-editorial .is-system-lab .cs-panel.is-active {
   opacity: 1;
   transform: none;
 }
-.case-page.is-vision .is-system-lab .cs-chain,
-.case-page.is-vision .is-system-lab .cs-seal.is-inline,
-.case-page.is-vision .is-system-lab .cs-prio {
+.case-page.is-editorial .is-system-lab .cs-chain,
+.case-page.is-editorial .is-system-lab .cs-seal.is-inline,
+.case-page.is-editorial .is-system-lab .cs-prio {
   padding-inline: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
 }
-.case-page.is-vision .is-system-lab .cs-prio.is-active {
+.case-page.is-editorial .is-system-lab .cs-prio.is-active {
   background: transparent;
   border-color: transparent;
 }
-.case-page.is-vision .is-system-lab .cs-specs-mini li { border: 0; }
-.case-page.is-vision .is-system-lab .cs-figure,
-.case-page.is-vision .is-system-lab .cs-tocmap-fig {
+.case-page.is-editorial .is-system-lab .cs-specs-mini li { border: 0; }
+.case-page.is-editorial .is-system-lab .cs-figure,
+.case-page.is-editorial .is-system-lab .cs-tocmap-fig {
   aspect-ratio: 16 / 9;
   margin: 0;
   overflow: hidden;
@@ -4638,8 +4651,8 @@
   background: transparent;
   box-shadow: none;
 }
-.case-page.is-vision .is-system-lab .cs-panel-fig .cs-figure img,
-.case-page.is-vision .is-system-lab .cs-panel-fig .cs-tocmap-fig img {
+.case-page.is-editorial .is-system-lab .cs-panel-fig .cs-figure img,
+.case-page.is-editorial .is-system-lab .cs-panel-fig .cs-tocmap-fig img {
   width: 100%;
   height: 100%;
   max-height: none;
@@ -4648,14 +4661,14 @@
   object-position: center;
   background: var(--cs-paper);
 }
-.case-page.is-vision .is-system-lab .cs-figure.is-trimmed img { transform: scale(1.012); }
-.case-page.is-vision .is-system-lab .cs-figure:hover { box-shadow: none; }
-.case-page.is-vision .is-system-lab .cs-pd-ctrl button { border-color: var(--cs-hair); color: var(--cs-ink-2); }
-.case-page.is-vision .is-system-lab .cs-pd-state { color: var(--cs-ink-3); }
-.case-page.is-vision .is-system-lab .cs-pd-state b { color: var(--cs-accent-deep); }
+.case-page.is-editorial .is-system-lab .cs-figure.is-trimmed img { transform: scale(1.012); }
+.case-page.is-editorial .is-system-lab .cs-figure:hover { box-shadow: none; }
+.case-page.is-editorial .is-system-lab .cs-pd-ctrl button { border-color: var(--cs-hair); color: var(--cs-ink-2); }
+.case-page.is-editorial .is-system-lab .cs-pd-state { color: var(--cs-ink-3); }
+.case-page.is-editorial .is-system-lab .cs-pd-state b { color: var(--cs-accent-deep); }
 
 /* 05 / 内容架构：真实跨页是主角，说明只做一张纸签 */
-.case-page.is-vision .is-architecture {
+.case-page.is-editorial .is-architecture {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
   padding-top: clamp(78px, 8vw, 118px);
@@ -4665,7 +4678,7 @@
 
 
 /* 06 / 延展：浅色编辑台，图片切换但不换页面色调 */
-.case-page.is-vision .is-evolution {
+.case-page.is-editorial .is-evolution {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
   padding-top: clamp(84px, 8vw, 124px);
@@ -4675,7 +4688,7 @@
 
 
 /* 05 / 校对与印刷：回到纸张式时间线，不做深色卡片墙 */
-.case-page.is-vision .is-proofroom {
+.case-page.is-editorial .is-proofroom {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
   padding-top: clamp(86px, 9vw, 132px);
@@ -4686,70 +4699,70 @@
   color: var(--cs-ink);
 }
 /* 时间轴最后一项不需要再垫一段：区块自己的下内边距已经够了 */
-.case-page.is-vision .is-proofroom .cs-line-item:last-child { padding-bottom: 0; }
-.case-page.is-vision .is-proofroom .cs-num,
-.case-page.is-vision .is-proofroom .cs-lede,
-.case-page.is-vision .is-proofroom .cs-line-body p,
-.case-page.is-vision .is-proofroom .cs-specs-mini span,
-.case-page.is-vision .is-proofroom .cs-quote-soft { color: var(--cs-ink-2); }
-.case-page.is-vision .is-proofroom .cs-title,
-.case-page.is-vision .is-proofroom .cs-line-body h3,
-.case-page.is-vision .is-proofroom .cs-line-body strong { color: var(--cs-ink); }
-.case-page.is-vision .is-proofroom .cs-title em,
-.case-page.is-vision .is-proofroom .cs-line-item.is-on .cs-line-k { color: var(--cs-accent-deep); }
-.case-page.is-vision .is-proofroom .cs-line-k {
+.case-page.is-editorial .is-proofroom .cs-line-item:last-child { padding-bottom: 0; }
+.case-page.is-editorial .is-proofroom .cs-num,
+.case-page.is-editorial .is-proofroom .cs-lede,
+.case-page.is-editorial .is-proofroom .cs-line-body p,
+.case-page.is-editorial .is-proofroom .cs-specs-mini span,
+.case-page.is-editorial .is-proofroom .cs-quote-soft { color: var(--cs-ink-2); }
+.case-page.is-editorial .is-proofroom .cs-title,
+.case-page.is-editorial .is-proofroom .cs-line-body h3,
+.case-page.is-editorial .is-proofroom .cs-line-body strong { color: var(--cs-ink); }
+.case-page.is-editorial .is-proofroom .cs-title em,
+.case-page.is-editorial .is-proofroom .cs-line-item.is-on .cs-line-k { color: var(--cs-accent-deep); }
+.case-page.is-editorial .is-proofroom .cs-line-k {
   margin-bottom: 14px;
   font-size: clamp(24px, 2.7vw, 36px);
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.25;
 }
-.case-page.is-vision .is-proofroom .cs-line { max-width: 1040px; margin: 54px auto 0; }
-.case-page.is-vision .is-proofroom .cs-line-rail { background: var(--cs-hair); }
-.case-page.is-vision .is-proofroom .cs-line-item {
+.case-page.is-editorial .is-proofroom .cs-line { max-width: 1040px; margin: 54px auto 0; }
+.case-page.is-editorial .is-proofroom .cs-line-rail { background: var(--cs-hair); }
+.case-page.is-editorial .is-proofroom .cs-line-item {
   margin-bottom: clamp(24px, 3vw, 42px);
   padding-bottom: clamp(24px, 3vw, 42px);
   border-bottom: 1px solid var(--cs-hair);
 }
-.case-page.is-vision .is-proofroom .cs-line-item:last-child {
+.case-page.is-editorial .is-proofroom .cs-line-item:last-child {
   margin-bottom: 0;
   border-bottom: 0;
 }
-.case-page.is-vision .is-proofroom .cs-line-body {
+.case-page.is-editorial .is-proofroom .cs-line-body {
   padding: 0 0 clamp(24px, 3vw, 38px);
   border: 0;
   border-radius: 0;
   background: transparent;
   box-shadow: none;
 }
-.case-page.is-vision .is-proofroom .cs-line-item:last-child .cs-line-body { border-bottom: 0; }
-.case-page.is-vision .is-proofroom .cs-line-item.is-on .cs-line-body {
+.case-page.is-editorial .is-proofroom .cs-line-item:last-child .cs-line-body { border-bottom: 0; }
+.case-page.is-editorial .is-proofroom .cs-line-item.is-on .cs-line-body {
   transform: none;
   border-color: var(--cs-hair);
   background: transparent;
 }
-.case-page.is-vision .is-proofroom .cs-line-body::after { display: none; }
-.case-page.is-vision .is-proofroom .cs-plate b {
+.case-page.is-editorial .is-proofroom .cs-line-body::after { display: none; }
+.case-page.is-editorial .is-proofroom .cs-plate b {
   margin-top: 8px;
   font-size: 14px;
   font-weight: 500;
   line-height: 1.45;
   color: var(--cs-ink-3);
 }
-.case-page.is-vision .is-proofroom .cs-plate img {
+.case-page.is-editorial .is-proofroom .cs-plate img {
   border: 0;
   border-radius: 0;
 }
-.case-page.is-vision .is-proofroom .cs-stat-n { color: var(--cs-ink); }
-.case-page.is-vision .is-proofroom .cs-stat-l { color: var(--cs-ink-3); }
-.case-page.is-vision .is-proofroom .cs-shift-label { color: var(--cs-ink); background: var(--cs-paper-2); }
-.case-page.is-vision .is-proofroom .cs-shift-label.is-mine { color: var(--cs-ink); background: var(--cs-paper-3); }
-.case-page.is-vision .is-proofroom .cs-shift-body,
-.case-page.is-vision .is-proofroom .cs-shift-goals li { border-color: var(--cs-hair); }
-.case-page.is-vision .is-proofroom .cs-shift-goals b { color: var(--cs-accent-deep); }
+.case-page.is-editorial .is-proofroom .cs-stat-n { color: var(--cs-ink); }
+.case-page.is-editorial .is-proofroom .cs-stat-l { color: var(--cs-ink-3); }
+.case-page.is-editorial .is-proofroom .cs-shift-label { color: var(--cs-ink); background: var(--cs-paper-2); }
+.case-page.is-editorial .is-proofroom .cs-shift-label.is-mine { color: var(--cs-ink); background: var(--cs-paper-3); }
+.case-page.is-editorial .is-proofroom .cs-shift-body,
+.case-page.is-editorial .is-proofroom .cs-shift-goals li { border-color: var(--cs-hair); }
+.case-page.is-editorial .is-proofroom .cs-shift-goals b { color: var(--cs-accent-deep); }
 
 /* 06–07 / 总结与能力：统一为先结论、后深读的极简手风琴。 */
-.case-page.is-vision .is-outcome {
+.case-page.is-editorial .is-outcome {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
   /* 上接 05、下接 07，三节同底色，靠间距分节即可，不用堆到 140px */
@@ -4758,23 +4771,23 @@
   background: var(--cs-paper);
   color: var(--cs-ink);
 }
-.case-page.is-vision .is-outcome .cs-num { color: var(--cs-ink-3); }
-.case-page.is-vision .is-outcome .cs-title { color: var(--cs-ink); }
-.case-page.is-vision .is-capabilities {
+.case-page.is-editorial .is-outcome .cs-num { color: var(--cs-ink-3); }
+.case-page.is-editorial .is-outcome .cs-title { color: var(--cs-ink); }
+.case-page.is-editorial .is-capabilities {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
   background: var(--cs-paper);
 }
-.case-page.is-vision .is-capabilities .cs-title { color: var(--cs-ink); }
-.case-page.is-vision .cs-accordion {
+.case-page.is-editorial .is-capabilities .cs-title { color: var(--cs-ink); }
+.case-page.is-editorial .cs-accordion {
   max-width: 980px;
   margin-top: clamp(28px, 3.5vw, 48px);
 }
-.case-page.is-vision .cs-accordion-item + .cs-accordion-item {
+.case-page.is-editorial .cs-accordion-item + .cs-accordion-item {
   margin-top: clamp(34px, 4vw, 52px);
 }
-.case-page.is-vision .cs-accordion-item h3 { margin: 0; }
-.case-page.is-vision .cs-accordion-trigger {
+.case-page.is-editorial .cs-accordion-item h3 { margin: 0; }
+.case-page.is-editorial .cs-accordion-trigger {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 34px;
   align-items: center;
@@ -4791,15 +4804,15 @@
   text-align: left;
   cursor: pointer;
 }
-.case-page.is-vision .cs-accordion-trigger i {
+.case-page.is-editorial .cs-accordion-trigger i {
   position: relative;
   display: block;
   width: 34px;
   height: 34px;
   color: var(--cs-accent-deep);
 }
-.case-page.is-vision .cs-accordion-trigger i::before,
-.case-page.is-vision .cs-accordion-trigger i::after {
+.case-page.is-editorial .cs-accordion-trigger i::before,
+.case-page.is-editorial .cs-accordion-trigger i::after {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -4809,21 +4822,21 @@
   content: "";
   transform: translate(-50%, -50%);
 }
-.case-page.is-vision .cs-accordion-trigger i::after {
+.case-page.is-editorial .cs-accordion-trigger i::after {
   transform: translate(-50%, -50%) rotate(90deg);
   transition: transform .35s var(--ease);
 }
-.case-page.is-vision .cs-accordion-item.is-open .cs-accordion-trigger i::after {
+.case-page.is-editorial .cs-accordion-item.is-open .cs-accordion-trigger i::after {
   transform: translate(-50%, -50%) rotate(90deg) scaleX(0);
 }
-.case-page.is-vision .cs-accordion-panel {
+.case-page.is-editorial .cs-accordion-panel {
   display: grid;
   grid-template-rows: 0fr;
   opacity: 0;
   transition: grid-template-rows .45s var(--ease), opacity .3s var(--ease);
 }
-.case-page.is-vision .cs-accordion-panel > div { overflow: hidden; }
-.case-page.is-vision .cs-accordion-panel p {
+.case-page.is-editorial .cs-accordion-panel > div { overflow: hidden; }
+.case-page.is-editorial .cs-accordion-panel p {
   max-width: 42em;
   margin: 0;
   padding-top: 20px;
@@ -4832,40 +4845,40 @@
   font-size: 17px;
   line-height: 1.82;
 }
-.case-page.is-vision .cs-accordion-panel strong { color: var(--cs-ink); font-weight: 600; }
-.case-page.is-vision .cs-accordion-item.is-open .cs-accordion-panel {
+.case-page.is-editorial .cs-accordion-panel strong { color: var(--cs-ink); font-weight: 600; }
+.case-page.is-editorial .cs-accordion-item.is-open .cs-accordion-panel {
   grid-template-rows: 1fr;
   opacity: 1;
 }
-.case-page.is-vision .cs-accordion-trigger:focus-visible {
+.case-page.is-editorial .cs-accordion-trigger:focus-visible {
   outline: 0;
   color: var(--cs-accent-deep);
 }
-.case-page.is-vision .cs-outro { border-top: 0; }
-.case-page.is-vision .cs-only-mobile { display: none; }
+.case-page.is-editorial .cs-outro { border-top: 0; }
+.case-page.is-editorial .cs-only-mobile { display: none; }
 
 /* 本页以纸面排版为主，图片和并列能力不再套独立卡片。 */
-.case-page.is-vision .cs-doc {
+.case-page.is-editorial .cs-doc {
   border: 0;
   border-radius: 0;
   background: transparent;
 }
-.case-page.is-vision .cs-doc:hover {
+.case-page.is-editorial .cs-doc:hover {
   transform: none;
   box-shadow: none;
 }
-.case-page.is-vision .cs-doc-cap {
+.case-page.is-editorial .cs-doc-cap {
   padding-inline: 0;
   border-top: 0;
 }
-.case-page.is-vision .cs-audience-pin .cs-facets {
+.case-page.is-editorial .cs-audience-pin .cs-facets {
   gap: clamp(28px, 4vw, 64px);
   border: 0;
   border-radius: 0;
   overflow: visible;
 }
-.case-page.is-vision .cs-audience-pin .cs-facet,
-.case-page.is-vision .cs-audience-pin .cs-facet + .cs-facet {
+.case-page.is-editorial .cs-audience-pin .cs-facet,
+.case-page.is-editorial .cs-audience-pin .cs-facet + .cs-facet {
   padding-inline: 0;
   border: 0;
   border-radius: 0;
@@ -4875,17 +4888,17 @@
   /* 手机内容不是桌面稿的缩放版：收紧字号，并删掉依赖桌面页内导航的章节编号。 */
   /* 礼盒在手机上就是一块真正的 16:9 画布；它进入视口时立即推进，
      不使用 sticky 轨道，也不额外制造滚动占位。 */
-  .case-page.is-vision .cs-reveal-scroll.is-mobile-scrub {
+  .case-page.is-editorial .cs-reveal-scroll.is-mobile-scrub {
     height: auto;
   }
-  .case-page.is-vision .cs-reveal-scroll.is-mobile-scrub > .cs-reveal {
+  .case-page.is-editorial .cs-reveal-scroll.is-mobile-scrub > .cs-reveal {
     position: relative;
     top: auto;
     height: auto;
     min-height: 0;
     aspect-ratio: 16 / 9;
   }
-  .case-page.is-vision .cs-reveal-scroll.is-mobile-scrub .cs-reveal-video {
+  .case-page.is-editorial .cs-reveal-scroll.is-mobile-scrub .cs-reveal-video {
     width: 100%;
     height: 100%;
     max-height: none;
@@ -4896,23 +4909,23 @@
   }
 
   /* 三本刊物在桌面端是主视觉，手机端只是进入阅读器的紧凑索引。 */
-  .case-page.is-vision .cs-journals { padding: 24px 12px 26px; }
-  .case-page.is-vision .cs-journals-inner {
+  .case-page.is-editorial .cs-journals { padding: 24px 12px 26px; }
+  .case-page.is-editorial .cs-journals-inner {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 8px;
   }
-  .case-page.is-vision .cs-journal-fig { max-width: none; border-radius: 3px; }
-  .case-page.is-vision .cs-journal-badge {
+  .case-page.is-editorial .cs-journal-fig { max-width: none; border-radius: 3px; }
+  .case-page.is-editorial .cs-journal-badge {
     bottom: 7px;
     gap: 3px;
     padding: 5px 7px;
     font-size: 10px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, .34);
   }
-  .case-page.is-vision .cs-journal-badge svg,
-  .case-page.is-vision .cs-journal-badge span { display: none; }
-  .case-page.is-vision .cs-journal-meta { margin-top: 8px; }
-  .case-page.is-vision .cs-journal-n {
+  .case-page.is-editorial .cs-journal-badge svg,
+  .case-page.is-editorial .cs-journal-badge span { display: none; }
+  .case-page.is-editorial .cs-journal-meta { margin-top: 8px; }
+  .case-page.is-editorial .cs-journal-n {
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
@@ -4921,134 +4934,134 @@
     line-height: 1.45;
   }
 
-  .case-page.is-vision .cs-hero-title { font-size: 29px; line-height: 1.2; margin-bottom: 16px; }
-  .case-page.is-vision .cs-hero-sub { font-size: 15px; line-height: 1.72; margin-bottom: 22px; }
-  .case-page.is-vision .cs-body > .cs-section > .cs-title,
-  .case-page.is-vision .cs-deck-head > .cs-title,
-  .case-page.is-vision .cs-mobile-pin-preview > .cs-title {
+  .case-page.is-editorial .cs-hero-title { font-size: 29px; line-height: 1.2; margin-bottom: 16px; }
+  .case-page.is-editorial .cs-hero-sub { font-size: 15px; line-height: 1.72; margin-bottom: 22px; }
+  .case-page.is-editorial .cs-body > .cs-section > .cs-title,
+  .case-page.is-editorial .cs-deck-head > .cs-title,
+  .case-page.is-editorial .cs-mobile-pin-preview > .cs-title {
     margin: 0;
     font-size: 24px;
     font-weight: 600;
     line-height: 1.3;
     color: var(--cs-ink);
   }
-  .case-page.is-vision .cs-body .cs-title em {
+  .case-page.is-editorial .cs-body .cs-title em {
     display: block;
     color: var(--cs-accent-deep);
   }
-  .case-page.is-vision .cs-lede { font-size: 15.5px; line-height: 1.72; margin-top: 14px; }
-  .case-page.is-vision .cs-sub {
+  .case-page.is-editorial .cs-lede { font-size: 15.5px; line-height: 1.72; margin-top: 14px; }
+  .case-page.is-editorial .cs-sub {
     margin-top: var(--cs-mobile-content-gap);
     margin-bottom: 0;
     font-size: 16px;
   }
-  .case-page.is-vision .cs-body .cs-num { display: none; }
-  .case-page.is-vision .cs-body > .cs-section,
-  .case-page.is-vision .cs-body > .cs-deck {
+  .case-page.is-editorial .cs-body .cs-num { display: none; }
+  .case-page.is-editorial .cs-body > .cs-section,
+  .case-page.is-editorial .cs-body > .cs-deck {
     padding-top: var(--cs-mobile-section-gap);
     padding-bottom: 0;
   }
-  .case-page.is-vision .cs-panel-txt h3,
-  .case-page.is-vision .cs-lesson h3,
-  .case-page.is-vision .cs-facet h4 { font-size: 20px; line-height: 1.35; }
-  .case-page.is-vision .cs-facet p,
-  .case-page.is-vision .cs-shift-body p,
-  .case-page.is-vision .cs-shift-flaws li,
-  .case-page.is-vision .cs-shift-goals span { font-size: 14px; line-height: 1.68; }
+  .case-page.is-editorial .cs-panel-txt h3,
+  .case-page.is-editorial .cs-lesson h3,
+  .case-page.is-editorial .cs-facet h4 { font-size: 20px; line-height: 1.35; }
+  .case-page.is-editorial .cs-facet p,
+  .case-page.is-editorial .cs-shift-body p,
+  .case-page.is-editorial .cs-shift-flaws li,
+  .case-page.is-editorial .cs-shift-goals span { font-size: 14px; line-height: 1.68; }
 
   /* 01 战略诊断：手机按阅读顺序自然排布，不复制桌面的四栏矩阵。 */
-  .case-page.is-vision .is-strategy { padding-bottom: 0; }
-  .case-page.is-vision .cs-strategy {
+  .case-page.is-editorial .is-strategy { padding-bottom: 0; }
+  .case-page.is-editorial .cs-strategy {
     margin-top: 32px;
   }
-  .case-page.is-vision .cs-strategy-head {
+  .case-page.is-editorial .cs-strategy-head {
     display: block;
     padding: 26px 0 22px;
   }
-  .case-page.is-vision .cs-strategy-kicker {
+  .case-page.is-editorial .cs-strategy-kicker {
     font-size: 12px;
   }
-  .case-page.is-vision .cs-strategy-kicker span {
+  .case-page.is-editorial .cs-strategy-kicker span {
     display: inline;
     margin: 0 0 0 8px;
     font-size: 9px;
   }
-  .case-page.is-vision .cs-strategy-head h3,
-  .case-page.is-vision .cs-strategy-brief-intro h3 {
+  .case-page.is-editorial .cs-strategy-head h3,
+  .case-page.is-editorial .cs-strategy-brief-intro h3 {
     margin-top: 20px;
     font-size: 21px;
     line-height: 1.38;
   }
-  .case-page.is-vision .cs-strategy-head h3 + p,
-  .case-page.is-vision .cs-strategy-brief-intro h3 + p {
+  .case-page.is-editorial .cs-strategy-head h3 + p,
+  .case-page.is-editorial .cs-strategy-brief-intro h3 + p {
     margin-top: 10px;
     font-size: 14px;
     line-height: 1.68;
   }
-  .case-page.is-vision .cs-strategy-diagnosis {
+  .case-page.is-editorial .cs-strategy-diagnosis {
     grid-template-columns: 1fr;
     border-radius: 7px;
   }
-  .case-page.is-vision .cs-strategy-card {
+  .case-page.is-editorial .cs-strategy-card {
     min-height: 0;
     padding: 20px;
     border-right: 0;
     border-bottom: 1px solid var(--cs-hair);
     background: transparent;
   }
-  .case-page.is-vision .cs-strategy-card:last-child { border-bottom: 0; }
-  .case-page.is-vision .cs-strategy-card::before { display: none; }
-  .case-page.is-vision .cs-strategy-card header {
+  .case-page.is-editorial .cs-strategy-card:last-child { border-bottom: 0; }
+  .case-page.is-editorial .cs-strategy-card::before { display: none; }
+  .case-page.is-editorial .cs-strategy-card header {
     gap: 9px;
     margin-bottom: 12px;
   }
-  .case-page.is-vision .cs-strategy-card h4,
-  .case-page.is-vision .cs-strategy-pillar h4 {
+  .case-page.is-editorial .cs-strategy-card h4,
+  .case-page.is-editorial .cs-strategy-pillar h4 {
     font-size: 17px;
   }
-  .case-page.is-vision .cs-strategy-card > p {
+  .case-page.is-editorial .cs-strategy-card > p {
     font-size: 14px;
     line-height: 1.68;
   }
-  .case-page.is-vision .cs-strategy-card strong {
+  .case-page.is-editorial .cs-strategy-card strong {
     margin-top: 16px;
     padding-top: 0;
     font-size: 12.5px;
   }
-  .case-page.is-vision .cs-strategy-card strong::before {
+  .case-page.is-editorial .cs-strategy-card strong::before {
     display: inline;
     margin: 0 8px 0 0;
   }
-  .case-page.is-vision .cs-strategy-brief {
+  .case-page.is-editorial .cs-strategy-brief {
     grid-template-columns: 1fr;
     margin-top: 34px;
     border-radius: 7px;
   }
-  .case-page.is-vision .cs-strategy-brief-intro {
+  .case-page.is-editorial .cs-strategy-brief-intro {
     padding: 22px 0 24px;
   }
-  .case-page.is-vision .cs-strategy-brief-intro h3 { margin-top: 20px; }
-  .case-page.is-vision .cs-strategy-path {
+  .case-page.is-editorial .cs-strategy-brief-intro h3 { margin-top: 20px; }
+  .case-page.is-editorial .cs-strategy-path {
     border-top: 0;
     border-left: 0;
   }
-  .case-page.is-vision .cs-strategy-pillar {
+  .case-page.is-editorial .cs-strategy-pillar {
     grid-template-columns: 28px minmax(0, 1fr);
     gap: 10px;
     padding: 18px 20px;
   }
-  .case-page.is-vision .cs-strategy-pillar p {
+  .case-page.is-editorial .cs-strategy-pillar p {
     margin-top: 5px;
     font-size: 13.5px;
     line-height: 1.62;
   }
   /* 面向对象由纵向手势直接驱动横移，不 pin，也不生成纵向占位。 */
-  .case-page.is-vision .cs-audience-stage {
+  .case-page.is-editorial .cs-audience-stage {
     display: block;
     overflow: visible;
     padding-bottom: 0;
   }
-  .case-page.is-vision .cs-audience-pin {
+  .case-page.is-editorial .cs-audience-pin {
     width: calc(100% + 2 * var(--gutter));
     margin-inline: calc(var(--gutter) * -1);
     padding-inline: var(--gutter);
@@ -5062,13 +5075,13 @@
     padding-bottom: 0;
     -webkit-overflow-scrolling: touch;
   }
-  .case-page.is-vision .cs-audience-pin::-webkit-scrollbar { display: none; }
-  .case-page.is-vision .cs-audience-pin.is-auto-x {
+  .case-page.is-editorial .cs-audience-pin::-webkit-scrollbar { display: none; }
+  .case-page.is-editorial .cs-audience-pin.is-auto-x {
     overflow-x: hidden;
     touch-action: pan-y;
     scroll-snap-type: none;
   }
-  .case-page.is-vision .cs-audience-pin .cs-facets {
+  .case-page.is-editorial .cs-audience-pin .cs-facets {
     display: flex;
     width: max-content;
     margin-top: var(--cs-mobile-content-gap);
@@ -5079,7 +5092,7 @@
     gap: 20px;
     padding-right: var(--gutter);
   }
-  .case-page.is-vision .cs-audience-pin .cs-facet {
+  .case-page.is-editorial .cs-audience-pin .cs-facet {
     box-sizing: border-box;
     flex: 0 0 min(82vw, 320px);
     width: min(82vw, 320px);
@@ -5097,8 +5110,8 @@
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
-  .case-page.is-vision .cs-audience-pin .cs-facet + .cs-facet { border-left: 0; }
-  .case-page.is-vision .cs-audience-pin .cs-facet-n {
+  .case-page.is-editorial .cs-audience-pin .cs-facet + .cs-facet { border-left: 0; }
+  .case-page.is-editorial .cs-audience-pin .cs-facet-n {
     align-self: baseline;
     margin: 0;
     font-family: var(--f-body);
@@ -5107,58 +5120,58 @@
     letter-spacing: .08em;
     color: rgb(var(--cs-accent-rgb) / .68);
   }
-  .case-page.is-vision .cs-audience-pin .cs-facet h4 {
+  .case-page.is-editorial .cs-audience-pin .cs-facet h4 {
     align-self: baseline;
     margin: 0;
     font-size: 18px;
     line-height: 1.35;
   }
-  .case-page.is-vision .cs-audience-pin .cs-facet p {
+  .case-page.is-editorial .cs-audience-pin .cs-facet p {
     grid-column: 1 / -1;
     align-self: start;
     margin: 0;
   }
-  .case-page.is-vision .cs-audience-pin .hscroll-dots { display: none; }
-  .case-page.is-vision .cs-mobile-pin-preview {
+  .case-page.is-editorial .cs-audience-pin .hscroll-dots { display: none; }
+  .case-page.is-editorial .cs-mobile-pin-preview {
     display: block;
     margin-top: var(--cs-mobile-section-gap);
   }
-  .case-page.is-vision .cs-mobile-pin-preview.is-stage-copy { padding-bottom: 0; }
-  .case-page.is-vision .cs-mobile-pin-preview.is-follow-copy { margin-top: var(--cs-mobile-content-gap); }
-  .case-page.is-vision .cs-mobile-pin-preview .cs-title { margin: 0; }
-  .case-page.is-vision .cs-mobile-pin-preview .cs-lede { margin-bottom: 0; }
-  .case-page.is-vision .cs-mobile-pin-preview .cs-lede + .cs-lede { margin-top: 12px; }
-  .case-page.is-vision .cs-mobile-pin-preview .cs-docs { margin-bottom: 0; }
-  .case-page.is-vision .cs-mobile-preview-source { display: none; }
-  .case-page.is-vision .cs-mobile-research-source { display: none; }
+  .case-page.is-editorial .cs-mobile-pin-preview.is-stage-copy { padding-bottom: 0; }
+  .case-page.is-editorial .cs-mobile-pin-preview.is-follow-copy { margin-top: var(--cs-mobile-content-gap); }
+  .case-page.is-editorial .cs-mobile-pin-preview .cs-title { margin: 0; }
+  .case-page.is-editorial .cs-mobile-pin-preview .cs-lede { margin-bottom: 0; }
+  .case-page.is-editorial .cs-mobile-pin-preview .cs-lede + .cs-lede { margin-top: 12px; }
+  .case-page.is-editorial .cs-mobile-pin-preview .cs-docs { margin-bottom: 0; }
+  .case-page.is-editorial .cs-mobile-preview-source { display: none; }
+  .case-page.is-editorial .cs-mobile-research-source { display: none; }
 
   /* HERO 的四组履历信息在桌面承担快速扫读，手机会把黑色首屏拖得过长。 */
-  .case-page.is-vision .cs-hero-meta { display: none; }
+  .case-page.is-editorial .cs-hero-meta { display: none; }
 
   /* 调研模块保留方法和现场照片，七个桌面式索引方块在手机省略。 */
-  .case-page.is-vision .cs-flow.is-steps { display: none; }
+  .case-page.is-editorial .cs-flow.is-steps { display: none; }
 
   /* 手机删去的细节卡与补充句；桌面仍完整保留。 */
-  .case-page.is-vision .is-mobile-omit { display: none !important; }
-  .case-page.is-vision .cs-only-desktop { display: none; }
-  .case-page.is-vision .cs-only-mobile { display: inline; }
+  .case-page.is-editorial .is-mobile-omit { display: none !important; }
+  .case-page.is-editorial .cs-only-desktop { display: none; }
+  .case-page.is-editorial .cs-only-mobile { display: inline; }
 
   /* 视觉体系沿用同一套 16:9 图文规范，手机只收紧留白。 */
-  .case-page.is-vision .is-system-lab {
+  .case-page.is-editorial .is-system-lab {
     padding-top: var(--cs-mobile-section-gap);
     padding-bottom: 0;
   }
-  .case-page.is-vision .is-system-lab .cs-deck-view {
+  .case-page.is-editorial .is-system-lab .cs-deck-view {
     position: relative;
     padding-bottom: 0;
   }
-  .case-page.is-vision .is-system-lab .cs-deck-track {
+  .case-page.is-editorial .is-system-lab .cs-deck-track {
     display: grid;
     max-width: none;
     gap: 0;
     padding: var(--cs-mobile-content-gap) var(--gutter) 0;
   }
-  .case-page.is-vision .is-system-lab .cs-panel {
+  .case-page.is-editorial .is-system-lab .cs-panel {
     width: auto;
     max-width: none;
     max-height: none;
@@ -5170,29 +5183,29 @@
     transition: none;
     contain: none;
   }
-  .case-page.is-vision .is-system-lab .cs-panel:first-child { padding-top: 0; }
-  .case-page.is-vision .is-system-lab .cs-panel:last-child { padding-bottom: 0; }
-  .case-page.is-vision .is-system-lab .cs-panel-fig {
+  .case-page.is-editorial .is-system-lab .cs-panel:first-child { padding-top: 0; }
+  .case-page.is-editorial .is-system-lab .cs-panel:last-child { padding-bottom: 0; }
+  .case-page.is-editorial .is-system-lab .cs-panel-fig {
     width: 100%;
     margin-inline: 0;
   }
-  .case-page.is-vision .is-system-lab .cs-panel-txt { padding-inline: 0; }
-  .case-page.is-vision .is-system-lab .cs-panel-txt h3 { margin-bottom: 10px; font-size: 19px; line-height: 1.38; }
-  .case-page.is-vision .is-system-lab .cs-panel-txt p { font-size: 14px; line-height: 1.68; }
-  .case-page.is-vision .is-system-lab .cs-specs-mini { margin-top: 6px; }
-  .case-page.is-vision .is-system-lab .cs-specs-mini li { padding-block: 4px; }
-  .case-page.is-vision .is-system-lab .cs-chain { font-size: 12px; line-height: 1.5; padding: 8px 10px; }
-  .case-page.is-vision .is-system-lab .cs-seal.is-inline {
+  .case-page.is-editorial .is-system-lab .cs-panel-txt { padding-inline: 0; }
+  .case-page.is-editorial .is-system-lab .cs-panel-txt h3 { margin-bottom: 10px; font-size: 19px; line-height: 1.38; }
+  .case-page.is-editorial .is-system-lab .cs-panel-txt p { font-size: 14px; line-height: 1.68; }
+  .case-page.is-editorial .is-system-lab .cs-specs-mini { margin-top: 6px; }
+  .case-page.is-editorial .is-system-lab .cs-specs-mini li { padding-block: 4px; }
+  .case-page.is-editorial .is-system-lab .cs-chain { font-size: 12px; line-height: 1.5; padding: 8px 10px; }
+  .case-page.is-editorial .is-system-lab .cs-seal.is-inline {
     grid-template-columns: 64px minmax(0, 1fr);
     gap: 10px;
     margin-top: 8px;
     padding: 8px 10px;
   }
-  .case-page.is-vision .is-system-lab .cs-seal.is-inline .cs-seal-stage { padding: 8%; }
-  .case-page.is-vision .is-system-lab .cs-prio { padding: 8px 10px; }
-  .case-page.is-vision .is-system-lab .cs-prio p { display: none; }
-  .case-page.is-vision .hscroll-dots { display: flex; }
-  .case-page.is-vision .hscroll-dots.is-in-rail {
+  .case-page.is-editorial .is-system-lab .cs-seal.is-inline .cs-seal-stage { padding: 8%; }
+  .case-page.is-editorial .is-system-lab .cs-prio { padding: 8px 10px; }
+  .case-page.is-editorial .is-system-lab .cs-prio p { display: none; }
+  .case-page.is-editorial .hscroll-dots { display: flex; }
+  .case-page.is-editorial .hscroll-dots.is-in-rail {
     position: absolute;
     left: 0;
     right: 0;
@@ -5202,16 +5215,16 @@
   }
 
   /* 05 回到竖向自然阅读，卡片高度由内容撑开。 */
-  .case-page.is-vision .is-proofroom { overflow: visible; }
-  .case-page.is-vision .is-proofroom .cs-line {
+  .case-page.is-editorial .is-proofroom { overflow: visible; }
+  .case-page.is-editorial .is-proofroom .cs-line {
     display: block;
     max-width: none;
     margin: 32px 0 0;
     padding: 0 0 0 32px;
     overflow: visible;
   }
-  .case-page.is-vision .is-proofroom .cs-line-item,
-  .case-page.is-vision .is-proofroom .cs-line-item:last-child {
+  .case-page.is-editorial .is-proofroom .cs-line-item,
+  .case-page.is-editorial .is-proofroom .cs-line-item:last-child {
     width: auto;
     max-width: none;
     height: auto;
@@ -5219,9 +5232,9 @@
     margin-bottom: 26px;
     padding: 0 0 26px;
   }
-  .case-page.is-vision .is-proofroom .cs-line-item:last-child { margin-bottom: 0; padding-bottom: 0; }
-  .case-page.is-vision .is-proofroom .cs-line-body,
-  .case-page.is-vision .is-proofroom .cs-line-item:last-child .cs-line-body {
+  .case-page.is-editorial .is-proofroom .cs-line-item:last-child { margin-bottom: 0; padding-bottom: 0; }
+  .case-page.is-editorial .is-proofroom .cs-line-body,
+  .case-page.is-editorial .is-proofroom .cs-line-item:last-child .cs-line-body {
     display: block;
     height: auto;
     min-height: 0;
@@ -5232,28 +5245,28 @@
     background: transparent;
     overflow: visible;
   }
-  .case-page.is-vision .is-proofroom .cs-line-k { font-size: 18px; margin-bottom: 8px; }
-  .case-page.is-vision .is-proofroom .cs-line-body p { font-size: 14px; line-height: 1.62; }
-  .case-page.is-vision .is-proofroom .cs-review-paths { margin-top: 10px; gap: 4px; }
-  .case-page.is-vision .is-proofroom .cs-review-paths li { font-size: 14px; line-height: 1.62; }
-  .case-page.is-vision .is-proofroom .cs-plates { gap: 8px; margin-top: 10px; }
-  .case-page.is-vision .is-proofroom .cs-plate img { max-height: 112px; object-fit: cover; }
-  .case-page.is-vision .is-proofroom .cs-plate b { margin-top: 6px; font-size: 13px; }
-  .case-page.is-vision .is-proofroom .cs-stats { margin-top: 12px; }
-  .case-page.is-vision .is-proofroom { padding-bottom: 0; }
+  .case-page.is-editorial .is-proofroom .cs-line-k { font-size: 18px; margin-bottom: 8px; }
+  .case-page.is-editorial .is-proofroom .cs-line-body p { font-size: 14px; line-height: 1.62; }
+  .case-page.is-editorial .is-proofroom .cs-review-paths { margin-top: 10px; gap: 4px; }
+  .case-page.is-editorial .is-proofroom .cs-review-paths li { font-size: 14px; line-height: 1.62; }
+  .case-page.is-editorial .is-proofroom .cs-plates { gap: 8px; margin-top: 10px; }
+  .case-page.is-editorial .is-proofroom .cs-plate img { max-height: 112px; object-fit: cover; }
+  .case-page.is-editorial .is-proofroom .cs-plate b { margin-top: 6px; font-size: 13px; }
+  .case-page.is-editorial .is-proofroom .cs-stats { margin-top: 12px; }
+  .case-page.is-editorial .is-proofroom { padding-bottom: 0; }
   /* 总结与能力共用一套紧凑的手机手风琴规范。 */
-  .case-page.is-vision .is-outcome { overflow: visible; }
-  .case-page.is-vision .cs-accordion { margin-top: var(--cs-mobile-content-gap); }
-  .case-page.is-vision .cs-accordion-item + .cs-accordion-item { margin-top: 32px; }
-  .case-page.is-vision .cs-accordion-trigger {
+  .case-page.is-editorial .is-outcome { overflow: visible; }
+  .case-page.is-editorial .cs-accordion { margin-top: var(--cs-mobile-content-gap); }
+  .case-page.is-editorial .cs-accordion-item + .cs-accordion-item { margin-top: 32px; }
+  .case-page.is-editorial .cs-accordion-trigger {
     grid-template-columns: minmax(0, 1fr) 28px;
     gap: 18px;
     font-size: 25px;
   }
-  .case-page.is-vision .cs-accordion-trigger i { width: 28px; height: 28px; }
-  .case-page.is-vision .cs-accordion-trigger i::before,
-  .case-page.is-vision .cs-accordion-trigger i::after { width: 18px; }
-  .case-page.is-vision .cs-accordion-panel p {
+  .case-page.is-editorial .cs-accordion-trigger i { width: 28px; height: 28px; }
+  .case-page.is-editorial .cs-accordion-trigger i::before,
+  .case-page.is-editorial .cs-accordion-trigger i::after { width: 18px; }
+  .case-page.is-editorial .cs-accordion-panel p {
     padding-top: 16px;
     font-size: 16px;
     line-height: 1.8;
@@ -5261,8 +5274,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .case-page.is-vision .cs-accordion-panel,
-  .case-page.is-vision .cs-accordion-trigger i::after { transition: none; }
+  .case-page.is-editorial .cs-accordion-panel,
+  .case-page.is-editorial .cs-accordion-trigger i::after { transition: none; }
 }
 
 /* ============================================================
@@ -5579,35 +5592,35 @@
    不用卡片堆层级；首屏由真实封面承担视觉主权，正文靠字号、留白、
    图像比例和少量红色建立节奏。
    ============================================================ */
-.case-page.is-vision .cs-hero {
+.case-page.is-editorial .cs-hero {
   min-height: 0;
   padding: clamp(132px, 11vw, 176px) var(--gutter) clamp(62px, 7vw, 92px);
 }
-.case-page.is-vision .cs-hero-inner {
+.case-page.is-editorial .cs-hero-inner {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: clamp(44px, 5vw, 68px);
   width: 100%;
   max-width: 1180px;
 }
-.case-page.is-vision .cs-hero-copy {
+.case-page.is-editorial .cs-hero-copy {
   position: relative;
   z-index: 2;
   max-width: 1060px;
   margin: 0 auto;
   text-align: center;
 }
-.case-page.is-vision .cs-hero-title {
+.case-page.is-editorial .cs-hero-title {
   max-width: none;
   font-size: clamp(42px, 5.4vw, 68px);
 }
-.case-page.is-vision .cs-hero-sub {
+.case-page.is-editorial .cs-hero-sub {
   max-width: 52em;
   margin-right: auto;
   margin-left: auto;
 }
-.case-page.is-vision .cs-tags { justify-content: center; gap: 10px 20px; }
-.case-page.is-vision .cs-tag {
+.case-page.is-editorial .cs-tags { justify-content: center; gap: 10px 20px; }
+.case-page.is-editorial .cs-tag {
   position: relative;
   padding: 0;
   border: 0;
@@ -5615,13 +5628,13 @@
   font-size: 13px;
   color: rgba(251, 251, 244, .58);
 }
-.case-page.is-vision .cs-tag:not(:last-child)::after {
+.case-page.is-editorial .cs-tag:not(:last-child)::after {
   position: absolute;
   right: -12px;
   color: rgba(251, 251, 244, .24);
   content: "·";
 }
-.case-page.is-vision .cs-hero-books {
+.case-page.is-editorial .cs-hero-books {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: start;
@@ -5629,7 +5642,7 @@
   width: min(820px, 100%);
   margin: 0 auto;
 }
-.case-page.is-vision .cs-hero-book {
+.case-page.is-editorial .cs-hero-book {
   position: relative;
   width: 100%;
   padding: 0;
@@ -5639,18 +5652,18 @@
   transform: none;
   transition: transform .5s cubic-bezier(.2, .8, .2, 1), filter .5s var(--ease);
 }
-.case-page.is-vision .cs-hero-book img {
+.case-page.is-editorial .cs-hero-book img {
   display: block;
   width: 100%;
   height: auto;
   filter: drop-shadow(0 26px 30px rgba(0, 0, 0, .42));
 }
-.case-page.is-vision .cs-hero-book:hover { transform: translateY(-10px); filter: brightness(1.05); }
-.case-page.is-vision .cs-hero-book:focus-visible {
+.case-page.is-editorial .cs-hero-book:hover { transform: translateY(-10px); filter: brightness(1.05); }
+.case-page.is-editorial .cs-hero-book:focus-visible {
   outline: 2px solid var(--cs-accent-lift);
   outline-offset: 8px;
 }
-.case-page.is-vision .cs-hero-books-hint {
+.case-page.is-editorial .cs-hero-books-hint {
   grid-column: 1 / -1;
   margin: 0;
   font-family: var(--f-cjk);
@@ -5660,15 +5673,15 @@
   color: rgba(251, 251, 244, .42);
 }
 
-.case-page.is-vision .cs-body > .cs-section {
+.case-page.is-editorial .cs-body > .cs-section {
   padding-top: clamp(82px, 8vw, 118px);
   padding-bottom: clamp(82px, 8vw, 118px);
 }
-.case-page.is-vision .cs-body > .cs-section + .cs-section { padding-top: clamp(82px, 8vw, 118px); }
+.case-page.is-editorial .cs-body > .cs-section + .cs-section { padding-top: clamp(82px, 8vw, 118px); }
 
 /* 01：问题与行动是一张信息映射图，而不是八张文字卡。 */
-.case-page.is-vision .cs-map-list { margin-top: clamp(42px, 5vw, 68px); }
-.case-page.is-vision .cs-map-row {
+.case-page.is-editorial .cs-map-list { margin-top: clamp(42px, 5vw, 68px); }
+.case-page.is-editorial .cs-map-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) clamp(76px, 8vw, 118px) minmax(0, 1fr);
   align-items: center;
@@ -5676,9 +5689,9 @@
   padding: clamp(24px, 3vw, 38px) 0;
   border-top: 1px solid var(--cs-hair);
 }
-.case-page.is-vision .cs-map-row:last-child { border-bottom: 1px solid var(--cs-hair); }
-.case-page.is-vision .cs-map-row small,
-.case-page.is-vision .cs-delivery-notes small {
+.case-page.is-editorial .cs-map-row:last-child { border-bottom: 1px solid var(--cs-hair); }
+.case-page.is-editorial .cs-map-row small,
+.case-page.is-editorial .cs-delivery-notes small {
   display: block;
   margin-bottom: 9px;
   font-family: var(--f-body);
@@ -5687,8 +5700,8 @@
   color: var(--cs-accent-deep);
   text-transform: uppercase;
 }
-.case-page.is-vision .cs-map-row h3,
-.case-page.is-vision .cs-delivery-notes h3 {
+.case-page.is-editorial .cs-map-row h3,
+.case-page.is-editorial .cs-delivery-notes h3 {
   margin: 0;
   font-family: var(--f-cjk);
   font-size: clamp(21px, 2vw, 28px);
@@ -5696,59 +5709,59 @@
   line-height: 1.35;
   color: var(--cs-ink);
 }
-.case-page.is-vision .cs-map-row p,
-.case-page.is-vision .cs-delivery-notes p {
+.case-page.is-editorial .cs-map-row p,
+.case-page.is-editorial .cs-delivery-notes p {
   margin: 8px 0 0;
   font-family: var(--f-cjk);
   font-size: 16px;
   line-height: 1.72;
   color: var(--cs-ink-2);
 }
-.case-page.is-vision .cs-map-link {
+.case-page.is-editorial .cs-map-link {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   color: var(--cs-ink-3);
 }
-.case-page.is-vision .cs-map-link span {
+.case-page.is-editorial .cs-map-link span {
   height: 1px;
   background: var(--cs-hair);
   transition: background .3s var(--ease);
 }
-.case-page.is-vision .cs-map-link i {
+.case-page.is-editorial .cs-map-link i {
   margin-left: 8px;
   font-family: var(--f-body);
   font-size: 18px;
   font-style: normal;
   transition: color .3s var(--ease), transform .3s var(--ease);
 }
-.case-page.is-vision .cs-map-row:hover .cs-map-link span { background: var(--cs-accent); }
-.case-page.is-vision .cs-map-row:hover .cs-map-link i { color: var(--cs-accent); transform: translateX(4px); }
-.case-page.is-vision .cs-map-row:hover .cs-map-action h3 { color: var(--cs-accent-deep); }
+.case-page.is-editorial .cs-map-row:hover .cs-map-link span { background: var(--cs-accent); }
+.case-page.is-editorial .cs-map-row:hover .cs-map-link i { color: var(--cs-accent); transform: translateX(4px); }
+.case-page.is-editorial .cs-map-row:hover .cs-map-action h3 { color: var(--cs-accent-deep); }
 
 /* 02：受众、七个研究模块和图书馆证据只保留一条内容流。 */
-.case-page.is-vision .cs-audience-stage { display: block; }
-.case-page.is-vision .cs-audience-pin { overflow: visible; }
-.case-page.is-vision .cs-audience-pin .cs-facets {
+.case-page.is-editorial .cs-audience-stage { display: block; }
+.case-page.is-editorial .cs-audience-pin { overflow: visible; }
+.case-page.is-editorial .cs-audience-pin .cs-facets {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: 28px;
 }
-.case-page.is-vision .cs-research-method { margin-top: clamp(72px, 8vw, 112px); }
-.case-page.is-vision .cs-research-intro {
+.case-page.is-editorial .cs-research-method { margin-top: clamp(72px, 8vw, 112px); }
+.case-page.is-editorial .cs-research-intro {
   display: grid;
   grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
   gap: clamp(28px, 5vw, 76px);
   align-items: start;
 }
-.case-page.is-vision .cs-research-intro h3 {
+.case-page.is-editorial .cs-research-intro h3 {
   margin: 0;
   font-family: var(--f-cjk);
   font-size: clamp(27px, 3vw, 40px);
   line-height: 1.28;
   color: var(--cs-ink);
 }
-.case-page.is-vision .cs-research-intro p {
+.case-page.is-editorial .cs-research-intro p {
   max-width: 42em;
   margin: 0;
   font-family: var(--f-cjk);
@@ -5756,13 +5769,13 @@
   line-height: 1.82;
   color: var(--cs-ink-2);
 }
-.case-page.is-vision .cs-flow.is-steps {
+.case-page.is-editorial .cs-flow.is-steps {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 0;
   margin-top: clamp(36px, 4vw, 52px);
 }
-.case-page.is-vision .cs-flow.is-steps .cs-flow-step {
+.case-page.is-editorial .cs-flow.is-steps .cs-flow-step {
   min-width: 0;
   padding: 0 10px;
   border: 0;
@@ -5771,22 +5784,22 @@
   background: transparent;
   text-align: left;
 }
-.case-page.is-vision .cs-flow.is-steps .cs-flow-step:last-child { border-right: 1px solid var(--cs-hair); }
-.case-page.is-vision .cs-flow.is-steps b { font-size: 14px; line-height: 1.45; }
-.case-page.is-vision .cs-flow.is-steps b i { margin-bottom: 8px; font-size: 11px; color: var(--cs-accent-deep); }
-.case-page.is-vision .cs-research-method .cs-docs {
+.case-page.is-editorial .cs-flow.is-steps .cs-flow-step:last-child { border-right: 1px solid var(--cs-hair); }
+.case-page.is-editorial .cs-flow.is-steps b { font-size: 14px; line-height: 1.45; }
+.case-page.is-editorial .cs-flow.is-steps b i { margin-bottom: 8px; font-size: 11px; color: var(--cs-accent-deep); }
+.case-page.is-editorial .cs-research-method .cs-docs {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
   margin-top: clamp(42px, 5vw, 68px);
 }
-.case-page.is-vision .cs-research-method .cs-doc { overflow: visible; }
-.case-page.is-vision .cs-research-method .cs-doc-cap {
+.case-page.is-editorial .cs-research-method .cs-doc { overflow: visible; }
+.case-page.is-editorial .cs-research-method .cs-doc-cap {
   padding: 12px 0 0;
   font-size: 13px;
   line-height: 1.55;
   color: var(--cs-ink-3);
 }
-.case-page.is-vision .cs-research-method .cs-doc-cap b {
+.case-page.is-editorial .cs-research-method .cs-doc-cap b {
   display: block;
   margin-bottom: 2px;
   color: var(--cs-ink);
@@ -5794,7 +5807,7 @@
 }
 
 /* 03：给五个面板统一补上锚点；封面与封底始终完整显示。 */
-.case-page.is-vision .is-system-lab .cs-panel::before {
+.case-page.is-editorial .is-system-lab .cs-panel::before {
   position: static;
   display: block;
   grid-column: 1 / -1;
@@ -5813,21 +5826,21 @@
   opacity: 1;
   transform: none;
 }
-.case-page.is-vision .is-system-lab .is-mobile-cover .cs-figure {
+.case-page.is-editorial .is-system-lab .is-mobile-cover .cs-figure {
   aspect-ratio: 922 / 1217;
   background: var(--cs-paper-2);
 }
-.case-page.is-vision .is-system-lab .is-mobile-cover .cs-figure img { object-fit: contain; }
+.case-page.is-editorial .is-system-lab .is-mobile-cover .cs-figure img { object-fit: contain; }
 
 /* 04：成果、生产过程与实物照片合并成同一个落地高潮。 */
-.case-page.is-vision .is-delivery { max-width: var(--cs-max); }
-.case-page.is-vision .cs-delivery-metrics {
+.case-page.is-editorial .is-delivery { max-width: var(--cs-max); }
+.case-page.is-editorial .cs-delivery-metrics {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(24px, 4vw, 64px);
   margin-top: clamp(44px, 5vw, 68px);
 }
-.case-page.is-vision .cs-delivery-metrics strong {
+.case-page.is-editorial .cs-delivery-metrics strong {
   display: flex;
   align-items: baseline;
   color: var(--cs-accent-deep);
@@ -5836,27 +5849,27 @@
   font-weight: 500;
   line-height: 1;
 }
-.case-page.is-vision .cs-delivery-metrics small {
+.case-page.is-editorial .cs-delivery-metrics small {
   margin-left: 5px;
   font-family: var(--f-cjk);
   font-size: .28em;
   color: var(--cs-ink-3);
 }
-.case-page.is-vision .cs-delivery-metrics p {
+.case-page.is-editorial .cs-delivery-metrics p {
   margin: 11px 0 0;
   font-family: var(--f-cjk);
   font-size: 15px;
   line-height: 1.55;
   color: var(--cs-ink-3);
 }
-.case-page.is-vision .cs-delivery-main {
+.case-page.is-editorial .cs-delivery-main {
   display: grid;
   grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr);
   gap: clamp(38px, 6vw, 88px);
   align-items: start;
   margin-top: clamp(62px, 7vw, 100px);
 }
-.case-page.is-vision .cs-delivery-photo {
+.case-page.is-editorial .cs-delivery-photo {
   position: relative;
   width: 100%;
   max-width: 720px;
@@ -5867,14 +5880,14 @@
   background: transparent;
   cursor: zoom-in;
 }
-.case-page.is-vision .cs-delivery-photo img {
+.case-page.is-editorial .cs-delivery-photo img {
   display: block;
   width: 100%;
   height: auto;
   transition: transform .7s var(--ease);
 }
-.case-page.is-vision .cs-delivery-photo:hover img { transform: scale(1.018); }
-.case-page.is-vision .cs-delivery-photo > span {
+.case-page.is-editorial .cs-delivery-photo:hover img { transform: scale(1.018); }
+.case-page.is-editorial .cs-delivery-photo > span {
   position: absolute;
   inset: auto 0 0;
   padding: 54px 24px 22px;
@@ -5882,21 +5895,21 @@
   text-align: left;
   color: #fff;
 }
-.case-page.is-vision .cs-delivery-photo b,
-.case-page.is-vision .cs-delivery-photo small { display: block; font-family: var(--f-cjk); }
-.case-page.is-vision .cs-delivery-photo b { font-size: 22px; line-height: 1.35; }
-.case-page.is-vision .cs-delivery-photo small { margin-top: 4px; font-size: 12px; color: rgba(255, 255, 255, .66); }
-.case-page.is-vision .cs-delivery-notes { display: grid; gap: clamp(34px, 4vw, 52px); }
-.case-page.is-vision .cs-delivery-notes article { padding: 0; border: 0; background: transparent; }
-.case-page.is-vision .cs-delivery-notes h3 { font-size: clamp(22px, 2.2vw, 30px); }
-.case-page.is-vision .cs-review-evidence {
+.case-page.is-editorial .cs-delivery-photo b,
+.case-page.is-editorial .cs-delivery-photo small { display: block; font-family: var(--f-cjk); }
+.case-page.is-editorial .cs-delivery-photo b { font-size: 22px; line-height: 1.35; }
+.case-page.is-editorial .cs-delivery-photo small { margin-top: 4px; font-size: 12px; color: rgba(255, 255, 255, .66); }
+.case-page.is-editorial .cs-delivery-notes { display: grid; gap: clamp(34px, 4vw, 52px); }
+.case-page.is-editorial .cs-delivery-notes article { padding: 0; border: 0; background: transparent; }
+.case-page.is-editorial .cs-delivery-notes h3 { font-size: clamp(22px, 2.2vw, 30px); }
+.case-page.is-editorial .cs-review-evidence {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   width: min(100%, 520px);
   margin-top: 22px;
 }
-.case-page.is-vision .cs-review-shot {
+.case-page.is-editorial .cs-review-shot {
   position: relative;
   aspect-ratio: 16 / 9;
   min-width: 0;
@@ -5907,7 +5920,7 @@
   background: transparent;
   cursor: zoom-in;
 }
-.case-page.is-vision .cs-review-shot img {
+.case-page.is-editorial .cs-review-shot img {
   display: block;
   width: 100%;
   height: 100%;
@@ -5915,7 +5928,7 @@
   object-position: top center;
   transition: transform .45s var(--ease), opacity .45s var(--ease);
 }
-.case-page.is-vision .cs-review-shot span {
+.case-page.is-editorial .cs-review-shot span {
   position: absolute;
   right: 8px;
   bottom: 8px;
@@ -5926,37 +5939,37 @@
   line-height: 1;
   color: #fff;
 }
-.case-page.is-vision .cs-review-shot:hover img { transform: scale(1.025); opacity: .92; }
-.case-page.is-vision .cs-review-shot:focus-visible {
+.case-page.is-editorial .cs-review-shot:hover img { transform: scale(1.025); opacity: .92; }
+.case-page.is-editorial .cs-review-shot:focus-visible {
   outline: 2px solid var(--cs-accent-deep);
   outline-offset: 3px;
 }
-.case-page.is-vision .cs-delivery-reveal {
+.case-page.is-editorial .cs-delivery-reveal {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
 }
 
 /* 05：三条结论直接露出，不再把最重要的话藏进手风琴。 */
-.case-page.is-vision .is-reflection { padding-bottom: clamp(110px, 12vw, 170px); }
-.case-page.is-vision .cs-reflection-list {
+.case-page.is-editorial .is-reflection { padding-bottom: clamp(110px, 12vw, 170px); }
+.case-page.is-editorial .cs-reflection-list {
   display: grid;
   gap: clamp(52px, 7vw, 92px);
   margin-top: clamp(52px, 6vw, 82px);
 }
-.case-page.is-vision .cs-reflection-list article {
+.case-page.is-editorial .cs-reflection-list article {
   display: grid;
   grid-template-columns: 70px minmax(280px, .9fr) minmax(0, 1.1fr);
   gap: clamp(24px, 4vw, 64px);
   align-items: start;
 }
-.case-page.is-vision .cs-reflection-list span {
+.case-page.is-editorial .cs-reflection-list span {
   font-family: var(--f-heading);
   font-size: 20px;
   line-height: 1.4;
   color: var(--cs-accent-deep);
 }
-.case-page.is-vision .cs-reflection-list h3 {
+.case-page.is-editorial .cs-reflection-list h3 {
   margin: 0;
   font-family: var(--f-cjk);
   font-size: clamp(28px, 3vw, 42px);
@@ -5964,7 +5977,7 @@
   line-height: 1.3;
   color: var(--cs-ink);
 }
-.case-page.is-vision .cs-reflection-list p {
+.case-page.is-editorial .cs-reflection-list p {
   max-width: 38em;
   margin: 2px 0 0;
   font-family: var(--f-cjk);
@@ -5974,64 +5987,64 @@
 }
 
 @media (max-width: 980px) and (min-width: 769px) {
-  .case-page.is-vision .cs-hero-inner { grid-template-columns: minmax(0, 1fr); gap: 46px; }
-  .case-page.is-vision .cs-hero-books { width: min(720px, 100%); }
-  .case-page.is-vision .cs-map-row { grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr); }
-  .case-page.is-vision .cs-flow.is-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 0; }
-  .case-page.is-vision .cs-delivery-main { grid-template-columns: 1fr 1fr; }
-  .case-page.is-vision .cs-reflection-list article { grid-template-columns: 52px minmax(0, 1fr); }
-  .case-page.is-vision .cs-reflection-list p { grid-column: 2; }
+  .case-page.is-editorial .cs-hero-inner { grid-template-columns: minmax(0, 1fr); gap: 46px; }
+  .case-page.is-editorial .cs-hero-books { width: min(720px, 100%); }
+  .case-page.is-editorial .cs-map-row { grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr); }
+  .case-page.is-editorial .cs-flow.is-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 0; }
+  .case-page.is-editorial .cs-delivery-main { grid-template-columns: 1fr 1fr; }
+  .case-page.is-editorial .cs-reflection-list article { grid-template-columns: 52px minmax(0, 1fr); }
+  .case-page.is-editorial .cs-reflection-list p { grid-column: 2; }
 }
 
 @media (max-width: 768px) {
-  .case-page.is-vision .cs-hero {
+  .case-page.is-editorial .cs-hero {
     min-height: 0;
     padding: 108px var(--gutter) 50px;
   }
-  .case-page.is-vision .cs-hero-inner {
+  .case-page.is-editorial .cs-hero-inner {
     display: grid;
     grid-template-columns: 1fr;
     gap: 32px;
   }
-  .case-page.is-vision .cs-hero-copy { text-align: left; }
-  .case-page.is-vision .cs-eyebrow {
+  .case-page.is-editorial .cs-hero-copy { text-align: left; }
+  .case-page.is-editorial .cs-eyebrow {
     margin-bottom: 12px;
     font-size: 10px;
     letter-spacing: .16em;
   }
-  .case-page.is-vision .cs-hero-title {
+  .case-page.is-editorial .cs-hero-title {
     max-width: none;
     margin-bottom: 12px;
     font-size: 29px;
   }
-  .case-page.is-vision .cs-hero-sub {
+  .case-page.is-editorial .cs-hero-sub {
     margin-bottom: 0;
     font-size: 14px;
     line-height: 1.68;
   }
-  .case-page.is-vision .cs-hero .cs-tags { display: none; }
-  .case-page.is-vision .cs-hero-books { width: 100%; gap: 8px; }
-  .case-page.is-vision .cs-hero-book {
+  .case-page.is-editorial .cs-hero .cs-tags { display: none; }
+  .case-page.is-editorial .cs-hero-books { width: 100%; gap: 8px; }
+  .case-page.is-editorial .cs-hero-book {
     width: 100%;
   }
-  .case-page.is-vision .cs-hero-book:hover { transform: none; }
-  .case-page.is-vision .cs-hero-books-hint { margin-top: 2px; font-size: 10px; }
+  .case-page.is-editorial .cs-hero-book:hover { transform: none; }
+  .case-page.is-editorial .cs-hero-books-hint { margin-top: 2px; font-size: 10px; }
 
-  .case-page.is-vision .cs-body > .cs-section,
-  .case-page.is-vision .cs-body > .cs-section + .cs-section {
+  .case-page.is-editorial .cs-body > .cs-section,
+  .case-page.is-editorial .cs-body > .cs-section + .cs-section {
     padding-top: 72px;
     padding-bottom: 0;
   }
 
-  .case-page.is-vision .cs-map-list { margin-top: 30px; }
-  .case-page.is-vision .cs-map-row {
+  .case-page.is-editorial .cs-map-list { margin-top: 30px; }
+  .case-page.is-editorial .cs-map-row {
     grid-template-columns: 1fr;
     gap: 14px;
     padding: 24px 0;
   }
-  .case-page.is-vision .cs-map-row h3 { font-size: 19px; }
-  .case-page.is-vision .cs-map-row p { margin-top: 5px; font-size: 14px; line-height: 1.65; }
-  .case-page.is-vision .cs-map-link {
+  .case-page.is-editorial .cs-map-row h3 { font-size: 19px; }
+  .case-page.is-editorial .cs-map-row p { margin-top: 5px; font-size: 14px; line-height: 1.65; }
+  .case-page.is-editorial .cs-map-link {
     grid-template-columns: 28px auto;
     justify-content: start;
     width: 54px;
@@ -6039,30 +6052,30 @@
     transform-origin: 16px 50%;
   }
 
-  .case-page.is-vision .cs-audience-pin { overflow-x: auto; }
-  .case-page.is-vision .cs-audience-pin .cs-facets {
+  .case-page.is-editorial .cs-audience-pin { overflow-x: auto; }
+  .case-page.is-editorial .cs-audience-pin .cs-facets {
     display: flex;
     grid-template-columns: none;
     margin-top: var(--cs-mobile-content-gap);
   }
-  .case-page.is-vision .cs-research-method { margin-top: 72px; }
-  .case-page.is-vision .cs-research-intro { grid-template-columns: 1fr; gap: 14px; }
-  .case-page.is-vision .cs-research-intro h3 { font-size: 23px; }
-  .case-page.is-vision .cs-research-intro p { font-size: 14.5px; line-height: 1.72; }
-  .case-page.is-vision .cs-flow.is-steps {
+  .case-page.is-editorial .cs-research-method { margin-top: 72px; }
+  .case-page.is-editorial .cs-research-intro { grid-template-columns: 1fr; gap: 14px; }
+  .case-page.is-editorial .cs-research-intro h3 { font-size: 23px; }
+  .case-page.is-editorial .cs-research-intro p { font-size: 14.5px; line-height: 1.72; }
+  .case-page.is-editorial .cs-flow.is-steps {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px 14px;
     margin-top: 30px;
   }
-  .case-page.is-vision .cs-flow.is-steps .cs-flow-step,
-  .case-page.is-vision .cs-flow.is-steps .cs-flow-step:last-child {
+  .case-page.is-editorial .cs-flow.is-steps .cs-flow-step,
+  .case-page.is-editorial .cs-flow.is-steps .cs-flow-step:last-child {
     padding: 0;
     border: 0;
   }
-  .case-page.is-vision .cs-flow.is-steps b { font-size: 14px; }
-  .case-page.is-vision .cs-flow.is-steps b i { margin-bottom: 5px; }
-  .case-page.is-vision .cs-research-method .cs-docs {
+  .case-page.is-editorial .cs-flow.is-steps b { font-size: 14px; }
+  .case-page.is-editorial .cs-flow.is-steps b i { margin-bottom: 5px; }
+  .case-page.is-editorial .cs-research-method .cs-docs {
     display: flex !important;
     grid-template-columns: none !important;
     width: calc(100% + 2 * var(--gutter));
@@ -6073,63 +6086,108 @@
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
   }
-  .case-page.is-vision .cs-research-method .cs-docs::-webkit-scrollbar { display: none; }
-  .case-page.is-vision .cs-research-method .cs-doc {
+  .case-page.is-editorial .cs-research-method .cs-docs::-webkit-scrollbar { display: none; }
+  .case-page.is-editorial .cs-research-method .cs-doc {
     flex: 0 0 min(78vw, 300px);
     scroll-snap-align: start;
   }
 
-  .case-page.is-vision .is-system-lab .cs-panel::before {
+  .case-page.is-editorial .is-system-lab .cs-panel::before {
     margin-bottom: 0;
     font-size: 10px;
   }
-  .case-page.is-vision .is-system-lab .cs-panel { gap: 16px; padding: 34px 0; }
-  .case-page.is-vision .is-system-lab .is-mobile-cover .cs-panel-fig {
+  .case-page.is-editorial .is-system-lab .cs-panel { gap: 16px; padding: 34px 0; }
+  .case-page.is-editorial .is-system-lab .is-mobile-cover .cs-panel-fig {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
-  .case-page.is-vision .is-system-lab .cs-pagedemo { max-width: 220px; margin-inline: auto; }
-  .case-page.is-vision .is-system-lab .cs-pd-stage { width: 180px; }
-  .case-page.is-vision .is-system-lab .cs-pd-ctrl { gap: 7px; }
-  .case-page.is-vision .is-system-lab .cs-pd-ctrl button { padding: 7px 9px; font-size: 11px; }
+  .case-page.is-editorial .is-system-lab .cs-pagedemo { max-width: 220px; margin-inline: auto; }
+  .case-page.is-editorial .is-system-lab .cs-pd-stage { width: 180px; }
+  .case-page.is-editorial .is-system-lab .cs-pd-ctrl { gap: 7px; }
+  .case-page.is-editorial .is-system-lab .cs-pd-ctrl button { padding: 7px 9px; font-size: 11px; }
 
-  .case-page.is-vision .cs-delivery-metrics {
+  .case-page.is-editorial .cs-delivery-metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 32px 18px;
     margin-top: 34px;
   }
-  .case-page.is-vision .cs-delivery-metrics strong { font-size: 42px; }
-  .case-page.is-vision .cs-delivery-metrics p { margin-top: 7px; font-size: 13px; }
-  .case-page.is-vision .cs-delivery-main {
+  .case-page.is-editorial .cs-delivery-metrics strong { font-size: 42px; }
+  .case-page.is-editorial .cs-delivery-metrics p { margin-top: 7px; font-size: 13px; }
+  .case-page.is-editorial .cs-delivery-main {
     grid-template-columns: 1fr;
     gap: 42px;
     margin-top: 52px;
   }
-  .case-page.is-vision .cs-delivery-photo { max-width: 420px; }
-  .case-page.is-vision .cs-delivery-photo b { font-size: 18px; }
-  .case-page.is-vision .cs-delivery-notes { gap: 34px; }
-  .case-page.is-vision .cs-delivery-notes h3 { font-size: 20px; }
-  .case-page.is-vision .cs-delivery-notes p { font-size: 14px; line-height: 1.68; }
-  .case-page.is-vision .cs-review-evidence { gap: 8px; margin-top: 18px; }
-  .case-page.is-vision .cs-review-shot span { right: 5px; bottom: 5px; padding: 4px 6px; font-size: 9px; }
-  .case-page.is-vision .cs-delivery-reveal { margin-top: 64px; }
-  .case-page.is-vision .cs-delivery-reveal.is-mobile-scrub,
-  .case-page.is-vision .cs-delivery-reveal.is-mobile-scrub > .cs-reveal {
+  .case-page.is-editorial .cs-delivery-photo { max-width: 420px; }
+  .case-page.is-editorial .cs-delivery-photo b { font-size: 18px; }
+  .case-page.is-editorial .cs-delivery-notes { gap: 34px; }
+  .case-page.is-editorial .cs-delivery-notes h3 { font-size: 20px; }
+  .case-page.is-editorial .cs-delivery-notes p { font-size: 14px; line-height: 1.68; }
+  .case-page.is-editorial .cs-review-evidence { gap: 8px; margin-top: 18px; }
+  .case-page.is-editorial .cs-review-shot span { right: 5px; bottom: 5px; padding: 4px 6px; font-size: 9px; }
+  .case-page.is-editorial .cs-delivery-reveal { margin-top: 64px; }
+  .case-page.is-editorial .cs-delivery-reveal.is-mobile-scrub,
+  .case-page.is-editorial .cs-delivery-reveal.is-mobile-scrub > .cs-reveal {
     height: auto;
     min-height: 0;
   }
-  .case-page.is-vision .cs-delivery-reveal .cs-reveal { aspect-ratio: 16 / 9; }
+  .case-page.is-editorial .cs-delivery-reveal .cs-reveal { aspect-ratio: 16 / 9; }
 
-  .case-page.is-vision .is-reflection { padding-bottom: 96px !important; }
-  .case-page.is-vision .cs-reflection-list { gap: 52px; margin-top: 40px; }
-  .case-page.is-vision .cs-reflection-list article { grid-template-columns: 1fr; gap: 10px; }
-  .case-page.is-vision .cs-reflection-list span { font-size: 14px; }
-  .case-page.is-vision .cs-reflection-list h3 { font-size: 25px; line-height: 1.34; }
-  .case-page.is-vision .cs-reflection-list p { margin-top: 0; font-size: 15px; line-height: 1.75; }
+  .case-page.is-editorial .is-reflection { padding-bottom: 96px !important; }
+  .case-page.is-editorial .cs-reflection-list { gap: 52px; margin-top: 40px; }
+  .case-page.is-editorial .cs-reflection-list article { grid-template-columns: 1fr; gap: 10px; }
+  .case-page.is-editorial .cs-reflection-list span { font-size: 14px; }
+  .case-page.is-editorial .cs-reflection-list h3 { font-size: 25px; line-height: 1.34; }
+  .case-page.is-editorial .cs-reflection-list p { margin-top: 0; font-size: 15px; line-height: 1.75; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .case-page.is-vision .cs-hero-book,
-  .case-page.is-vision .cs-delivery-photo img,
-  .case-page.is-vision .cs-map-link i { transition: none; }
+  .case-page.is-editorial .cs-hero-book,
+  .case-page.is-editorial .cs-delivery-photo img,
+  .case-page.is-editorial .cs-map-link i { transition: none; }
 }
+
+/* ────────────────────────────────────────
+   文化墙案例的两处版式微调
+   1) 首屏三张图是横向施工图，不是书封。三等分会把平面图压到
+      256px 宽，图上的房间名根本看不清；改成「一张大图 + 两张小图」。
+   2) 立面图、平面图都是白底线稿，热区联动那层灰罩要浅一些，
+      否则线条整片糊掉，反而看不出被点亮的是哪一块。
+   ──────────────────────────────────────── */
+.case-page.is-culture .cs-hero-books {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: min(760px, 100%);
+}
+.case-page.is-culture .cs-hero-book.is-lead { grid-column: 1 / -1; }
+.case-page.is-culture .cs-hero-book img {
+  border-radius: 4px;
+  background: #fff;
+  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, .38));
+}
+/* 立面图是 11.4 米一面墙，宽高比 1800/825。塞进 tocmap 默认的左右两栏里
+   只有 590px 宽，热区跟着缩到 120px 左右，点亮了也看不清是哪一块。
+   宽图改成上下排：图占满整行，优先级卡在下面横排四张。 */
+.case-page.is-culture .cs-tocmap.is-wide { grid-template-columns: minmax(0, 1fr); }
+.case-page.is-culture .cs-tocmap.is-wide .cs-prios {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 900px) {
+  .case-page.is-culture .cs-tocmap.is-wide .cs-prios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .case-page.is-culture .cs-tocmap.is-wide .cs-prios { grid-template-columns: minmax(0, 1fr); }
+}
+.case-page.is-culture .cs-tocmap-fig::after { background: rgba(2, 2, 2, 0.34); }
+.case-page.is-culture .cs-hot { backdrop-filter: brightness(2.4) saturate(1.1); }
+
+@media (max-width: 768px) {
+  .case-page.is-culture .cs-hero-books { grid-template-columns: 1fr; }
+}
+
+/* 文化墙的两张证据：一张横向线稿、一张竖向聊天截图。
+   板块默认 4:3 + object-fit:cover，竖图会被裁掉大半只剩中间一条。
+   这里改成整张放进去，白底衬着，看图纸和看截图都不缺内容。 */
+.case-page.is-culture .cs-doc-fig { aspect-ratio: 4 / 3; background: #fff; }
+.case-page.is-culture .cs-doc-fig img { height: 100%; object-fit: contain; }

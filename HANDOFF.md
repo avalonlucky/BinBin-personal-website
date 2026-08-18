@@ -63,7 +63,7 @@ assets/work/<slug>/   该作品的图片资源
 | `cs-outro` / `cs-cta-card` / `cs-ai-pill` / `cs-summary` | 页尾行动区（浅底）：项目总结 popover、邮箱↔电话切换、问问 AI |
 | `cs-journals` / `cs-journal` | 深色头图下方的刊物封面并排，hover 抬起 |
 | `cs-seal` | 印章阳刻／阴刻切换，底色随之反转 |
-| `cs-tocmap` / `cs-prio` / `cs-hot` | 目录热区联动：hover 优先级卡 → 点亮真实版面上对应位置 |
+| `cs-tocmap` / `cs-prio` / `cs-hot` | 图上热区联动：hover 卡片 → 点亮真实图纸／版面上对应位置。一页可放多张，坐标写在 `.cs-prio` 的 `data-hot` 上，图的比例写在 `img` 的 `--fig-ar` 上 |
 | `cs-chapter` / `cs-art` / `cs-chapter-sum` | 章节卡与文章条目（挂在思维导图两侧） |
 | `cs-books` / `cs-book` | 双刊对照（对外／对内两种设计语言） |
 | `cs-rules` / `cs-rule` | 规范条目卡，`auto-fit` 自适应，可放色块与 `<code>` 数值 |
@@ -241,6 +241,84 @@ assets/work/<slug>/   该作品的图片资源
   结果 `querySelector` 先命中了同名属性的缩略图按钮，`textContent` 一赋值
   就把按钮里的 `<img>` 冲掉了。**给容器和条目用不同的 data 名**（现在是
   `data-slide-cap-title`）。
+
+### 昂楷科技总部文化墙与展厅（`work/ankki-culture-wall.html`）
+
+第三个案例。**没有自己的 CSS / JS 文件**——最初写过一版 `culture-wall.css` +
+`culture-wall.js`（`cw-` 前缀），用户看完的评价是「很不好看，和前两个作品的
+风格完全不搭」，已整个删掉重做。现在这一页和内刊页共用同一套板块，
+只有主色不同。**以后再加案例，先看能不能用 `is-editorial`，别再另起一套。**
+
+**`is-editorial` 与 `is-vision` / `is-culture` 的分工**
+
+`case.css` 里原来有 400 多条 `.case-page.is-vision .xxx`，把版式和颜色绑在了
+一起。现在拆开：
+
+- `.case-page.is-editorial` —— 只管**版式**：`cs-map-list` / `cs-deck` /
+  `cs-tocmap` / `cs-delivery-metrics` / `cs-delivery-notes` /
+  `cs-reflection-list` / `cs-hero-books` 等等。想复用这套版式的新案例，
+  body 上加 `is-editorial` 即可。
+- `.case-page.is-vision` —— 只管**颜色**（内刊红 `#E60012`）。
+- `.case-page.is-culture` —— 只管**颜色**（企业蓝 `#4265F5`），外加两处版式微调。
+
+内刊页现在是 `class="case-page is-editorial is-vision"`，
+文化墙页是 `class="case-page is-editorial is-culture"`。
+
+**页面结构（八节）**
+
+| 编号 | 板块 | 交互 |
+| --- | --- | --- |
+| 01 诊断与命题 | `cs-map-list` | 问题 → 行动，四行 |
+| 02 内容统筹 | `cs-delivery-notes` | — |
+| 03 参观动线 | `cs-tocmap`（6F 平面） | hover 右侧四站 → 平面图上亮出位置 |
+| 04 展厅重点 | `cs-tocmap.is-wide`（立面） | 同上，卡片改为图下横排四张 |
+| 05 荣誉分层 | `cs-delivery-notes` | — |
+| 06 工艺与预算 | `cs-delivery-metrics` + `cs-compare` + `cs-docs` | 图纸与审批截图点击放大 |
+| 07 施工与验收 | `cs-flow.is-steps` | 七阶段 |
+| 08 项目复盘 | `cs-reflection-list` | 四条 |
+
+**`initTocMap()` 已经改成支持多张图**：原来只取第一个 `[data-tocmap]`，
+热区坐标写死在 `TOC_HOTSPOTS` 常量里（内刊目录页专用）。现在改成
+`querySelectorAll`，并支持在 `.cs-prio` 上写 `data-hot="l,t,w,h"`——
+一张卡可以带多块热区，用分号隔开（如动线的「各部门办公区」是三块）。
+没写 `data-hot` 时仍然退回 `TOC_HOTSPOTS`，内刊页不受影响。
+`.cs-tocmap-fig img` 的 `aspect-ratio` 也改成了 `var(--fig-ar, 1800 / 1187)`，
+每张图在 HTML 里用内联 `style="--fig-ar: 1600 / 1562"` 声明自己的比例。
+
+**热区坐标怎么来的**：把图裁出来叠红框反复对照量的，不是估的。
+量法见 `tools/` 里的临时脚本思路——`PIL` 裁图 → `ImageDraw.rectangle` 画候选框
+→ 看图 → 调数值。眼睛估的坐标一定会偏，这条在案例一已经栽过一次。
+
+**图片资产（都是从原始 CAD 大图裁出来的）**
+
+| 文件 | 来源 | 说明 |
+| --- | --- | --- |
+| `showroom-elevation.webp` 1800×825 | `showroom-detail.webp` 裁 (650,150)-(1850,700) | 展厅背景墙立面，去掉图框与图签 |
+| `floorplan-6f-plan.webp` 1600×1562 | `floorplan-6f.webp` 裁 (70,45)-(1560,1500) | 6F 平面，去掉右侧 SHEET NOTES 与图签 |
+| `curve-detail-trim.webp` 1700×1015 | `curve-detail.webp` 裁 (270,300)-(1860,1250) | 双弧墙尺寸图，去掉大片白边 |
+| `change-approval.webp` 578×954 | 原 798×1400 截图裁 (122,232)-(700,1186) | **已脱敏**，见下 |
+
+**脱敏是裁掉+模糊，不是 CSS 盖色块**。原来那版用 `.cw-approval-proof i`
+四个绝对定位的色块盖住头像和昵称——审查元素一删就露出来，点开 lightbox
+放大的还是原图。现在直接改图：裁掉标题栏（对方姓名）、三个头像和
+带「姓名+手机号前缀」的微信水印，正文里的「刘总」用 `tools/redact.py`
+降采样糊掉。**换图必须重做这一步，不要退回 CSS 遮挡。**
+
+**数据来源（真实文件，别改数字）**
+
+- `新增明细表-昂楷科技文化墙制作项目明细表.xlsx`（桌面）：`cs-compare` 与
+  `cs-delivery-metrics` 的全部数字。制作报价 97,800 → 118,540（不含税），
+  取消四项省 9,500，形象墙 12,000 → 25,840，走廊外墙 5,000 → 10,000。
+- `合同协议书-…补充协议书-20230707.doc`：原合同 2022-06-16 签订；
+  变更增项两轮谈判后按 15,000 确认；补充协议 2.15 万元（含 1% 税）结清。
+- `0214安装计划` 工作表：07 节末尾那段现场遗留问题的出处，日期 2023-02-14。
+
+**两个数字口径别混**：`cs-delivery-metrics` 里的 97,800 / 118,540 是
+**制作部分不含税**，不是整个项目的规模。文案里必须带「制作」两个字，
+否则和别处可能出现的「29.4 万」对不上。
+
+**页面上只允许出现部门，不许出现人名与联系方式**——源文件里甲乙双方联系人、
+各部门对接人的姓名和手机号都是明的。
 
 ## 已完成的主要修改
 

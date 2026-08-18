@@ -748,46 +748,60 @@ const TOC_HOTSPOTS = [
 ];
 
 function initTocMap() {
-  const map = document.querySelector('[data-tocmap]');
-  if (!map) return;
-  const fig   = map.querySelector('.cs-tocmap-fig');
-  // 优先级卡不一定和图在同一个容器里：面板组把图放进 .cs-panel-fig、
-  // 把卡片放进 .cs-panel-txt，只在 map 内部找会一张都找不到，
-  // 联动就静默失效。往上找到共同祖先再找卡片。
-  const scope = map.closest('.cs-panel, .cs-section, .cs-deck') || document;
-  const prios = [...scope.querySelectorAll('.cs-prio')];
-  if (!fig || !prios.length) return;
+  const maps = [...document.querySelectorAll('[data-tocmap]')];
+  if (!maps.length) return;
 
-  // 按数据建热区：每个优先级一组，同组一起亮
-  const groups = TOC_HOTSPOTS.map((boxes, gi) => boxes.map(b => {
-    const el = document.createElement('div');
-    el.className = 'cs-hot';
-    el.style.cssText = `left:${b.l}%;top:${b.t}%;width:${b.w}%;height:${b.h}%`;
-    if (b === boxes[0]) {
-      const tag = document.createElement('span');
-      tag.textContent = prios[gi]?.dataset.prioLabel || `0${gi + 1}`;
-      el.appendChild(tag);
-    }
-    fig.appendChild(el);
-    return el;
-  }));
+  maps.forEach(map => {
+    const fig = map.querySelector('.cs-tocmap-fig');
+    // 优先级卡不一定和图在同一个容器里：面板组把图放进 .cs-panel-fig、
+    // 把卡片放进 .cs-panel-txt，只在 map 内部找会一张都找不到，
+    // 联动就静默失效。往上找到共同祖先再找卡片。
+    const scope = map.closest('.cs-panel, .cs-section, .cs-deck') || document;
+    const prios = [...scope.querySelectorAll('.cs-prio')];
+    if (!fig || !prios.length) return;
 
-  let current = -1;
-  const light = gi => {
-    if (gi === current) return;
-    current = gi;
-    groups.forEach((g, i) => g.forEach(el => el.classList.toggle('is-on', i === gi)));
-    prios.forEach((p, i) => p.classList.toggle('is-active', i === gi));
-    fig.classList.toggle('is-lit', gi >= 0);
-  };
+    // 热区来源有两种：卡片自带 data-hot（一张图一套坐标，写在 HTML 里），
+    // 没有就退回内刊目录页那套常量。data-hot 支持一卡多块，用分号隔开：
+    // data-hot="10.8,26.4,24,38.7; 40,26,10,38"
+    const fromDom = prios.some(p => p.dataset.hot);
+    const boxSets = fromDom
+      ? prios.map(p => (p.dataset.hot || '').split(';').filter(Boolean).map(chunk => {
+          const [l, t, w, h] = chunk.split(',').map(Number);
+          return { l, t, w, h };
+        }))
+      : TOC_HOTSPOTS;
 
-  prios.forEach((p, i) => {
-    p.addEventListener('mouseenter', () => light(i));
-    p.addEventListener('focus',      () => light(i));
-    p.addEventListener('click',      () => light(current === i ? -1 : i));
+    // 按数据建热区：每个优先级一组，同组一起亮
+    const groups = boxSets.map((boxes, gi) => boxes.map(b => {
+      const el = document.createElement('div');
+      el.className = 'cs-hot';
+      el.style.cssText = `left:${b.l}%;top:${b.t}%;width:${b.w}%;height:${b.h}%`;
+      if (b === boxes[0]) {
+        const tag = document.createElement('span');
+        tag.textContent = prios[gi]?.dataset.prioLabel || `0${gi + 1}`;
+        el.appendChild(tag);
+      }
+      fig.appendChild(el);
+      return el;
+    }));
+
+    let current = -1;
+    const light = gi => {
+      if (gi === current) return;
+      current = gi;
+      groups.forEach((g, i) => g.forEach(el => el.classList.toggle('is-on', i === gi)));
+      prios.forEach((p, i) => p.classList.toggle('is-active', i === gi));
+      fig.classList.toggle('is-lit', gi >= 0);
+    };
+
+    prios.forEach((p, i) => {
+      p.addEventListener('mouseenter', () => light(i));
+      p.addEventListener('focus',      () => light(i));
+      p.addEventListener('click',      () => light(current === i ? -1 : i));
+    });
+    // 只在整块移出时才灭，卡片之间来回移动不闪
+    map.addEventListener('mouseleave', () => light(-1));
   });
-  // 只在整块移出时才灭，卡片之间来回移动不闪
-  map.addEventListener('mouseleave', () => light(-1));
 }
 
 /* ─────────────────────────────────────────
