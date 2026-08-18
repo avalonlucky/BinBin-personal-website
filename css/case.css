@@ -4738,7 +4738,7 @@
 .case-page.is-vision .is-proofroom .cs-shift-goals li { border-color: var(--cs-hair); }
 .case-page.is-vision .is-proofroom .cs-shift-goals b { color: var(--cs-accent-deep); }
 
-/* 06–07 / 总结与能力：统一为无底色的分割线列表。 */
+/* 06–07 / 总结与能力：统一为先结论、后深读的极简手风琴。 */
 .case-page.is-vision .is-outcome {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
@@ -4750,34 +4750,87 @@
 }
 .case-page.is-vision .is-outcome .cs-num { color: var(--cs-ink-3); }
 .case-page.is-vision .is-outcome .cs-title { color: var(--cs-ink); }
-.case-page.is-vision .is-outcome .cs-lessons {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  margin-top: clamp(28px, 3.5vw, 48px);
-  border: 0;
-}
-.case-page.is-vision .is-outcome .cs-lesson,
-.case-page.is-vision .is-outcome .cs-lesson:first-child {
-  min-height: 0;
-  padding: clamp(28px, 3vw, 42px);
-  border: 0;
-  border-left: 1px solid var(--cs-hair);
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  color: var(--cs-ink);
-}
-.case-page.is-vision .is-outcome .cs-lesson:first-child { border-left: 0; }
-.case-page.is-vision .is-outcome .cs-lesson:hover { transform: none; background: transparent; }
-.case-page.is-vision .is-outcome .cs-lesson h3,
-.case-page.is-vision .is-outcome .cs-lesson strong { color: var(--cs-ink); }
-.case-page.is-vision .is-outcome .cs-lesson p { color: var(--cs-ink-2); font-size: 17px; line-height: 1.82; }
 .case-page.is-vision .is-capabilities {
   max-width: none;
   padding-inline: max(var(--gutter), calc((100vw - var(--cs-max)) / 2 + var(--gutter)));
   background: var(--cs-paper);
 }
 .case-page.is-vision .is-capabilities .cs-title { color: var(--cs-ink); }
+.case-page.is-vision .cs-accordion {
+  max-width: 980px;
+  margin-top: clamp(28px, 3.5vw, 48px);
+}
+.case-page.is-vision .cs-accordion-item + .cs-accordion-item {
+  margin-top: clamp(34px, 4vw, 52px);
+}
+.case-page.is-vision .cs-accordion-item h3 { margin: 0; }
+.case-page.is-vision .cs-accordion-trigger {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34px;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cs-ink);
+  font-family: var(--f-cjk);
+  font-size: clamp(25px, 2.5vw, 34px);
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+}
+.case-page.is-vision .cs-accordion-trigger i {
+  position: relative;
+  display: block;
+  width: 34px;
+  height: 34px;
+  color: var(--cs-accent-deep);
+}
+.case-page.is-vision .cs-accordion-trigger i::before,
+.case-page.is-vision .cs-accordion-trigger i::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+.case-page.is-vision .cs-accordion-trigger i::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  transition: transform .35s var(--ease);
+}
+.case-page.is-vision .cs-accordion-item.is-open .cs-accordion-trigger i::after {
+  transform: translate(-50%, -50%) rotate(90deg) scaleX(0);
+}
+.case-page.is-vision .cs-accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows .45s var(--ease), opacity .3s var(--ease);
+}
+.case-page.is-vision .cs-accordion-panel > div { overflow: hidden; }
+.case-page.is-vision .cs-accordion-panel p {
+  max-width: 42em;
+  margin: 0;
+  padding-top: 20px;
+  color: var(--cs-ink-2);
+  font-family: var(--f-cjk);
+  font-size: 17px;
+  line-height: 1.82;
+}
+.case-page.is-vision .cs-accordion-panel strong { color: var(--cs-ink); font-weight: 600; }
+.case-page.is-vision .cs-accordion-item.is-open .cs-accordion-panel {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.case-page.is-vision .cs-accordion-trigger:focus-visible {
+  outline: 0;
+  color: var(--cs-accent-deep);
+}
 .case-page.is-vision .cs-outro { border-top: 0; }
 .case-page.is-vision .cs-only-mobile { display: none; }
 
@@ -4808,38 +4861,6 @@
   border-radius: 0;
   background: transparent;
 }
-.case-page.is-vision .cs-capability-list .cs-facets {
-  gap: 0;
-  margin-top: clamp(28px, 3.5vw, 48px);
-  border-top: 0;
-  border-right: 0;
-  border-bottom: 0;
-  border-left: 0;
-  border-radius: 0;
-  overflow: visible;
-}
-.case-page.is-vision .cs-capability-list .cs-facet {
-  padding: clamp(26px, 3vw, 40px);
-  border-radius: 0;
-  background: transparent;
-}
-.case-page.is-vision .cs-capability-list .cs-facet,
-.case-page.is-vision .cs-capability-list .cs-facet + .cs-facet {
-  border-left: 1px solid var(--cs-hair);
-}
-.case-page.is-vision .cs-capability-list .cs-facet:first-child { border-left: 0; }
-
-@media (max-width: 900px) {
-  .case-page.is-vision .is-outcome .cs-lessons { grid-template-columns: 1fr; }
-  .case-page.is-vision .is-outcome .cs-lesson,
-  .case-page.is-vision .is-outcome .cs-lesson:first-child {
-    min-height: 0;
-    border-left: 0;
-    border-bottom: 1px solid var(--cs-hair);
-  }
-  .case-page.is-vision .is-outcome .cs-lesson:last-child { border-bottom: 0; }
-}
-
 @media (max-width: 768px) {
   /* 手机内容不是桌面稿的缩放版：收紧字号，并删掉依赖桌面页内导航的章节编号。 */
   /* 礼盒在手机上就是一块真正的 16:9 画布；它进入视口时立即推进，
@@ -5210,52 +5231,28 @@
   .case-page.is-vision .is-proofroom .cs-plate b { margin-top: 6px; font-size: 13px; }
   .case-page.is-vision .is-proofroom .cs-stats { margin-top: 12px; }
   .case-page.is-vision .is-proofroom { padding-bottom: 0; }
-  /* 总结与能力共用无底色、细分割线的单列规范。 */
+  /* 总结与能力共用一套紧凑的手机手风琴规范。 */
   .case-page.is-vision .is-outcome { overflow: visible; }
-  .case-page.is-vision .is-outcome .cs-lessons {
-    position: static;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    margin: var(--cs-mobile-content-gap) 0 0;
-    padding: 0;
-    overflow: visible;
+  .case-page.is-vision .cs-accordion { margin-top: var(--cs-mobile-content-gap); }
+  .case-page.is-vision .cs-accordion-item + .cs-accordion-item { margin-top: 32px; }
+  .case-page.is-vision .cs-accordion-trigger {
+    grid-template-columns: minmax(0, 1fr) 28px;
+    gap: 18px;
+    font-size: 25px;
   }
-  .case-page.is-vision .is-outcome .cs-lesson,
-  .case-page.is-vision .is-outcome .cs-lesson:first-child,
-  .case-page.is-vision .is-outcome .cs-lesson:last-child {
-    width: auto;
-    max-width: none;
-    min-height: 0;
-    height: auto;
-    max-height: none;
-    align-content: start;
-    padding: 24px 0;
-    border-left: 0;
-    border-bottom: 1px solid var(--cs-hair);
-    border-radius: 0;
-    background: transparent;
+  .case-page.is-vision .cs-accordion-trigger i { width: 28px; height: 28px; }
+  .case-page.is-vision .cs-accordion-trigger i::before,
+  .case-page.is-vision .cs-accordion-trigger i::after { width: 18px; }
+  .case-page.is-vision .cs-accordion-panel p {
+    padding-top: 16px;
+    font-size: 16px;
+    line-height: 1.8;
   }
-  .case-page.is-vision .is-outcome .cs-lesson:last-child { border-bottom: 0; }
-  .case-page.is-vision .is-outcome .cs-lesson:first-child { padding-top: 0; }
-  .case-page.is-vision .is-outcome .cs-lesson:last-child { padding-bottom: 0; }
-  .case-page.is-vision .is-outcome .cs-lesson p { font-size: 14px; line-height: 1.7; }
-  .case-page.is-vision .cs-capability-list .cs-facets {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    margin-top: var(--cs-mobile-content-gap);
-    width: auto;
-  }
-  .case-page.is-vision .cs-capability-list .cs-facet,
-  .case-page.is-vision .cs-capability-list .cs-facet + .cs-facet {
-    padding: 24px 0;
-    border-left: 0;
-    border-bottom: 1px solid var(--cs-hair);
-  }
-  .case-page.is-vision .cs-capability-list .cs-facet:last-child { border-bottom: 0; }
-  .case-page.is-vision .cs-capability-list .cs-facet:first-child { padding-top: 0; }
-  .case-page.is-vision .cs-capability-list .cs-facet:last-child { padding-bottom: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-page.is-vision .cs-accordion-panel,
+  .case-page.is-vision .cs-accordion-trigger i::after { transition: none; }
 }
 
 /* ============================================================

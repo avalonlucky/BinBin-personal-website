@@ -2071,6 +2071,37 @@ function initCanvasBorders() {
   });
 }
 
+function initCaseAccordions() {
+  document.querySelectorAll('[data-cs-accordion]').forEach(accordion => {
+    const items = [...accordion.querySelectorAll('.cs-accordion-item')];
+    const triggers = items.map(item => item.querySelector('.cs-accordion-trigger')).filter(Boolean);
+    if (!items.length || triggers.length !== items.length) return;
+
+    const openItem = activeItem => {
+      items.forEach(item => {
+        const active = item === activeItem;
+        item.classList.toggle('is-open', active);
+        item.querySelector('.cs-accordion-trigger').setAttribute('aria-expanded', String(active));
+        item.querySelector('.cs-accordion-panel').setAttribute('aria-hidden', String(!active));
+      });
+    };
+
+    triggers.forEach((trigger, index) => {
+      trigger.addEventListener('click', () => openItem(items[index]));
+      trigger.addEventListener('keydown', event => {
+        let nextIndex = null;
+        if (event.key === 'ArrowDown') nextIndex = (index + 1) % triggers.length;
+        if (event.key === 'ArrowUp') nextIndex = (index - 1 + triggers.length) % triggers.length;
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = triggers.length - 1;
+        if (nextIndex === null) return;
+        event.preventDefault();
+        triggers[nextIndex].focus();
+      });
+    });
+  });
+}
+
 function initClock() {
   const el = document.getElementById('clock');
   if (!el) return;
@@ -2113,6 +2144,7 @@ initLightbox();
 initOutro();
 initCanvasBorders();
 initClock();
+initCaseAccordions();
 
 window.addEventListener('load', () => {
   ScrollTrigger.refresh();
