@@ -880,6 +880,9 @@ function initReader() {
   const leftIdx  = p => single() ? null : (p === 0 ? null : 2 * p - 1);
   const rightIdx = p => single() ? p : 2 * p;
   const maxPos   = () => single() ? book.pages - 1 : Math.floor(book.pages / 2);
+  const afterPaint = () => new Promise(resolve => {
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  });
 
   const setImgSrc = (slot, src) => {
     const img = slot.querySelector('img');
@@ -957,7 +960,10 @@ function initReader() {
     if (version !== renderVersion || book.key !== bookKey) return;
     setImgSrc(pgL, readyLeft);
     setImgSrc(pgR, readyRight);
-    stageBook.classList.remove('is-loading');
+    // 两页和统一书脊在同一帧出现，避免图片解码顺序造成中缝阴影左右跳动。
+    await afterPaint();
+    if (version !== renderVersion || book.key !== bookKey) return;
+    stageBook.classList.remove('is-loading', 'is-opening');
   };
 
   /* ── 翻页：一层绕书脊旋转的元素，正面是当前页、背面是翻过去看到的那页 ── */
@@ -1150,6 +1156,7 @@ function initReader() {
     gsap.set(flip, { rotateY: 0 });
     book = BOOKS.find(b => b.key === key) || BOOKS[0];
     pos = 0;
+    stageBook.classList.add('is-opening');
     tabsBox.querySelectorAll('.cs-rd-tab').forEach(b => b.classList.toggle('is-active', b.dataset.book === book.key));
     render();
   };
@@ -1192,6 +1199,7 @@ function initReader() {
     gsap.killTweensOf(flip);
     flip.classList.remove('is-on');
     gsap.set(flip, { rotateY: 0 });
+    stageBook.classList.remove('is-loading', 'is-opening');
     rd.classList.remove('is-open');
     rd.setAttribute('aria-hidden', 'true');
     lenis.start();

@@ -3921,6 +3921,8 @@
   background: #fff;
   overflow: hidden;
   position: relative;
+  opacity: 1;
+  transition: opacity .16s ease;
 }
 .cs-rd-pg img { width: 100%; height: 100%; display: block; }
 .cs-rd-pg.is-blank { background: rgba(251, 251, 244, 0.06); }
@@ -3936,6 +3938,15 @@
   background: linear-gradient(90deg, transparent, rgba(0,0,0,0.22) 44%, rgba(0,0,0,0.28) 50%, rgba(0,0,0,0.22) 56%, transparent);
   pointer-events: none;
   z-index: 4;
+  opacity: 1;
+  transition: opacity .16s ease;
+}
+.cs-rd-book.is-opening .cs-rd-pg,
+.cs-rd-book.is-opening::after { opacity: 0; }
+.cs-rd-book.is-opening .cs-rd-loading {
+  opacity: 1;
+  visibility: visible;
+  transition: none;
 }
 
 /* 翻动中的那一页 */
@@ -5564,27 +5575,38 @@
 }
 
 /* ============================================================
-   《昂楷视界》v103：五章叙事与统一编辑语法
+   《昂楷视界》v104：五章叙事与统一编辑语法
    不用卡片堆层级；首屏由真实封面承担视觉主权，正文靠字号、留白、
    图像比例和少量红色建立节奏。
    ============================================================ */
 .case-page.is-vision .cs-hero {
-  min-height: 100svh;
-  display: grid;
-  align-items: center;
-  padding: clamp(116px, 10vw, 156px) var(--gutter) clamp(54px, 6vw, 82px);
+  min-height: 0;
+  padding: clamp(132px, 11vw, 176px) var(--gutter) clamp(62px, 7vw, 92px);
 }
 .case-page.is-vision .cs-hero-inner {
   display: grid;
-  grid-template-columns: minmax(0, .96fr) minmax(440px, .84fr);
-  align-items: center;
-  gap: clamp(44px, 6vw, 96px);
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(44px, 5vw, 68px);
   width: 100%;
+  max-width: 1180px;
 }
-.case-page.is-vision .cs-hero-copy { position: relative; z-index: 2; }
-.case-page.is-vision .cs-hero-title { max-width: 9.8em; }
-.case-page.is-vision .cs-hero-sub { max-width: 35em; }
-.case-page.is-vision .cs-tags { gap: 10px 20px; }
+.case-page.is-vision .cs-hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 1060px;
+  margin: 0 auto;
+  text-align: center;
+}
+.case-page.is-vision .cs-hero-title {
+  max-width: none;
+  font-size: clamp(42px, 5.4vw, 68px);
+}
+.case-page.is-vision .cs-hero-sub {
+  max-width: 52em;
+  margin-right: auto;
+  margin-left: auto;
+}
+.case-page.is-vision .cs-tags { justify-content: center; gap: 10px 20px; }
 .case-page.is-vision .cs-tag {
   position: relative;
   padding: 0;
@@ -5600,21 +5622,22 @@
   content: "·";
 }
 .case-page.is-vision .cs-hero-books {
-  position: relative;
-  min-width: 0;
-  height: clamp(470px, 42vw, 620px);
-  perspective: 1400px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(12px, 2vw, 26px);
+  width: min(820px, 100%);
+  margin: 0 auto;
 }
 .case-page.is-vision .cs-hero-book {
-  position: absolute;
-  bottom: 42px;
-  width: clamp(205px, 16vw, 270px);
+  position: relative;
+  width: 100%;
   padding: 0;
   border: 0;
   background: transparent;
   cursor: pointer;
-  transform-origin: 50% 100%;
-  transition: transform .65s cubic-bezier(.2, .8, .2, 1), filter .65s var(--ease);
+  transform: none;
+  transition: transform .5s cubic-bezier(.2, .8, .2, 1), filter .5s var(--ease);
 }
 .case-page.is-vision .cs-hero-book img {
   display: block;
@@ -5622,37 +5645,18 @@
   height: auto;
   filter: drop-shadow(0 26px 30px rgba(0, 0, 0, .42));
 }
-.case-page.is-vision .cs-hero-book.is-v3 {
-  left: 3%;
-  z-index: 1;
-  transform: rotate(-10deg) translateY(22px);
-}
-.case-page.is-vision .cs-hero-book.is-v4 {
-  left: 50%;
-  z-index: 3;
-  transform: translateX(-50%) rotate(-1deg);
-}
-.case-page.is-vision .cs-hero-book.is-dao {
-  right: 2%;
-  z-index: 2;
-  transform: rotate(9deg) translateY(18px);
-}
-.case-page.is-vision .cs-hero-books:hover .is-v3 { transform: translateX(-20px) rotate(-14deg) translateY(10px); }
-.case-page.is-vision .cs-hero-books:hover .is-v4 { transform: translateX(-50%) translateY(-16px) rotate(0); }
-.case-page.is-vision .cs-hero-books:hover .is-dao { transform: translateX(20px) rotate(13deg) translateY(8px); }
-.case-page.is-vision .cs-hero-book:hover { z-index: 5; filter: brightness(1.05); }
+.case-page.is-vision .cs-hero-book:hover { transform: translateY(-10px); filter: brightness(1.05); }
 .case-page.is-vision .cs-hero-book:focus-visible {
   outline: 2px solid var(--cs-accent-lift);
   outline-offset: 8px;
 }
 .case-page.is-vision .cs-hero-books-hint {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  grid-column: 1 / -1;
   margin: 0;
   font-family: var(--f-cjk);
   font-size: 12px;
   letter-spacing: .1em;
+  text-align: center;
   color: rgba(251, 251, 244, .42);
 }
 
@@ -5885,6 +5889,48 @@
 .case-page.is-vision .cs-delivery-notes { display: grid; gap: clamp(34px, 4vw, 52px); }
 .case-page.is-vision .cs-delivery-notes article { padding: 0; border: 0; background: transparent; }
 .case-page.is-vision .cs-delivery-notes h3 { font-size: clamp(22px, 2.2vw, 30px); }
+.case-page.is-vision .cs-review-evidence {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: min(100%, 520px);
+  margin-top: 22px;
+}
+.case-page.is-vision .cs-review-shot {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.case-page.is-vision .cs-review-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform .45s var(--ease), opacity .45s var(--ease);
+}
+.case-page.is-vision .cs-review-shot span {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 5px 8px;
+  background: rgba(2, 2, 2, .72);
+  font-family: var(--f-cjk);
+  font-size: 10px;
+  line-height: 1;
+  color: #fff;
+}
+.case-page.is-vision .cs-review-shot:hover img { transform: scale(1.025); opacity: .92; }
+.case-page.is-vision .cs-review-shot:focus-visible {
+  outline: 2px solid var(--cs-accent-deep);
+  outline-offset: 3px;
+}
 .case-page.is-vision .cs-delivery-reveal {
   width: 100vw;
   margin-left: calc(50% - 50vw);
@@ -5928,8 +5974,8 @@
 }
 
 @media (max-width: 980px) and (min-width: 769px) {
-  .case-page.is-vision .cs-hero-inner { grid-template-columns: minmax(0, 1fr) minmax(360px, .78fr); gap: 28px; }
-  .case-page.is-vision .cs-hero-books { height: 500px; }
+  .case-page.is-vision .cs-hero-inner { grid-template-columns: minmax(0, 1fr); gap: 46px; }
+  .case-page.is-vision .cs-hero-books { width: min(720px, 100%); }
   .case-page.is-vision .cs-map-row { grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr); }
   .case-page.is-vision .cs-flow.is-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 0; }
   .case-page.is-vision .cs-delivery-main { grid-template-columns: 1fr 1fr; }
@@ -5939,14 +5985,15 @@
 
 @media (max-width: 768px) {
   .case-page.is-vision .cs-hero {
-    min-height: 100svh;
-    padding: 108px var(--gutter) 34px;
+    min-height: 0;
+    padding: 108px var(--gutter) 50px;
   }
   .case-page.is-vision .cs-hero-inner {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 22px;
+    gap: 32px;
   }
+  .case-page.is-vision .cs-hero-copy { text-align: left; }
   .case-page.is-vision .cs-eyebrow {
     margin-bottom: 12px;
     font-size: 10px;
@@ -5963,18 +6010,12 @@
     line-height: 1.68;
   }
   .case-page.is-vision .cs-hero .cs-tags { display: none; }
-  .case-page.is-vision .cs-hero-books { height: 270px; }
+  .case-page.is-vision .cs-hero-books { width: 100%; gap: 8px; }
   .case-page.is-vision .cs-hero-book {
-    bottom: 20px;
-    width: min(39vw, 146px);
+    width: 100%;
   }
-  .case-page.is-vision .cs-hero-book.is-v3 { left: 2%; transform: rotate(-10deg) translateY(14px); }
-  .case-page.is-vision .cs-hero-book.is-v4 { left: 50%; transform: translateX(-50%) rotate(-1deg); }
-  .case-page.is-vision .cs-hero-book.is-dao { right: 1%; transform: rotate(9deg) translateY(12px); }
-  .case-page.is-vision .cs-hero-books:hover .is-v3 { transform: rotate(-10deg) translateY(14px); }
-  .case-page.is-vision .cs-hero-books:hover .is-v4 { transform: translateX(-50%) rotate(-1deg); }
-  .case-page.is-vision .cs-hero-books:hover .is-dao { transform: rotate(9deg) translateY(12px); }
-  .case-page.is-vision .cs-hero-books-hint { right: 0; bottom: 0; font-size: 10px; }
+  .case-page.is-vision .cs-hero-book:hover { transform: none; }
+  .case-page.is-vision .cs-hero-books-hint { margin-top: 2px; font-size: 10px; }
 
   .case-page.is-vision .cs-body > .cs-section,
   .case-page.is-vision .cs-body > .cs-section + .cs-section {
@@ -6069,6 +6110,8 @@
   .case-page.is-vision .cs-delivery-notes { gap: 34px; }
   .case-page.is-vision .cs-delivery-notes h3 { font-size: 20px; }
   .case-page.is-vision .cs-delivery-notes p { font-size: 14px; line-height: 1.68; }
+  .case-page.is-vision .cs-review-evidence { gap: 8px; margin-top: 18px; }
+  .case-page.is-vision .cs-review-shot span { right: 5px; bottom: 5px; padding: 4px 6px; font-size: 9px; }
   .case-page.is-vision .cs-delivery-reveal { margin-top: 64px; }
   .case-page.is-vision .cs-delivery-reveal.is-mobile-scrub,
   .case-page.is-vision .cs-delivery-reveal.is-mobile-scrub > .cs-reveal {
