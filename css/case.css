@@ -27,7 +27,6 @@
   --cs-hair-dark: rgba(251, 251, 244, 0.14);
   --cs-max:       1240px;
 }
-
 /* 《昂楷视界》内刊案例：整页换成期刊自己的主色（规范里的 #E60012 / #222222）。
    刊物本身就带一套色彩规范，详情页用它自己的颜色讲它自己的事。
    撤销只需去掉 body 上的 is-vision。 */
@@ -5562,4 +5561,532 @@
   .case-page.is-product-sheets .cs-figure:active img,
   .case-page.is-product-sheets .cs-sheet:active { transform: scale(.975); opacity: .72; }
   .case-page.is-product-sheets .cs-swatch:active { transform: translateY(-2px) scale(.9); }
+}
+
+/* ============================================================
+   《昂楷视界》v103：五章叙事与统一编辑语法
+   不用卡片堆层级；首屏由真实封面承担视觉主权，正文靠字号、留白、
+   图像比例和少量红色建立节奏。
+   ============================================================ */
+.case-page.is-vision .cs-hero {
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  padding: clamp(116px, 10vw, 156px) var(--gutter) clamp(54px, 6vw, 82px);
+}
+.case-page.is-vision .cs-hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, .96fr) minmax(440px, .84fr);
+  align-items: center;
+  gap: clamp(44px, 6vw, 96px);
+  width: 100%;
+}
+.case-page.is-vision .cs-hero-copy { position: relative; z-index: 2; }
+.case-page.is-vision .cs-hero-title { max-width: 9.8em; }
+.case-page.is-vision .cs-hero-sub { max-width: 35em; }
+.case-page.is-vision .cs-tags { gap: 10px 20px; }
+.case-page.is-vision .cs-tag {
+  position: relative;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  font-size: 13px;
+  color: rgba(251, 251, 244, .58);
+}
+.case-page.is-vision .cs-tag:not(:last-child)::after {
+  position: absolute;
+  right: -12px;
+  color: rgba(251, 251, 244, .24);
+  content: "·";
+}
+.case-page.is-vision .cs-hero-books {
+  position: relative;
+  min-width: 0;
+  height: clamp(470px, 42vw, 620px);
+  perspective: 1400px;
+}
+.case-page.is-vision .cs-hero-book {
+  position: absolute;
+  bottom: 42px;
+  width: clamp(205px, 16vw, 270px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform-origin: 50% 100%;
+  transition: transform .65s cubic-bezier(.2, .8, .2, 1), filter .65s var(--ease);
+}
+.case-page.is-vision .cs-hero-book img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 26px 30px rgba(0, 0, 0, .42));
+}
+.case-page.is-vision .cs-hero-book.is-v3 {
+  left: 3%;
+  z-index: 1;
+  transform: rotate(-10deg) translateY(22px);
+}
+.case-page.is-vision .cs-hero-book.is-v4 {
+  left: 50%;
+  z-index: 3;
+  transform: translateX(-50%) rotate(-1deg);
+}
+.case-page.is-vision .cs-hero-book.is-dao {
+  right: 2%;
+  z-index: 2;
+  transform: rotate(9deg) translateY(18px);
+}
+.case-page.is-vision .cs-hero-books:hover .is-v3 { transform: translateX(-20px) rotate(-14deg) translateY(10px); }
+.case-page.is-vision .cs-hero-books:hover .is-v4 { transform: translateX(-50%) translateY(-16px) rotate(0); }
+.case-page.is-vision .cs-hero-books:hover .is-dao { transform: translateX(20px) rotate(13deg) translateY(8px); }
+.case-page.is-vision .cs-hero-book:hover { z-index: 5; filter: brightness(1.05); }
+.case-page.is-vision .cs-hero-book:focus-visible {
+  outline: 2px solid var(--cs-accent-lift);
+  outline-offset: 8px;
+}
+.case-page.is-vision .cs-hero-books-hint {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  font-family: var(--f-cjk);
+  font-size: 12px;
+  letter-spacing: .1em;
+  color: rgba(251, 251, 244, .42);
+}
+
+.case-page.is-vision .cs-body > .cs-section {
+  padding-top: clamp(82px, 8vw, 118px);
+  padding-bottom: clamp(82px, 8vw, 118px);
+}
+.case-page.is-vision .cs-body > .cs-section + .cs-section { padding-top: clamp(82px, 8vw, 118px); }
+
+/* 01：问题与行动是一张信息映射图，而不是八张文字卡。 */
+.case-page.is-vision .cs-map-list { margin-top: clamp(42px, 5vw, 68px); }
+.case-page.is-vision .cs-map-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(76px, 8vw, 118px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 3vw, 44px);
+  padding: clamp(24px, 3vw, 38px) 0;
+  border-top: 1px solid var(--cs-hair);
+}
+.case-page.is-vision .cs-map-row:last-child { border-bottom: 1px solid var(--cs-hair); }
+.case-page.is-vision .cs-map-row small,
+.case-page.is-vision .cs-delivery-notes small {
+  display: block;
+  margin-bottom: 9px;
+  font-family: var(--f-body);
+  font-size: 11px;
+  letter-spacing: .14em;
+  color: var(--cs-accent-deep);
+  text-transform: uppercase;
+}
+.case-page.is-vision .cs-map-row h3,
+.case-page.is-vision .cs-delivery-notes h3 {
+  margin: 0;
+  font-family: var(--f-cjk);
+  font-size: clamp(21px, 2vw, 28px);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--cs-ink);
+}
+.case-page.is-vision .cs-map-row p,
+.case-page.is-vision .cs-delivery-notes p {
+  margin: 8px 0 0;
+  font-family: var(--f-cjk);
+  font-size: 16px;
+  line-height: 1.72;
+  color: var(--cs-ink-2);
+}
+.case-page.is-vision .cs-map-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  color: var(--cs-ink-3);
+}
+.case-page.is-vision .cs-map-link span {
+  height: 1px;
+  background: var(--cs-hair);
+  transition: background .3s var(--ease);
+}
+.case-page.is-vision .cs-map-link i {
+  margin-left: 8px;
+  font-family: var(--f-body);
+  font-size: 18px;
+  font-style: normal;
+  transition: color .3s var(--ease), transform .3s var(--ease);
+}
+.case-page.is-vision .cs-map-row:hover .cs-map-link span { background: var(--cs-accent); }
+.case-page.is-vision .cs-map-row:hover .cs-map-link i { color: var(--cs-accent); transform: translateX(4px); }
+.case-page.is-vision .cs-map-row:hover .cs-map-action h3 { color: var(--cs-accent-deep); }
+
+/* 02：受众、七个研究模块和图书馆证据只保留一条内容流。 */
+.case-page.is-vision .cs-audience-stage { display: block; }
+.case-page.is-vision .cs-audience-pin { overflow: visible; }
+.case-page.is-vision .cs-audience-pin .cs-facets {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 28px;
+}
+.case-page.is-vision .cs-research-method { margin-top: clamp(72px, 8vw, 112px); }
+.case-page.is-vision .cs-research-intro {
+  display: grid;
+  grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+  gap: clamp(28px, 5vw, 76px);
+  align-items: start;
+}
+.case-page.is-vision .cs-research-intro h3 {
+  margin: 0;
+  font-family: var(--f-cjk);
+  font-size: clamp(27px, 3vw, 40px);
+  line-height: 1.28;
+  color: var(--cs-ink);
+}
+.case-page.is-vision .cs-research-intro p {
+  max-width: 42em;
+  margin: 0;
+  font-family: var(--f-cjk);
+  font-size: 17px;
+  line-height: 1.82;
+  color: var(--cs-ink-2);
+}
+.case-page.is-vision .cs-flow.is-steps {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0;
+  margin-top: clamp(36px, 4vw, 52px);
+}
+.case-page.is-vision .cs-flow.is-steps .cs-flow-step {
+  min-width: 0;
+  padding: 0 10px;
+  border: 0;
+  border-left: 1px solid var(--cs-hair);
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+}
+.case-page.is-vision .cs-flow.is-steps .cs-flow-step:last-child { border-right: 1px solid var(--cs-hair); }
+.case-page.is-vision .cs-flow.is-steps b { font-size: 14px; line-height: 1.45; }
+.case-page.is-vision .cs-flow.is-steps b i { margin-bottom: 8px; font-size: 11px; color: var(--cs-accent-deep); }
+.case-page.is-vision .cs-research-method .cs-docs {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: clamp(42px, 5vw, 68px);
+}
+.case-page.is-vision .cs-research-method .cs-doc { overflow: visible; }
+.case-page.is-vision .cs-research-method .cs-doc-cap {
+  padding: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--cs-ink-3);
+}
+.case-page.is-vision .cs-research-method .cs-doc-cap b {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--cs-ink);
+  font-size: 15px;
+}
+
+/* 03：给五个面板统一补上锚点；封面与封底始终完整显示。 */
+.case-page.is-vision .is-system-lab .cs-panel::before {
+  position: static;
+  display: block;
+  grid-column: 1 / -1;
+  width: auto;
+  height: auto;
+  margin: 0 0 -8px;
+  padding: 0;
+  background: transparent;
+  content: attr(data-panel-label);
+  font-family: var(--f-body);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: .14em;
+  color: var(--cs-accent-deep);
+  opacity: 1;
+  transform: none;
+}
+.case-page.is-vision .is-system-lab .is-mobile-cover .cs-figure {
+  aspect-ratio: 922 / 1217;
+  background: var(--cs-paper-2);
+}
+.case-page.is-vision .is-system-lab .is-mobile-cover .cs-figure img { object-fit: contain; }
+
+/* 04：成果、生产过程与实物照片合并成同一个落地高潮。 */
+.case-page.is-vision .is-delivery { max-width: var(--cs-max); }
+.case-page.is-vision .cs-delivery-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(24px, 4vw, 64px);
+  margin-top: clamp(44px, 5vw, 68px);
+}
+.case-page.is-vision .cs-delivery-metrics strong {
+  display: flex;
+  align-items: baseline;
+  color: var(--cs-accent-deep);
+  font-family: var(--f-heading);
+  font-size: clamp(46px, 5vw, 72px);
+  font-weight: 500;
+  line-height: 1;
+}
+.case-page.is-vision .cs-delivery-metrics small {
+  margin-left: 5px;
+  font-family: var(--f-cjk);
+  font-size: .28em;
+  color: var(--cs-ink-3);
+}
+.case-page.is-vision .cs-delivery-metrics p {
+  margin: 11px 0 0;
+  font-family: var(--f-cjk);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--cs-ink-3);
+}
+.case-page.is-vision .cs-delivery-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr);
+  gap: clamp(38px, 6vw, 88px);
+  align-items: start;
+  margin-top: clamp(62px, 7vw, 100px);
+}
+.case-page.is-vision .cs-delivery-photo {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.case-page.is-vision .cs-delivery-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform .7s var(--ease);
+}
+.case-page.is-vision .cs-delivery-photo:hover img { transform: scale(1.018); }
+.case-page.is-vision .cs-delivery-photo > span {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 54px 24px 22px;
+  background: linear-gradient(to top, rgba(0, 0, 0, .76), transparent);
+  text-align: left;
+  color: #fff;
+}
+.case-page.is-vision .cs-delivery-photo b,
+.case-page.is-vision .cs-delivery-photo small { display: block; font-family: var(--f-cjk); }
+.case-page.is-vision .cs-delivery-photo b { font-size: 22px; line-height: 1.35; }
+.case-page.is-vision .cs-delivery-photo small { margin-top: 4px; font-size: 12px; color: rgba(255, 255, 255, .66); }
+.case-page.is-vision .cs-delivery-notes { display: grid; gap: clamp(34px, 4vw, 52px); }
+.case-page.is-vision .cs-delivery-notes article { padding: 0; border: 0; background: transparent; }
+.case-page.is-vision .cs-delivery-notes h3 { font-size: clamp(22px, 2.2vw, 30px); }
+.case-page.is-vision .cs-delivery-reveal {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* 05：三条结论直接露出，不再把最重要的话藏进手风琴。 */
+.case-page.is-vision .is-reflection { padding-bottom: clamp(110px, 12vw, 170px); }
+.case-page.is-vision .cs-reflection-list {
+  display: grid;
+  gap: clamp(52px, 7vw, 92px);
+  margin-top: clamp(52px, 6vw, 82px);
+}
+.case-page.is-vision .cs-reflection-list article {
+  display: grid;
+  grid-template-columns: 70px minmax(280px, .9fr) minmax(0, 1.1fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+}
+.case-page.is-vision .cs-reflection-list span {
+  font-family: var(--f-heading);
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--cs-accent-deep);
+}
+.case-page.is-vision .cs-reflection-list h3 {
+  margin: 0;
+  font-family: var(--f-cjk);
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--cs-ink);
+}
+.case-page.is-vision .cs-reflection-list p {
+  max-width: 38em;
+  margin: 2px 0 0;
+  font-family: var(--f-cjk);
+  font-size: 17px;
+  line-height: 1.82;
+  color: var(--cs-ink-2);
+}
+
+@media (max-width: 980px) and (min-width: 769px) {
+  .case-page.is-vision .cs-hero-inner { grid-template-columns: minmax(0, 1fr) minmax(360px, .78fr); gap: 28px; }
+  .case-page.is-vision .cs-hero-books { height: 500px; }
+  .case-page.is-vision .cs-map-row { grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr); }
+  .case-page.is-vision .cs-flow.is-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 0; }
+  .case-page.is-vision .cs-delivery-main { grid-template-columns: 1fr 1fr; }
+  .case-page.is-vision .cs-reflection-list article { grid-template-columns: 52px minmax(0, 1fr); }
+  .case-page.is-vision .cs-reflection-list p { grid-column: 2; }
+}
+
+@media (max-width: 768px) {
+  .case-page.is-vision .cs-hero {
+    min-height: 100svh;
+    padding: 108px var(--gutter) 34px;
+  }
+  .case-page.is-vision .cs-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .case-page.is-vision .cs-eyebrow {
+    margin-bottom: 12px;
+    font-size: 10px;
+    letter-spacing: .16em;
+  }
+  .case-page.is-vision .cs-hero-title {
+    max-width: none;
+    margin-bottom: 12px;
+    font-size: 29px;
+  }
+  .case-page.is-vision .cs-hero-sub {
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1.68;
+  }
+  .case-page.is-vision .cs-hero .cs-tags { display: none; }
+  .case-page.is-vision .cs-hero-books { height: 270px; }
+  .case-page.is-vision .cs-hero-book {
+    bottom: 20px;
+    width: min(39vw, 146px);
+  }
+  .case-page.is-vision .cs-hero-book.is-v3 { left: 2%; transform: rotate(-10deg) translateY(14px); }
+  .case-page.is-vision .cs-hero-book.is-v4 { left: 50%; transform: translateX(-50%) rotate(-1deg); }
+  .case-page.is-vision .cs-hero-book.is-dao { right: 1%; transform: rotate(9deg) translateY(12px); }
+  .case-page.is-vision .cs-hero-books:hover .is-v3 { transform: rotate(-10deg) translateY(14px); }
+  .case-page.is-vision .cs-hero-books:hover .is-v4 { transform: translateX(-50%) rotate(-1deg); }
+  .case-page.is-vision .cs-hero-books:hover .is-dao { transform: rotate(9deg) translateY(12px); }
+  .case-page.is-vision .cs-hero-books-hint { right: 0; bottom: 0; font-size: 10px; }
+
+  .case-page.is-vision .cs-body > .cs-section,
+  .case-page.is-vision .cs-body > .cs-section + .cs-section {
+    padding-top: 72px;
+    padding-bottom: 0;
+  }
+
+  .case-page.is-vision .cs-map-list { margin-top: 30px; }
+  .case-page.is-vision .cs-map-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 24px 0;
+  }
+  .case-page.is-vision .cs-map-row h3 { font-size: 19px; }
+  .case-page.is-vision .cs-map-row p { margin-top: 5px; font-size: 14px; line-height: 1.65; }
+  .case-page.is-vision .cs-map-link {
+    grid-template-columns: 28px auto;
+    justify-content: start;
+    width: 54px;
+    transform: rotate(90deg);
+    transform-origin: 16px 50%;
+  }
+
+  .case-page.is-vision .cs-audience-pin { overflow-x: auto; }
+  .case-page.is-vision .cs-audience-pin .cs-facets {
+    display: flex;
+    grid-template-columns: none;
+    margin-top: var(--cs-mobile-content-gap);
+  }
+  .case-page.is-vision .cs-research-method { margin-top: 72px; }
+  .case-page.is-vision .cs-research-intro { grid-template-columns: 1fr; gap: 14px; }
+  .case-page.is-vision .cs-research-intro h3 { font-size: 23px; }
+  .case-page.is-vision .cs-research-intro p { font-size: 14.5px; line-height: 1.72; }
+  .case-page.is-vision .cs-flow.is-steps {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 14px;
+    margin-top: 30px;
+  }
+  .case-page.is-vision .cs-flow.is-steps .cs-flow-step,
+  .case-page.is-vision .cs-flow.is-steps .cs-flow-step:last-child {
+    padding: 0;
+    border: 0;
+  }
+  .case-page.is-vision .cs-flow.is-steps b { font-size: 14px; }
+  .case-page.is-vision .cs-flow.is-steps b i { margin-bottom: 5px; }
+  .case-page.is-vision .cs-research-method .cs-docs {
+    display: flex !important;
+    grid-template-columns: none !important;
+    width: calc(100% + 2 * var(--gutter));
+    margin: 34px calc(var(--gutter) * -1) 0;
+    padding: 0 var(--gutter);
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .case-page.is-vision .cs-research-method .cs-docs::-webkit-scrollbar { display: none; }
+  .case-page.is-vision .cs-research-method .cs-doc {
+    flex: 0 0 min(78vw, 300px);
+    scroll-snap-align: start;
+  }
+
+  .case-page.is-vision .is-system-lab .cs-panel::before {
+    margin-bottom: 0;
+    font-size: 10px;
+  }
+  .case-page.is-vision .is-system-lab .cs-panel { gap: 16px; padding: 34px 0; }
+  .case-page.is-vision .is-system-lab .is-mobile-cover .cs-panel-fig {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .case-page.is-vision .is-system-lab .cs-pagedemo { max-width: 220px; margin-inline: auto; }
+  .case-page.is-vision .is-system-lab .cs-pd-stage { width: 180px; }
+  .case-page.is-vision .is-system-lab .cs-pd-ctrl { gap: 7px; }
+  .case-page.is-vision .is-system-lab .cs-pd-ctrl button { padding: 7px 9px; font-size: 11px; }
+
+  .case-page.is-vision .cs-delivery-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 18px;
+    margin-top: 34px;
+  }
+  .case-page.is-vision .cs-delivery-metrics strong { font-size: 42px; }
+  .case-page.is-vision .cs-delivery-metrics p { margin-top: 7px; font-size: 13px; }
+  .case-page.is-vision .cs-delivery-main {
+    grid-template-columns: 1fr;
+    gap: 42px;
+    margin-top: 52px;
+  }
+  .case-page.is-vision .cs-delivery-photo { max-width: 420px; }
+  .case-page.is-vision .cs-delivery-photo b { font-size: 18px; }
+  .case-page.is-vision .cs-delivery-notes { gap: 34px; }
+  .case-page.is-vision .cs-delivery-notes h3 { font-size: 20px; }
+  .case-page.is-vision .cs-delivery-notes p { font-size: 14px; line-height: 1.68; }
+  .case-page.is-vision .cs-delivery-reveal { margin-top: 64px; }
+  .case-page.is-vision .cs-delivery-reveal.is-mobile-scrub,
+  .case-page.is-vision .cs-delivery-reveal.is-mobile-scrub > .cs-reveal {
+    height: auto;
+    min-height: 0;
+  }
+  .case-page.is-vision .cs-delivery-reveal .cs-reveal { aspect-ratio: 16 / 9; }
+
+  .case-page.is-vision .is-reflection { padding-bottom: 96px !important; }
+  .case-page.is-vision .cs-reflection-list { gap: 52px; margin-top: 40px; }
+  .case-page.is-vision .cs-reflection-list article { grid-template-columns: 1fr; gap: 10px; }
+  .case-page.is-vision .cs-reflection-list span { font-size: 14px; }
+  .case-page.is-vision .cs-reflection-list h3 { font-size: 25px; line-height: 1.34; }
+  .case-page.is-vision .cs-reflection-list p { margin-top: 0; font-size: 15px; line-height: 1.75; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-page.is-vision .cs-hero-book,
+  .case-page.is-vision .cs-delivery-photo img,
+  .case-page.is-vision .cs-map-link i { transition: none; }
 }
