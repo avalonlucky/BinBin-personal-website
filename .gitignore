@@ -1,0 +1,16 @@
+# Local Cloudflare state and secrets
+.wrangler/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.env
+.env.*
+!.env.example
+
+# Dependencies and generated files
+node_modules/
+.DS_Store
+
+# Separate local prototype and preview utilities
+immersive-showcase/
+mobile-preview.html

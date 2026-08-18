@@ -1,6 +1,6 @@
 # Maridian Space 网站交接说明
 
-更新时间：2026-08-13
+更新时间：2026-08-18
 
 ## 项目信息
 
@@ -9,6 +9,29 @@
 - 正式站：`https://chaoshanai.com`
 - Cloudflare Pages 项目：`binbin-personal-website`
 - 参考网站：`https://estrela.studio`
+
+## 中文运营后台
+
+- 正式地址：`https://chaoshanai.com/ops/`
+- 初始凭据：Cloudflare Pages 环境变量 `OPS_PASSWORD`（`secret_text`）仅用于第一次管理员账号绑定，不要把真实值写入仓库或文档
+- 数据库：Cloudflare D1 `binbin-site-analytics`
+- Pages D1 绑定：`ANALYTICS_DB`
+- 数据表：`analytics_events`、`ops_login_attempts`、`ops_admin_account`，建表文件见 `db/analytics-schema.sql`
+- 采集入口：`functions/api/track.js`
+- 登录验证：`functions/api/ops/login.js`；会话检查、退出和修改密码分别为 `session.js`、`logout.js`、`password.js`
+- 账号模型：首次成功登录必须通过现有 `OPS_PASSWORD`，当次输入的邮箱会绑定为唯一管理员邮箱；之后统一使用邮箱 + D1 中的 PBKDF2 加盐密码哈希验证
+- 登录会话：`functions/_lib/ops-auth.js` 使用账号专属随机密钥生成 12 小时、`HttpOnly` / `Secure` / `SameSite=Strict` 的签名 Cookie；修改密码会轮换会话密钥与版本，使其他设备旧会话立即失效
+- 密码策略：接受任意非空长度；前端与服务端只校验非空、确认一致和新旧密码不同，不要重新加入固定长度限制
+- 登录入口：五个公开页面底部以不显眼的方式默认显示“登录”；登录成功留在原页面并变为“个人中心”，可进入 `/ops/` 或直接修改密码
+- 汇总接口：`functions/api/ops/metrics.js`
+- 前端采集：`js/site-analytics.js`，已加载到首页、About、隐私说明和三个正式作品详情页
+- 后台页面：`ops/index.html`、`ops/ops.css`、`ops/ops.js`
+
+统计口径：访客为匿名浏览器 ID；访问次数按 30 分钟无活动切分；有效停留只累计页面可见、窗口聚焦且用户未超过 60 秒无活动的时间，并每 15 秒合并上报。作品页按 `cs-hero` / `cs-hall`、各 `.cs-section[data-toc]`、页尾行动区和上下篇导航分别累计章节停留。所有页面点击记录语义目标和归一化位置，但不记录表单输入值。
+
+网站默认运行第一方运营统计，不展示授权弹窗；访客可在 `privacy.html` 随时退出并清除本机匿名标识，Do Not Track 开启时也不启动采集。完整 IP 只从 Cloudflare 的 `CF-Connecting-IP` 服务端请求头读取，只写入 `page_view` 事件，最长保留 30 天；其他运营事件最长保留 365 天。后台支持 24 小时 / 7 天 / 30 天范围，新增作品停留排行、匿名深度访客、章节停留、点击热区、点击目标和 IP 访问记录。
+
+发布运营后台时，不要把 `functions/`、`db/`、`.dev.vars.example` 当成静态资源上传；Wrangler 会从项目根目录单独编译并上传 Pages Functions。D1 绑定或 `OPS_PASSWORD` 修改后必须重新部署才能生效。行为追踪、登录限流、管理员账号迁移分别位于 `0002_behavior_tracking.sql`、`0003_ops_login_rate_limit.sql`、`0004_ops_admin_account.sql`；必须先迁移 D1 再发布依赖新表或字段的 Functions。
 
 ## 当前状态
 

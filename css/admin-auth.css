@@ -1,0 +1,329 @@
+.footer-admin-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: .5rem 0 1.2rem;
+}
+
+.footer-admin-row--case {
+  padding: .4rem var(--gutter, 4vw) 1.2rem;
+  background: var(--cs-paper, #fbfbf4);
+}
+
+.footer-admin-access {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: .65rem .1rem .65rem 1rem;
+  color: rgba(251, 251, 244, .2);
+  font: 500 1rem/1.2 var(--f-body, "Helvetica Neue", Arial, sans-serif);
+  letter-spacing: .06em;
+  cursor: pointer;
+  transition: color .2s ease;
+}
+
+.footer-admin-row--case .footer-admin-access {
+  color: rgba(2, 2, 2, .22);
+}
+
+.footer-admin-access:hover,
+.footer-admin-access:focus-visible,
+.footer-admin-access.is-authenticated {
+  color: rgba(251, 251, 244, .62);
+}
+
+.footer-admin-row--case .footer-admin-access:hover,
+.footer-admin-row--case .footer-admin-access:focus-visible,
+.footer-admin-row--case .footer-admin-access.is-authenticated {
+  color: rgba(2, 2, 2, .62);
+}
+
+.footer-admin-access:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 3px;
+}
+
+.admin-auth-layer[hidden],
+.admin-auth-view[hidden] {
+  display: none !important;
+}
+
+.admin-auth-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  font-family: var(--f-body, "Helvetica Neue", Arial, sans-serif);
+  color: #161614;
+}
+
+.admin-auth-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: rgba(5, 7, 7, .48);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  cursor: default;
+  transition: opacity .18s ease;
+}
+
+.admin-auth-panel {
+  position: absolute;
+  top: 8.6rem;
+  right: max(2.4rem, calc((100vw - 144rem) / 2));
+  width: min(42rem, calc(100vw - 3.2rem));
+  padding: 2.2rem;
+  border: 1px solid rgba(25, 25, 22, .18);
+  border-radius: 2rem;
+  background: #f8f6ed;
+  box-shadow: 0 2.8rem 8rem rgba(0, 0, 0, .26);
+  opacity: 0;
+  transform: translateY(-1rem) scale(.985);
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.admin-auth-layer.is-open .admin-auth-backdrop,
+.admin-auth-layer.is-open .admin-auth-panel {
+  opacity: 1;
+}
+
+.admin-auth-layer.is-open .admin-auth-panel {
+  transform: translateY(0) scale(1);
+}
+
+.admin-auth-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4.8rem;
+}
+
+.admin-auth-brand,
+.admin-auth-eyebrow {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+}
+
+.admin-auth-brand {
+  color: #67665e;
+}
+
+.admin-auth-close {
+  width: 3.6rem;
+  height: 3.6rem;
+  padding: 0 0 .2rem;
+  border: 1px solid #cfcdc3;
+  border-radius: 50%;
+  background: transparent;
+  color: #292925;
+  font-size: 2.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.admin-auth-eyebrow {
+  margin: 0 0 1.4rem;
+  color: #ff7f2a;
+}
+
+.admin-auth-view h2 {
+  margin: 0;
+  color: #11110f;
+  font-family: var(--f-display, Georgia, serif);
+  font-size: clamp(3.8rem, 5vw, 5.4rem);
+  font-weight: 400;
+  line-height: .95;
+}
+
+.admin-auth-copy {
+  max-width: 34rem;
+  margin: 2rem 0 3.2rem;
+  color: #64635c;
+  font-size: 1.45rem;
+  line-height: 1.65;
+}
+
+.admin-auth-field + .admin-auth-field {
+  margin-top: 1.4rem;
+}
+
+.admin-auth-form label {
+  display: block;
+  margin-bottom: .9rem;
+  color: #35342f;
+  font-size: 1.25rem;
+}
+
+.admin-auth-form input {
+  width: 100%;
+  height: 5.2rem;
+  padding: 0 1.6rem;
+  border: 1px solid #c8c6bb;
+  border-radius: .9rem;
+  outline: none;
+  background: #fffef8;
+  color: #171715;
+  font: inherit;
+  font-size: 1.5rem;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.admin-auth-form input:focus {
+  border-color: #ff7f2a;
+  box-shadow: 0 0 0 3px rgba(255, 127, 42, .14);
+}
+
+.admin-auth-identity {
+  display: inline-flex;
+  max-width: 100%;
+  margin: 1.6rem 0 0;
+  padding: .7rem 1.1rem;
+  border-radius: 999px;
+  background: #e9e6dc;
+  color: #55544e;
+  font-size: 1.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-auth-form button,
+.admin-auth-primary,
+.admin-auth-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 5.2rem;
+  margin-top: 1.2rem;
+  border: 1px solid #171715;
+  border-radius: .9rem;
+  font: inherit;
+  font-size: 1.4rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.admin-auth-form button,
+.admin-auth-primary {
+  background: #171715;
+  color: #f9f7ee;
+}
+
+.admin-auth-form button:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+.admin-auth-secondary {
+  background: transparent;
+  color: #171715;
+}
+
+.admin-auth-password {
+  margin-top: 1.2rem;
+  border: 1px solid #c8c6bb;
+  border-radius: .9rem;
+  background: #f3f1e8;
+}
+
+.admin-auth-password summary {
+  padding: 1.7rem 1.6rem;
+  color: #2d2d29;
+  font-size: 1.35rem;
+  cursor: pointer;
+  list-style-position: inside;
+}
+
+.admin-auth-password[open] summary {
+  border-bottom: 1px solid #d6d3c8;
+}
+
+.admin-auth-password-form {
+  padding: 1.6rem;
+}
+
+.admin-auth-password-form button {
+  margin-top: 1.6rem;
+}
+
+.admin-auth-password-form .admin-auth-message:empty {
+  display: none;
+}
+
+.admin-auth-message {
+  min-height: 2rem;
+  margin: 1rem 0 0;
+  color: #b3472d;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.admin-auth-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 2.4rem;
+  z-index: 3200;
+  padding: 1.3rem 1.8rem;
+  border-radius: 999px;
+  background: #171715;
+  color: #f9f7ee;
+  font-family: var(--f-body, "Helvetica Neue", Arial, sans-serif);
+  font-size: 1.3rem;
+  text-align: center;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, .24);
+  opacity: 0;
+  transform: translate(-50%, 1rem);
+  transition: opacity .22s ease, transform .22s ease;
+}
+
+.admin-auth-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (max-width: 760px) {
+  .footer-admin-row {
+    padding-bottom: 1rem;
+  }
+
+  .footer-admin-access {
+    min-width: 44px;
+    min-height: 44px;
+    padding: .8rem 0 .8rem 1rem;
+    font-size: 1rem;
+  }
+
+  .admin-auth-panel {
+    top: auto;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    width: auto;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    padding: 1.8rem;
+    border-radius: 1.6rem;
+    transform: translateY(1.4rem) scale(.99);
+  }
+
+  .admin-auth-top {
+    margin-bottom: 3.6rem;
+  }
+
+  .admin-auth-view h2 {
+    font-size: 4.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-auth-backdrop,
+  .admin-auth-panel,
+  .admin-auth-toast {
+    transition: none;
+  }
+}

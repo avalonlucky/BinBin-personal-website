@@ -13,6 +13,7 @@
 
   <link rel="stylesheet" href="../css/style.css?v=83">
   <link rel="stylesheet" href="../css/case.css?v=107">
+  <link rel="stylesheet" href="../css/admin-auth.css?v=4">
 </head>
 <body class="case-page is-editorial is-culture">
 <div class="site">
@@ -32,10 +33,6 @@
         <a href="../index.html#contact">Contact</a>
         <canvas class="border-canvas"></canvas>
       </div>
-      <button class="nav-pill nav-menu" data-border aria-label="Menu">
-        <span>···</span>
-        <canvas class="border-canvas"></canvas>
-      </button>
     </div>
   </nav>
 
@@ -506,6 +503,12 @@
         </div>
       </div>
 
+      <div class="footer-admin-row footer-admin-row--case">
+        <button class="footer-admin-access" type="button" data-admin-auth aria-label="登录" aria-haspopup="dialog" aria-expanded="false">
+          <span>登录</span>
+        </button>
+      </div>
+
     </div><!-- /.page-scroll -->
   </main>
 </div><!-- /.site -->
@@ -529,6 +532,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="../js/case.js?v=76"></script>
 <script src="../js/showroom3d.js?v=7"></script>
+<script src="../js/admin-auth.js?v=5"></script>
 <script src="../js/site-analytics.js?v=3"></script>
 </body>
 </html>

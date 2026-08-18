@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <title>隐私与运营统计 · Maridian Space</title>
+  <meta name="description" content="Maridian Space 网站运营统计的收集范围、用途、保存期限与退出方式。">
+  <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/privacy.css?v=1">
+</head>
+<body>
+  <header class="privacy-nav">
+    <a href="index.html" aria-label="返回 Maridian Space"><span>M</span>Maridian Space</a>
+    <a href="index.html">返回网站 ↗</a>
+  </header>
+
+  <main>
+    <p class="eyebrow">PRIVACY & ANALYTICS</p>
+    <h1>隐私与<br><em>运营统计</em></h1>
+    <p class="intro">我希望知道哪些作品真正被认真阅读，同时尽量减少对访客的影响。以下说明本站收集什么、为什么收集，以及你如何随时退出。</p>
+
+    <section class="preference" aria-labelledby="preferenceTitle">
+      <div>
+        <p class="eyebrow">YOUR CHOICE</p>
+        <h2 id="preferenceTitle">你的统计偏好</h2>
+        <p id="consentStatus">正在读取…</p>
+        <small id="visitorIdentity"></small>
+      </div>
+      <div class="preference-actions">
+        <button type="button" id="denyAnalytics">退出并清除本机标识</button>
+        <button class="is-primary" type="button" id="allowAnalytics">重新启用统计</button>
+      </div>
+    </section>
+
+    <div class="privacy-grid">
+      <section>
+        <span>01</span>
+        <h2>收集哪些信息</h2>
+        <p>本站默认运行第一方运营统计，会收集连接 IP、随机生成的匿名浏览器与会话编号、访问页面和来源、国家或地区、设备与浏览器类型、作品有效停留时间、章节停留时间、点击目标和页面归一化坐标，以及页面性能指标。</p>
+        <p>不会记录你在输入框中输入的内容，也不会通过统计功能收集姓名、电话号码或邮箱地址。</p>
+      </section>
+      <section>
+        <span>02</span>
+        <h2>如何使用</h2>
+        <p>这些信息仅用于了解作品是否被阅读、哪些内容更有价值、访问是否来自异常流量，以及改善网站内容、交互和加载性能。</p>
+        <p>统计结果只在密码保护的私人运营后台中查看，不公开展示，也不用于广告画像或向第三方出售。</p>
+      </section>
+      <section>
+        <span>03</span>
+        <h2>保存多久</h2>
+        <p>完整 IP 最长保留 30 天，之后自动从历史事件中移除。其他运营事件最长保留 12 个月。达到期限后会自动删除或去标识化。</p>
+        <p>数据由 Cloudflare Pages 与 D1 提供存储和处理支持。</p>
+      </section>
+      <section>
+        <span>04</span>
+        <h2>你的选择</h2>
+        <p>你可以在本页随时退出或重新启用统计。退出会停止后续采集，并清除本机保存的匿名编号；浏览器开启“禁止追踪”时，本站也不会启动统计。</p>
+        <p>如需查询或删除已经收集的数据，可将本页显示的匿名编号发送至 <a href="mailto:accounts@estrela.studio">accounts@estrela.studio</a>。</p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>Maridian Space · 更新于 2026 年 8 月 18 日</p>
+    <a href="mailto:accounts@estrela.studio">联系网站运营者</a>
+  </footer>
+
+  <script src="js/privacy.js?v=1"></script>
+  <script src="js/site-analytics.js?v=3"></script>
+</body>
+</html>

@@ -12,6 +12,7 @@
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="css/style.css?v=83">
+  <link rel="stylesheet" href="css/admin-auth.css?v=4">
 </head>
 <body>
 <div class="site">
@@ -31,10 +32,6 @@
         <a href="#contact">Contact</a>
         <canvas class="border-canvas"></canvas>
       </div>
-      <button class="nav-pill nav-menu" data-border aria-label="Menu">
-        <span>···</span>
-        <canvas class="border-canvas"></canvas>
-      </button>
     </div>
   </nav>
 
@@ -483,13 +480,18 @@
             <div class="footer-contact-links">
               <p><span class="f-bullet">•</span> <a href="tel:+8613106333009">+86 13106333009</a> / <a href="tel:+85254151285">+85254151285</a></p>
               <p><span class="f-bullet">•</span> <a href="mailto:accounts@estrela.studio">Write Us</a></p>
-              <p><span class="f-bullet">•</span> <a href="#">Newsletter Signup</a></p>
+              <p><span class="f-bullet">•</span> <a href="privacy.html">Privacy & Analytics</a></p>
             </div>
           </div>
           <div class="footer-clock-row">
             <span id="clock">00:00:00</span> <span class="footer-tz">(GMT+2)</span>
           </div>
         </div>
+      </div>
+      <div class="footer-admin-row">
+        <button class="footer-admin-access" type="button" data-admin-auth aria-label="登录" aria-haspopup="dialog" aria-expanded="false">
+          <span>登录</span>
+        </button>
       </div>
     </footer>
 
@@ -503,5 +505,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/hscroll.js?v=1"></script>
   <script src="js/main.js?v=42"></script>
+<script src="js/admin-auth.js?v=5"></script>
+<script src="js/site-analytics.js?v=3"></script>
 </body>
 </html>

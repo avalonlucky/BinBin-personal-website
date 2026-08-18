@@ -35,7 +35,22 @@
 | ScrollTrigger | 3.12.5 | 滚动触发 + pin（钉住）效果 |
 | Lenis | 1.1.14 | 丝滑滚动 |
 
-全部通过 CDN 引入，无需 npm/构建。
+前台动画库通过 CDN 引入，无需前端构建。运营后台使用 Cloudflare Pages Functions 与 D1，发布时由 Wrangler 自动编译 Functions。
+
+## 运营后台
+
+- 地址：`https://chaoshanai.com/ops/`
+- 数据：第一方访问、作品与章节有效停留、点击热点、联系转化、来源、地区、设备、IP 汇总和真实用户性能
+- 登录：公开页面底部以不显眼的方式显示“登录”；使用管理员邮箱和密码验证后仍停留当前页，入口变为“个人中心”，可由此进入后台
+- 首次设置：第一次成功登录使用现有 `OPS_PASSWORD` 作为默认密码，并把当次输入的邮箱绑定为唯一管理员邮箱；之后不再使用云端密钥登录
+- 修改密码：登录后可从“个人中心”或运营后台直接修改；接受任意非空长度，密码经 PBKDF2 加盐哈希后保存在 D1，修改会让其他设备上的旧会话失效
+- 保护：浏览器只保存 12 小时的 `HttpOnly` 安全会话 Cookie，不保存密码；连续失败会按 IP 限流
+- 数据库：Cloudflare D1 `binbin-site-analytics`，Pages 绑定名为 `ANALYTICS_DB`
+- 采集脚本：`js/site-analytics.js`
+- 后台页面：`ops/`
+- 服务端接口：`functions/api/track.js` 与 `functions/api/ops/`（登录、会话、退出、修改密码和指标）
+
+网站默认运行第一方运营统计，不展示授权弹窗；访客可在 `privacy.html` 随时退出，浏览器开启 Do Not Track 时也不启动采集。完整 IP 只由 Cloudflare 服务端读取、最长保留 30 天，其他运营事件最长保留 12 个月。统计从 2026-08-18 上线后开始累计，历史访问不会回填。
 
 ---
 
