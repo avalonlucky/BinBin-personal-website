@@ -6596,3 +6596,75 @@
   font-size: 12.5px;
   color: var(--cs-accent-deep);
 }
+
+/* ── 展厅 3D：起得来就顶掉轴测 SVG，起不来 SVG 原地兜底 ── */
+.cs-room {
+  position: relative;
+  display: none;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #05070a;
+  cursor: grab;
+}
+.cs-axo.is-3d .cs-room { display: block; }
+.cs-axo.is-3d .cs-axo-svg { display: none; }
+.cs-axo.is-dragging .cs-room { cursor: grabbing; }
+.cs-room canvas { display: block; width: 100%; height: 100%; }
+.cs-axo.is-3d .cs-axo-canvas { padding: clamp(12px, 1.4vw, 20px); }
+
+.cs-room-ui {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 7px;
+}
+.cs-room-ui button {
+  padding: 7px 13px;
+  border: 1px solid rgba(251, 251, 244, .2);
+  border-radius: 100px;
+  background: rgba(5, 7, 10, .62);
+  backdrop-filter: blur(6px);
+  font-family: var(--f-cjk);
+  font-size: 12px;
+  color: rgba(251, 251, 244, .8);
+  transition: border-color .3s var(--ease), color .3s var(--ease), background .3s var(--ease);
+}
+.cs-room-ui button:hover,
+.cs-room-ui button.is-on {
+  border-color: var(--cs-accent-lift);
+  background: rgb(var(--cs-accent-rgb) / .22);
+  color: #fff;
+}
+
+.cs-room-hint {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  margin: 0;
+  padding: 8px 16px;
+  border-radius: 100px;
+  background: rgba(5, 7, 10, .66);
+  backdrop-filter: blur(6px);
+  font-family: var(--f-cjk);
+  font-size: 12px;
+  color: rgba(251, 251, 244, .78);
+  white-space: nowrap;
+  transform: translateX(-50%);
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+.cs-room-hint.is-gone {
+  opacity: 0;
+  transform: translateX(-50%) translateY(8px);
+}
+
+@media (max-width: 900px) {
+  .cs-room { aspect-ratio: 4 / 3; }
+}
+@media (max-width: 560px) {
+  .cs-room-ui { top: 8px; right: 8px; }
+  .cs-room-ui button { padding: 6px 10px; font-size: 11px; }
+  .cs-room-hint { bottom: 8px; padding: 6px 12px; font-size: 11px; }
+}

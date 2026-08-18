@@ -837,6 +837,7 @@ function initAxo() {
   const select = i => {
     if (i === current) return;
     current = i;
+    axo.__onSelect?.(i);          // 3D 模块挂在这里，两边共用一份选中状态
     const data = AXO_ZONES[i];
     zones.forEach((z, n) => z.classList.toggle('is-on', n === i));
     legs.forEach((l, n) => {
@@ -862,6 +863,7 @@ function initAxo() {
     l.addEventListener('mouseenter', () => select(i));
     l.addEventListener('focus', () => select(i));
   });
+  axo.__select = select;          // 3D 里点中展板时回调它
   select(0);
 }
 
