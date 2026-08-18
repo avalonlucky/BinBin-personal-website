@@ -33,12 +33,18 @@
     ceiling: 3.0,
   };
 
-  // 每个展位沿墙的起止（米，从墙左端算起），量自立面图
+  // 每个展位沿墙的起止（米，从墙左端算起），量自立面图。
+  //
+  // art：贴到这块展板上的真实设计稿。给了就用图，没给就用下面
+  // makeTexture() 现画的示意底纹。**换真图只改这一行，几何和灯光都不用动。**
+  // 图按「铺满不变形」处理（多余的边裁掉），所以送来的稿子最好接近下面这个比例：
+  //   clients 1.85:1 ／ awards 1.28:1 ／ screens 1.57:1 ／ product 1.00:1
+  const ART_DIR = '../assets/work/culture-wall/room/';
   const ZONES = [
-    { key: 'clients', from: 0.912, to: 3.876, label: '客户案例' },
-    { key: 'awards',  from: 4.218, to: 6.270, label: '荣誉资质' },
-    { key: 'screens', from: 6.498, to: 9.006, label: '电子屏'   },
-    { key: 'product', from: 9.234, to: 10.830, label: '产品展示' },
+    { key: 'clients', from: 0.912, to: 3.876,  label: '客户案例', art: null },
+    { key: 'awards',  from: 4.218, to: 6.270,  label: '荣誉资质', art: null },
+    { key: 'screens', from: 6.498, to: 9.006,  label: '电子屏',   art: null },
+    { key: 'product', from: 9.234, to: 10.830, label: '产品展示', art: null },
   ];
 
   const PANEL = { bottom: 0.6, height: 1.6 };   // 展板离地 600，高 1600
@@ -202,7 +208,27 @@
         emissive: new THREE.Color(ACCENT),
         emissiveIntensity: 0,
       });
+      // 有真稿就贴真稿，没有就用现画的示意底纹。
+      // 真稿是异步到的，先挂上示意图，加载完再换——不留白板。
       if (z.key !== 'screens') mat.map = makeTexture(THREE, z.key, w, PANEL.height);
+      if (z.art) {
+        new THREE.TextureLoader().load(ART_DIR + z.art, tex => {
+          tex.colorSpace = THREE.SRGBColorSpace;
+          tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+          // 铺满不变形：按展板比例裁掉多余的边
+          const boardAR = w / PANEL.height;
+          const imgAR = tex.image.width / tex.image.height;
+          if (imgAR > boardAR) {
+            tex.repeat.set(boardAR / imgAR, 1);
+            tex.offset.set((1 - boardAR / imgAR) / 2, 0);
+          } else {
+            tex.repeat.set(1, imgAR / boardAR);
+            tex.offset.set(0, (1 - imgAR / boardAR) / 2);
+          }
+          mat.map = tex;
+          mat.needsUpdate = true;
+        });
+      }
 
       const panel = new THREE.Mesh(new THREE.BoxGeometry(w, PANEL.height, .07), mat);
       panel.position.set(cx, cy, .045);
