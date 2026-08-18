@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>昂楷科技总部文化墙与展厅 · Maridian Space</title>
-  <meta name="description" content="两层办公空间、三十多个点位、十几个部门。先把每面墙讲什么定下来，再让视觉、工艺和预算跟着这条线走。">
+  <title>文化墙 · 展厅设计 · Maridian Space</title>
+  <meta name="description" content="昂楷科技公司总部文化墙统筹：两层办公空间、三十多个区域、十几个部门，从内容规划一直做到现场验收。">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23020202'/><path d='M14 48V16h8l10 16 10-16h8v32h-8V29L32 45 22 29v19z' fill='%23FBFBF4'/></svg>">
 
   <link rel="preload" href="../fonts/PPMigra-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="../css/style.css?v=82">
-  <link rel="stylesheet" href="../css/case.css?v=105">
+  <link rel="stylesheet" href="../css/style.css?v=83">
+  <link rel="stylesheet" href="../css/case.css?v=106">
 </head>
 <body class="case-page is-editorial is-culture">
 <div class="site">
@@ -44,46 +44,45 @@
     <div class="page-scroll">
 
       <!-- ══════════════════════════════════════
-           HERO
+           首屏 — 黑着的展厅，随滚动一盏一盏点亮
+           灯箱里的 .cs-hall-art 是内容位：将来把渲染图
+           或 Three.js 的 canvas 放进去，点灯时序不用动。
       ══════════════════════════════════════ -->
-      <section class="cs-hero" id="top">
-        <div class="cs-hero-glow" aria-hidden="true"></div>
-        <div class="cs-hero-inner">
-          <div class="cs-hero-copy">
-            <p class="cs-eyebrow">Spatial narrative · 深圳前海总部 · 2022—2023</p>
-            <h1 class="cs-hero-title">把两层办公空间，<em>做成一条走得通的企业叙事</em></h1>
-            <p class="cs-hero-sub">五楼、六楼三十多个点位，十几个部门各有各的诉求。我做的不是设计几面墙，而是先把「每面墙讲什么、谁来讲、讲多少字」定下来，再让视觉、工艺和预算跟着这条线走，一直跟到现场验收。</p>
-            <div class="cs-tags">
-              <span class="cs-tag">空间内容策划</span>
-              <span class="cs-tag">视觉统筹</span>
-              <span class="cs-tag">供应商与预算</span>
-              <span class="cs-tag">现场落地</span>
+      <section class="cs-hall" id="top" data-hall>
+        <div class="cs-hall-view">
+          <div class="cs-hall-room" data-lit="0">
+            <div class="cs-hall-scene">
+              <div class="cs-hall-floor" aria-hidden="true"></div>
+              <div class="cs-hall-frames" aria-hidden="true">
+                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>形象墙</b><small>ENTRY</small></div>
+                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>客户案例</b><small>CLIENTS</small></div>
+                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>荣誉资质</b><small>AWARDS</small></div>
+                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>电子屏</b><small>SCREENS</small></div>
+                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>产品展示</b><small>PRODUCT</small></div>
+              </div>
+              <div class="cs-hall-pools" aria-hidden="true">
+                <span class="cs-hall-pool"></span>
+                <span class="cs-hall-pool"></span>
+                <span class="cs-hall-pool"></span>
+              </div>
             </div>
           </div>
 
-          <div class="cs-hero-books" aria-label="点击查看真实施工图纸">
-            <button class="cs-hero-book is-lead" type="button"
-                    data-zoom="../assets/work/culture-wall/showroom-elevation.webp"
-                    data-zoom-title="展厅背景墙立面大样图"
-                    data-zoom-note="11.4 米一面墙，客户案例、荣誉资质、电子屏与产品展示排成一条参观顺序">
-              <img src="../assets/work/culture-wall/showroom-elevation.webp" width="1800" height="825"
-                   alt="昂楷科技展厅背景墙立面大样图" loading="eager" decoding="async">
-            </button>
-            <button class="cs-hero-book" type="button"
-                    data-zoom="../assets/work/culture-wall/floorplan-6f-plan.webp"
-                    data-zoom-title="6F 平面布置图"
-                    data-zoom-note="前厅、电梯厅、展厅与各部门办公区的空间关系">
-              <img src="../assets/work/culture-wall/floorplan-6f-plan.webp" width="1600" height="1562"
-                   alt="昂楷科技六楼平面布置图" loading="eager" decoding="async">
-            </button>
-            <button class="cs-hero-book" type="button"
-                    data-zoom="../assets/work/culture-wall/curve-detail-trim.webp"
-                    data-zoom-title="双弧形象墙尺寸图"
-                    data-zoom-note="电梯厅两道弧墙 R4710 / R4900，图上注明「尺寸以现场为准」">
-              <img src="../assets/work/culture-wall/curve-detail-trim.webp" width="1700" height="1015"
-                   alt="昂楷科技双弧形象墙尺寸图" loading="eager" decoding="async">
-            </button>
-            <p class="cs-hero-books-hint">真实施工图纸 · 点击放大</p>
+          <div class="cs-hall-copy">
+            <p class="cs-eyebrow">Case 03 · 公司总部文化墙统筹</p>
+            <h1>文化墙 · <em>展厅设计</em></h1>
+            <p>深圳前海总部五、六两层，三十多个区域、十几个部门。作为项目负责人，我统筹内容规划、跨部门协调、动线设计、供应商比价与施工验收——展厅是其中的核心。</p>
+            <div class="cs-hall-tags">
+              <span>内容统筹</span>
+              <span>展厅设计</span>
+              <span>供应商与成本</span>
+              <span>落地验收</span>
+            </div>
+          </div>
+
+          <div class="cs-hall-cue" aria-hidden="true">
+            <span data-hall-cue>向下滚动，把灯打开</span>
+            <i></i>
           </div>
         </div>
       </section>
@@ -93,162 +92,238 @@
       ══════════════════════════════════════ -->
       <div class="cs-body">
 
-        <!-- ── 01 诊断与命题 ── -->
-        <section class="cs-section" data-toc="诊断与命题">
-          <p class="cs-num">01 — 诊断与命题</p>
-          <h2 class="cs-title">墙面不好看是表象，<em>真正缺的是一套内容秩序</em></h2>
-          <p class="cs-lede">总部装修接近尾声时，三十多面墙还只是一张待填的清单。每个部门都想把自己的东西挂上去，没有人回答访客到底该按什么顺序看。我把这件事拆成四个能落地的动作。</p>
+        <!-- ── 01 项目概览 ── -->
+        <section class="cs-section" data-toc="项目概览">
+          <p class="cs-num">01 — 项目概览</p>
+          <h2 class="cs-title">昂楷科技深圳前海总部，<em>五六两层的整体文化墙与展厅</em></h2>
+          <p class="cs-lede">范围包括前台形象、公司展厅、各部门墙面、走廊、荣誉资质墙、客户墙等三十多个区域，涉及生产、技服、研发、人资、财务、品宣等十多个部门。一个设计师解决不了这种规模的事，尤其是内容编写和规划——需要召集各部门一起讨论、定稿、执行。</p>
 
-          <div class="cs-map-list" aria-label="四组问题与对应设计行动">
-            <article class="cs-map-row">
-              <div class="cs-map-problem"><small>问题 01</small><h3>三十多面墙各说各话</h3><p>每个部门都在争墙面，谁也说不清整体在讲什么。</p></div>
-              <div class="cs-map-link" aria-hidden="true"><span></span><i>→</i></div>
-              <div class="cs-map-action"><small>行动 01</small><h3>逐区域需求清单</h3><p>一面墙一行，写清责任部门、位置、尺寸与内容板块。</p></div>
+          <div class="cs-delivery-metrics" aria-label="项目概况">
+            <div><strong>2</strong><p>层办公空间 · 五楼与六楼</p></div>
+            <div><strong>30+</strong><p>区域与墙面</p></div>
+            <div><strong>10+</strong><p>协作部门</p></div>
+            <div><strong>29 万</strong><p>项目总预算 · 含税</p></div>
+          </div>
+
+          <h3 class="cs-sub">我在这个项目里做什么</h3>
+          <div class="cs-delivery-notes">
+            <article>
+              <small>01 / 内容统筹</small>
+              <h3>三十多个区域逐一规划</h3>
+              <p>每个区域写清责任部门、位置、成品尺寸、内容板块和字数要求，做成一份所有人都看得懂的清单。</p>
             </article>
-            <article class="cs-map-row">
-              <div class="cs-map-problem"><small>问题 02</small><h3>文案深浅不一</h3><p>有的部门交来三百字，有的只给一个标题，排不进同一面墙。</p></div>
-              <div class="cs-map-link" aria-hidden="true"><span></span><i>→</i></div>
-              <div class="cs-map-action"><small>行动 02</small><h3>给字数定规格</h3><p>提前规定每块内容 40–80 字、每句 6–12 字，部门照着写。</p></div>
+            <article>
+              <small>02 / 跨部门协调</small>
+              <h3>把十几个部门拉到一张表上</h3>
+              <p>技服部写会议标准、研发部写 IPD 流程、人资部写企业理念。会后发清单和纪要，把口头承诺变成白纸黑字。</p>
             </article>
-            <article class="cs-map-row">
-              <div class="cs-map-problem"><small>问题 03</small><h3>参观动线没人负责</h3><p>政府、客户、投资人来访，讲解全靠陪同的人临场发挥。</p></div>
-              <div class="cs-map-link" aria-hidden="true"><span></span><i>→</i></div>
-              <div class="cs-map-action"><small>行动 03</small><h3>按参观顺序排内容</h3><p>从电梯厅到展厅再回到办公区，每一站都接着上一站说。</p></div>
+            <article>
+              <small>03 / 商务谈判</small>
+              <h3>多轮比价与增项谈判</h3>
+              <p>评估供应商资质、比稿、比价，重点区域升级工艺，次要区域该砍就砍，把钱花在访客真正会看的地方。</p>
             </article>
-            <article class="cs-map-row">
-              <div class="cs-map-problem"><small>问题 04</small><h3>预算既怕贵又怕廉价</h3><p>要有档次又不能超支，标准全凭一句「看着办」。</p></div>
-              <div class="cs-map-link" aria-hidden="true"><span></span><i>→</i></div>
-              <div class="cs-map-action"><small>行动 04</small><h3>把取舍写成对照表</h3><p>每个点位的原工艺、现工艺和价差逐条列出，让决策有依据。</p></div>
+            <article>
+              <small>04 / 落地跟进</small>
+              <h3>分区安装排期到现场验收</h3>
+              <p>每个区域明确责任人和安装时间，现场解决墙面、高度、尺寸这些图纸上看不出来的问题，直到收尾。</p>
             </article>
           </div>
         </section>
 
-        <!-- ── 02 内容统筹 ── -->
+        <!-- ── 02 执行流程 ── -->
+        <section class="cs-section" data-toc="执行流程">
+          <p class="cs-num">02 — 执行流程</p>
+          <h2 class="cs-title">大型文化墙不是「设计 + 施工」两步，<em>是一条会卡住的链路</em></h2>
+          <p class="cs-lede">真正做下来，从需求到验收有七个阶段，每一步都可能停在别人那里，每一步都需要有人推。合同 2022 年 6 月签，2023 年 2 月排安装计划，7 月才结清——中间大半年，大部分时间花在协调和现场。</p>
+
+          <div class="cs-flow is-steps" aria-label="项目七个阶段">
+            <div class="cs-flow-step"><b><i>01</i>需求调研与内容规划</b><small>走访每个区域，确定由哪个部门负责、讲什么、多大尺寸、放多少字</small></div>
+            <div class="cs-flow-step"><b><i>02</i>内容脚本撰写</b><small>按规划的字数要求，召集各部门负责人提供并打磨文案</small></div>
+            <div class="cs-flow-step"><b><i>03</i>参观动线设计</b><small>规划访客从进门到展厅再到各楼层的路径，让参观有逻辑、有节奏</small></div>
+            <div class="cs-flow-step"><b><i>04</i>供应商筛选与比价</b><small>评估资质、比稿、比价，既要做得出效果又要控在预算内</small></div>
+            <div class="cs-flow-step"><b><i>05</i>设计方案与领导汇报</b><small>整体效果图、材质、价格逐一过审，每个决策都要讲清为什么</small></div>
+            <div class="cs-flow-step"><b><i>06</i>打样与工艺确认</b><small>不能太贵，也不能因为便宜用劣质材料；重点区域升级为背光展板与灯箱</small></div>
+            <div class="cs-flow-step"><b><i>07</i>施工安装与验收</b><small>按区域排定计划、明确责任人和时间，现场跟进直到收尾</small></div>
+          </div>
+        </section>
+
+        <!-- ── 03 内容统筹 ── -->
         <section class="cs-section" data-toc="内容统筹">
-          <p class="cs-num">02 — 内容统筹</p>
-          <h2 class="cs-title">最难的不是排版，<em>是把十几个部门对到一张表上</em></h2>
-          <p class="cs-lede">设计一面墙只要几个小时，确认这面墙该讲什么要跑好几趟。我先做出一份所有人都看得懂的清单，再拿着它一个部门一个部门谈——技服部写服务标准，研发部写 IPD 流程，人资部写用人理念。</p>
+          <p class="cs-num">03 — 内容统筹</p>
+          <h2 class="cs-title">最难的不是设计，<em>是把每面墙讲什么对清楚</em></h2>
+          <p class="cs-lede">设计一面墙只要几个小时，确认这面墙该讲什么要跑好几趟。我做了一份逐区域的需求清单——精确到责任部门、位置、尺寸、内容板块和字数要求，让各部门知道自己该提供什么。</p>
 
           <div class="cs-delivery-notes">
             <article>
               <small>01 / 清单</small>
-              <h3>一面墙一行，不留模糊地带</h3>
-              <p>五楼八个区、六楼二十个区，每行写清责任部门、位置、成品尺寸、内容板块和字数要求。表格发出去，部门就知道自己欠什么。</p>
+              <h3>五楼八个区，六楼二十个区</h3>
+              <p>一面墙一行，不留模糊地带。表格发出去，部门就知道自己欠什么、什么时候交。</p>
             </article>
             <article>
               <small>02 / 字数</small>
               <h3>先定规格，再收文案</h3>
-              <p>每块内容 40–80 字、每句 6–12 字。这不是苛刻，是让墙上的字在三米外还读得完。尺度决定信息量，不能等排版时才发现放不下。</p>
+              <p>每块内容 40–80 字、每句 6–12 字。尺度决定信息量，不能等排版时才发现放不下。</p>
             </article>
             <article>
-              <small>03 / 认领</small>
-              <h3>口头承诺换成白纸黑字</h3>
-              <p>拉通会开完就发清单和纪要：谁负责哪面墙、提供什么文案、什么时候交。后面每一次催进度，对的都是同一份表。</p>
+              <small>03 / 动线</small>
+              <h3>内容顺序跟着人走</h3>
+              <p>访客从电梯厅进来，先建立第一印象，再进展厅集中理解公司，出来沿弧墙看见历程与客户。</p>
             </article>
           </div>
-        </section>
 
-        <!-- ── 03 参观动线 ── -->
-        <section class="cs-section" data-toc="参观动线">
-          <p class="cs-num">03 — 参观动线</p>
-          <h2 class="cs-title">访客从电梯门打开那一刻，<em>就已经开始读这家公司</em></h2>
-          <p class="cs-lede">六楼是对外主线。我按访客真实的走法安排内容顺序：先建立第一印象，再进展厅集中理解公司，出来沿弧墙看见历程与客户，最后穿过办公区结束参观。<strong class="cs-only-desktop">鼠标移到右边任意一站，平面图上会亮出它的位置。</strong><strong class="cs-only-mobile">点右边任意一站，平面图上会亮出它的位置。</strong></p>
-
-          <div class="cs-tocmap" data-tocmap>
-            <button class="cs-tocmap-fig" type="button"
+          <div class="cs-docs">
+            <button class="cs-doc" type="button"
                     data-zoom="../assets/work/culture-wall/floorplan-6f-plan.webp"
                     data-zoom-title="6F 平面布置图"
-                    data-zoom-note="参观动线：电梯厅 → 展厅 → 企业文化互动墙 → 各部门办公区">
-              <img src="../assets/work/culture-wall/floorplan-6f-plan.webp" width="1600" height="1562"
-                   style="--fig-ar: 1600 / 1562"
-                   alt="昂楷科技六楼平面布置图，标出参观动线上的四站" loading="lazy" decoding="async">
+                    data-zoom-note="前厅、电梯厅、展厅与各部门办公区的空间关系，内容点位就排在这张图上">
+              <div class="cs-doc-fig"><img src="../assets/work/culture-wall/floorplan-6f-plan.webp" width="1600" height="1562" alt="昂楷科技六楼平面布置图" loading="lazy" decoding="async"></div>
+              <div class="cs-doc-cap"><b>6F 平面</b>访客主线：前厅 → 展厅 → 弧墙 → 办公区</div>
             </button>
-            <div class="cs-prios">
-              <button class="cs-prio" type="button" data-prio-label="01 电梯厅" data-hot="30.0,44.2,40.0,10.2">
-                <div class="cs-prio-n">01<small>第一印象</small></div>
-                <div>
-                  <h4>前厅与电梯厅</h4>
-                  <p>背光不锈钢拉丝标识定调。访客还没开口，公司的分量已经交代了一半。</p>
-                </div>
-              </button>
-              <button class="cs-prio" type="button" data-prio-label="02 展厅" data-hot="27.5,23.7,11.3,22.4">
-                <div class="cs-prio-n">02<small>集中呈现</small></div>
-                <div>
-                  <h4>展厅</h4>
-                  <p>出电梯右转就进来。公司最想讲的四件事，压缩在一面 11.4 米的墙上。</p>
-                </div>
-              </button>
-              <button class="cs-prio" type="button" data-prio-label="03 弧墙" data-hot="67.5,44.2,6.3,13.4">
-                <div class="cs-prio-n">03<small>延展叙事</small></div>
-                <div>
-                  <h4>企业文化互动墙</h4>
-                  <p>两道弧墙顺着走廊展开发展历程与典型客户，把展厅里的结论接回时间线。</p>
-                </div>
-              </button>
-              <button class="cs-prio" type="button" data-prio-label="04 办公区" data-hot="66.3,9.9,10.6,15.0;14.4,70.4,62.5,19.2;67.5,57.6,9.4,12.2">
-                <div class="cs-prio-n">04<small>回到日常</small></div>
-                <div>
-                  <h4>各部门办公区</h4>
-                  <p>参观最后落到真实工位。这里的墙不再对外说话，而是给每天坐在这儿的人看。</p>
-                </div>
-              </button>
-            </div>
+            <button class="cs-doc" type="button"
+                    data-zoom="../assets/work/culture-wall/curve-detail-trim.webp"
+                    data-zoom-title="双弧形象墙尺寸图"
+                    data-zoom-note="电梯厅两道弧墙 R4710 / R4900 的放样依据，图上注明「尺寸以现场为准」">
+              <div class="cs-doc-fig"><img src="../assets/work/culture-wall/curve-detail-trim.webp" width="1700" height="1015" alt="双弧形象墙尺寸放样图" loading="lazy" decoding="async"></div>
+              <div class="cs-doc-cap"><b>弧墙放样</b>造型不是效果图里的一条曲线，先得有半径</div>
+            </button>
           </div>
         </section>
 
-        <!-- ── 04 展厅重点 ── -->
-        <section class="cs-section" data-toc="展厅重点">
-          <p class="cs-num">04 — 展厅重点</p>
-          <h2 class="cs-title">一面 11.4 米的墙，<em>只允许讲四件事</em></h2>
-          <p class="cs-lede">展厅不是资料仓库。访客停留不过十来分钟，能记住的东西有限，所以这面墙上的每一段都得有存在的理由：先证明有人在用，再证明被人认可，然后展开能力，最后落回产品本身。</p>
+        <!-- ── 04 展厅设计 ── -->
+        <section class="cs-section" data-toc="展厅设计">
+          <p class="cs-num">04 — 展厅设计</p>
+          <h2 class="cs-title">展厅是参观动线的第一站，<em>一面 11.4 米的墙只允许讲四件事</em></h2>
+          <p class="cs-lede">从电梯出来经前台向右即进入展厅。它集中了公司最想讲的东西——谁在用、谁认可、能力覆盖到哪、产品长什么样。访客停留不过十来分钟，所以这面墙上的每一段都得有存在的理由。<strong>点下面的编号或图例，看对应展位。</strong></p>
 
-          <div class="cs-tocmap is-wide" data-tocmap>
-            <button class="cs-tocmap-fig" type="button"
+          <div class="cs-axo" data-axo>
+            <div class="cs-axo-head">
+              <b>展厅轴测示意 · Axonometric</b>
+              <small>点击编号 / 图例查看展位</small>
+            </div>
+
+            <div class="cs-axo-stage">
+              <div class="cs-axo-canvas">
+                <svg class="cs-axo-svg" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="展厅轴测示意图，四个展位可点击">
+                  <defs>
+                    <linearGradient id="cs-axo-wall-g" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%"   stop-color="#181e29"/>
+                      <stop offset="100%" stop-color="#0b0e15"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- 左侧转角墙：给这个盒子一个角，不然轴测图看着是平的 -->
+                  <polygon class="cs-axo-return" points="90,40 90,150 30,240 30,130"/>
+                  <!-- 地面 -->
+                  <polygon class="cs-axo-floor" points="90,150 630,240 570,330 30,240"/>
+                  <g class="cs-axo-grid">
+                    <line x1="75" y1="172.5" x2="615" y2="262.5"/>
+                    <line x1="60" y1="195"   x2="600" y2="285"/>
+                    <line x1="45" y1="217.5" x2="585" y2="307.5"/>
+                    <line x1="198" y1="168" x2="138" y2="258"/>
+                    <line x1="306" y1="186" x2="246" y2="276"/>
+                    <line x1="414" y1="204" x2="354" y2="294"/>
+                    <line x1="522" y1="222" x2="462" y2="312"/>
+                  </g>
+                  <!-- 背墙 -->
+                  <polygon class="cs-axo-wall" points="90,40 630,130 630,240 90,150" fill="url(#cs-axo-wall-g)"/>
+
+                  <!-- 展位 01 客户案例 -->
+                  <g class="cs-axo-zone" data-axo-zone="0" tabindex="0" role="button" aria-label="展位 01 客户案例墙">
+                    <ellipse class="cs-axo-pool" cx="173.4" cy="213.9" rx="52" ry="17" transform="rotate(9.5 173.4 213.9)"/>
+                    <polygon class="cs-axo-panel" points="133.2,63.2 273.6,86.6 273.6,160.6 133.2,137.2"/>
+                    <circle class="cs-axo-dot" cx="173.4" cy="213.9" r="12"/>
+                    <text class="cs-axo-num" x="173.4" y="218" text-anchor="middle">1</text>
+                  </g>
+
+                  <!-- 展位 02 荣誉资质 -->
+                  <g class="cs-axo-zone" data-axo-zone="1" tabindex="0" role="button" aria-label="展位 02 荣誉资质">
+                    <ellipse class="cs-axo-pool" cx="308.4" cy="236.4" rx="42" ry="15" transform="rotate(9.5 308.4 236.4)"/>
+                    <polygon class="cs-axo-panel" points="289.8,89.3 387,105.5 387,179.5 289.8,163.3"/>
+                    <circle class="cs-axo-dot" cx="308.4" cy="236.4" r="12"/>
+                    <text class="cs-axo-num" x="308.4" y="240.5" text-anchor="middle">2</text>
+                  </g>
+
+                  <!-- 展位 03 电子屏 -->
+                  <g class="cs-axo-zone" data-axo-zone="2" tabindex="0" role="button" aria-label="展位 03 三块电子屏">
+                    <ellipse class="cs-axo-pool" cx="427.2" cy="256.2" rx="48" ry="16" transform="rotate(9.5 427.2 256.2)"/>
+                    <polygon class="cs-axo-panel" points="397.8,107.3 516.6,127.1 516.6,201.1 397.8,181.3"/>
+                    <circle class="cs-axo-dot" cx="427.2" cy="256.2" r="12"/>
+                    <text class="cs-axo-num" x="427.2" y="260.3" text-anchor="middle">3</text>
+                  </g>
+
+                  <!-- 展位 04 产品展示 -->
+                  <g class="cs-axo-zone" data-axo-zone="3" tabindex="0" role="button" aria-label="展位 04 产品展示造型端">
+                    <ellipse class="cs-axo-pool" cx="535.2" cy="274.2" rx="36" ry="13" transform="rotate(9.5 535.2 274.2)"/>
+                    <polygon class="cs-axo-panel" points="527.4,128.9 603,141.5 603,215.5 527.4,202.9"/>
+                    <circle class="cs-axo-dot" cx="535.2" cy="274.2" r="12"/>
+                    <text class="cs-axo-num" x="535.2" y="278.3" text-anchor="middle">4</text>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="cs-axo-info">
+                <p class="cs-axo-info-idx" data-axo-idx>ZONE 01</p>
+                <h3 data-axo-name>客户案例墙</h3>
+                <p data-axo-copy>进展厅先看谁在用。数据安全讲起来抽象，一整片客户单位名称是最省解释的开场。</p>
+                <dl data-axo-facts></dl>
+              </div>
+            </div>
+
+            <div class="cs-axo-legend">
+              <button class="cs-axo-leg" type="button" aria-pressed="true"><i>1</i>客户案例墙</button>
+              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>2</i>荣誉资质</button>
+              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>3</i>三块电子屏</button>
+              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>4</i>产品展示造型端</button>
+            </div>
+          </div>
+
+          <div class="cs-docs">
+            <button class="cs-doc" type="button"
                     data-zoom="../assets/work/culture-wall/showroom-elevation.webp"
                     data-zoom-title="展厅背景墙立面大样图"
-                    data-zoom-note="客户案例 2240 宽、荣誉资质 2000×1600、三块 55 英寸电子屏与右端产品展示造型">
-              <img src="../assets/work/culture-wall/showroom-elevation.webp" width="1800" height="825"
-                   style="--fig-ar: 1800 / 825"
-                   alt="展厅背景墙立面图，标出客户案例、荣誉资质、电子屏与产品展示四个区" loading="lazy" decoding="async">
+                    data-zoom-note="轴测图上的四个展位，在施工图上就是这条 11400 mm 的立面">
+              <div class="cs-doc-fig"><img src="../assets/work/culture-wall/showroom-elevation.webp" width="1800" height="825" alt="展厅背景墙立面大样图" loading="lazy" decoding="async"></div>
+              <div class="cs-doc-cap"><b>对应的施工立面</b>轴测是示意，这张才是照着做的图</div>
             </button>
-            <div class="cs-prios">
-              <button class="cs-prio" type="button" data-prio-label="01 客户案例" data-hot="10.8,26.4,24.0,38.7">
-                <div class="cs-prio-n">01<small>先证明有人用</small></div>
-                <div>
-                  <h4>客户案例墙</h4>
-                  <p>2240 宽的一整片网格。数据安全说起来抽象，一屏客户单位名称最省解释。</p>
-                </div>
-              </button>
-              <button class="cs-prio" type="button" data-prio-label="02 荣誉资质" data-hot="37.3,25.8,16.5,39.3">
-                <div class="cs-prio-n">02<small>再证明被认可</small></div>
-                <div>
-                  <h4>荣誉资质</h4>
-                  <p>2000×1600 的独立版面，只放最重的几张。位置和留白本身就是分级。</p>
-                </div>
-              </button>
-              <button class="cs-prio" type="button" data-prio-label="03 电子屏" data-hot="54.9,28.4,21.0,36.0">
-                <div class="cs-prio-n">03<small>展开能力</small></div>
-                <div>
-                  <h4>三块 55 英寸电子屏</h4>
-                  <p>产品界面与解决方案循环播放。会变的内容交给屏幕，墙面只承担不变的部分。</p>
-                </div>
-              </button>
-              <button class="cs-prio" type="button" data-prio-label="04 产品展示" data-hot="76.0,21.5,14.6,43.6">
-                <div class="cs-prio-n">04<small>落回实物</small></div>
-                <div>
-                  <h4>产品展示造型端</h4>
-                  <p>R200 圆角收口的造型区陈列实体样机，一路看下来的说法在这里能上手。</p>
-                </div>
-              </button>
+            <div class="cs-doc is-slot" aria-label="展厅 3D 渲染图位">
+              <div class="cs-doc-fig"><span class="cs-doc-empty">展厅 3D 渲染图<br><small>assets/work/culture-wall/showroom-render.webp</small></span></div>
+              <div class="cs-doc-cap"><b>渲染图</b>待补：整体空间与灯光效果</div>
             </div>
           </div>
         </section>
 
-        <!-- ── 05 荣誉分层 ── -->
+        <!-- ── 05 实景与展厅外的文化墙 ── -->
+        <section class="cs-section" data-toc="实景与延展">
+          <p class="cs-num">05 — 实景与延展</p>
+          <h2 class="cs-title">出了展厅，<em>参观动线沿椭圆环形继续</em></h2>
+          <p class="cs-lede">人资部 → 发展规划与服务网络（走廊对面是政府来访照片墙）→ 市场部第二面荣誉墙 → 发展历程 → 企业文化与典型客户墙 → 战略合作屋 → 研发部，最后回到前台。这些墙面同属一套视觉语言，各自承担不同的信息。</p>
+
+          <div class="cs-docs">
+            <div class="cs-doc is-slot" aria-label="前台形象墙图位">
+              <div class="cs-doc-fig"><span class="cs-doc-empty">前台形象墙<br><small>ANKKI 背光标识 + 三角几何装饰</small></span></div>
+              <div class="cs-doc-cap"><b>前台形象墙</b>电梯出来第一眼，旁侧走廊陈列优秀员工展板</div>
+            </div>
+            <div class="cs-doc is-slot" aria-label="发展规划与服务网络图位">
+              <div class="cs-doc-fig"><span class="cs-doc-empty">发展规划 · 服务网络<br><small>走廊两侧对望</small></span></div>
+              <div class="cs-doc-cap"><b>走廊对望的两侧</b>一侧发展规划与全国服务网络地图，一侧政府来访照片墙</div>
+            </div>
+            <div class="cs-doc is-slot" aria-label="发展历程与企业文化墙图位">
+              <div class="cs-doc-fig"><span class="cs-doc-empty">发展历程 · 企业文化<br><small>沿弧墙展开的时间轴</small></span></div>
+              <div class="cs-doc-cap"><b>弧墙时间轴</b>环形企业文化墙 + 一整面典型客户 LOGO 墙</div>
+            </div>
+            <div class="cs-doc is-slot" aria-label="企业战略屋图位">
+              <div class="cs-doc-fig"><span class="cs-doc-empty">企业战略屋<br><small>市场部</small></span></div>
+              <div class="cs-doc-cap"><b>企业战略屋</b>愿景使命、核心价值观、业务定位与战略目标层层递进</div>
+            </div>
+          </div>
+
+          <p class="cs-note">图位待补：这一节放展厅实拍与各部门墙面的现场照，文件放进 <code>assets/work/culture-wall/</code> 后替换即可。</p>
+        </section>
+
+        <!-- ── 06 荣誉分层 ── -->
         <section class="cs-section" data-toc="荣誉分层">
-          <p class="cs-num">05 — 荣誉分层</p>
-          <h2 class="cs-title">证书太多，<em>反而没有一张被记住</em></h2>
-          <p class="cs-lede">公司这些年攒下的资质、奖项和牌匾足够铺满一整面墙。全都并排挂上去，含金量最高的那几张就被稀释成了背景。我按分量分成三层——分完才发现，荣誉根本装不进一面墙，于是拆成了两处。</p>
+          <p class="cs-num">06 — 荣誉分层</p>
+          <h2 class="cs-title">证书太多，<em>全堆一面墙只会稀释分量</em></h2>
+          <p class="cs-lede">公司这些年攒下的资质、奖项和牌匾足够铺满一整面墙。我按含金量把它们分层，也因此拆成了两面墙：最重量级的放进展厅、用重点照明单独呈现；其余的集中到市场部的第二面荣誉墙。</p>
 
           <div class="cs-delivery-notes">
             <article>
@@ -264,16 +339,16 @@
             <article>
               <small>03 / 市场部</small>
               <h3>常规资质：体量即说服力</h3>
-              <p>软著与荣誉牌匾不需要逐张阅读，统一尺寸整齐排布，把「积累了很多年」一眼交代完。</p>
+              <p>软著与荣誉牌匾不需要逐张阅读，用展柜规整陈列，把「积累了很多年」一眼交代完。</p>
             </article>
           </div>
         </section>
 
-        <!-- ── 06 工艺与预算 ── -->
-        <section class="cs-section" data-toc="工艺与预算">
-          <p class="cs-num">06 — 工艺与预算</p>
+        <!-- ── 07 成本控制 ── -->
+        <section class="cs-section" data-toc="成本控制">
+          <p class="cs-num">07 — 成本控制</p>
           <h2 class="cs-title">「不能贵，也不能廉价」，<em>最后是靠一张对照表落地的</em></h2>
-          <p class="cs-lede">这句要求听着像没说，做下来才明白它逼着人做取舍。我把制作部分逐项做了前后对比：哪面墙升级工艺、升级到什么材质、价格差多少，哪些点位干脆不做。这张表后来既是向领导汇报的材料，也是跟供应商谈判的筹码。</p>
+          <p class="cs-lede">这句听着像没说的要求，其实是整个项目的成本主线。我把制作部分逐项做了前后对比：哪面墙升级工艺、升级到什么材质、价格差多少，哪些点位干脆不做。这张表后来既是向领导汇报的材料，也是跟供应商谈判的筹码。</p>
 
           <div class="cs-delivery-metrics" aria-label="制作部分费用变化">
             <div><strong>97,800</strong><p>原合同制作报价 · 不含税</p></div>
@@ -315,16 +390,9 @@
             </div>
           </div>
 
-          <p class="cs-lede">展厅那 30,000 元是我在这场谈判里最在意的一项：总价一分没涨，工艺却从喷绘贴换成了蓝色烤漆背光字、PVC 线条、亚克力盒子和灯箱。变更后供应商的应付比原合同多出两万多，最终以 15,000 元确认；加上后续零星新增，2023 年 7 月用一份补充协议 2.15 万元一次性结清。</p>
+          <p class="cs-lede">展厅那 30,000 元是这场谈判里我最在意的一项：总价一分没涨，工艺却从喷绘贴换成了蓝色烤漆背光字、PVC 线条、亚克力盒子和灯箱。变更后供应商的应付比原合同多出两万多，最终以 15,000 元确认；加上后续零星新增，2023 年 7 月用一份补充协议 2.15 万元一次性结清。</p>
 
           <div class="cs-docs">
-            <button class="cs-doc" type="button"
-                    data-zoom="../assets/work/culture-wall/curve-detail-trim.webp"
-                    data-zoom-title="双弧形象墙尺寸图"
-                    data-zoom-note="R4710 / R4900 两道弧线的放样依据，图上注明「尺寸以现场为准」">
-              <div class="cs-doc-fig"><img src="../assets/work/culture-wall/curve-detail-trim.webp" width="1700" height="1015" alt="双弧形象墙尺寸放样图" loading="lazy" decoding="async"></div>
-              <div class="cs-doc-cap"><b>弧墙放样</b>造型不是效果图里的一条曲线，先得有半径</div>
-            </button>
             <button class="cs-doc" type="button"
                     data-zoom="../assets/work/culture-wall/change-approval.webp"
                     data-zoom-title="变更与预算审批记录（已脱敏）"
@@ -332,32 +400,17 @@
               <div class="cs-doc-fig"><img src="../assets/work/culture-wall/change-approval.webp" width="578" height="954" alt="文化墙项目变更与预算审批沟通记录，已裁去姓名与头像" loading="lazy" decoding="async"></div>
               <div class="cs-doc-cap"><b>变更留痕</b>不是口头说「改一下」，金额和原因都要有记录（已脱敏）</div>
             </button>
+            <div class="cs-doc is-slot" aria-label="报价单图位">
+              <div class="cs-doc-fig"><span class="cs-doc-empty">空间设计制作报价单<br><small>设计 + 制作分项报价</small></span></div>
+              <div class="cs-doc-cap"><b>报价单</b>待补：每一项的数量、工艺、单价</div>
+            </div>
           </div>
         </section>
 
-        <!-- ── 07 施工与验收 ── -->
-        <section class="cs-section" data-toc="施工与验收">
-          <p class="cs-num">07 — 施工与验收</p>
-          <h2 class="cs-title">图纸上成立的东西，<em>到现场未必装得上</em></h2>
-          <p class="cs-lede">从需求到验收，这个项目走了七步，每一步都可能卡住，每一步都得有人推。合同 2022 年 6 月签，2023 年 2 月排安装计划，7 月才结清——中间大半年，绝大部分时间花在协调和现场。</p>
-
-          <div class="cs-flow is-steps" aria-label="项目七个阶段">
-            <div class="cs-flow-step"><b><i>01</i>需求调研</b><small>走遍每个区域，确认责任部门与内容</small></div>
-            <div class="cs-flow-step"><b><i>02</i>内容脚本</b><small>按字数规格收稿并逐段打磨</small></div>
-            <div class="cs-flow-step"><b><i>03</i>动线设计</b><small>把点位排成一条参观顺序</small></div>
-            <div class="cs-flow-step"><b><i>04</i>供应商比价</b><small>看资质、比稿、比价</small></div>
-            <div class="cs-flow-step"><b><i>05</i>方案汇报</b><small>效果图、材质与价格同屏过审</small></div>
-            <div class="cs-flow-step"><b><i>06</i>打样确认</b><small>门牌、桌贴先打样再批量</small></div>
-            <div class="cs-flow-step"><b><i>07</i>安装验收</b><small>分区排期，现场复核尺寸与高度</small></div>
-          </div>
-
-          <p class="cs-lede">2023 年 2 月 14 日那份安装计划里，一半的行后面都跟着备注：党建室的墙面基层要先处理，人资部文化墙的高度当天再复核一次，商务会议室与通道挂画的尺寸和样式还得一起确认。这些都不是图纸上能提前发现的问题，只能去现场量、去盯。</p>
-        </section>
-
-        <!-- ── 08 项目复盘 ── -->
-        <section class="cs-section is-reflection" data-toc="项目复盘">
-          <p class="cs-num">08 — 项目复盘</p>
-          <h2 class="cs-title">一个设计师，<em>解决不了这种规模的事</em></h2>
+        <!-- ── 08 总结与收获 ── -->
+        <section class="cs-section is-reflection" data-toc="总结与收获">
+          <p class="cs-num">08 — 总结与收获</p>
+          <h2 class="cs-title">第一次统筹这么大的项目，<em>看清了比设计更难的那部分</em></h2>
 
           <div class="cs-reflection-list">
             <article>
@@ -367,18 +420,23 @@
             </article>
             <article>
               <span>02</span>
+              <h3>三十多面墙背后是十几个部门</h3>
+              <p>每个部门都觉得自己的墙最重要。最花精力的不是设计，是把这些诉求拉到一张清单上对齐——先做需求表、再逐个部门确认，比开大会扯皮高效得多。</p>
+            </article>
+            <article>
+              <span>03</span>
               <h3>汇报要给选择题</h3>
               <p>领导很看重文化墙，但没有时间陪我从头推导。后来每次汇报我都把效果图、材质和价格区间放在一起，让判断压缩成几个能当场拍板的选项。</p>
             </article>
             <article>
-              <span>03</span>
+              <span>04</span>
               <h3>预算不会自己变多，只能重新分配</h3>
               <p>砍掉走廊、商务会议室、文控室这些访客根本不会停留的点位，把省下的钱压到形象墙和展厅。同一笔钱，被看见的次数差了几十倍。</p>
             </article>
             <article>
-              <span>04</span>
-              <h3>跨部门靠的是可追踪，不是反复催</h3>
-              <p>统一清单、阶段汇报、变更确认，把「我这边尽快」换成负责人、金额和交付节点。少开一次扯皮的会，就少一次现场返工。</p>
+              <span>05</span>
+              <h3>图纸上好看的东西，现场未必装得上</h3>
+              <p>墙面不平、高度对不上、消防设施挡住版面。提前去现场量、去盯，比装完再返工便宜得多——这是这个项目里最贵的一课。</p>
             </article>
           </div>
         </section>
@@ -400,8 +458,8 @@
                 <button class="cs-summary-close" type="button" aria-label="关闭">
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2l12 12M14 2L2 14"/></svg>
                 </button>
-                <p>Maridian 作为项目负责人，统筹了昂楷科技深圳前海总部五、六两层的文化墙与展厅项目，覆盖三十多个展示点位、十余个协作部门。</p>
-                <p>项目不从墙面造型开始，而是先完成内容清单、字数规格与参观动线：访客从电梯厅进入，经展厅集中理解公司，沿弧形文化墙看见发展历程与典型客户，最后回到办公区；员工日常空间则保留部门身份与协作语境。</p>
+                <p>Maridian 作为项目负责人，统筹了昂楷科技深圳前海总部五、六两层的文化墙与展厅项目，覆盖三十多个展示区域、十余个协作部门，项目总预算约 29 万元。</p>
+                <p>项目不从墙面造型开始，而是先完成内容清单、字数规格与参观动线：访客从前台进入展厅集中理解公司，沿弧形文化墙看见发展历程与典型客户，最后回到办公区。展厅作为核心，把客户案例、荣誉资质、电子屏与产品陈列压缩在一面 11.4 米的墙上。</p>
                 <p>他同时负责供应商筛选比价、图纸深化、材料与工艺取舍、预算变更汇报、施工排期与现场验收。制作部分逐项做出前后对照表，主动取消四处低价值点位，把预算集中到形象墙与展厅，并通过两轮谈判把变更增项从两万余元压到 1.5 万元。</p>
                 <p>项目从 2022 年 6 月签约推进到 2023 年 7 月结算，最终以一份补充协议完成全部增项结清。</p>
               </div>
@@ -468,6 +526,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="../js/case.js?v=74"></script>
+<script src="../js/case.js?v=75"></script>
 </body>
 </html>

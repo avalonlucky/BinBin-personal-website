@@ -71,6 +71,9 @@ assets/work/<slug>/   该作品的图片资源
 | `cs-pagedemo` | 印章式页码演示：上一页／下一页，页码按奇偶换边 |
 | `cs-slides` / `cs-slide-thumb` | 一张主图 + 一排缩略图，点缩略图切换并同步放大目标 |
 | `cs-figure.is-compact` / `.is-narrow` | 大图限宽居中（780 / 520），细节留给点击放大 |
+| `cs-hall` | 会亮起来的展厅首屏：`data-lit="0..7"` 驱动，灯箱内可换渲染图 / canvas |
+| `cs-axo` | 展厅轴测图：点编号或图例查看展位，分区数据在 `case.js` 的 `AXO_ZONES` |
+| `cs-doc.is-slot` | 待补图位：虚线框，写清将来放什么、文件放哪 |
 | `cs-reader` / `cs-rd-*` | 刊物阅读器：三本切换、跨页翻页、拖拽 / 点书角 / 方向键 |
 
 ### 写新详情页的注意事项
@@ -242,80 +245,103 @@ assets/work/<slug>/   该作品的图片资源
   就把按钮里的 `<img>` 冲掉了。**给容器和条目用不同的 data 名**（现在是
   `data-slide-cap-title`）。
 
-### 昂楷科技总部文化墙与展厅（`work/ankki-culture-wall.html`）
+### 文化墙 · 展厅设计（`work/ankki-culture-wall.html`）
 
-第三个案例。**没有自己的 CSS / JS 文件**——最初写过一版 `culture-wall.css` +
-`culture-wall.js`（`cw-` 前缀），用户看完的评价是「很不好看，和前两个作品的
-风格完全不搭」，已整个删掉重做。现在这一页和内刊页共用同一套板块，
-只有主色不同。**以后再加案例，先看能不能用 `is-editorial`，别再另起一套。**
+第三个案例。用户对这一页的定调是「展厅是空间和 3D 类的项目，不能用常规思路搞，
+不要做成 Word 一样的说明文档」，所以它比前两个案例更重氛围和交互。
+
+**做过两次废弃，别再走回头路**
+
+1. 第一版写了 `css/culture-wall.css` + `js/culture-wall.js`（`cw-` 前缀）——
+   自成一套设计系统，用户评价「很不好看，和前两个作品的风格完全不搭」。已删。
+2. 第二版全部套用内刊页的板块（`cs-map-list` / `cs-tocmap` …）——版式对了，
+   但通篇是图纸和表格，还是像文档。用户要的是「开场黑着的展厅随滚动一盏盏点亮」。
+
+**现在这一版：共用 `is-editorial` 版式 + 两个空间专属板块。**
 
 **`is-editorial` 与 `is-vision` / `is-culture` 的分工**
 
-`case.css` 里原来有 400 多条 `.case-page.is-vision .xxx`，把版式和颜色绑在了
-一起。现在拆开：
+`case.css` 里原有 400 多条 `.case-page.is-vision .xxx`，把版式和颜色绑死了。
+现在拆开：`is-editorial` 只管版式（`cs-delivery-metrics` / `cs-delivery-notes` /
+`cs-flow` / `cs-compare` / `cs-docs` / `cs-reflection-list` …），
+`is-vision` 只管内刊红 `#E60012`，`is-culture` 只管企业蓝 `#4265F5`。
+内刊页 `class="case-page is-editorial is-vision"`，
+这一页 `class="case-page is-editorial is-culture"`。
 
-- `.case-page.is-editorial` —— 只管**版式**：`cs-map-list` / `cs-deck` /
-  `cs-tocmap` / `cs-delivery-metrics` / `cs-delivery-notes` /
-  `cs-reflection-list` / `cs-hero-books` 等等。想复用这套版式的新案例，
-  body 上加 `is-editorial` 即可。
-- `.case-page.is-vision` —— 只管**颜色**（内刊红 `#E60012`）。
-- `.case-page.is-culture` —— 只管**颜色**（企业蓝 `#4265F5`），外加两处版式微调。
+**`.cs-hall` — 会亮起来的首屏**
 
-内刊页现在是 `class="case-page is-editorial is-vision"`，
-文化墙页是 `class="case-page is-editorial is-culture"`。
+整屏黑着的展厅轮廓，随滚动依次点亮：地面网格 → 五块灯箱一块一块 → 地面氛围灯。
+- 结构：`.cs-hall`（高 200vh，撑出滚动行程）> `.cs-hall-view`（`sticky`）>
+  `.cs-hall-room` + `.cs-hall-copy` + `.cs-hall-cue`。
+- **亮度是离散状态，不是补间**：`initHall()` 只把滚动进度翻译成
+  `.cs-hall-room` 上的 `data-lit="0..7"`，过渡全交给 CSS。
+  七盏灯 × 五个属性 = 三十多条并发补间，滚轮甩快一点必定有灯卡在半亮；
+  离散状态 + CSS transition 永远自洽。**改这块时不要改回 gsap.to()。**
+- 前 8% 进度留给标题、后 12% 保持全亮，中间把七级分完。
+- 文字在上、展厅在下，**两块不能重叠**——标题压在灯箱标签上时两边都读不清。
+  上下间距靠 `.cs-hall-view` 的 `padding-top` 与 `.cs-hall-room` 的
+  `padding-bottom` 撑开，改任何一个都要重新量一次「标签行顶 − 标签胶囊底」的余量
+  （目前桌面 22px、390 宽 24px）。
+- **接 Three.js 的位置**：每块灯箱里的 `.cs-hall-art` 就是内容位，
+  塞 `<img>` 或 `<canvas>` 进去即可，点灯时序不用动。
+  用户的计划是把画框换成真实渲染图与现场照。
 
-**页面结构（八节）**
+**`.cs-axo` — 展厅轴测图**
 
-| 编号 | 板块 | 交互 |
+点编号或图例查看展位，四个展位数据写在 `case.js` 的 `AXO_ZONES` 里。
+SVG 是手算的等轴测：地面 `90,150 630,240 570,330 30,240`，
+背墙由地面后沿升高 110，左侧另有一块转角墙——**没有转角墙时整张图看着是平的**。
+四块展板沿背墙按参数 t 排布，宽度比例照真实立面（客户案例最宽、产品展示最窄）：
+t 分别是 0.08–0.34 / 0.37–0.55 / 0.57–0.79 / 0.81–0.95。
+墙上某点 = `(90 + 540t, 40 + 90t)`（顶）/`(90 + 540t, 150 + 90t)`（底）。
+地面编号圆点与光晕落在 `(90 + 540t − 30, 150 + 90t + 45)`。
+
+**页面结构（八节，顺序是用户定的）**
+
+| 编号 | 板块 | 说明 |
 | --- | --- | --- |
-| 01 诊断与命题 | `cs-map-list` | 问题 → 行动，四行 |
-| 02 内容统筹 | `cs-delivery-notes` | — |
-| 03 参观动线 | `cs-tocmap`（6F 平面） | hover 右侧四站 → 平面图上亮出位置 |
-| 04 展厅重点 | `cs-tocmap.is-wide`（立面） | 同上，卡片改为图下横排四张 |
-| 05 荣誉分层 | `cs-delivery-notes` | — |
-| 06 工艺与预算 | `cs-delivery-metrics` + `cs-compare` + `cs-docs` | 图纸与审批截图点击放大 |
-| 07 施工与验收 | `cs-flow.is-steps` | 七阶段 |
-| 08 项目复盘 | `cs-reflection-list` | 四条 |
+| 01 项目概览 | `cs-delivery-metrics` + `cs-delivery-notes` | 概况数字 + 我的四项角色 |
+| 02 执行流程 | `cs-flow.is-steps` | 七阶段 |
+| 03 内容统筹 | `cs-delivery-notes` + `cs-docs` | 需求清单方法 + 平面图 / 弧墙图 |
+| 04 展厅设计 | **`cs-axo`** + `cs-docs` | 轴测交互 + 对应施工立面 |
+| 05 实景与延展 | `cs-docs`（四个 `is-slot` 图位） | 待补现场照 |
+| 06 荣誉分层 | `cs-delivery-notes` | 三层，拆成两面墙 |
+| 07 成本控制 | `cs-delivery-metrics` + `cs-compare` + `cs-docs` | 真实数字 |
+| 08 总结与收获 | `cs-reflection-list` | 五条 |
 
-**`initTocMap()` 已经改成支持多张图**：原来只取第一个 `[data-tocmap]`，
-热区坐标写死在 `TOC_HOTSPOTS` 常量里（内刊目录页专用）。现在改成
-`querySelectorAll`，并支持在 `.cs-prio` 上写 `data-hot="l,t,w,h"`——
-一张卡可以带多块热区，用分号隔开（如动线的「各部门办公区」是三块）。
-没写 `data-hot` 时仍然退回 `TOC_HOTSPOTS`，内刊页不受影响。
-`.cs-tocmap-fig img` 的 `aspect-ratio` 也改成了 `var(--fig-ar, 1800 / 1187)`，
-每张图在 HTML 里用内联 `style="--fig-ar: 1600 / 1562"` 声明自己的比例。
+用户明确要求**不要**的：诊断与命题、工艺与材质、施工与验收（独立成节）。
 
-**热区坐标怎么来的**：把图裁出来叠红框反复对照量的，不是估的。
-量法见 `tools/` 里的临时脚本思路——`PIL` 裁图 → `ImageDraw.rectangle` 画候选框
-→ 看图 → 调数值。眼睛估的坐标一定会偏，这条在案例一已经栽过一次。
+**`.cs-doc.is-slot` 是待补图位**：结构同 `.cs-doc` 但不是按钮，虚线框，
+写清将来放什么、文件放哪。拿到照片后换成正常的 `<button class="cs-doc">` 即可。
 
-**图片资产（都是从原始 CAD 大图裁出来的）**
+**新增 section 级板块记得进 `style.css` 的 `:not()` 串**：
+`main section:not(…):not(.cs-hall):not(.cs-stage)`。漏了会被那条
+权重 (0,5,2) 的规则刷成白底，`sticky` 也会被打回 `relative`。
+
+**图片资产（都是从原始 CAD 大图裁出来的，原图保留做二次裁切的底）**
 
 | 文件 | 来源 | 说明 |
 | --- | --- | --- |
-| `showroom-elevation.webp` 1800×825 | `showroom-detail.webp` 裁 (650,150)-(1850,700) | 展厅背景墙立面，去掉图框与图签 |
-| `floorplan-6f-plan.webp` 1600×1562 | `floorplan-6f.webp` 裁 (70,45)-(1560,1500) | 6F 平面，去掉右侧 SHEET NOTES 与图签 |
-| `curve-detail-trim.webp` 1700×1015 | `curve-detail.webp` 裁 (270,300)-(1860,1250) | 双弧墙尺寸图，去掉大片白边 |
+| `showroom-elevation.webp` 1800×825 | `showroom-detail.webp` 裁 (650,150)-(1850,700) | 展厅背景墙立面 |
+| `floorplan-6f-plan.webp` 1600×1562 | `floorplan-6f.webp` 裁 (70,45)-(1560,1500) | 6F 平面，去掉图签与 NOTES |
+| `curve-detail-trim.webp` 1700×1015 | `curve-detail.webp` 裁 (270,300)-(1860,1250) | 双弧墙尺寸图 |
 | `change-approval.webp` 578×954 | 原 798×1400 截图裁 (122,232)-(700,1186) | **已脱敏**，见下 |
 
-**脱敏是裁掉+模糊，不是 CSS 盖色块**。原来那版用 `.cw-approval-proof i`
-四个绝对定位的色块盖住头像和昵称——审查元素一删就露出来，点开 lightbox
-放大的还是原图。现在直接改图：裁掉标题栏（对方姓名）、三个头像和
-带「姓名+手机号前缀」的微信水印，正文里的「刘总」用 `tools/redact.py`
-降采样糊掉。**换图必须重做这一步，不要退回 CSS 遮挡。**
+**脱敏是改图，不是 CSS 盖色块**。最早那版用绝对定位色块盖住头像和昵称——
+审查元素一删就露出来，点开 lightbox 放大的还是原图。现在直接改图：
+裁掉标题栏（对方姓名）、三个头像和带「姓名+手机号前缀」的微信水印，
+正文里剩下的称呼用 `tools/redact.py` 降采样糊掉。**换图必须重做这一步。**
 
 **数据来源（真实文件，别改数字）**
 
-- `新增明细表-昂楷科技文化墙制作项目明细表.xlsx`（桌面）：`cs-compare` 与
-  `cs-delivery-metrics` 的全部数字。制作报价 97,800 → 118,540（不含税），
-  取消四项省 9,500，形象墙 12,000 → 25,840，走廊外墙 5,000 → 10,000。
+- `新增明细表-昂楷科技文化墙制作项目明细表.xlsx`（桌面）：07 节的全部数字。
+  制作报价 97,800 → 118,540（不含税），取消四项省 9,500，
+  形象墙 12,000 → 25,840，走廊外墙 5,000 → 10,000。
 - `合同协议书-…补充协议书-20230707.doc`：原合同 2022-06-16 签订；
   变更增项两轮谈判后按 15,000 确认；补充协议 2.15 万元（含 1% 税）结清。
-- `0214安装计划` 工作表：07 节末尾那段现场遗留问题的出处，日期 2023-02-14。
 
-**两个数字口径别混**：`cs-delivery-metrics` 里的 97,800 / 118,540 是
-**制作部分不含税**，不是整个项目的规模。文案里必须带「制作」两个字，
-否则和别处可能出现的「29.4 万」对不上。
+**两个数字口径别混**：01 节的「29 万」是含税的项目总预算，
+07 节的 97,800 / 118,540 是**制作部分不含税**。文案里必须带「制作」两个字。
 
 **页面上只允许出现部门，不许出现人名与联系方式**——源文件里甲乙双方联系人、
 各部门对接人的姓名和手机号都是明的。

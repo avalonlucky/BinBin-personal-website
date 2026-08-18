@@ -747,6 +747,124 @@ const TOC_HOTSPOTS = [
    { l: 77.6, t: 11.5, w: 17.8, h: 13.0 }],
 ];
 
+/* ─────────────────────────────────────────
+   展厅首屏 — 随滚动一面墙一面墙地点灯
+   进度只翻译成 data-lit="0..7"，剩下交给 CSS 过渡。
+   不用 GSAP 逐个补间：七盏灯 × 五个属性等于三十多条并发补间，
+   滚轮甩快一点就会有灯卡在半亮；离散状态 + CSS 过渡永远自洽。
+───────────────────────────────────────── */
+function initHall() {
+  const hall = document.querySelector('[data-hall]');
+  if (!hall) return;
+  const room   = hall.querySelector('.cs-hall-room');
+  const frames = [...hall.querySelectorAll('.cs-hall-frame')];
+  const cue    = hall.querySelector('[data-hall-cue]');
+  if (!room) return;
+
+  const STEPS = frames.length + 2;          // 地面 + 五块灯箱 + 氛围灯
+  const CUE = ['向下滚动，把灯打开', '继续，还有几盏没亮', '灯全开了 · 往下看项目'];
+
+  const apply = level => {
+    if (room.dataset.lit === String(level)) return;
+    room.dataset.lit = level;
+    frames.forEach((f, i) => f.classList.toggle('is-on', i < level - 1));
+    if (cue) cue.textContent = level === 0 ? CUE[0] : level >= STEPS ? CUE[2] : CUE[1];
+  };
+
+  if (prefersReducedMotion.matches) {
+    apply(STEPS);
+    return;
+  }
+  apply(0);
+
+  ScrollTrigger.create({
+    trigger: hall,
+    start: 'top top',
+    end: 'bottom bottom',
+    invalidateOnRefresh: true,
+    onUpdate: self => {
+      // 前 8% 留给标题，最后 12% 保持全亮，中间把七级灯分完
+      const t = (self.progress - 0.08) / 0.8;
+      apply(Math.max(0, Math.min(STEPS, Math.ceil(t * STEPS))));
+    },
+  });
+}
+
+/* ─────────────────────────────────────────
+   展厅轴测图 — 点编号或图例查看展位
+   分区宽度按真实立面图的比例排：11.4 米的墙上，
+   客户案例最宽、产品展示造型端最窄。
+───────────────────────────────────────── */
+const AXO_ZONES = [
+  {
+    idx: 'ZONE 01',
+    name: '客户案例墙',
+    copy: '进展厅先看谁在用。数据安全讲起来抽象，一整片客户单位名称是最省解释的开场。',
+    facts: [['墙面宽度', '2240 mm 网格 + 850 mm 展板'], ['工艺', 'PVC 造型展板 · 亚克力割字']],
+  },
+  {
+    idx: 'ZONE 02',
+    name: '荣誉资质',
+    copy: '只放最重的几张。2000×1600 的独立版面，位置和留白本身就完成了一次分级。',
+    facts: [['版面尺寸', '2000 × 1600 mm'], ['照明', '独立打光，与相邻区拉开']],
+  },
+  {
+    idx: 'ZONE 03',
+    name: '三块 55 英寸电子屏',
+    copy: '产品界面与解决方案循环播放。会变的内容交给屏幕，墙面只承担长期不变的部分。',
+    facts: [['屏幕', '55 英寸 × 3'], ['分工', '左侧产品 UI · 右侧解决方案']],
+  },
+  {
+    idx: 'ZONE 04',
+    name: '产品展示造型端',
+    copy: 'R200 圆角收口的造型区陈列实体样机。一路看下来的说法，在这里能上手。',
+    facts: [['造型', 'R200 圆角收口'], ['陈列', '实体样机 · 可近距离查看']],
+  },
+];
+
+function initAxo() {
+  const axo = document.querySelector('[data-axo]');
+  if (!axo) return;
+  const zones = [...axo.querySelectorAll('.cs-axo-zone')];
+  const legs  = [...axo.querySelectorAll('.cs-axo-leg')];
+  const idx   = axo.querySelector('[data-axo-idx]');
+  const name  = axo.querySelector('[data-axo-name]');
+  const copy  = axo.querySelector('[data-axo-copy]');
+  const facts = axo.querySelector('[data-axo-facts]');
+  if (!zones.length) return;
+
+  let current = -1;
+  const select = i => {
+    if (i === current) return;
+    current = i;
+    const data = AXO_ZONES[i];
+    zones.forEach((z, n) => z.classList.toggle('is-on', n === i));
+    legs.forEach((l, n) => {
+      l.classList.toggle('is-on', n === i);
+      l.setAttribute('aria-pressed', String(n === i));
+    });
+    if (idx)  idx.textContent  = data.idx;
+    if (name) name.textContent = data.name;
+    if (copy) copy.textContent = data.copy;
+    if (facts) {
+      facts.innerHTML = data.facts
+        .map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`)
+        .join('');
+    }
+  };
+
+  zones.forEach((z, i) => {
+    z.addEventListener('click', () => select(i));
+    z.addEventListener('mouseenter', () => select(i));
+  });
+  legs.forEach((l, i) => {
+    l.addEventListener('click', () => select(i));
+    l.addEventListener('mouseenter', () => select(i));
+    l.addEventListener('focus', () => select(i));
+  });
+  select(0);
+}
+
 function initTocMap() {
   const maps = [...document.querySelectorAll('[data-tocmap]')];
   if (!maps.length) return;
@@ -2149,6 +2267,8 @@ initScrubVideo();
 initDeck();
 initAudienceRail();
 initLine();
+initHall();
+initAxo();
 initTocMap();
 initReader();
 initPageDemo();
