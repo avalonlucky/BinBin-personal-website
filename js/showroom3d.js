@@ -221,33 +221,54 @@
     }
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x05070c);
-    scene.fog = new THREE.Fog(0x05070c, 10, 28);
+    scene.background = new THREE.Color(0xdfe4ea);
+    scene.fog = new THREE.Fog(0xd8dde4, 16, 42);
 
-    const camera = new THREE.PerspectiveCamera(50, 16 / 9, 0.05, 60);
+    const camera = new THREE.PerspectiveCamera(62, 16 / 9, 0.05, 60);
 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.22;
+    renderer.toneMappingExposure = 1.34;
     mount.appendChild(renderer.domElement);
 
     const hw = ROOM.width / 2, hd = ROOM.depth / 2, C = ROOM.ceiling;
 
     /* ── 围合：近黑哑光 ── */
+    // 墙：白色半哑烤漆。参考里的展厅全是白墙，深色只给吊顶——
+    // 深顶白墙才是让墙面「跳」出来的那一手，整间做暗是反的。
     const shellMat = new THREE.MeshStandardMaterial({
-      color: 0x14161d, roughness: .92, metalness: .04, side: THREE.BackSide,
+      color: 0xf3f5f8, roughness: .42, metalness: .03, side: THREE.BackSide,
     });
     const box = new THREE.Mesh(new THREE.BoxGeometry(ROOM.width, C, ROOM.depth), shellMat);
     box.position.y = C / 2;
     scene.add(box);
+
+    // 吊顶：深灰高光张拉膜，会把下面的灯带和墙面映上去
+    const ceil = new THREE.Mesh(
+      new THREE.PlaneGeometry(ROOM.width, ROOM.depth),
+      new THREE.MeshStandardMaterial({ color: 0x24272e, roughness: .22, metalness: .55 }));
+    ceil.rotation.x = Math.PI / 2;
+    ceil.position.y = C - .004;
+    scene.add(ceil);
+
+    // 墙顶一圈内嵌白色灯带（沿墙走，不是横贯房间）
+    const coveWhite = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    [[ROOM.width, 0, -hd + .06, 0], [ROOM.width, 0, hd - .06, Math.PI],
+     [ROOM.depth, -hw + .06, 0, Math.PI / 2], [ROOM.depth, hw - .06, 0, -Math.PI / 2]]
+      .forEach(([len, x, z, rot]) => {
+        const st = new THREE.Mesh(new THREE.PlaneGeometry(len, .075), coveWhite);
+        st.position.set(x, C - .14, z);
+        st.rotation.y = rot;
+        scene.add(st);
+      });
 
     /* ── 地面：真实平面反射 ──
        这一块是整个「造价感」的来源。拉不到 Reflector 就退成
        高金属度的深色地面：映不出东西，至少不是一块死板。 */
     if (Reflector) {
       const mirror = new Reflector(new THREE.PlaneGeometry(ROOM.width, ROOM.depth), {
-        textureWidth: 1024, textureHeight: 1024, color: 0x2a3040,
+        textureWidth: 1024, textureHeight: 1024, color: 0x9aa3b0,
       });
       mirror.rotation.x = -Math.PI / 2;
       mirror.position.y = 0.001;
@@ -255,39 +276,32 @@
       // 压一层半透明深色，把镜面压成「抛光石材」而不是「镜子」
       const veil = new THREE.Mesh(
         new THREE.PlaneGeometry(ROOM.width, ROOM.depth),
-        new THREE.MeshBasicMaterial({ color: 0x0a0d14, transparent: true, opacity: .5 }));
+        new THREE.MeshBasicMaterial({ color: 0xe7eaef, transparent: true, opacity: .58 }));
       veil.rotation.x = -Math.PI / 2;
       veil.position.y = 0.004;
       scene.add(veil);
     } else {
       const floor = new THREE.Mesh(
         new THREE.PlaneGeometry(ROOM.width, ROOM.depth),
-        new THREE.MeshStandardMaterial({ color: 0x0e1118, roughness: .18, metalness: .85 }));
+        new THREE.MeshStandardMaterial({ color: 0xdfe3e9, roughness: .12, metalness: .55 }));
       floor.rotation.x = -Math.PI / 2;
       scene.add(floor);
     }
 
     /* ── 吊顶：三条内嵌暖光槽 ── */
-    const coffer = new THREE.MeshBasicMaterial({ color: 0xfff0dc });
+    const coffer = new THREE.MeshBasicMaterial({ color: 0xffffff });
     [-2.1, 0, 2.1].forEach(z => {
       const s = new THREE.Mesh(new THREE.PlaneGeometry(ROOM.width - 1.6, .085), coffer);
       s.rotation.x = Math.PI / 2;
       s.position.set(0, C - .02, z);
       scene.add(s);
-      const l = new THREE.PointLight(WARM, 5.5, 10, 1.8);
+      const l = new THREE.PointLight(0xffffff, 6.5, 13, 1.5);
       l.position.set(0, C - .35, z);
       scene.add(l);
     });
 
-    /* ── 墙脚一道暖色洗光线 ── */
-    const baseMat = new THREE.MeshBasicMaterial({ color: 0xf6e2c6 });
-    [[ROOM.width, 0, -hd + .015, 0], [ROOM.depth, -hw + .015, 0, Math.PI / 2],
-     [ROOM.depth, hw - .015, 0, -Math.PI / 2]].forEach(([len, x, z, rot]) => {
-      const b = new THREE.Mesh(new THREE.PlaneGeometry(len, .014), baseMat);
-      b.position.set(x, .05, z);
-      b.rotation.y = rot;
-      scene.add(b);
-    });
+    /* 墙脚的暖色线去掉了：参考里的白空间没有这一笔，
+       亮场里它只会显脏。蓝色勾边改到每块内容自己身上。 */
 
     /* ── 六块内容：背发光，浮在墙前 ── */
     const panels = [];
@@ -367,15 +381,15 @@
     });
 
     /* ── 基础照明：只给一点。暗场靠的是「不照」 ── */
-    scene.add(new THREE.HemisphereLight(0x9fb6ff, 0x0a0d14, .48));
-    scene.add(new THREE.AmbientLight(0xffffff, .18));
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xc9d2dd, 1.55));
+    scene.add(new THREE.AmbientLight(0xffffff, .95));
 
     /* ── 辉光 ── */
     let composer = null;
     if (EffectComposer && RenderPass && UnrealBloomPass) {
       composer = new EffectComposer(renderer);
       composer.addPass(new RenderPass(scene, camera));
-      composer.addPass(new UnrealBloomPass(new THREE.Vector2(1, 1), 0.44, 0.60, 0.80));
+      composer.addPass(new UnrealBloomPass(new THREE.Vector2(1, 1), 0.30, 0.50, 0.94));
     }
 
     /* ── 相机：站在房间里，只转不绕 ── */
