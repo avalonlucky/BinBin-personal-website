@@ -6248,11 +6248,13 @@
     box-shadow 1.2s var(--ease),
     transform 1s var(--ease);
 }
-.cs-hall-frame:nth-child(1) { width: 15%; height: 56%; }
-.cs-hall-frame:nth-child(2) { width: 24%; height: 68%; }
-.cs-hall-frame:nth-child(3) { width: 19%; height: 60%; }
-.cs-hall-frame:nth-child(4) { width: 21%; height: 72%; }
-.cs-hall-frame:nth-child(5) { width: 14%; height: 52%; }
+/* 从左到右就是展厅里的真实次序：西墙灯光柜 → 背墙三块 → 东墙。
+   高矮宽窄按各自的形态给：灯光柜落地最高，荣誉墙最宽。 */
+.cs-hall-frame:nth-child(1) { width: 14%; height: 74%; }
+.cs-hall-frame:nth-child(2) { width: 21%; height: 60%; }
+.cs-hall-frame:nth-child(3) { width: 24%; height: 68%; }
+.cs-hall-frame:nth-child(4) { width: 21%; height: 60%; }
+.cs-hall-frame:nth-child(5) { width: 14%; height: 64%; }
 
 /* 灯箱里那层「内容」——现在是抽象的发光面，
    将来换成渲染图 / 现场照，只要塞一个 <img> 进来即可 */
@@ -6422,37 +6424,59 @@
   padding: clamp(16px, 2.4vw, 34px);
   border-right: 1px solid rgba(251, 251, 244, .1);
 }
-.cs-axo-svg { width: 100%; height: auto; max-width: 640px; }
-
-.cs-axo-floor  { fill: #0d1017; stroke: rgba(251, 251, 244, .13); stroke-width: 1; }
-.cs-axo-grid   { stroke: rgba(251, 251, 244, .09); stroke-width: .8; }
-.cs-axo-wall   { stroke: rgba(251, 251, 244, .16); stroke-width: 1; }
-.cs-axo-return { fill: #070a10; stroke: rgba(251, 251, 244, .1); stroke-width: 1; }
-.cs-axo-pool   { fill: rgb(var(--cs-accent-rgb) / .5); opacity: 0; transition: opacity .45s var(--ease); }
-
-.cs-axo-zone { cursor: pointer; }
-.cs-axo-zone .cs-axo-panel {
-  fill: #1a1f2b;
-  stroke: rgba(251, 251, 244, .2);
-  stroke-width: 1;
-  transition: fill .38s var(--ease), stroke .38s var(--ease);
+/* 轴测 SVG 已经退役：那张手算的等轴测画的是第一版（内容全在一面背墙上）。
+   最终布局是四面墙都有内容的房间，与其再手算一张 SVG，不如直接用
+   用户画的那张平面图——按构造就是对的，热区是覆在图上的按钮。 */
+.cs-axo-canvas { --axo-ar: 16 / 10; }
+.cs-axo-plan {
+  position: relative;
+  width: 100%;
+  max-width: 660px;
+  /* 和 .cs-room 同宽同比例：3D 顶掉平面图时文档高度不跳 */
+  aspect-ratio: var(--axo-ar);
 }
-.cs-axo-zone .cs-axo-dot {
-  fill: #05070a;
-  stroke: var(--cs-accent-lift);
-  stroke-width: 1.4;
-  transition: fill .38s var(--ease);
+.cs-axo-plan img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  /* 线稿是黑线白底，这一节是深色的，反相之后才融得进去 */
+  filter: invert(1) hue-rotate(180deg) brightness(.92) contrast(1.05);
 }
-.cs-axo-zone .cs-axo-num {
-  fill: var(--cs-accent-lift);
+.cs-axo-zone {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1.5px solid rgba(251, 251, 244, .26);
+  border-radius: 3px;
+  background: rgb(251 251 244 / .05);
+  cursor: pointer;
+  transition: background .38s var(--ease), border-color .38s var(--ease),
+              box-shadow .38s var(--ease);
+}
+.cs-axo-zone i {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.4px solid var(--cs-accent-lift);
+  background: #05070a;
   font-family: var(--f-body);
   font-size: 11px;
-  transition: fill .38s var(--ease);
+  font-style: normal;
+  color: var(--cs-accent-lift);
+  transition: background .38s var(--ease), color .38s var(--ease);
 }
-.cs-axo-zone.is-on .cs-axo-panel { fill: rgb(var(--cs-accent-rgb) / .34); stroke: var(--cs-accent-lift); }
-.cs-axo-zone.is-on .cs-axo-dot   { fill: var(--cs-accent-lift); }
-.cs-axo-zone.is-on .cs-axo-num   { fill: #05070a; }
-.cs-axo-zone.is-on .cs-axo-pool  { opacity: 1; }
+.cs-axo-zone.is-on {
+  border-color: var(--cs-accent-lift);
+  background: rgb(var(--cs-accent-rgb) / .34);
+  box-shadow: 0 0 0 1px rgb(var(--cs-accent-rgb) / .3), 0 0 22px rgb(var(--cs-accent-rgb) / .3);
+}
+.cs-axo-zone.is-on i { background: var(--cs-accent-lift); color: #05070a; }
+.cs-axo-zone:focus-visible { outline: 2px solid var(--cs-accent-lift); outline-offset: 2px; }
 
 .cs-axo-info {
   display: grid;
@@ -6602,14 +6626,15 @@
   position: relative;
   display: none;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  max-width: 660px;
+  aspect-ratio: var(--axo-ar, 16 / 10);
   border-radius: 8px;
   overflow: hidden;
   background: #05070a;
   cursor: grab;
 }
 .cs-axo.is-3d .cs-room { display: block; }
-.cs-axo.is-3d .cs-axo-svg { display: none; }
+.cs-axo.is-3d .cs-axo-plan { display: none; }
 .cs-axo.is-dragging .cs-room { cursor: grabbing; }
 .cs-room canvas { display: block; width: 100%; height: 100%; }
 .cs-axo.is-3d .cs-axo-canvas { padding: clamp(12px, 1.4vw, 20px); }
@@ -6661,7 +6686,7 @@
 }
 
 @media (max-width: 900px) {
-  .cs-room { aspect-ratio: 4 / 3; }
+  .cs-axo-canvas { --axo-ar: 4 / 3; }
 }
 @media (max-width: 560px) {
   .cs-room-ui { top: 8px; right: 8px; }

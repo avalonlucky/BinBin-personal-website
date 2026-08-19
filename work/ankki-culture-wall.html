@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=83">
-  <link rel="stylesheet" href="../css/case.css?v=111">
+  <link rel="stylesheet" href="../css/case.css?v=113">
   <link rel="stylesheet" href="../css/admin-auth.css?v=4">
 </head>
 <body class="case-page is-editorial is-culture">
@@ -51,11 +51,11 @@
             <div class="cs-hall-scene">
               <div class="cs-hall-floor" aria-hidden="true"></div>
               <div class="cs-hall-frames" aria-hidden="true">
-                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>形象墙</b><small>ENTRY</small></div>
-                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>客户案例</b><small>CLIENTS</small></div>
+                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>灯光柜</b><small>PRODUCT</small></div>
+                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>产品演示</b><small>DEMO</small></div>
                 <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>荣誉资质</b><small>AWARDS</small></div>
-                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>电子屏</b><small>SCREENS</small></div>
-                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>产品展示</b><small>PRODUCT</small></div>
+                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>解决方案</b><small>SOLUTION</small></div>
+                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>宣传片</b><small>FILM</small></div>
               </div>
               <div class="cs-hall-pools" aria-hidden="true">
                 <span class="cs-hall-pool"></span>
@@ -189,98 +189,56 @@
         <!-- ── 04 展厅设计 ── -->
         <section class="cs-section" data-toc="展厅设计">
           <p class="cs-num">04 — 展厅设计</p>
-          <h2 class="cs-title">展厅是参观动线的第一站，<em>一面 11.4 米的墙只允许讲四件事</em></h2>
-          <p class="cs-lede">从电梯出来经前台向右即进入展厅。它集中了公司最想讲的东西——谁在用、谁认可、能力覆盖到哪、产品长什么样。访客停留不过十来分钟，所以这面墙上的每一段都得有存在的理由。<strong>下面是按施工图尺寸在浏览器里搭出来的展厅：拖动转视角，点展板或图例看对应展位。</strong></p>
+          <h2 class="cs-title">展厅是一个独立房间，<em>四面墙各讲一件事</em></h2>
+          <p class="cs-lede">从电梯出来经前台向右进入展厅。它集中了公司最想讲的东西——产品跑起来什么样、谁认可、能力覆盖到哪、技术怎么长出来的。访客停留不过十来分钟，所以每一面墙都得有存在的理由：背墙三块主内容，两侧各一块，转身出门那一面是一条长灯箱。<strong>下面是按最终布局在浏览器里搭出来的展厅，相机站在房间里：拖动转头看四周，点内容或图例走过去。</strong></p>
 
           <div class="cs-axo" data-axo>
             <div class="cs-axo-head">
-              <b>展厅轴测示意 · Axonometric</b>
-              <small data-axo-hint>点击编号 / 图例查看展位</small>
+              <b>展厅平面 · 最终布局</b>
+              <small data-axo-hint>点编号或图例查看内容</small>
             </div>
 
             <div class="cs-axo-stage">
               <div class="cs-axo-canvas">
                 <div class="cs-room" data-room aria-hidden="true"></div>
-                <svg class="cs-axo-svg" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="展厅轴测示意图，四个展位可点击">
-                  <defs>
-                    <linearGradient id="cs-axo-wall-g" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%"   stop-color="#181e29"/>
-                      <stop offset="100%" stop-color="#0b0e15"/>
-                    </linearGradient>
-                  </defs>
-                  <!-- 左侧转角墙：给这个盒子一个角，不然轴测图看着是平的 -->
-                  <polygon class="cs-axo-return" points="90,40 90,150 30,240 30,130"/>
-                  <!-- 地面 -->
-                  <polygon class="cs-axo-floor" points="90,150 630,240 570,330 30,240"/>
-                  <g class="cs-axo-grid">
-                    <line x1="75" y1="172.5" x2="615" y2="262.5"/>
-                    <line x1="60" y1="195"   x2="600" y2="285"/>
-                    <line x1="45" y1="217.5" x2="585" y2="307.5"/>
-                    <line x1="198" y1="168" x2="138" y2="258"/>
-                    <line x1="306" y1="186" x2="246" y2="276"/>
-                    <line x1="414" y1="204" x2="354" y2="294"/>
-                    <line x1="522" y1="222" x2="462" y2="312"/>
-                  </g>
-                  <!-- 背墙 -->
-                  <polygon class="cs-axo-wall" points="90,40 630,130 630,240 90,150" fill="url(#cs-axo-wall-g)"/>
-
-                  <!-- 展位 01 客户案例 -->
-                  <g class="cs-axo-zone" data-axo-zone="0" tabindex="0" role="button" aria-label="展位 01 客户案例墙">
-                    <ellipse class="cs-axo-pool" cx="173.4" cy="213.9" rx="52" ry="17" transform="rotate(9.5 173.4 213.9)"/>
-                    <polygon class="cs-axo-panel" points="133.2,63.2 273.6,86.6 273.6,160.6 133.2,137.2"/>
-                    <circle class="cs-axo-dot" cx="173.4" cy="213.9" r="12"/>
-                    <text class="cs-axo-num" x="173.4" y="218" text-anchor="middle">1</text>
-                  </g>
-
-                  <!-- 展位 02 荣誉资质 -->
-                  <g class="cs-axo-zone" data-axo-zone="1" tabindex="0" role="button" aria-label="展位 02 荣誉资质">
-                    <ellipse class="cs-axo-pool" cx="308.4" cy="236.4" rx="42" ry="15" transform="rotate(9.5 308.4 236.4)"/>
-                    <polygon class="cs-axo-panel" points="289.8,89.3 387,105.5 387,179.5 289.8,163.3"/>
-                    <circle class="cs-axo-dot" cx="308.4" cy="236.4" r="12"/>
-                    <text class="cs-axo-num" x="308.4" y="240.5" text-anchor="middle">2</text>
-                  </g>
-
-                  <!-- 展位 03 电子屏 -->
-                  <g class="cs-axo-zone" data-axo-zone="2" tabindex="0" role="button" aria-label="展位 03 三块电子屏">
-                    <ellipse class="cs-axo-pool" cx="427.2" cy="256.2" rx="48" ry="16" transform="rotate(9.5 427.2 256.2)"/>
-                    <polygon class="cs-axo-panel" points="397.8,107.3 516.6,127.1 516.6,201.1 397.8,181.3"/>
-                    <circle class="cs-axo-dot" cx="427.2" cy="256.2" r="12"/>
-                    <text class="cs-axo-num" x="427.2" y="260.3" text-anchor="middle">3</text>
-                  </g>
-
-                  <!-- 展位 04 产品展示 -->
-                  <g class="cs-axo-zone" data-axo-zone="3" tabindex="0" role="button" aria-label="展位 04 产品展示造型端">
-                    <ellipse class="cs-axo-pool" cx="535.2" cy="274.2" rx="36" ry="13" transform="rotate(9.5 535.2 274.2)"/>
-                    <polygon class="cs-axo-panel" points="527.4,128.9 603,141.5 603,215.5 527.4,202.9"/>
-                    <circle class="cs-axo-dot" cx="535.2" cy="274.2" r="12"/>
-                    <text class="cs-axo-num" x="535.2" y="278.3" text-anchor="middle">4</text>
-                  </g>
-                </svg>
+                <div class="cs-axo-plan">
+                  <img src="../assets/work/culture-wall/showroom-plan.webp" width="1640" height="847"
+                       alt="展厅平面：背墙三块内容，两侧各一块，进门一侧一条长灯箱"
+                       loading="lazy" decoding="async">
+                    <button class="cs-axo-zone" type="button" data-axo-zone="0" style="left:18.29%;top:1.42%;width:16.46%;height:10.98%" aria-label="展位 01 产品环境演示电视"><i>1</i></button>
+                    <button class="cs-axo-zone" type="button" data-axo-zone="1" style="left:42.07%;top:1.42%;width:16.16%;height:10.98%" aria-label="展位 02 荣誉资质"><i>2</i></button>
+                    <button class="cs-axo-zone" type="button" data-axo-zone="2" style="left:65.85%;top:1.42%;width:16.16%;height:10.98%" aria-label="展位 03 解决方案电视"><i>3</i></button>
+                    <button class="cs-axo-zone" type="button" data-axo-zone="3" style="left:6.59%;top:18.3%;width:5.18%;height:40.73%" aria-label="展位 04 产品展示灯光柜"><i>4</i></button>
+                    <button class="cs-axo-zone" type="button" data-axo-zone="4" style="left:88.9%;top:15.11%;width:5.0%;height:40.14%" aria-label="展位 05 播放宣传片的电视"><i>5</i></button>
+                    <button class="cs-axo-zone" type="button" data-axo-zone="5" style="left:6.4%;top:68.24%;width:37.5%;height:9.09%" aria-label="展位 06 技术演进灯箱"><i>6</i></button>
+                </div>
               </div>
 
               <div class="cs-axo-info">
                 <p class="cs-axo-info-idx" data-axo-idx>ZONE 01</p>
-                <h3 data-axo-name>客户案例墙</h3>
-                <p data-axo-copy>进展厅先看谁在用。数据安全讲起来抽象，一整片客户单位名称是最省解释的开场。</p>
+                <h3 data-axo-name>产品环境演示电视</h3>
+                <p data-axo-copy>进门左手第一块。产品跑在什么环境里、界面长什么样，用动态画面讲比用文字讲省一半时间。</p>
                 <dl data-axo-facts></dl>
               </div>
             </div>
 
             <div class="cs-axo-legend">
-              <button class="cs-axo-leg" type="button" aria-pressed="true"><i>1</i>客户案例墙</button>
+              <button class="cs-axo-leg" type="button" aria-pressed="true"><i>1</i>产品环境演示电视</button>
               <button class="cs-axo-leg" type="button" aria-pressed="false"><i>2</i>荣誉资质</button>
-              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>3</i>三块电子屏</button>
-              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>4</i>产品展示造型端</button>
+              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>3</i>解决方案电视</button>
+              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>4</i>产品展示灯光柜</button>
+              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>5</i>播放宣传片的电视</button>
+              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>6</i>技术演进灯箱</button>
             </div>
           </div>
 
           <div class="cs-docs">
             <button class="cs-doc" type="button"
                     data-zoom="../assets/work/culture-wall/showroom-elevation.webp"
-                    data-zoom-title="展厅背景墙立面大样图"
-                    data-zoom-note="轴测图上的四个展位，在施工图上就是这条 11400 mm 的立面">
-              <div class="cs-doc-fig"><img src="../assets/work/culture-wall/showroom-elevation.webp" width="1800" height="825" alt="展厅背景墙立面大样图" loading="lazy" decoding="async"></div>
-              <div class="cs-doc-cap"><b>对应的施工立面</b>轴测是示意，这张才是照着做的图</div>
+                    data-zoom-title="展厅背景墙立面大样图（第一版）"
+                    data-zoom-note="第一版把内容全排在一面 11400 mm 的背墙上，其中包含客户案例墙">
+              <div class="cs-doc-fig"><img src="../assets/work/culture-wall/showroom-elevation.webp" width="1800" height="825" alt="展厅背景墙立面大样图，第一版方案" loading="lazy" decoding="async"></div>
+              <div class="cs-doc-cap"><b>第一版立面</b>内容全压在一面墙上；后来客户案例墙整块搬去了前台弧墙，其余分到四面</div>
             </button>
             <div class="cs-doc is-slot" aria-label="展厅 3D 渲染图位">
               <div class="cs-doc-fig"><span class="cs-doc-empty">展厅 3D 渲染图<br><small>assets/work/culture-wall/showroom-render.webp</small></span></div>
@@ -527,7 +485,7 @@
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2l12 12M14 2L2 14"/></svg>
                 </button>
                 <p>Maridian 作为项目负责人，统筹了昂楷科技深圳前海总部五、六两层的文化墙与展厅项目，覆盖三十多个展示区域、十余个协作部门，项目总预算约 29 万元。</p>
-                <p>项目不从墙面造型开始，而是先完成内容清单、字数规格与参观动线：访客从前台进入展厅集中理解公司，沿弧形文化墙看见发展历程与典型客户，最后回到办公区。展厅作为核心，把客户案例、荣誉资质、电子屏与产品陈列压缩在一面 11.4 米的墙上。</p>
+                <p>项目不从墙面造型开始，而是先完成内容清单、字数规格与参观动线：访客从前台进入展厅集中理解公司，沿弧形文化墙看见发展历程与典型客户，最后回到办公区。展厅作为核心，用四面墙分担产品演示、荣誉资质、解决方案、实体陈列与技术演进；客户案例则整块前移到前台正对大门的弧墙上，进门第一眼就看得见。</p>
                 <p>他同时负责供应商筛选比价、图纸深化、材料与工艺取舍、预算变更汇报、施工排期与现场验收。制作部分逐项做出前后对照表，主动取消四处低价值点位，把预算集中到形象墙与展厅，并通过两轮谈判把变更增项从两万余元压到 1.5 万元。</p>
                 <p>项目从 2022 年 6 月签约推进到 2023 年 7 月结算，最终以一份补充协议完成全部增项结清。</p>
               </div>
@@ -600,8 +558,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="../js/case.js?v=76"></script>
-<script src="../js/showroom3d.js?v=7"></script>
+<script src="../js/case.js?v=78"></script>
+<script src="../js/showroom3d.js?v=13"></script>
 <script src="../js/wall3d.js?v=7"></script>
 <script src="../js/admin-auth.js?v=5"></script>
 <script src="../js/site-analytics.js?v=3"></script>
