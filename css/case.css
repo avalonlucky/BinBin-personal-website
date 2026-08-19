@@ -6668,3 +6668,62 @@
   .cs-room-ui button { padding: 6px 10px; font-size: 11px; }
   .cs-room-hint { bottom: 8px; padding: 6px 12px; font-size: 11px; }
 }
+
+/* ── 单面墙 3D：把一张施工图按真实毫米立起来 ──
+   壳子先用 aspect-ratio 把高度锁死，画布是后来才塞进去的，
+   不锁的话首屏高度和加载完的高度对不上，ScrollTrigger 全歪。 */
+.cs-wall {
+  margin: clamp(26px, 3.4vw, 46px) 0 0;
+}
+.cs-wall-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #05070a;
+  cursor: grab;
+  touch-action: pan-y;          /* 竖着划仍然是翻页，不抢滚动 */
+}
+.cs-wall-stage.is-dragging { cursor: grabbing; }
+.cs-wall-stage canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* 画布是后 append 的，同为定位元素时会盖住按钮——
+   展厅那个查看器的画布是静态流内元素，没这问题，这里得显式抬一层 */
+.cs-wall-stage .cs-room-ui,
+.cs-wall-stage .cs-room-hint { z-index: 2; }
+/* WebGL 起不来时这张实景照就是兜底；起来了就淡出让位 */
+.cs-wall-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity .9s var(--ease);
+}
+.cs-wall.is-3d .cs-wall-photo { opacity: 0; pointer-events: none; }
+
+.cs-wall figcaption {
+  max-width: 46em;
+  margin: 0;
+  padding-top: 14px;
+  color: var(--cs-ink-2);
+  font-family: var(--f-cjk);
+  font-size: 14px;
+  line-height: 1.76;
+}
+.cs-wall figcaption b {
+  margin-right: .5em;
+  color: var(--cs-ink);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .cs-wall-stage { aspect-ratio: 4 / 3; }
+}

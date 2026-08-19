@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=83">
-  <link rel="stylesheet" href="../css/case.css?v=107">
+  <link rel="stylesheet" href="../css/case.css?v=109">
   <link rel="stylesheet" href="../css/admin-auth.css?v=4">
 </head>
 <body class="case-page is-editorial is-culture">
@@ -295,11 +295,41 @@
           <h2 class="cs-title">出了展厅，<em>参观动线沿椭圆环形继续</em></h2>
           <p class="cs-lede">人资部 → 发展规划与服务网络（走廊对面是政府来访照片墙）→ 市场部第二面荣誉墙 → 发展历程 → 企业文化与典型客户墙 → 战略合作屋 → 研发部，最后回到前台。这些墙面同属一套视觉语言，各自承担不同的信息。</p>
 
-          <div class="cs-docs">
-            <div class="cs-doc is-slot" aria-label="前台形象墙图位">
-              <div class="cs-doc-fig"><span class="cs-doc-empty">前台形象墙<br><small>ANKKI 背光标识 + 三角几何装饰</small></span></div>
-              <div class="cs-doc-cap"><b>前台形象墙</b>电梯出来第一眼，旁侧走廊陈列优秀员工展板</div>
+          <h3 class="cs-sub">电梯开门第一眼：前台形象墙</h3>
+          <p>整条动线的起点，也是唯一一处不在展厅里的重点墙面。四米出头的一面弧墙，只放一组标识——4050 × 2850 的墙上，标识组合占 1880 宽、居中，下沿离地 1900，正好落在站着平视再抬一点的位置。上方那片三角形穿孔从密到疏往下散开，背后打光，把大面积的白墙从「空」变成「有质感的空」。</p>
+
+          <figure class="cs-wall">
+            <div class="cs-wall-stage" data-wall
+                 data-wall-size="4050,2850"
+                 data-wall-art="../assets/work/culture-wall/room/entry-logo.webp"
+                 data-wall-art-box="1092,574,1872,370"
+                 data-wall-deco="triangles"
+                 data-wall-dims="h:1086:400:1880:1880 标识总宽|v:900:570:380:380 图形高|v:1086:950:1900:1900 下沿离地|h:0:1250:4050:1600 视平线|h:0:2770:4050:4050 墙宽|v:4050:0:2850:2850 墙高">
+              <img class="cs-wall-photo" src="../assets/work/culture-wall/entry-wall.webp"
+                   width="1440" height="960" alt="昂楷科技前台形象墙实景" loading="lazy" decoding="async">
+              <div class="cs-room-ui">
+                <button type="button" data-wall-toggle hidden aria-pressed="false">尺寸</button>
+              </div>
+              <p class="cs-room-hint" data-wall-hint>拖动可环视</p>
             </div>
+            <figcaption><b>按施工图立起来的形象墙</b>墙体、标识、离地高度全部照 AI 源文件里的毫米建模，不是示意图。拖动换视角，点「尺寸」把图纸上的标注调出来——1900 的下沿高度是从 1600 视平线推的。起不来 WebGL 的设备会直接显示实景照。</figcaption>
+          </figure>
+
+          <div class="cs-docs">
+            <button class="cs-doc" type="button"
+                    data-zoom="../assets/work/culture-wall/entry-wall.webp"
+                    data-zoom-title="前台形象墙实景"
+                    data-zoom-note="背发光标识 + 三角穿孔，弧形墙面向两侧收进">
+              <div class="cs-doc-fig"><img src="../assets/work/culture-wall/entry-wall.webp" width="1440" height="960" alt="昂楷科技前台形象墙实景照片" loading="lazy" decoding="async"></div>
+              <div class="cs-doc-cap"><b>落地实物</b>电梯出来第一眼，旁侧走廊陈列优秀员工展板</div>
+            </button>
+            <button class="cs-doc" type="button"
+                    data-zoom="../assets/work/culture-wall/entry-wall-spec.webp"
+                    data-zoom-title="前台形象墙标识定位图"
+                    data-zoom-note="标识总宽 1880、图形高 380、中文字高 210、下沿离地 1900">
+              <div class="cs-doc-fig"><img src="../assets/work/culture-wall/entry-wall-spec.webp" width="2000" height="1346" alt="前台形象墙标识定位施工图" loading="lazy" decoding="async"></div>
+              <div class="cs-doc-cap"><b>对应的定位图</b>上面那面三维墙，就是照这张图的毫米搭的</div>
+            </button>
             <div class="cs-doc is-slot" aria-label="发展规划与服务网络图位">
               <div class="cs-doc-fig"><span class="cs-doc-empty">发展规划 · 服务网络<br><small>走廊两侧对望</small></span></div>
               <div class="cs-doc-cap"><b>走廊对望的两侧</b>一侧发展规划与全国服务网络地图，一侧政府来访照片墙</div>
@@ -314,7 +344,7 @@
             </div>
           </div>
 
-          <p class="cs-note">图位待补：这一节放展厅实拍与各部门墙面的现场照，文件放进 <code>assets/work/culture-wall/</code> 后替换即可。</p>
+          <p class="cs-note">其余图位待补：各部门墙面的现场照与设计稿陆续补齐，规则同上——设计稿按毫米立成三维，实景照并排放在下面。</p>
         </section>
 
         <!-- ── 06 荣誉分层 ── -->
@@ -532,6 +562,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="../js/case.js?v=76"></script>
 <script src="../js/showroom3d.js?v=7"></script>
+<script src="../js/wall3d.js?v=7"></script>
 <script src="../js/admin-auth.js?v=5"></script>
 <script src="../js/site-analytics.js?v=3"></script>
 </body>
