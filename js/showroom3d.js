@@ -49,11 +49,11 @@
   // **换真图只改这一行，几何和灯光都不用动。**
   const ART_DIR = '../assets/work/culture-wall/room/';
   const ZONES = [
-    { key: 'demo',     wall: 'back',  from: 1.549, to: 3.694, kind: 'screen',   label: '产品环境演示电视', art: null },
+    { key: 'demo',     wall: 'back',  from: 1.549, to: 3.694, kind: 'screen',   label: '产品服务',         art: null },
     { key: 'awards',   wall: 'back',  from: 4.648, to: 6.752, kind: 'panel',    label: '荣誉资质',         art: null },
-    { key: 'solution', wall: 'back',  from: 7.745, to: 9.851, kind: 'screen',   label: '解决方案电视',     art: null },
-    { key: 'product',  wall: 'west',  from: 1.134, to: 3.870, kind: 'cabinet',  label: '产品展示灯光柜',   art: null },
-    { key: 'film',     wall: 'east',  from: 0.920, to: 3.617, kind: 'screen',   label: '播放宣传片的电视', art: null },
+    { key: 'solution', wall: 'back',  from: 7.745, to: 9.851, kind: 'screen',   label: '解决方案',         art: null },
+    { key: 'product',  wall: 'west',  from: 1.134, to: 3.870, kind: 'cabinet',  label: '样机展示',         art: null },
+    { key: 'film',     wall: 'east',  from: 0.920, to: 3.617, kind: 'screen',   label: '宣传片',           art: null },
     { key: 'tech',     wall: 'front', from: 0.000, to: 4.886, kind: 'lightbox', label: '技术演进灯箱',     art: null },
   ];
 
@@ -92,33 +92,37 @@
     const c = cv.getContext('2d');
     const W = cv.width, H = cv.height;
 
-    c.fillStyle = '#161a23';
+    // 实景的展板是白色造型板 + 蓝色刻线，不是深色板
+    c.fillStyle = '#f4f6fa';
     c.fillRect(0, 0, W, H);
+    c.strokeStyle = 'rgba(42,86,190,.55)';
+    c.lineWidth = Math.max(1, H * .012);
+    c.strokeRect(H * .05, H * .05, W - H * .1, H - H * .1);
 
     if (z.key === 'awards') {
       // 荣誉墙：只放几块，留白拉开分量
       [[0.10, 0.14, 0.34, 0.32], [0.54, 0.14, 0.34, 0.32],
        [0.10, 0.56, 0.34, 0.30], [0.54, 0.56, 0.34, 0.30]].forEach(([x, y, w2, h2], i) => {
-        c.fillStyle = i === 0 ? 'rgba(206,216,255,.26)' : 'rgba(206,216,255,.15)';
+        c.fillStyle = i === 0 ? 'rgba(42,86,190,.30)' : 'rgba(42,86,190,.16)';
         c.fillRect(x * W, y * H, w2 * W, h2 * H);
       });
     } else if (z.kind === 'lightbox') {
       // 技术演进灯箱：一条横向时间轴
-      c.fillStyle = 'rgba(206,216,255,.10)';
+      c.fillStyle = 'rgba(42,86,190,.35)';
       c.fillRect(0, H * 0.46, W, H * 0.02);
       for (let i = 0; i < 7; i++) {
         const x = W * (0.08 + i * 0.14);
-        c.fillStyle = 'rgba(206,216,255,.30)';
+        c.fillStyle = 'rgba(42,86,190,.75)';
         c.beginPath();
         c.arc(x, H * 0.47, H * 0.022, 0, Math.PI * 2);
         c.fill();
-        c.fillStyle = 'rgba(206,216,255,.13)';
+        c.fillStyle = 'rgba(42,86,190,.20)';
         c.fillRect(x - W * 0.045, H * (i % 2 ? 0.56 : 0.24), W * 0.09, H * 0.16);
       }
     } else if (z.kind === 'cabinet') {
       // 灯光柜：分层的搁板
       for (let i = 0; i < 4; i++) {
-        c.fillStyle = `rgba(206,216,255,${0.10 + i * 0.03})`;
+        c.fillStyle = `rgba(42,86,190,${0.14 + i * 0.04})`;
         c.fillRect(W * 0.12, H * (0.08 + i * 0.23), W * 0.76, H * 0.14);
       }
     }
@@ -146,7 +150,7 @@
     }
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a0e15);
+    scene.background = new THREE.Color(0x1b2033);
     // 站在一个 11 米的房间里不该有雾，去掉
 
     const camera = new THREE.PerspectiveCamera(52, 16 / 9, 0.05, 60);
@@ -154,32 +158,81 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.36;
+    renderer.toneMappingExposure = 1.05;
     mount.appendChild(renderer.domElement);
 
     const hw = ROOM.width / 2, hd = ROOM.depth / 2;
 
     /* ── 房间外壳 ──
-       一个 BackSide 的盒子＝从里面看的四面墙 + 吊顶 + 地面。
-       底色不能太黑：这是一屏要「看懂空间」的图，不是氛围渲染。 */
+       材质全部照实景照定，不是凭空调的氛围色：
+       墙是白色科技造型板，地是蓝灰环氧自流平，
+       吊顶是深色铝格栅 + 白灯带，墙顶一圈蓝色灯槽。
+       上一版整间是灰蓝盒子，跟真实空间完全不像。 */
     const shellMat = new THREE.MeshStandardMaterial({
-      color: 0x3d4759, roughness: .95, metalness: 0, side: THREE.BackSide,
+      color: 0xeceef3, roughness: .78, metalness: .02, side: THREE.BackSide,
     });
     const box = new THREE.Mesh(
       new THREE.BoxGeometry(ROOM.width, ROOM.ceiling, ROOM.depth), shellMat);
     box.position.set(0, ROOM.ceiling / 2, 0);
     scene.add(box);
 
-    // 地面单独铺一层：比墙暗，但有一点反射
+    // 地面：蓝灰自流平，磨得比较亮，有一点映
     const floor = new THREE.Mesh(
       new THREE.PlaneGeometry(ROOM.width, ROOM.depth),
-      new THREE.MeshStandardMaterial({ color: 0x272f40, roughness: .5, metalness: .25 }));
+      new THREE.MeshStandardMaterial({ color: 0x4f5470, roughness: .40, metalness: .26 }));
     floor.rotation.x = -Math.PI / 2;
     floor.position.y = 0.002;
     scene.add(floor);
 
+    // 吊顶：深色铝格栅。实景里它是整间最暗的一块，
+    // 白墙才跳得出来——顶也做成白的会糊成一片。
+    const ceilTex = (() => {
+      const cv = document.createElement('canvas');
+      cv.width = 8; cv.height = 256;
+      const c = cv.getContext('2d');
+      c.fillStyle = '#262b3a'; c.fillRect(0, 0, 8, 256);
+      c.fillStyle = '#5b6480';
+      for (let i = 0; i < 256; i += 8) c.fillRect(0, i, 8, 4);
+      const t = new THREE.CanvasTexture(cv);
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.wrapS = t.wrapT = THREE.RepeatWrapping;
+      t.repeat.set(1, 26);
+      return t;
+    })();
+    const ceil = new THREE.Mesh(
+      new THREE.PlaneGeometry(ROOM.width, ROOM.depth),
+      new THREE.MeshStandardMaterial({ color: 0xffffff, map: ceilTex, roughness: .9 }));
+    ceil.rotation.x = Math.PI / 2;
+    ceil.position.y = ROOM.ceiling - .002;
+    scene.add(ceil);
+
+    // 吊顶上的白灯带：三条顺着房间长向
+    const stripMat = new THREE.MeshBasicMaterial({ color: 0xf2f6ff });
+    [-1.35, 0, 1.35].forEach(z => {
+      const st = new THREE.Mesh(new THREE.PlaneGeometry(ROOM.width - .6, .1), stripMat);
+      st.rotation.x = Math.PI / 2;
+      st.position.set(0, ROOM.ceiling - .012, z);
+      scene.add(st);
+    });
+
+    // 墙顶一圈蓝色灯槽——实景里最有辨识度的一笔
+    const coveMat = new THREE.MeshBasicMaterial({ color: 0x2f7bff });
+    [[ROOM.width, 0, -hd + .02, 0],
+     [ROOM.width, 0, hd - .02, Math.PI],
+     [ROOM.depth, -hw + .02, 0, Math.PI / 2],
+     [ROOM.depth, hw - .02, 0, -Math.PI / 2]].forEach(([len, x, z, rot]) => {
+      const cove = new THREE.Mesh(new THREE.PlaneGeometry(len, .07), coveMat);
+      cove.position.set(x, ROOM.ceiling - .10, z);
+      cove.rotation.y = rot;
+      scene.add(cove);
+    });
+    // 离吊顶太近会在顶上洗出一块亮蓝斑，放到墙腰的高度
+    const coveLight = new THREE.PointLight(0x3f86ff, 7, 15, 1.6);
+    coveLight.position.set(0, ROOM.ceiling - .75, 0);
+    scene.add(coveLight);
+
     // 墙脚一圈压暗的踢脚，替代做不起的接触阴影
-    const skirtMat = new THREE.MeshStandardMaterial({ color: 0x090c12, roughness: 1 });
+    const skirtMat = new THREE.MeshStandardMaterial({ color: 0xd2d6e0, roughness: .85 });
     [[ROOM.width, 0, -hd + .012, 0],
      [ROOM.width, 0, hd - .012, Math.PI],
      [ROOM.depth, -hw + .012, 0, Math.PI / 2],
@@ -191,7 +244,7 @@
     });
 
     // 棱线：暗部里没有这几条线，墙和吊顶会糊成一片
-    const edgeMat = new THREE.LineBasicMaterial({ color: ACCENT_LIGHT, transparent: true, opacity: .3 });
+    const edgeMat = new THREE.LineBasicMaterial({ color: 0x8f97ad, transparent: true, opacity: .35 });
     const seg = (a, b) => {
       const g = new THREE.BufferGeometry().setFromPoints(
         [new THREE.Vector3(...a), new THREE.Vector3(...b)]);
@@ -219,7 +272,7 @@
         color: 0xffffff,
         roughness: .82,
         metalness: .04,
-        emissive: new THREE.Color(ACCENT),
+        emissive: new THREE.Color(ACCENT_LIGHT),
         emissiveIntensity: 0,
         map: makeTexture(THREE, z, p.len, size.height),
       });
@@ -259,7 +312,7 @@
       // 一圈灯槽
       const edge = new THREE.Mesh(
         new THREE.PlaneGeometry(p.len + .1, size.height + .1),
-        new THREE.MeshBasicMaterial({ color: ACCENT_LIGHT, transparent: true, opacity: 0 }));
+        new THREE.MeshBasicMaterial({ color: 0x2f7bff, transparent: true, opacity: 0 }));
       edge.position.set(p.x + p.nx * .008, cy, p.z + p.nz * .008);
       edge.rotation.y = p.rot;
       scene.add(edge);
@@ -295,10 +348,11 @@
     });
 
     /* ── 基础照明 ── */
-    scene.add(new THREE.HemisphereLight(0xd6e0ff, 0x1c2331, 2.0));
-    scene.add(new THREE.AmbientLight(0xffffff, .86));
-    const wash = new THREE.PointLight(0x4265f5, 4.0, 13, 2);
-    wash.position.set(0, 1.5, 0);   // 放 2.4 米高会在吊顶上洗出一块亮蓝斑
+    scene.add(new THREE.HemisphereLight(0xeaf0ff, 0x3c4160, 1.5));
+    scene.add(new THREE.AmbientLight(0xffffff, .55));
+    // 白墙 + 蓝灯槽已经够亮，中心补光只留一点压地面的反射
+    const wash = new THREE.PointLight(0xdfe8ff, 3.0, 12, 2);
+    wash.position.set(0, 1.6, 0);
     scene.add(wash);
 
     /* ── 相机：站在房间里，只转不绕 ──
@@ -470,9 +524,9 @@
 
       panels.forEach((p, i) => {
         const on = allLights || i === active;
-        p.material.emissiveIntensity = lerp(p.material.emissiveIntensity, on ? .15 : .04, .09);
-        p.userData.edge.material.opacity = lerp(p.userData.edge.material.opacity, on ? .62 : .08, .09);
-        spots[i].intensity = lerp(spots[i].intensity, on ? 13 : 6, .09);
+        p.material.emissiveIntensity = lerp(p.material.emissiveIntensity, on ? .09 : 0, .09);
+        p.userData.edge.material.opacity = lerp(p.userData.edge.material.opacity, on ? .85 : .16, .09);
+        spots[i].intensity = lerp(spots[i].intensity, on ? 11 : 4, .09);
         const s = p.userData.screen;
         if (s) s.material.color.lerp(on ? screenOn : screenOff, .09);
       });
