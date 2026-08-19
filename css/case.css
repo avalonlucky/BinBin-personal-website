@@ -6727,3 +6727,14 @@
 @media (max-width: 900px) {
   .cs-wall-stage { aspect-ratio: 4 / 3; }
 }
+
+/* ── 动线平面图：图比目录页那张宽得多，右栏再挤就读不了 ── */
+.cs-tocmap.is-route { grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr); }
+.cs-tocmap.is-route .cs-prio { padding: 13px 15px; gap: 12px; }
+.cs-tocmap.is-route .cs-prio h4 { font-size: 15px; }
+.cs-tocmap.is-route .cs-prio p { font-size: 13px; line-height: 1.62; }
+/* 线稿图压灰会糊成一团，罩子轻一点就够把亮区拎出来 */
+.cs-tocmap.is-route .cs-tocmap-fig::after { background: rgba(2, 2, 2, .34); }
+@media (max-width: 900px) {
+  .cs-tocmap.is-route { grid-template-columns: 1fr; }
+}
