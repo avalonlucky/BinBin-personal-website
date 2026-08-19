@@ -1,135 +1,185 @@
 /* ============================================================
-   展厅 3D — 按最终布局把展厅在浏览器里搭出来
+   展厅 3D — 不设预算的重做版
    ============================================================
-   为什么值得做 3D：这是一个空间项目，平面截图讲不清「站在里面
-   是什么感觉」。平面图能表达关系，但表达不了体量和光。
+   这一版不是复刻实物。用户的原话：「假如现在给你充足的预算，
+   让你重新去改造这个展厅」「这是拿去给面试官看的，越高大上越好」。
+   实物为了控成本，用的是均匀铺满的冷蓝灯 + 白色亚克力造型板，
+   拍出来像消毒间。所以这里保留他真实的**布局和内容**，
+   把**材质与光**整个换掉。
 
-   **布局依据是用户手绘的最终布局草图，不是那张 11400 立面大样图。**
-   立面图是第一版，后来改过：第一版把内容全排在一面背墙上，
-   最终版是一个四面都有内容的房间，客户案例墙整个搬出了展厅
-   （搬到前台正对大门的弧形墙上）。草图只定位置关系、不定尺寸，
-   房间开间沿用 CAD，内容宽度按草图比例换算。
+   设计上只做三件事，其余全部让路：
+   1. **暗场。** 围合近黑，眼睛没有别处可去，只能看内容。
+      均匀照亮是展厅设计里最省事也最廉价的做法。
+   2. **光当材料用。** 不打泛光，只有三样发光体：吊顶的光槽、
+      内容板自己的背发光、以及擦着内容打下来的窄光。
+   3. **地面要照出东西来。** 一块能映出发光板的地面，
+      是「造价高」这件事最省钱的表达——真实平面反射，不是贴图。
 
-   几个刻意的约束：
-   1. Three.js 只在这一节快滚到时才去下（≈166KB gzip）。
-      没滚到、或者压根不看这一节的人，一个字节都不用付。
-   2. 不劫持滚轮。滚轮永远归页面，视角只用拖拽改——
-      在长页面里用滚轮缩放模型，用户会以为页面卡住了。
-   3. WebGL 起不来就什么都不做，展厅平面图继续留在原地兜底。
-   4. 不加载任何外部模型贴图。墙面内容用 CanvasTexture 现画，
-      改布局只改 ROOM / ZONES 两个常量。
+   技术上：three 主包必到；Reflector / 辉光是 addons，
+   拉不到就自动降级成不带反射和辉光的版本，出图照旧。
+   小屏主动关掉这两样（都是全屏级开销）。
 
-   **相机站在房间里面，只转不绕。** 四面墙都有东西，绕着房子转的
-   轨道相机永远看不到进门那面墙；站在里面转头才是这个空间真实的
-   看法，也不会出现镜头穿墙。
+   布局和分区仍然来自用户手绘的最终布局草图，见 HANDOFF。
    ============================================================ */
 
 (() => {
   const mount = document.querySelector('[data-room]');
   const shell = document.querySelector('[data-axo]');
   if (!mount || !shell) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) return;
+  /* ── 房间（米）──
+     进深和层高比实物放大了一点：暗场需要距离才拉得开层次，
+     3.6 米的吊顶也比实物的 3.0 米更像一个正经展厅。 */
+  const ROOM = { width: 11.4, depth: 6.4, ceiling: 3.6 };
 
-  /* ── 房间（米）── */
-  const ROOM = {
-    width: 11.4,      // 开间，沿用 CAD
-    depth: 5.1,       // 进深，按草图 2.23:1 的长宽比反算
-    height: 2.8,
-    ceiling: 3.0,
-  };
-
-  // 每块内容在所属墙上的起止（米）。
-  //   back / front：从西端（草图左边）算起
-  //   west / east ：从背墙（草图上边）算起
-  // 数值是草图上量的比例 × 房间尺寸，见 HANDOFF。
-  //
-  // art：贴到这块板上的真实设计稿。给了就用图，没给就用现画的示意底纹。
-  // **换真图只改这一行，几何和灯光都不用动。**
   const ART_DIR = '../assets/work/culture-wall/room/';
   const ZONES = [
-    { key: 'demo',     wall: 'back',  from: 1.549, to: 3.694, kind: 'screen',   label: '产品服务',         art: null },
-    { key: 'awards',   wall: 'back',  from: 4.648, to: 6.752, kind: 'panel',    label: '荣誉资质',         art: null },
-    { key: 'solution', wall: 'back',  from: 7.745, to: 9.851, kind: 'screen',   label: '解决方案',         art: null },
-    { key: 'product',  wall: 'west',  from: 1.134, to: 3.870, kind: 'cabinet',  label: '样机展示',         art: null },
-    { key: 'film',     wall: 'east',  from: 0.920, to: 3.617, kind: 'screen',   label: '宣传片',           art: null },
-    { key: 'tech',     wall: 'front', from: 0.000, to: 4.886, kind: 'lightbox', label: '技术演进灯箱',     art: null },
+    { key: 'demo',     wall: 'back',  from: 1.55, to: 3.70, kind: 'panel',    label: '产品服务',     en: 'PRODUCT SERVICE', art: null },
+    { key: 'awards',   wall: 'back',  from: 4.65, to: 6.75, kind: 'panel',    label: '荣誉资质',     en: 'QUALIFICATION',   art: null },
+    { key: 'solution', wall: 'back',  from: 7.75, to: 9.85, kind: 'panel',    label: '解决方案',     en: 'SOLUTIONS',       art: null },
+    { key: 'product',  wall: 'west',  from: 1.60, to: 4.60, kind: 'cabinet',  label: '样机展示',     en: 'PROTOTYPE',       art: null },
+    { key: 'film',     wall: 'east',  from: 1.40, to: 4.40, kind: 'screen',   label: '宣传片',       en: 'FILM',            art: null },
+    { key: 'tech',     wall: 'front', from: 0.60, to: 3.90, kind: 'lightbox', label: '技术演进灯箱', en: 'EVOLUTION',       art: 'art-tech.webp' },
   ];
 
-  const ACCENT = 0x4265f5;
-  const ACCENT_LIGHT = 0x8ca4ff;
-
-  /* 每种内容离地多高、多高一块 */
   const SIZING = {
-    panel:    { bottom: 0.60, height: 1.60 },
-    screen:   { bottom: 0.60, height: 1.60 },
-    lightbox: { bottom: 0.35, height: 2.10 },
-    cabinet:  { bottom: 0.00, height: 2.00 },
+    panel:    { bottom: 0.72, height: 1.70 },
+    screen:   { bottom: 0.72, height: 1.70 },
+    lightbox: { bottom: 0.55, height: 2.10 },
+    cabinet:  { bottom: 0.28, height: 2.10 },
   };
 
-  /* ── 把「第几面墙 + 沿墙的位置」翻译成世界坐标 ──
-     背墙法线朝 +z，进门那面朝 -z，两侧朝 ±x。
-     四面墙共用一个函数，将来加一面墙不用碰别的代码。 */
+  const WARM = 0xffd9a8;      // 暖侧：光槽和窄光
+  const COOL = 0x6f9bff;      // 冷侧：只用在内容自己的辉光上
+
+  /* ── 背发光洇在墙上的那圈光 ──
+     一块平的加色方块在暗场里看着就是实心蓝色板，不是光。
+     必须是径向渐变，边缘化掉。 */
+  function makeGlowTex(THREE) {
+    const cv = document.createElement('canvas');
+    cv.width = cv.height = 256;
+    const c = cv.getContext('2d');
+    const g = c.createRadialGradient(128, 128, 0, 128, 128, 128);
+    g.addColorStop(0,   'rgba(190,214,255,.95)');
+    g.addColorStop(.30, 'rgba(140,180,255,.42)');
+    g.addColorStop(.62, 'rgba(110,155,255,.12)');
+    g.addColorStop(1,   'rgba(110,155,255,0)');
+    c.fillStyle = g;
+    c.fillRect(0, 0, 256, 256);
+    const t = new THREE.CanvasTexture(cv);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  }
+
+  /* ── 墙位 → 世界坐标 ── */
   function place(z) {
-    const mid = (z.from + z.to) / 2;
-    const len = z.to - z.from;
+    const mid = (z.from + z.to) / 2, len = z.to - z.from;
     const hw = ROOM.width / 2, hd = ROOM.depth / 2;
     switch (z.wall) {
-      case 'back':  return { x: mid - hw, z: -hd,       rot: 0,            len, nx: 0,  nz: 1 };
-      case 'front': return { x: mid - hw, z: hd,        rot: Math.PI,      len, nx: 0,  nz: -1 };
-      case 'west':  return { x: -hw,      z: mid - hd,  rot: Math.PI / 2,  len, nx: 1,  nz: 0 };
-      default:      return { x: hw,       z: mid - hd,  rot: -Math.PI / 2, len, nx: -1, nz: 0 };
+      case 'back':  return { x: mid - hw, z: -hd,      rot: 0,            len, nx: 0,  nz: 1 };
+      case 'front': return { x: mid - hw, z: hd,       rot: Math.PI,      len, nx: 0,  nz: -1 };
+      case 'west':  return { x: -hw,      z: mid - hd, rot: Math.PI / 2,  len, nx: 1,  nz: 0 };
+      default:      return { x: hw,       z: mid - hd, rot: -Math.PI / 2, len, nx: -1, nz: 0 };
     }
   }
 
-  /* ── 墙面内容用 canvas 现画，不引外部贴图 ── */
+  /* ── 没有设计稿的那几块，画一版像样的版面顶上 ──
+     深底 + 细线 + 大留白，和真稿（技术演进那张）同一个调子，
+     不至于一块真稿旁边杵着几块灰方块。 */
   function makeTexture(THREE, z, w, h) {
-    const px = 256;
+    const H = 512, W = Math.round(H * (w / h));
     const cv = document.createElement('canvas');
-    cv.width = Math.round(px * (w / h));
-    cv.height = px;
+    cv.width = W; cv.height = H;
     const c = cv.getContext('2d');
-    const W = cv.width, H = cv.height;
 
-    // 实景的展板是白色造型板 + 蓝色刻线，不是深色板
-    c.fillStyle = '#f4f6fa';
+    const g = c.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, '#0b1426');
+    g.addColorStop(1, '#07101f');
+    c.fillStyle = g;
     c.fillRect(0, 0, W, H);
-    c.strokeStyle = 'rgba(42,86,190,.55)';
-    c.lineWidth = Math.max(1, H * .012);
-    c.strokeRect(H * .05, H * .05, W - H * .1, H - H * .1);
+
+    c.strokeStyle = 'rgba(150,186,255,.30)';
+    c.lineWidth = 2;
+    c.strokeRect(H * .07, H * .07, W - H * .14, H - H * .14);
+
+    const pad = H * .13;
+    c.fillStyle = '#eaf1ff';
+    c.font = `600 ${Math.round(H * .105)}px "PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif`;
+    c.textBaseline = 'top';
+    c.fillText(z.label, pad, pad);
+    c.fillStyle = 'rgba(150,186,255,.72)';
+    c.font = `500 ${Math.round(H * .048)}px system-ui,sans-serif`;
+    c.fillText(z.en, pad, pad + H * .135);
+    c.fillStyle = 'rgba(120,160,255,.85)';
+    c.fillRect(pad, pad + H * .215, H * .34, 3);
+
+    const top = pad + H * .30;
+    const boxW = W - pad * 2, boxH = H - top - pad * .8;
 
     if (z.key === 'awards') {
-      // 荣誉墙：只放几块，留白拉开分量
-      [[0.10, 0.14, 0.34, 0.32], [0.54, 0.14, 0.34, 0.32],
-       [0.10, 0.56, 0.34, 0.30], [0.54, 0.56, 0.34, 0.30]].forEach(([x, y, w2, h2], i) => {
-        c.fillStyle = i === 0 ? 'rgba(42,86,190,.30)' : 'rgba(42,86,190,.16)';
-        c.fillRect(x * W, y * H, w2 * W, h2 * H);
-      });
-    } else if (z.kind === 'lightbox') {
-      // 技术演进灯箱：一条横向时间轴
-      c.fillStyle = 'rgba(42,86,190,.35)';
-      c.fillRect(0, H * 0.46, W, H * 0.02);
-      for (let i = 0; i < 7; i++) {
-        const x = W * (0.08 + i * 0.14);
-        c.fillStyle = 'rgba(42,86,190,.75)';
-        c.beginPath();
-        c.arc(x, H * 0.47, H * 0.022, 0, Math.PI * 2);
-        c.fill();
-        c.fillStyle = 'rgba(42,86,190,.20)';
-        c.fillRect(x - W * 0.045, H * (i % 2 ? 0.56 : 0.24), W * 0.09, H * 0.16);
+      const cols = 4, rows = 3, gx = boxW * .028, gy = boxH * .07;
+      const cw = (boxW - gx * (cols - 1)) / cols;
+      const ch = (boxH - gy * (rows - 1)) / rows;
+      for (let r = 0; r < rows; r++) for (let k = 0; k < cols; k++) {
+        const first = r === 0 && k === 0;
+        c.fillStyle = first ? 'rgba(255,217,168,.24)' : 'rgba(190,214,255,.11)';
+        c.fillRect(pad + k * (cw + gx), top + r * (ch + gy), cw, ch);
+        c.strokeStyle = first ? 'rgba(255,217,168,.7)' : 'rgba(150,186,255,.28)';
+        c.lineWidth = first ? 2.4 : 1.2;
+        c.strokeRect(pad + k * (cw + gx), top + r * (ch + gy), cw, ch);
       }
-    } else if (z.kind === 'cabinet') {
-      // 灯光柜：分层的搁板
-      for (let i = 0; i < 4; i++) {
-        c.fillStyle = `rgba(42,86,190,${0.14 + i * 0.04})`;
-        c.fillRect(W * 0.12, H * (0.08 + i * 0.23), W * 0.76, H * 0.14);
+    } else if (z.key === 'demo') {
+      c.fillStyle = 'rgba(190,214,255,.09)';
+      c.fillRect(pad, top, boxW, boxH);
+      c.strokeStyle = 'rgba(150,186,255,.34)'; c.lineWidth = 1.4;
+      c.strokeRect(pad, top, boxW, boxH);
+      c.fillStyle = 'rgba(150,186,255,.30)';
+      c.fillRect(pad, top, boxW, boxH * .12);
+      for (let i = 0; i < 9; i++) {
+        const bh = boxH * (.16 + ((i * 37) % 53) / 100);
+        c.fillStyle = i === 4 ? 'rgba(255,217,168,.75)' : 'rgba(150,186,255,.42)';
+        c.fillRect(pad + boxW * (.06 + i * .102), top + boxH * .86 - bh, boxW * .062, bh);
+      }
+    } else if (z.key === 'solution') {
+      const cx = pad + boxW * .5, cy = top + boxH * .5, R = Math.min(boxW, boxH) * .34;
+      c.strokeStyle = 'rgba(150,186,255,.34)'; c.lineWidth = 1.4;
+      for (let i = 0; i < 6; i++) {
+        const a = (i / 6) * Math.PI * 2 - Math.PI / 2;
+        const x = cx + Math.cos(a) * R, y = cy + Math.sin(a) * R;
+        c.beginPath(); c.moveTo(cx, cy); c.lineTo(x, y); c.stroke();
+        c.fillStyle = 'rgba(190,214,255,.55)';
+        c.beginPath(); c.arc(x, y, R * .14, 0, Math.PI * 2); c.fill();
+      }
+      c.fillStyle = 'rgba(255,217,168,.85)';
+      c.beginPath(); c.arc(cx, cy, R * .2, 0, Math.PI * 2); c.fill();
+    } else if (z.key === 'film') {
+      c.fillStyle = 'rgba(6,12,24,.9)';
+      c.fillRect(pad, top, boxW, boxH);
+      c.strokeStyle = 'rgba(150,186,255,.34)'; c.lineWidth = 1.4;
+      c.strokeRect(pad, top, boxW, boxH);
+      const cx = pad + boxW * .5, cy = top + boxH * .5, r = Math.min(boxW, boxH) * .17;
+      c.fillStyle = 'rgba(255,217,168,.85)';
+      c.beginPath();
+      c.moveTo(cx - r * .5, cy - r * .8);
+      c.lineTo(cx + r * .85, cy);
+      c.lineTo(cx - r * .5, cy + r * .8);
+      c.closePath(); c.fill();
+    } else if (z.key === 'product') {
+      for (let i = 0; i < 3; i++) {
+        const y = top + boxH * (.06 + i * .32);
+        c.fillStyle = 'rgba(150,186,255,.20)';
+        c.fillRect(pad, y + boxH * .24, boxW, 3);
+        for (let k = 0; k < 3; k++) {
+          c.fillStyle = 'rgba(190,214,255,.14)';
+          c.fillRect(pad + boxW * (.06 + k * .31), y, boxW * .24, boxH * .22);
+        }
       }
     }
 
     const tex = new THREE.CanvasTexture(cv);
     tex.colorSpace = THREE.SRGBColorSpace;
-    tex.anisotropy = 4;
+    tex.anisotropy = 8;
     return tex;
   }
 
@@ -137,253 +187,215 @@
   async function build() {
     let THREE;
     try {
-      THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js');
+      THREE = await import('three');
     } catch {
-      return false;                       // 拉不到就安静退场，平面图继续用
+      try { THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js'); }
+      catch { return false; }
     }
 
     let renderer;
     try {
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'low-power' });
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
     } catch {
       return false;
     }
 
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x1b2033);
-    // 站在一个 11 米的房间里不该有雾，去掉
+    // 反射和辉光都是全屏级开销，小屏一律不上
+    const rich = window.innerWidth >= 820;
+    let Reflector = null, EffectComposer = null, RenderPass = null, UnrealBloomPass = null;
+    if (rich) {
+      try {
+        const mods = await Promise.all([
+          import('three/addons/objects/Reflector.js'),
+          import('three/addons/postprocessing/EffectComposer.js'),
+          import('three/addons/postprocessing/RenderPass.js'),
+          import('three/addons/postprocessing/UnrealBloomPass.js'),
+        ]);
+        Reflector = mods[0].Reflector;
+        EffectComposer = mods[1].EffectComposer;
+        RenderPass = mods[2].RenderPass;
+        UnrealBloomPass = mods[3].UnrealBloomPass;
+      } catch {
+        Reflector = EffectComposer = RenderPass = UnrealBloomPass = null;
+      }
+    }
 
-    const camera = new THREE.PerspectiveCamera(52, 16 / 9, 0.05, 60);
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x05070c);
+    scene.fog = new THREE.Fog(0x05070c, 10, 28);
+
+    const camera = new THREE.PerspectiveCamera(50, 16 / 9, 0.05, 60);
 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
+    renderer.toneMappingExposure = 1.22;
     mount.appendChild(renderer.domElement);
 
-    const hw = ROOM.width / 2, hd = ROOM.depth / 2;
+    const hw = ROOM.width / 2, hd = ROOM.depth / 2, C = ROOM.ceiling;
 
-    /* ── 房间外壳 ──
-       材质全部照实景照定，不是凭空调的氛围色：
-       墙是白色科技造型板，地是蓝灰环氧自流平，
-       吊顶是深色铝格栅 + 白灯带，墙顶一圈蓝色灯槽。
-       上一版整间是灰蓝盒子，跟真实空间完全不像。 */
+    /* ── 围合：近黑哑光 ── */
     const shellMat = new THREE.MeshStandardMaterial({
-      color: 0xeceef3, roughness: .78, metalness: .02, side: THREE.BackSide,
+      color: 0x14161d, roughness: .92, metalness: .04, side: THREE.BackSide,
     });
-    const box = new THREE.Mesh(
-      new THREE.BoxGeometry(ROOM.width, ROOM.ceiling, ROOM.depth), shellMat);
-    box.position.set(0, ROOM.ceiling / 2, 0);
+    const box = new THREE.Mesh(new THREE.BoxGeometry(ROOM.width, C, ROOM.depth), shellMat);
+    box.position.y = C / 2;
     scene.add(box);
 
-    // 地面：蓝灰自流平，磨得比较亮，有一点映
-    const floor = new THREE.Mesh(
-      new THREE.PlaneGeometry(ROOM.width, ROOM.depth),
-      new THREE.MeshStandardMaterial({ color: 0x4f5470, roughness: .40, metalness: .26 }));
-    floor.rotation.x = -Math.PI / 2;
-    floor.position.y = 0.002;
-    scene.add(floor);
+    /* ── 地面：真实平面反射 ──
+       这一块是整个「造价感」的来源。拉不到 Reflector 就退成
+       高金属度的深色地面：映不出东西，至少不是一块死板。 */
+    if (Reflector) {
+      const mirror = new Reflector(new THREE.PlaneGeometry(ROOM.width, ROOM.depth), {
+        textureWidth: 1024, textureHeight: 1024, color: 0x2a3040,
+      });
+      mirror.rotation.x = -Math.PI / 2;
+      mirror.position.y = 0.001;
+      scene.add(mirror);
+      // 压一层半透明深色，把镜面压成「抛光石材」而不是「镜子」
+      const veil = new THREE.Mesh(
+        new THREE.PlaneGeometry(ROOM.width, ROOM.depth),
+        new THREE.MeshBasicMaterial({ color: 0x0a0d14, transparent: true, opacity: .5 }));
+      veil.rotation.x = -Math.PI / 2;
+      veil.position.y = 0.004;
+      scene.add(veil);
+    } else {
+      const floor = new THREE.Mesh(
+        new THREE.PlaneGeometry(ROOM.width, ROOM.depth),
+        new THREE.MeshStandardMaterial({ color: 0x0e1118, roughness: .18, metalness: .85 }));
+      floor.rotation.x = -Math.PI / 2;
+      scene.add(floor);
+    }
 
-    // 吊顶：深色铝格栅。实景里它是整间最暗的一块，
-    // 白墙才跳得出来——顶也做成白的会糊成一片。
-    const ceilTex = (() => {
-      const cv = document.createElement('canvas');
-      cv.width = 8; cv.height = 256;
-      const c = cv.getContext('2d');
-      c.fillStyle = '#262b3a'; c.fillRect(0, 0, 8, 256);
-      c.fillStyle = '#5b6480';
-      for (let i = 0; i < 256; i += 8) c.fillRect(0, i, 8, 4);
-      const t = new THREE.CanvasTexture(cv);
-      t.colorSpace = THREE.SRGBColorSpace;
-      t.wrapS = t.wrapT = THREE.RepeatWrapping;
-      t.repeat.set(1, 26);
-      return t;
-    })();
-    const ceil = new THREE.Mesh(
-      new THREE.PlaneGeometry(ROOM.width, ROOM.depth),
-      new THREE.MeshStandardMaterial({ color: 0xffffff, map: ceilTex, roughness: .9 }));
-    ceil.rotation.x = Math.PI / 2;
-    ceil.position.y = ROOM.ceiling - .002;
-    scene.add(ceil);
-
-    // 吊顶上的白灯带：三条顺着房间长向
-    const stripMat = new THREE.MeshBasicMaterial({ color: 0xf2f6ff });
-    [-1.35, 0, 1.35].forEach(z => {
-      const st = new THREE.Mesh(new THREE.PlaneGeometry(ROOM.width - .6, .1), stripMat);
-      st.rotation.x = Math.PI / 2;
-      st.position.set(0, ROOM.ceiling - .012, z);
-      scene.add(st);
-    });
-
-    // 墙顶一圈蓝色灯槽——实景里最有辨识度的一笔
-    const coveMat = new THREE.MeshBasicMaterial({ color: 0x2f7bff });
-    [[ROOM.width, 0, -hd + .02, 0],
-     [ROOM.width, 0, hd - .02, Math.PI],
-     [ROOM.depth, -hw + .02, 0, Math.PI / 2],
-     [ROOM.depth, hw - .02, 0, -Math.PI / 2]].forEach(([len, x, z, rot]) => {
-      const cove = new THREE.Mesh(new THREE.PlaneGeometry(len, .07), coveMat);
-      cove.position.set(x, ROOM.ceiling - .10, z);
-      cove.rotation.y = rot;
-      scene.add(cove);
-    });
-    // 离吊顶太近会在顶上洗出一块亮蓝斑，放到墙腰的高度
-    const coveLight = new THREE.PointLight(0x3f86ff, 7, 15, 1.6);
-    coveLight.position.set(0, ROOM.ceiling - .75, 0);
-    scene.add(coveLight);
-
-    // 墙脚一圈压暗的踢脚，替代做不起的接触阴影
-    const skirtMat = new THREE.MeshStandardMaterial({ color: 0xd2d6e0, roughness: .85 });
-    [[ROOM.width, 0, -hd + .012, 0],
-     [ROOM.width, 0, hd - .012, Math.PI],
-     [ROOM.depth, -hw + .012, 0, Math.PI / 2],
-     [ROOM.depth, hw - .012, 0, -Math.PI / 2]].forEach(([len, x, z, rot]) => {
-      const s = new THREE.Mesh(new THREE.PlaneGeometry(len, .11), skirtMat);
-      s.position.set(x, .055, z);
-      s.rotation.y = rot;
+    /* ── 吊顶：三条内嵌暖光槽 ── */
+    const coffer = new THREE.MeshBasicMaterial({ color: 0xfff0dc });
+    [-2.1, 0, 2.1].forEach(z => {
+      const s = new THREE.Mesh(new THREE.PlaneGeometry(ROOM.width - 1.6, .085), coffer);
+      s.rotation.x = Math.PI / 2;
+      s.position.set(0, C - .02, z);
       scene.add(s);
+      const l = new THREE.PointLight(WARM, 5.5, 10, 1.8);
+      l.position.set(0, C - .35, z);
+      scene.add(l);
     });
 
-    // 棱线：暗部里没有这几条线，墙和吊顶会糊成一片
-    const edgeMat = new THREE.LineBasicMaterial({ color: 0x8f97ad, transparent: true, opacity: .35 });
-    const seg = (a, b) => {
-      const g = new THREE.BufferGeometry().setFromPoints(
-        [new THREE.Vector3(...a), new THREE.Vector3(...b)]);
-      scene.add(new THREE.Line(g, edgeMat));
-    };
-    const C = ROOM.ceiling;
-    const corners = [[-hw, -hd], [hw, -hd], [hw, hd], [-hw, hd]];
-    corners.forEach(([x, z], i) => {
-      const [nx, nz] = corners[(i + 1) % 4];
-      seg([x, C, z], [nx, C, nz]);          // 顶角
-      seg([x, 0, z], [nx, 0, nz]);          // 墙脚
-      seg([x, 0, z], [x, C, z]);            // 立缝
+    /* ── 墙脚一道暖色洗光线 ── */
+    const baseMat = new THREE.MeshBasicMaterial({ color: 0xf6e2c6 });
+    [[ROOM.width, 0, -hd + .015, 0], [ROOM.depth, -hw + .015, 0, Math.PI / 2],
+     [ROOM.depth, hw - .015, 0, -Math.PI / 2]].forEach(([len, x, z, rot]) => {
+      const b = new THREE.Mesh(new THREE.PlaneGeometry(len, .014), baseMat);
+      b.position.set(x, .05, z);
+      b.rotation.y = rot;
+      scene.add(b);
     });
 
-    /* ── 六块内容 ── */
+    /* ── 六块内容：背发光，浮在墙前 ── */
     const panels = [];
     const spots = [];
+    const glows = [];
+    const glowTex = makeGlowTex(THREE);
 
     ZONES.forEach((z, i) => {
       const p = place(z);
       const size = SIZING[z.kind];
       const cy = size.bottom + size.height / 2;
+      const off = .11;                     // 离墙的缝，光从这里洇出来
 
+      const tex = makeTexture(THREE, z, p.len, size.height);
       const mat = new THREE.MeshStandardMaterial({
-        color: 0xffffff,
-        roughness: .82,
-        metalness: .04,
-        emissive: new THREE.Color(ACCENT_LIGHT),
-        emissiveIntensity: 0,
-        map: makeTexture(THREE, z, p.len, size.height),
+        color: 0xffffff, roughness: .55, metalness: .05,
+        map: tex, emissiveMap: tex,
+        emissive: new THREE.Color(0xffffff),
+        emissiveIntensity: .55,
       });
+      mat.userData.emiBase = .55;
 
-      // 真稿是异步到的，先挂示意底纹，加载完再换——不留白板
       if (z.art) {
-        new THREE.TextureLoader().load(ART_DIR + z.art, tex => {
-          tex.colorSpace = THREE.SRGBColorSpace;
-          tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        new THREE.TextureLoader().load(ART_DIR + z.art, t => {
+          t.colorSpace = THREE.SRGBColorSpace;
+          t.anisotropy = renderer.capabilities.getMaxAnisotropy();
           const boardAR = p.len / size.height;
-          const imgAR = tex.image.width / tex.image.height;
+          const imgAR = t.image.width / t.image.height;
           if (imgAR > boardAR) {
-            tex.repeat.set(boardAR / imgAR, 1);
-            tex.offset.set((1 - boardAR / imgAR) / 2, 0);
+            t.repeat.set(boardAR / imgAR, 1);
+            t.offset.set((1 - boardAR / imgAR) / 2, 0);
           } else {
-            tex.repeat.set(1, imgAR / boardAR);
-            tex.offset.set(0, (1 - imgAR / boardAR) / 2);
+            t.repeat.set(1, imgAR / boardAR);
+            t.offset.set(0, (1 - imgAR / boardAR) / 2);
           }
-          mat.map = tex;
+          mat.map = t; mat.emissiveMap = t;
+          mat.emissiveIntensity = .72;
+          mat.userData.emiBase = .72;      // 真稿本身够亮，压一点免得糊
           mat.needsUpdate = true;
         });
       }
 
-      // 灯光柜是落地的柜子，不是贴墙的板，厚度给足
-      const thick = z.kind === 'cabinet' ? .46 : .08;
-      const panel = new THREE.Mesh(
-        new THREE.BoxGeometry(p.len, size.height, thick), mat);
-      panel.position.set(
-        p.x + p.nx * (thick / 2 + .012),
-        cy,
-        p.z + p.nz * (thick / 2 + .012));
+      const thick = z.kind === 'cabinet' ? .34 : .07;
+      const panel = new THREE.Mesh(new THREE.BoxGeometry(p.len, size.height, thick), mat);
+      panel.position.set(p.x + p.nx * (off + thick / 2), cy, p.z + p.nz * (off + thick / 2));
       panel.rotation.y = p.rot;
       panel.userData.zone = i;
       scene.add(panel);
       panels.push(panel);
 
-      // 一圈灯槽
-      const edge = new THREE.Mesh(
-        new THREE.PlaneGeometry(p.len + .1, size.height + .1),
-        new THREE.MeshBasicMaterial({ color: 0x2f7bff, transparent: true, opacity: 0 }));
-      edge.position.set(p.x + p.nx * .008, cy, p.z + p.nz * .008);
-      edge.rotation.y = p.rot;
-      scene.add(edge);
-      panel.userData.edge = edge;
+      // 背后洇在墙上的一圈光
+      const glow = new THREE.Mesh(
+        new THREE.PlaneGeometry(p.len + 1.9, size.height + 1.9),
+        new THREE.MeshBasicMaterial({
+          map: glowTex, color: COOL, transparent: true, opacity: .1,
+          blending: THREE.AdditiveBlending, depthWrite: false,
+        }));
+      glow.position.set(p.x + p.nx * .01, cy, p.z + p.nz * .01);
+      glow.rotation.y = p.rot;
+      scene.add(glow);
+      glows.push(glow);
 
-      // 电视那几块：板上再压一块真正的屏
-      if (z.kind === 'screen') {
-        const sw = Math.min(1.5, p.len * .74), sh = sw * .5625;
-        const screen = new THREE.Mesh(
-          new THREE.PlaneGeometry(sw, sh),
-          new THREE.MeshBasicMaterial({ color: 0x1a2740 }));
-        screen.position.set(
-          p.x + p.nx * (thick + .03),
-          cy + .12,
-          p.z + p.nz * (thick + .03));
-        screen.rotation.y = p.rot;
-        scene.add(screen);
-        panel.userData.screen = screen;
-      }
+      // 板下一条暖色反光边，把板从墙上「托」起来
+      const lip = new THREE.Mesh(
+        new THREE.PlaneGeometry(p.len, .014),
+        new THREE.MeshBasicMaterial({ color: 0xffc98a }));
+      lip.position.set(p.x + p.nx * (off + thick), size.bottom - .03, p.z + p.nz * (off + thick));
+      lip.rotation.y = p.rot;
+      scene.add(lip);
 
-      // 每块内容一盏射灯，从吊顶打下来
-      const spot = new THREE.SpotLight(0xeaf0ff, 0, 9, Math.PI / 6, .55, 1.2);
-      spot.position.set(p.x + p.nx * 1.25, ROOM.ceiling - .08, p.z + p.nz * 1.25);
-      spot.target.position.set(p.x, cy, p.z);
+      // 擦着板面打下来的窄光
+      const spot = new THREE.SpotLight(0xfff3e4, 0, 8, Math.PI / 9, .7, 1.4);
+      spot.position.set(p.x + p.nx * .75, C - .12, p.z + p.nz * .75);
+      spot.target.position.set(p.x + p.nx * .2, cy + .2, p.z + p.nz * .2);
       scene.add(spot, spot.target);
       spots.push(spot);
-
-      const fixture = new THREE.Mesh(
-        new THREE.CylinderGeometry(.07, .09, .1, 14),
-        new THREE.MeshStandardMaterial({ color: 0x2a3242, roughness: .6 }));
-      fixture.position.set(p.x + p.nx * 1.25, ROOM.ceiling - .05, p.z + p.nz * 1.25);
-      scene.add(fixture);
     });
 
-    /* ── 基础照明 ── */
-    scene.add(new THREE.HemisphereLight(0xeaf0ff, 0x3c4160, 1.5));
-    scene.add(new THREE.AmbientLight(0xffffff, .55));
-    // 白墙 + 蓝灯槽已经够亮，中心补光只留一点压地面的反射
-    const wash = new THREE.PointLight(0xdfe8ff, 3.0, 12, 2);
-    wash.position.set(0, 1.6, 0);
-    scene.add(wash);
+    /* ── 基础照明：只给一点。暗场靠的是「不照」 ── */
+    scene.add(new THREE.HemisphereLight(0x9fb6ff, 0x0a0d14, .48));
+    scene.add(new THREE.AmbientLight(0xffffff, .18));
 
-    /* ── 相机：站在房间里，只转不绕 ──
-       yaw = 0 面朝背墙（-z）。左右拖转 yaw（不夹逼，能整圈转过去
-       看进门那面墙），上下拖转 pitch（夹逼，不至于翻过头）。 */
-    // 默认沿房间长轴看过去：站在西端，朝东望。
-    // 这个房间 11.4 × 5.1，很长很浅——
-    //   第一版站正中面对背墙，背墙怼满整屏，像一面墙不像一个房间；
-    //   第二版站角上斜看，地面和顶角斜切出画，像是没框好。
-    // 顺着长轴看，背墙的板一块块退进去、尽头是东墙那块，
-    // 两面墙同时在画面里，进深才出得来。
-    const HOME_EYE = new THREE.Vector3(-hw + 1.0, 1.60, 0.55);
-    const HOME_YAW = 1.30;
+    /* ── 辉光 ── */
+    let composer = null;
+    if (EffectComposer && RenderPass && UnrealBloomPass) {
+      composer = new EffectComposer(renderer);
+      composer.addPass(new RenderPass(scene, camera));
+      composer.addPass(new UnrealBloomPass(new THREE.Vector2(1, 1), 0.44, 0.60, 0.80));
+    }
+
+    /* ── 相机：站在房间里，只转不绕 ── */
+    const HOME_EYE = new THREE.Vector3(-hw + 1.75, 1.60, hd - 1.15);
+    const HOME_YAW = 1.06;
     const eye = HOME_EYE.clone();
     const wantEye = eye.clone();
-    let yaw = HOME_YAW, pitch = -.05;
-    let wantYaw = HOME_YAW, wantPitch = -.05;
+    let yaw = HOME_YAW, pitch = -.03;
+    let wantYaw = HOME_YAW, wantPitch = -.03;
 
     const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
     const applyCamera = () => {
       camera.position.copy(eye);
       const cp = Math.cos(pitch);
-      camera.lookAt(
-        eye.x + Math.sin(yaw) * cp,
-        eye.y + Math.sin(pitch),
-        eye.z - Math.cos(yaw) * cp);
+      camera.lookAt(eye.x + Math.sin(yaw) * cp, eye.y + Math.sin(pitch), eye.z - Math.cos(yaw) * cp);
     };
 
     let dragging = false, lastX = 0, lastY = 0, moved = 0;
     const el = renderer.domElement;
-    el.style.touchAction = 'pan-y';        // 竖向滑动仍然翻页
+    el.style.touchAction = 'pan-y';
 
     el.addEventListener('pointerdown', e => {
       dragging = true; moved = 0;
@@ -397,7 +409,7 @@
       lastX = e.clientX; lastY = e.clientY;
       moved += Math.abs(dx) + Math.abs(dy);
       wantYaw -= dx * .005;
-      wantPitch = clamp(wantPitch - dy * .004, -.45, .34);
+      wantPitch = clamp(wantPitch - dy * .004, -.42, .32);
     });
     const endDrag = e => {
       if (!dragging) return;
@@ -408,11 +420,10 @@
     el.addEventListener('pointerup', endDrag);
     el.addEventListener('pointercancel', endDrag);
 
-    /* ── 点内容选中 ── */
     const ray = new THREE.Raycaster();
     const ndc = new THREE.Vector2();
     el.addEventListener('click', e => {
-      if (moved > 6) return;                 // 拖完松手不算点击
+      if (moved > 6) return;
       const r = el.getBoundingClientRect();
       ndc.x = ((e.clientX - r.left) / r.width) * 2 - 1;
       ndc.y = -((e.clientY - r.top) / r.height) * 2 + 1;
@@ -421,13 +432,8 @@
       if (hit) shell.__select?.(hit.object.userData.zone);
     });
 
-    /* ── 选中某块内容：灯亮、板发光、人走过去正对着它 ── */
-    let active = 0;
-    let allLights = false;
-    let armed = false;
-
-    // yaw 是连续量，转身要走最近的一边，
-    // 不然从 -170° 转到 +170° 会绕一整圈回来
+    /* ── 选中：走过去，正对着看 ── */
+    let active = 0, allLights = false, armed = false;
     const shortestYaw = (from, to) => {
       let d = (to - from) % (Math.PI * 2);
       if (d > Math.PI) d -= Math.PI * 2;
@@ -438,45 +444,32 @@
     const focus = i => {
       active = i;
       if (!armed) { armed = true; return; }
-      const z = ZONES[i];
-      const p = place(z);
-      const size = SIZING[z.kind];
+      const z = ZONES[i], p = place(z), size = SIZING[z.kind];
       const cy = size.bottom + size.height / 2;
-
-      // 站多远由这块内容自己的尺寸决定，不能写死。
-      // 写死 2.6 米时，2.1 米宽的电视刚好，4.9 米长的灯箱直接怼满整屏。
+      // 站多远由这块内容自己的尺寸决定；写死会让长板怼满整屏
       const vHalf = (camera.fov * Math.PI / 180) / 2;
       const hHalf = Math.atan(Math.tan(vHalf) * camera.aspect);
-      const need = Math.max(
-        (p.len * .62) / Math.tan(hHalf),          // 横向留 24% 余量
-        (size.height * .78) / Math.tan(vHalf));   // 纵向留 56%，上下要有墙
-      // 再退也退不出房间：垂直于这面墙的那个方向只有这么长
-      const room = (z.wall === 'west' || z.wall === 'east' ? ROOM.width : ROOM.depth) - .8;
-      const stand = clamp(need, 1.9, room);
-
-      wantEye.set(
-        clamp(p.x + p.nx * stand, -hw + .55, hw - .55),
-        1.55,
-        clamp(p.z + p.nz * stand, -hd + .55, hd - .55));
-
-      const dx = p.x - wantEye.x, dy = cy - 1.55, dz = p.z - wantEye.z;
+      const need = Math.max((p.len * .62) / Math.tan(hHalf),
+                            (size.height * .80) / Math.tan(vHalf));
+      const room = (z.wall === 'west' || z.wall === 'east' ? ROOM.width : ROOM.depth) - .9;
+      const stand = clamp(need, 2.0, room);
+      wantEye.set(clamp(p.x + p.nx * stand, -hw + .6, hw - .6), 1.58,
+                  clamp(p.z + p.nz * stand, -hd + .6, hd - .6));
+      const dx = p.x - wantEye.x, dy = cy - 1.58, dz = p.z - wantEye.z;
       wantYaw = shortestYaw(wantYaw, Math.atan2(dx, -dz));
-      wantPitch = clamp(Math.atan2(dy, Math.hypot(dx, dz)), -.45, .34);
+      wantPitch = clamp(Math.atan2(dy, Math.hypot(dx, dz)), -.42, .32);
     };
-
     shell.__onSelect = focus;
-    // initAxo() 在页面加载时就 select(0) 过一次了，那时 __onSelect 还没挂上，
-    // 所以 armed 一直是 false——上一版因此把「不动镜头」用在了用户的第一次
-    // 点击上，点第一下永远没反应。挂完回调立刻上膛：之后每一次都是用户点的。
+    // initAxo() 加载时就 select(0) 过一次，那时回调还没挂上，
+    // 所以挂完立刻上膛：之后每一次都是用户点的
     armed = true;
 
     const resetView = () => {
       wantEye.copy(HOME_EYE);
       wantYaw = shortestYaw(wantYaw, HOME_YAW);
-      wantPitch = -.05;
+      wantPitch = -.03;
     };
 
-    /* ── 控件 ── */
     mount.insertAdjacentHTML('beforeend', `
       <div class="cs-room-ui">
         <button type="button" data-room-lights>全部点亮</button>
@@ -494,15 +487,14 @@
     });
     el.addEventListener('pointerdown', () => hint?.classList.add('is-gone'), { once: true });
 
-    /* ── 渲染循环，只在可见时跑 ── */
     let visible = false;
-    new IntersectionObserver(([e]) => { visible = e.isIntersecting; },
-                             { threshold: 0.01 }).observe(mount);
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.01 }).observe(mount);
 
     const resize = () => {
       const r = mount.getBoundingClientRect();
       if (!r.width || !r.height) return;
       renderer.setSize(r.width, r.height, false);
+      composer?.setSize(r.width, r.height);
       camera.aspect = r.width / r.height;
       camera.updateProjectionMatrix();
     };
@@ -510,8 +502,6 @@
     resize();
 
     const lerp = (a, b, t) => a + (b - a) * t;
-    const screenOn = new THREE.Color(0x3f5fd8);
-    const screenOff = new THREE.Color(0x141c2e);
 
     const tick = () => {
       requestAnimationFrame(tick);
@@ -524,34 +514,29 @@
 
       panels.forEach((p, i) => {
         const on = allLights || i === active;
-        p.material.emissiveIntensity = lerp(p.material.emissiveIntensity, on ? .09 : 0, .09);
-        p.userData.edge.material.opacity = lerp(p.userData.edge.material.opacity, on ? .85 : .16, .09);
-        spots[i].intensity = lerp(spots[i].intensity, on ? 11 : 4, .09);
-        const s = p.userData.screen;
-        if (s) s.material.color.lerp(on ? screenOn : screenOff, .09);
+        const base = p.material.userData.emiBase;
+        p.material.emissiveIntensity =
+          lerp(p.material.emissiveIntensity, on ? base + .30 : base * .62, .08);
+        glows[i].material.opacity = lerp(glows[i].material.opacity, on ? .28 : .08, .08);
+        spots[i].intensity = lerp(spots[i].intensity, on ? 9 : 2.4, .08);
       });
 
-      renderer.render(scene, camera);
+      (composer || renderer).render(scene, camera);
     };
 
     applyCamera();
     tick();
     shell.classList.add('is-3d');
 
-    // 头部文案跟着换：3D 起来之后这里已经不是平面图了
     const head = shell.querySelector('.cs-axo-head b');
     const headHint = shell.querySelector('[data-axo-hint]');
-    if (head) head.textContent = '展厅 3D · 按最终布局搭建';
+    if (head) head.textContent = '展厅 3D · 不设预算的重做版';
     if (headHint) headHint.textContent = '拖动转头 · 点内容或图例走过去';
 
-    // 画布和平面图高度不一样，切换那一下文档会长一截。
-    // ScrollTrigger 的 start/end 是测一次就缓存的，别留这个雷。
     window.ScrollTrigger?.refresh();
-
     return true;
   }
 
-  /* ── 快滚到时才去下 Three.js ── */
   const arm = new IntersectionObserver(entries => {
     if (!entries[0].isIntersecting) return;
     arm.disconnect();

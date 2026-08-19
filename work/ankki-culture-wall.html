@@ -11,6 +11,15 @@
   <link rel="preload" href="../fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
+  <!-- Three.js 的 addons（反射、辉光）内部是 import ... from 'three'，
+       没有 import map 浏览器解析不了这个裸名。addons 拉不到时
+       showroom3d 会自动降级成不带反射/辉光的版本，不影响出图。 -->
+  <script type="importmap">
+  {"imports":{
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }}
+  </script>
   <link rel="stylesheet" href="../css/style.css?v=83">
   <link rel="stylesheet" href="../css/case.css?v=114">
   <link rel="stylesheet" href="../css/admin-auth.css?v=4">
@@ -606,7 +615,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="../js/case.js?v=79"></script>
-<script src="../js/showroom3d.js?v=15"></script>
+<script src="../js/showroom3d.js?v=19"></script>
 <script src="../js/wall3d.js?v=7"></script>
 <script src="../js/admin-auth.js?v=5"></script>
 <script src="../js/site-analytics.js?v=3"></script>
