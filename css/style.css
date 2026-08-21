@@ -325,7 +325,7 @@ button:focus-visible {
 /* ============================================================
    MAIN — cream background from here
    ============================================================ */
-main section:not(.s-hero):not(.s-testimonials):not(.s-faq):not(.cs-hero):not(.cs-closing):not(.cs-section):not(.cs-reveal):not(.cs-deck):not(.cs-hall):not(.cs-stage) {
+main section:not(.s-hero):not(.s-testimonials):not(.s-faq):not(.cs-hero):not(.cs-closing):not(.cs-section):not(.cs-reveal):not(.cs-deck):not(.cs-hall):not(.cs-stage):not(.culture-tour):not(.culture-thesis) {
   background: var(--c-white);
   position: relative;
   z-index: 5;
