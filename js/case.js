@@ -1289,7 +1289,7 @@ function initReader() {
   /* ── 滚到封面区时，三枚「翻阅整本」胶囊依次闪一下 ──
      不依赖 hover，没把鼠标移上去的人也能注意到这里可以点。 */
   const badges = [...document.querySelectorAll('.cs-journal-badge')];
-  const journals = document.querySelector('.cs-journals');
+  const journals = document.querySelector('.cs-journals, .cs-hero-books');
   if (journals && badges.length) {
     ScrollTrigger.create({
       trigger: journals,

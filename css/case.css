@@ -5642,7 +5642,7 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: start;
   gap: clamp(12px, 2vw, 26px);
-  width: min(820px, 100%);
+  width: min(1180px, 100%);
   margin: 0 auto;
 }
 .case-page.is-editorial .cs-hero-book {
@@ -5654,6 +5654,20 @@
   cursor: pointer;
   transform: none;
   transition: transform .5s cubic-bezier(.2, .8, .2, 1), filter .5s var(--ease);
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.5), 0 26px 60px rgba(0,0,0,.42);
+}
+.case-page.is-editorial .cs-hero-book::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 42%;
+  background: linear-gradient(180deg, transparent, rgba(2,2,2,.72));
+  pointer-events: none;
 }
 .case-page.is-editorial .cs-hero-book img {
   display: block;
@@ -5662,6 +5676,13 @@
   filter: drop-shadow(0 26px 30px rgba(0, 0, 0, .42));
 }
 .case-page.is-editorial .cs-hero-book:hover { transform: translateY(-10px); filter: brightness(1.05); }
+.case-page.is-editorial .cs-hero-book:hover .cs-journal-badge {
+  background: var(--cs-accent);
+  color: #fff;
+  transform: translateX(-50%) translateY(-4px);
+  box-shadow: 0 10px 26px rgb(var(--cs-accent-rgb) / .5);
+}
+.case-page.is-editorial .cs-hero-book:hover .cs-journal-badge span { opacity: .8; }
 .case-page.is-editorial .cs-hero-book:focus-visible {
   outline: 2px solid var(--cs-accent-lift);
   outline-offset: 8px;
