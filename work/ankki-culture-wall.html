@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=83">
-  <link rel="stylesheet" href="../css/case.css?v=115">
+  <link rel="stylesheet" href="../css/case.css?v=118">
   <link rel="stylesheet" href="../css/admin-auth.css?v=4">
 </head>
 <body class="case-page is-editorial is-culture">
@@ -45,44 +45,33 @@
            灯箱里的 .cs-hall-art 是内容位：将来把渲染图
            或 Three.js 的 canvas 放进去，点灯时序不用动。
       ══════════════════════════════════════ -->
-      <section class="cs-hall" id="top" data-hall>
-        <div class="cs-hall-view">
-          <div class="cs-hall-room" data-lit="0">
-            <div class="cs-hall-scene">
-              <div class="cs-hall-floor" aria-hidden="true"></div>
-              <div class="cs-hall-frames" aria-hidden="true">
-                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>灯光柜</b><small>PRODUCT</small></div>
-                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>产品演示</b><small>DEMO</small></div>
-                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>荣誉资质</b><small>AWARDS</small></div>
-                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>解决方案</b><small>SOLUTION</small></div>
-                <div class="cs-hall-frame"><span class="cs-hall-art"></span><b>宣传片</b><small>FILM</small></div>
-              </div>
-              <div class="cs-hall-pools" aria-hidden="true">
-                <span class="cs-hall-pool"></span>
-                <span class="cs-hall-pool"></span>
-                <span class="cs-hall-pool"></span>
-              </div>
-            </div>
+      <section class="culture-tour" id="top" data-culture-tour>
+        <div class="culture-tour-copy">
+          <p class="cs-eyebrow">Case 03 · Spatial narrative · 2022—2023</p>
+          <h1>把一层办公室，<br><em>编成一场有次序的参观。</em></h1>
+          <p>访客只有十分钟。我先决定他们每走一步应该记住什么，再把三十多面墙编辑成一条从“看见”到“信任”的空间叙事。</p>
+          <div class="culture-tour-meta"><span>2 层空间</span><span>30+ 展示点位</span><span>10+ 协作部门</span><span>29 万预算</span></div>
+        </div>
+        <div class="culture-tour-stage" data-tour-stage aria-label="可拖动环视的展厅空间示意">
+          <div class="culture-room" data-tour-room>
+            <div class="culture-plane culture-floor"></div><div class="culture-plane culture-ceiling"></div>
+            <div class="culture-plane culture-back"><img src="../assets/work/culture-wall/render/hall-mainwall.webp" alt="展厅主展墙"></div>
+            <div class="culture-plane culture-left"><img src="../assets/work/culture-wall/render/hall-tech.webp" alt="技术演进灯箱"></div>
+            <div class="culture-plane culture-right"><img src="../assets/work/culture-wall/render/hall-screens.webp" alt="解决方案与宣传片屏幕"></div>
+            <button class="culture-hotspot is-active" type="button" data-tour-view="0" style="--x:50%;--y:37%"><i>01</i><span>主展墙</span></button>
+            <button class="culture-hotspot" type="button" data-tour-view="1" style="--x:21%;--y:48%"><i>02</i><span>技术演进</span></button>
+            <button class="culture-hotspot" type="button" data-tour-view="2" style="--x:79%;--y:48%"><i>03</i><span>动态屏幕</span></button>
           </div>
-
-          <div class="cs-hall-copy">
-            <p class="cs-eyebrow">Case 03 · 公司总部文化墙统筹</p>
-            <h1>文化墙 · <em>展厅设计</em></h1>
-            <p>深圳前海总部五、六两层，三十多个区域、十几个部门。作为项目负责人，我统筹内容规划、跨部门协调、动线设计、供应商比价与施工验收——展厅是其中的核心。</p>
-            <div class="cs-hall-tags">
-              <span>内容统筹</span>
-              <span>展厅设计</span>
-              <span>供应商与成本</span>
-              <span>落地验收</span>
-            </div>
-          </div>
-
-          <div class="cs-hall-cue" aria-hidden="true">
-            <span data-hall-cue>向下滚动，把灯打开</span>
-            <i></i>
-          </div>
+          <div class="culture-tour-vignette" aria-hidden="true"></div>
+          <p class="culture-tour-hint"><span></span>拖动环视 · 点击标记聚焦展面</p>
+          <div class="culture-tour-caption" data-tour-caption><small>01 / 访客进门的第一个回答</small><strong>你们做什么，凭什么值得信任？</strong></div>
+        </div>
+        <div class="culture-tour-map">
+          <img src="../assets/work/culture-wall/floorplan-6f-plan.webp" alt="六楼平面布置图">
+          <div><small>空间依据</small><strong>前厅 → 展厅 → 弧墙 → 办公区</strong><p>参考原始施工平面与项目期间的点位草图重建。</p></div>
         </div>
       </section>
+      <section class="culture-thesis" aria-label="项目核心判断"><p>这个项目的设计对象，从来不是一面墙。</p><h2>是视线、信息与脚步<br>在空间里发生的先后关系。</h2></section>
 
       <!-- ══════════════════════════════════════
            正文（浅色）
@@ -92,8 +81,8 @@
         <!-- ── 01 项目概览 ── -->
         <section class="cs-section" data-toc="项目概览">
           <p class="cs-num">01 — 项目概览</p>
-          <h2 class="cs-title">昂楷科技深圳前海总部，<em>五六两层的整体文化墙与展厅</em></h2>
-          <p class="cs-lede">范围包括前台形象、公司展厅、各部门墙面、走廊、荣誉资质墙、客户墙等三十多个区域，涉及生产、技服、研发、人资、财务、品宣等十多个部门。一个设计师解决不了这种规模的事，尤其是内容编写和规划——需要召集各部门一起讨论、定稿、执行。</p>
+          <h2 class="cs-title">三十多面墙，<em>不该是三十多个孤立的版面</em></h2>
+          <p class="cs-lede">我先写下参观者每走一步应该获得的信息：前台建立第一印象，展厅集中回答“业务与信任”，弧形走廊再把历程、客户与组织文化展开。墙面的造型和文字，都必须服从这条信息次序。</p>
 
           <div class="cs-delivery-metrics" aria-label="项目概况">
             <div><strong>2</strong><p>层办公空间 · 五楼与六楼</p></div>
@@ -130,8 +119,8 @@
         <!-- ── 02 执行流程 ── -->
         <section class="cs-section" data-toc="执行流程">
           <p class="cs-num">02 — 执行流程</p>
-          <h2 class="cs-title">大型文化墙不是「设计 + 施工」两步，<em>是一条会卡住的链路</em></h2>
-          <p class="cs-lede">真正做下来，从需求到验收有七个阶段，每一步都可能停在别人那里，每一步都需要有人推。合同 2022 年 6 月签，2023 年 2 月排安装计划，7 月才结清——中间大半年，大部分时间花在协调和现场。</p>
+          <h2 class="cs-title">设计方案只是中间的一帧，<em>前后是一整条决策链</em></h2>
+          <p class="cs-lede">从需求调研到现场验收，我要让内容、动线、材质、报价和施工在同一条时间线上不断链。设计师在这里不只产出画面，也负责让每一个判断最终能被做出来。</p>
 
           <div class="cs-flow is-steps" aria-label="项目七个阶段">
             <div class="cs-flow-step"><b><i>01</i>需求调研与内容规划</b><small>走访每个区域，确定由哪个部门负责、讲什么、多大尺寸、放多少字</small></div>
@@ -147,8 +136,8 @@
         <!-- ── 03 内容统筹 ── -->
         <section class="cs-section" data-toc="内容统筹">
           <p class="cs-num">03 — 内容统筹</p>
-          <h2 class="cs-title">最难的不是设计，<em>是把每面墙讲什么对清楚</em></h2>
-          <p class="cs-lede">设计一面墙只要几个小时，确认这面墙该讲什么要跑好几趟。我做了一份逐区域的需求清单——精确到责任部门、位置、尺寸、内容板块和字数要求，让各部门知道自己该提供什么。</p>
+          <h2 class="cs-title">尺度决定信息量，<em>脚步决定阅读顺序</em></h2>
+          <p class="cs-lede">我把每个点位的位置、视距、停留时间和责任部门先写进同一张表。一面墙能放多少字，应该用图还是用屏，不在排版时凭感觉决定，而是由人在空间里如何接近它来决定。</p>
 
           <div class="cs-delivery-notes">
             <article>
@@ -189,8 +178,8 @@
         <!-- ── 04 展厅设计 ── -->
         <section class="cs-section" data-toc="展厅设计">
           <p class="cs-num">04 — 展厅设计</p>
-          <h2 class="cs-title">展厅是一个独立房间，<em>四面墙各讲一件事</em></h2>
-          <p class="cs-lede">从电梯出来经前台向右进入展厅。它集中了公司最想讲的东西——产品跑起来什么样、谁认可、能力覆盖到哪、技术怎么长出来的。访客停留不过十来分钟，所以每一面墙都得有存在的理由：背墙三块主内容，两侧各一块，转身出门那一面是一条长灯箱。</p>
+          <h2 class="cs-title">访客只有十分钟，<em>四面墙必须依次回答四个问题</em></h2>
+          <p class="cs-lede">你们做什么？凭什么可信？能力覆盖到哪里？技术将走向哪里？我没有让四面墙争着说话：主展墙建立业务与信任，两侧屏幕承载会持续变化的内容，出门前的长灯箱再用一条技术时间线收束参观。</p>
 
           <div class="cs-renders" data-zoom-group>
             <figure class="cs-render is-wide">
@@ -285,7 +274,7 @@
         <!-- ── 05 动线与公共区 ── -->
         <section class="cs-section" data-toc="动线与公共区">
           <p class="cs-num">05 — 动线与公共区</p>
-          <h2 class="cs-title">出了展厅，<em>参观动线沿椭圆环形继续</em></h2>
+          <h2 class="cs-title">离开展厅之后，<em>参观不能突然失去剧情</em></h2>
           <p class="cs-lede">电梯厅出来是前台，右转进展厅；出了展厅沿走廊一路走下去，发展规划与服务网络、政府来访照片墙、弧形的企业文化墙与客户 LOGO、发展历程、荣誉资质墙依次出现，最后绕回前台。这些墙面同属一套视觉语言，各自承担不同的信息。<strong class="cs-only-desktop">鼠标移到右边任意一站，平面图上会亮出它的位置。</strong><strong class="cs-only-mobile">点右边任意一站，平面图上会亮出它的位置。</strong></p>
 
           <div class="cs-tocmap is-route" data-tocmap style="--fig-ar: 2048 / 1433">
@@ -581,8 +570,8 @@
         <!-- ── 08 成本控制 ── -->
         <section class="cs-section" data-toc="成本控制">
           <p class="cs-num">08 — 成本控制</p>
-          <h2 class="cs-title">「不能贵，也不能廉价」，<em>最后是靠一张对照表落地的</em></h2>
-          <p class="cs-lede">这句听着像没说的要求，其实是整个项目的成本主线。我把制作部分逐项做了前后对比：哪面墙升级工艺、升级到什么材质、价格差多少，哪些点位干脆不做。这张表后来既是向领导汇报的材料，也是跟供应商谈判的筹码。</p>
+          <h2 class="cs-title">预算没有变多，<em>我只是让它出现在更值得被看见的地方</em></h2>
+          <p class="cs-lede">成本控制不是把每个点位一起做便宜，而是先承认视线有优先级。我取消四处几乎没有停留的墙面，把省下的金额转给前台、展厅与走廊尽头：这些地方每一次参观都会被看见。</p>
 
           <div class="cs-delivery-metrics" aria-label="制作部分费用变化">
             <div><strong>97,800</strong><p>原合同制作报价 · 不含税</p></div>
@@ -634,17 +623,13 @@
               <div class="cs-doc-fig"><img src="../assets/work/culture-wall/change-approval.webp" width="578" height="954" alt="文化墙项目变更与预算审批沟通记录，已裁去姓名与头像" loading="lazy" decoding="async"></div>
               <div class="cs-doc-cap"><b>变更留痕</b>不是口头说「改一下」，金额和原因都要有记录（已脱敏）</div>
             </button>
-            <div class="cs-doc is-slot" aria-label="报价单图位">
-              <div class="cs-doc-fig"><span class="cs-doc-empty">空间设计制作报价单<br><small>设计 + 制作分项报价</small></span></div>
-              <div class="cs-doc-cap"><b>报价单</b>待补：每一项的数量、工艺、单价</div>
-            </div>
           </div>
         </section>
 
         <!-- ── 09 总结与收获 ── -->
         <section class="cs-section is-reflection" data-toc="总结与收获">
           <p class="cs-num">09 — 总结与收获</p>
-          <h2 class="cs-title">第一次统筹这么大的项目，<em>看清了比设计更难的那部分</em></h2>
+          <h2 class="cs-title">最后留下的不只是三十多面墙，<em>而是一套可以重复使用的判断方法</em></h2>
 
           <div class="cs-reflection-list">
             <article>
@@ -768,6 +753,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="../js/case.js?v=80"></script>
 <script src="../js/wall3d.js?v=7"></script>
+<script src="../js/culture-tour.js?v=1"></script>
 <script src="../js/admin-auth.js?v=5"></script>
 <script src="../js/site-analytics.js?v=3"></script>
 </body>
