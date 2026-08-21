@@ -7130,7 +7130,6 @@
 }
 
 /* Culture wall — project evidence and delivery */
-.is-culture .cs-toc { display: none !important; }
 .culture-tour-role { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin-top: 22px; font-family: var(--f-cjk); }
 .culture-tour-role span { color: #7896ff; font: 10px/1 var(--f-sans); letter-spacing: .14em; }
 .culture-tour-role strong { margin-right: 18px; color: rgba(247,247,242,.9); font-size: 13px; font-weight: 500; }
