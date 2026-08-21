@@ -3949,16 +3949,21 @@
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 46px;
+  width: 20px;
   transform: translateX(-50%);
-  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.22) 44%, rgba(0,0,0,0.28) 50%, rgba(0,0,0,0.22) 56%, transparent);
+  background: linear-gradient(90deg,
+    transparent 0,
+    rgba(0,0,0,.035) 24%,
+    rgba(0,0,0,.11) 49%,
+    rgba(0,0,0,.11) 51%,
+    rgba(0,0,0,.035) 76%,
+    transparent 100%);
   pointer-events: none;
-  z-index: 4;
+  /* 始终压在静态页与翻动页上方，避免翻页元素经过书脊时阴影忽隐忽现。 */
+  z-index: 7;
   opacity: 1;
-  transition: opacity .16s ease;
 }
-.cs-rd-book.is-opening .cs-rd-pg,
-.cs-rd-book.is-opening::after { opacity: 0; }
+.cs-rd-book.is-opening .cs-rd-pg { opacity: 0; }
 .cs-rd-book.is-opening .cs-rd-loading {
   opacity: 1;
   visibility: visible;
