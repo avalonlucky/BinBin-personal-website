@@ -11,17 +11,8 @@
   <link rel="preload" href="../fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Three.js 的 addons（反射、辉光）内部是 import ... from 'three'，
-       没有 import map 浏览器解析不了这个裸名。addons 拉不到时
-       showroom3d 会自动降级成不带反射/辉光的版本，不影响出图。 -->
-  <script type="importmap">
-  {"imports":{
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }}
-  </script>
   <link rel="stylesheet" href="../css/style.css?v=83">
-  <link rel="stylesheet" href="../css/case.css?v=114">
+  <link rel="stylesheet" href="../css/case.css?v=115">
   <link rel="stylesheet" href="../css/admin-auth.css?v=4">
 </head>
 <body class="case-page is-editorial is-culture">
@@ -177,7 +168,7 @@
             </article>
           </div>
 
-          <div class="cs-docs">
+          <div class="cs-docs" data-zoom-group>
             <button class="cs-doc" type="button"
                     data-zoom="../assets/work/culture-wall/floorplan-6f-plan.webp"
                     data-zoom-title="6F 平面布置图"
@@ -199,49 +190,60 @@
         <section class="cs-section" data-toc="展厅设计">
           <p class="cs-num">04 — 展厅设计</p>
           <h2 class="cs-title">展厅是一个独立房间，<em>四面墙各讲一件事</em></h2>
-          <p class="cs-lede">从电梯出来经前台向右进入展厅。它集中了公司最想讲的东西——产品跑起来什么样、谁认可、能力覆盖到哪、技术怎么长出来的。访客停留不过十来分钟，所以每一面墙都得有存在的理由：背墙三块主内容，两侧各一块，转身出门那一面是一条长灯箱。<strong>下面是按最终布局在浏览器里搭出来的展厅，相机站在房间里：拖动转头看四周，点内容或图例走过去。</strong></p>
+          <p class="cs-lede">从电梯出来经前台向右进入展厅。它集中了公司最想讲的东西——产品跑起来什么样、谁认可、能力覆盖到哪、技术怎么长出来的。访客停留不过十来分钟，所以每一面墙都得有存在的理由：背墙三块主内容，两侧各一块，转身出门那一面是一条长灯箱。</p>
 
-          <div class="cs-axo" data-axo>
-            <div class="cs-axo-head">
-              <b>展厅平面 · 最终布局</b>
-              <small data-axo-hint>点编号或图例查看内容</small>
-            </div>
-
-            <div class="cs-axo-stage">
-              <div class="cs-axo-canvas">
-                <div class="cs-room" data-room aria-hidden="true"></div>
-                <div class="cs-axo-plan">
-                  <img src="../assets/work/culture-wall/showroom-plan.webp" width="1640" height="847"
-                       alt="展厅平面：背墙三块内容，两侧各一块，进门一侧一条长灯箱"
-                       loading="lazy" decoding="async">
-                    <button class="cs-axo-zone" type="button" data-axo-zone="0" style="left:18.29%;top:1.42%;width:16.46%;height:10.98%" aria-label="展位 01 产品服务"><i>1</i></button>
-                    <button class="cs-axo-zone" type="button" data-axo-zone="1" style="left:42.07%;top:1.42%;width:16.16%;height:10.98%" aria-label="展位 02 荣誉资质"><i>2</i></button>
-                    <button class="cs-axo-zone" type="button" data-axo-zone="2" style="left:65.85%;top:1.42%;width:16.16%;height:10.98%" aria-label="展位 03 解决方案"><i>3</i></button>
-                    <button class="cs-axo-zone" type="button" data-axo-zone="3" style="left:6.59%;top:18.3%;width:5.18%;height:40.73%" aria-label="展位 04 样机展示"><i>4</i></button>
-                    <button class="cs-axo-zone" type="button" data-axo-zone="4" style="left:88.9%;top:15.11%;width:5.0%;height:40.14%" aria-label="展位 05 宣传片"><i>5</i></button>
-                    <button class="cs-axo-zone" type="button" data-axo-zone="5" style="left:6.4%;top:68.24%;width:37.5%;height:9.09%" aria-label="展位 06 技术演进灯箱"><i>6</i></button>
-                </div>
-              </div>
-
-              <div class="cs-axo-info">
-                <p class="cs-axo-info-idx" data-axo-idx>ZONE 01</p>
-                <h3 data-axo-name>产品服务</h3>
-                <p data-axo-copy>进门左手第一块。产品跑在什么环境里、界面长什么样，用动态画面讲比用文字讲省一半时间。</p>
-                <dl data-axo-facts></dl>
-              </div>
-            </div>
-
-            <div class="cs-axo-legend">
-              <button class="cs-axo-leg" type="button" aria-pressed="true"><i>1</i>产品服务</button>
-              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>2</i>荣誉资质</button>
-              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>3</i>解决方案</button>
-              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>4</i>样机展示</button>
-              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>5</i>宣传片</button>
-              <button class="cs-axo-leg" type="button" aria-pressed="false"><i>6</i>技术演进灯箱</button>
-            </div>
+          <div class="cs-renders" data-zoom-group>
+            <figure class="cs-render is-wide">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/hall-mainwall.webp"
+                      data-zoom-title="展厅背墙 · 四段内容全景"
+                      data-zoom-note="从左到右：样机展示 · 产品服务 · 荣誉资质 · 解决方案">
+                <img src="../assets/work/culture-wall/render/hall-mainwall.webp" width="1448" height="1086" alt="展厅背墙效果图，从左到右依次为样机展示、产品服务、荣誉资质、解决方案四段" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>01</i>背墙全景</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>一面墙分四段</b>样机展示、产品服务、荣誉资质、解决方案从左到右排开。白色造型板开槽走一条蓝色灯线，把四段串成一条读得下去的线，而不是四块各说各话的板。</figcaption>
+            </figure>
+            <figure class="cs-render">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/hall-awards.webp"
+                      data-zoom-title="荣誉资质段落"
+                      data-zoom-note="全场唯一一处做了内嵌灯光柜的墙面">
+                <img src="../assets/work/culture-wall/render/hall-awards.webp" width="1448" height="1086" alt="展厅荣誉资质墙效果图，左侧内嵌灯光展柜陈列奖牌，右侧证书阵列" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>02</i>荣誉资质</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>分量与数量分开讲</b>最重的几张奖牌进灯光柜、单独打光；量大的证书压成规整阵列排在右边。</figcaption>
+            </figure>
+            <figure class="cs-render">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/hall-tech.webp"
+                      data-zoom-title="技术演进灯箱"
+                      data-zoom-note="进门一侧的弧形背光灯箱，把技术路线画成一条流线">
+                <img src="../assets/work/culture-wall/render/hall-tech.webp" width="1600" height="900" alt="展厅技术演进灯箱效果图，蓝色背光弧形板与弧形玻璃隔断" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>03</i>技术演进</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>转身出门那一面</b>弧形板加背光，是全场唯一一块靠光讲内容的墙。左边就是分隔展厅与走廊的弧形玻璃。</figcaption>
+            </figure>
+            <figure class="cs-render">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/hall-screens.webp"
+                      data-zoom-title="宣传片与解决方案电视"
+                      data-zoom-note="一块讲方案结构，一块循环播宣传片">
+                <img src="../assets/work/culture-wall/render/hall-screens.webp" width="1600" height="900" alt="展厅解决方案与宣传片电视效果图" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>04</i>两块屏</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>会变的内容交给屏幕</b>方案和宣传片每年都在改，做成墙面就等于每年拆一次。墙只承担长期不变的部分。</figcaption>
+            </figure>
           </div>
 
-          <div class="cs-docs">
+          <p class="cs-note">这一组是提案阶段的效果图，用来跟领导和供应商确认造型、材质与灯光。下面是同一批墙装完之后的现场照。</p>
+
+          <p class="cs-shot-note"><b>落地实景</b>2023 年 2 月起分区安装，同年 7 月收尾</p>
+
+          <div class="cs-docs" data-zoom-group>
             <button class="cs-doc" type="button"
                     data-zoom="../assets/work/culture-wall/showroom-elevation.webp"
                     data-zoom-title="展厅背景墙立面大样图（第一版）"
@@ -280,9 +282,9 @@
           </div>
         </section>
 
-        <!-- ── 05 实景与展厅外的文化墙 ── -->
-        <section class="cs-section" data-toc="实景与延展">
-          <p class="cs-num">05 — 实景与延展</p>
+        <!-- ── 05 动线与公共区 ── -->
+        <section class="cs-section" data-toc="动线与公共区">
+          <p class="cs-num">05 — 动线与公共区</p>
           <h2 class="cs-title">出了展厅，<em>参观动线沿椭圆环形继续</em></h2>
           <p class="cs-lede">电梯厅出来是前台，右转进展厅；出了展厅沿走廊一路走下去，发展规划与服务网络、政府来访照片墙、弧形的企业文化墙与客户 LOGO、发展历程、荣誉资质墙依次出现，最后绕回前台。这些墙面同属一套视觉语言，各自承担不同的信息。<strong class="cs-only-desktop">鼠标移到右边任意一站，平面图上会亮出它的位置。</strong><strong class="cs-only-mobile">点右边任意一站，平面图上会亮出它的位置。</strong></p>
 
@@ -329,6 +331,20 @@
           <h3 class="cs-sub">电梯开门第一眼：前台形象墙</h3>
           <p>整条动线的起点，也是唯一一处不在展厅里的重点墙面。四米出头的一面弧墙，只放一组标识——4050 × 2850 的墙上，标识组合占 1880 宽、居中，下沿离地 1900——比 1600 的站立视平线高出一头，进门抬眼正对。上方那片三角形穿孔从密到疏往下散开，背后打光，把大面积的白墙从「空」变成「有质感的空」。</p>
 
+          <div class="cs-renders" data-zoom-group>
+            <figure class="cs-render is-wide">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/f6-lobby.webp"
+                      data-zoom-title="公司前台与形象墙"
+                      data-zoom-note="电梯厅出来第一眼，整条参观动线的起点">
+                <img src="../assets/work/culture-wall/render/f6-lobby.webp" width="1600" height="900" alt="公司前台效果图，白色弧形形象墙上是 ANKKI 昂楷科技标识，前台台面下走蓝色灯带" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>01</i>前台</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>动线的第一句话</b>一整面白墙只放一组标识，两侧的柱面和台面下沿走蓝色灯带把视线收到中间。留白是这面墙唯一的手段。</figcaption>
+            </figure>
+          </div>
+
           <figure class="cs-wall">
             <div class="cs-wall-stage" data-wall
                  data-wall-size="4050,2850"
@@ -346,7 +362,48 @@
             <figcaption><b>按施工图立起来的形象墙</b>墙体、标识、离地高度全部照 AI 源文件里的毫米建模，不是示意图。拖动换视角，点「尺寸」把图纸上的标注调出来，另外加了一条 1600 视平线做参照。起不来 WebGL 的设备会直接显示实景照。</figcaption>
           </figure>
 
-          <div class="cs-docs">
+          <h3 class="cs-sub">出了展厅，沿走廊一路走下去</h3>
+          <p>动线到这里不再有房间的边界，墙面就是全部。三面墙分别承担三件事：企业文化与客户名录放在整层唯一一道弧墙上，发展历程用一条上扬曲线拉开时间，服务网络用一张立体地图交代覆盖范围。同一套白色造型板加蓝色灯线的语言，从展厅一直延续到这里。</p>
+
+          <div class="cs-renders" data-zoom-group>
+            <figure class="cs-render is-wide">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/f6-arc.webp"
+                      data-zoom-title="企业文化墙与典型客户名录"
+                      data-zoom-note="整层唯一一道弧墙，客户案例墙在这里，不在展厅">
+                <img src="../assets/work/culture-wall/render/f6-arc.webp" width="1600" height="900" alt="弧形企业文化墙效果图，左侧使命愿景价值观，中央 ANKKI 圆形标识，两侧客户 LOGO 阵列" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>02</i>弧墙</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>客户案例在这儿</b>使命、愿景、价值观在左，中间是发光的圆形标识，两翼铺开分行业的客户 LOGO。弧度让这面墙不是一眼看完的，走过去时 LOGO 一片片展开。</figcaption>
+            </figure>
+            <figure class="cs-render">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/f6-history.webp"
+                      data-zoom-title="发展历程时间轴"
+                      data-zoom-note="2009 年公司成立起的时间轴，沿一条上扬曲线排布">
+                <img src="../assets/work/culture-wall/render/f6-history.webp" width="1600" height="900" alt="发展历程墙效果图，蓝色上扬曲线上挂着年份节点" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>03</i>发展历程</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>时间做成一条上扬的线</b>年份挂在曲线上，越往后节点越密——增长本身就是这面墙要说的话。</figcaption>
+            </figure>
+            <figure class="cs-render">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/f6-network.webp"
+                      data-zoom-title="发展规划与全国服务网络"
+                      data-zoom-note="规划用电视播放，服务网络做成立体地图落在墙上">
+                <img src="../assets/work/culture-wall/render/f6-network.webp" width="1600" height="900" alt="发展规划与服务网络墙效果图，立体中国地图与二十余个分支机构标点" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>04</i>服务网络</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>地图比文字省解释</b>覆盖到哪儿，一眼就看完了。左边留一块屏给发展规划，是因为规划每年都要换。</figcaption>
+            </figure>
+          </div>
+
+          <p class="cs-shot-note"><b>落地实景</b>前台与走廊各面墙的现场照，含施工定位图</p>
+
+          <div class="cs-docs" data-zoom-group>
             <button class="cs-doc" type="button"
                     data-zoom="../assets/work/culture-wall/entry-wall.webp"
                     data-zoom-title="前台形象墙实景"
@@ -401,9 +458,104 @@
           <p class="cs-note">这一节的现场照都是竣工后拍的。企业战略屋在最终版布局里没有单独成墙，内容并入了弧墙那一段。</p>
         </section>
 
-        <!-- ── 06 荣誉分层 ── -->
+        <!-- ── 06 部门墙面 ── -->
+        <section class="cs-section" data-toc="部门墙面">
+          <p class="cs-num">06 — 部门墙面</p>
+          <h2 class="cs-title">访客看得到的只是一半，<em>另一半是每天上班的人在看</em></h2>
+          <p class="cs-lede">前台和展厅是给外人看的，办公区和技术区的墙是给自己人看的。这两类墙的规则不一样：展厅要克制、要留白，部门墙要具体——写清楚这个部门做什么、怎么做、做到哪一步了。所以从六楼办公区到五楼技术区，我给部门墙另立了一套做法：主色可以离开企业蓝，内容密度可以更高，但造型语言必须还认得出是同一家公司。</p>
+
+          <h3 class="cs-sub">六层 · 办公与职能部门</h3>
+          <div class="cs-renders" data-zoom-group>
+            <figure class="cs-render is-wide">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/f6-ipd.webp"
+                      data-zoom-title="研发部 IPD 流程墙"
+                      data-zoom-note="一张 A3 幅面的流程概览图放大到整面墙">
+                <img src="../assets/work/culture-wall/render/f6-ipd.webp" width="1600" height="900" alt="研发部 IPD 流程墙效果图，横跨整面墙的流程矩阵" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>01</i>研发部</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>最不该好看的那面墙</b>IPD 流程图本身就是一张信息密度极高的矩阵，任何造型都是干扰。这面墙的设计工作是把它排干净、让站在三米外的人能找到自己那一行。</figcaption>
+            </figure>
+            <figure class="cs-render">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/f6-lab.webp"
+                      data-zoom-title="研发部攻防演练墙"
+                      data-zoom-note="攻防对抗全景推演，红蓝两色从中心标靶向外扩散">
+                <img src="../assets/work/culture-wall/render/f6-lab.webp" width="1600" height="900" alt="攻防演练墙效果图，弧形墙面上红蓝同心圆推演图" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>02</i>实验室</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>攻与防画成一张同心圆</b>中心是标靶，红色向外是攻击面，蓝色向外是防护层。技术内容用图形讲，比列一串名词记得住。</figcaption>
+            </figure>
+            <figure class="cs-render">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/f6-party.webp"
+                      data-zoom-title="保密室党建墙"
+                      data-zoom-note="「坚持党管数据　保障数据安全」，红金配色">
+                <img src="../assets/work/culture-wall/render/f6-party.webp" width="1600" height="900" alt="保密室党建墙效果图，红色飘带与金色党徽造型，下方图文栏目" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>03</i>保密室</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>唯一一处离开企业蓝的墙</b>党建内容有它自己的视觉规矩，硬套企业蓝反而不对。改用红金，但造型的圆角和栏目分块沿用同一套语言。</figcaption>
+            </figure>
+            <figure class="cs-render">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/f6-hr.webp"
+                      data-zoom-title="人力资源部文化墙"
+                      data-zoom-note="「让优秀成为一种习惯」，四个色块串成一条闭环">
+                <img src="../assets/work/culture-wall/render/f6-hr.webp" width="1600" height="900" alt="人资部文化墙效果图，绿橙蓝四个圆角色块与飞鸟图形" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>04</i>人资部</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>办公区里的墙要轻</b>发现、表彰、学习、宣传四步串成闭环。天天在旁边坐班的人受不了一整面蓝，所以这里放开用色。</figcaption>
+            </figure>
+          </div>
+
+          <h3 class="cs-sub">五层 · 技术服务与实训区</h3>
+          <p>五楼是技术服务部门和数据安全实训区，来的人不是客户就是学员，墙面要承担真的讲解功能——不是氛围，是教具。</p>
+          <div class="cs-renders" data-zoom-group>
+            <figure class="cs-render is-wide">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/f5-env.webp"
+                      data-zoom-title="数据安全实训环境介绍"
+                      data-zoom-note="把整套实训环境的系统拓扑排成一面墙">
+                <img src="../assets/work/culture-wall/render/f5-env.webp" width="1600" height="900" alt="数据安全实训环境介绍墙效果图，蓝色拓扑结构图" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>05</i>实训环境</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>拓扑图当墙用</b>互联网访问区、办公内网区、培训区三条线进来，中间是数据安全治理平台，右边落到各类数据库。讲解的人可以直接指着墙走一遍。</figcaption>
+            </figure>
+            <figure class="cs-render">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/f5-sandbox.webp"
+                      data-zoom-title="实训沙盘课程体系与认证体系"
+                      data-zoom-note="课程体系在左、知识图谱居中、认证路径在右">
+                <img src="../assets/work/culture-wall/render/f5-sandbox.webp" width="1600" height="900" alt="数据安全实训沙盘课程体系墙效果图" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>06</i>实训沙盘</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>一面墙讲完一条学习路径</b>从课程到能力再到认证，三段横向排开——学员站在墙前面就知道自己在哪一段。</figcaption>
+            </figure>
+            <figure class="cs-render">
+              <button class="cs-render-btn" type="button"
+                      data-zoom="../assets/work/culture-wall/render/f5-team.webp"
+                      data-zoom-title="技术服务部远景与组织架构"
+                      data-zoom-note="部门使命愿景、组织架构、荣誉与风采、三年规划四段">
+                <img src="../assets/work/culture-wall/render/f5-team.webp" width="1600" height="900" alt="技术服务部门远景与组织架构墙效果图" loading="lazy" decoding="async">
+                <span class="cs-render-tag"><i>07</i>技术服务部</span>
+                <span class="cs-render-zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6.2 2.2H2.2v4M9.8 2.2h4v4M9.8 13.8h4v-4M6.2 13.8H2.2v-4"/></svg></span>
+              </button>
+              <figcaption><b>部门墙的标准四段</b>使命愿景、组织架构、荣誉风采、未来规划——这四段后来成了其他部门墙的模板，各部门照着填就行，不用每面墙重新设计一次。</figcaption>
+            </figure>
+          </div>
+
+          <p class="cs-note">这一节全部是效果图。部门墙的施工在展厅之后分批推进，用途是各部门确认内容与版式，也是后来其他部门提需求时的参照样板。</p>
+        </section>
+
+        <!-- ── 07 荣誉分层 ── -->
         <section class="cs-section" data-toc="荣誉分层">
-          <p class="cs-num">06 — 荣誉分层</p>
+          <p class="cs-num">07 — 荣誉分层</p>
           <h2 class="cs-title">证书太多，<em>全堆一面墙只会稀释分量</em></h2>
           <p class="cs-lede">公司这些年攒下的资质、奖项和牌匾足够铺满一整面墙。我按含金量把它们分层，也因此拆成了两面墙：最重量级的放进展厅、用重点照明单独呈现；其余的集中到市场部的第二面荣誉墙。</p>
 
@@ -426,9 +578,9 @@
           </div>
         </section>
 
-        <!-- ── 07 成本控制 ── -->
+        <!-- ── 08 成本控制 ── -->
         <section class="cs-section" data-toc="成本控制">
-          <p class="cs-num">07 — 成本控制</p>
+          <p class="cs-num">08 — 成本控制</p>
           <h2 class="cs-title">「不能贵，也不能廉价」，<em>最后是靠一张对照表落地的</em></h2>
           <p class="cs-lede">这句听着像没说的要求，其实是整个项目的成本主线。我把制作部分逐项做了前后对比：哪面墙升级工艺、升级到什么材质、价格差多少，哪些点位干脆不做。这张表后来既是向领导汇报的材料，也是跟供应商谈判的筹码。</p>
 
@@ -474,7 +626,7 @@
 
           <p class="cs-lede">展厅那 30,000 元是这场谈判里我最在意的一项：总价一分没涨，工艺却从喷绘贴换成了蓝色烤漆背光字、PVC 线条、亚克力盒子和灯箱。变更后供应商的应付比原合同多出两万多，最终以 15,000 元确认；加上后续零星新增，2023 年 7 月用一份补充协议 2.15 万元一次性结清。</p>
 
-          <div class="cs-docs">
+          <div class="cs-docs" data-zoom-group>
             <button class="cs-doc" type="button"
                     data-zoom="../assets/work/culture-wall/change-approval.webp"
                     data-zoom-title="变更与预算审批记录（已脱敏）"
@@ -489,9 +641,9 @@
           </div>
         </section>
 
-        <!-- ── 08 总结与收获 ── -->
+        <!-- ── 09 总结与收获 ── -->
         <section class="cs-section is-reflection" data-toc="总结与收获">
-          <p class="cs-num">08 — 总结与收获</p>
+          <p class="cs-num">09 — 总结与收获</p>
           <h2 class="cs-title">第一次统筹这么大的项目，<em>看清了比设计更难的那部分</em></h2>
 
           <div class="cs-reflection-list">
@@ -614,8 +766,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="../js/case.js?v=79"></script>
-<script src="../js/showroom3d.js?v=19"></script>
+<script src="../js/case.js?v=80"></script>
 <script src="../js/wall3d.js?v=7"></script>
 <script src="../js/admin-auth.js?v=5"></script>
 <script src="../js/site-analytics.js?v=3"></script>

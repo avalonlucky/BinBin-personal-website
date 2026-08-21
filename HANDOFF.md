@@ -2,6 +2,65 @@
 
 更新时间：2026-08-18
 
+## 2026-08-21 · 展厅 3D 全部换成效果图
+
+**为什么改**：浏览器实时渲染（Three.js + Reflector + Bloom）做不到 3ds Max / V-Ray 那种质感，
+反复调了三轮仍然被判定「拿去面试第一轮就被 pass」。用户改用 GPT 直接生成 15 张展厅效果图，
+质量远超实时渲染，方向就此换掉——**不要再回头做展厅 3D**。
+
+**删掉的东西**
+- `js/showroom3d.js`（整个文件）
+- `work/ankki-culture-wall.html` 里的 `<script type="importmap">`
+  （只有 showroom3d 的 addons 需要裸名 `three`；`js/wall3d.js` 走完整 CDN URL，不依赖它）
+- `js/case.js` 里的 `AXO_ZONES` / `initAxo()` 及其调用
+- HTML 里的 `.cs-axo` 整块（平面图热区 + 图例 + 信息面板）
+- **注**：`css/case.css` 里 `.cs-axo*` 的样式还留着，是死代码，没删是因为中间夹着
+  `.cs-doc.is-slot` 等在用的规则，删起来容易误伤。
+
+**保留**：`js/wall3d.js`（前台形象墙按毫米建模 + 尺寸标注）。它不是效果图，是可交互的施工大样，
+用途和被否掉的展厅 3D 不一样。
+
+**新增的块：`.cs-renders` 效果图画廊**
+```html
+<div class="cs-renders" data-zoom-group>
+  <figure class="cs-render is-wide">      <!-- is-wide 占满两列，放主视觉 -->
+    <button class="cs-render-btn" type="button"
+            data-zoom="..." data-zoom-title="..." data-zoom-note="...">
+      <img src="..." width="1600" height="900" loading="lazy" decoding="async">
+      <span class="cs-render-tag"><i>01</i>背墙全景</span>
+      <span class="cs-render-zoom" aria-hidden="true"><svg …></svg></span>
+    </button>
+    <figcaption><b>小标题</b>说明文字</figcaption>
+  </figure>
+</div>
+```
+CSS 在 `css/case.css` 末尾。两列网格，760px 以下退成一列，`.is-wide` 同时失效。
+
+**Lightbox 图组（`data-zoom-group`）**
+`openZoom()` 从收单图改成收一组：点任意 `[data-zoom]` 时，向上找 `[data-zoom-group]`，
+把里面所有 `[data-zoom]` 收进 `zoomList`，左右箭头/键盘在组内循环，meta 行尾追加 `n/N`。
+- 组内 > 1 张 → 加 `is-zoomset`（留前后按钮，藏「看背面」）
+- 组内 = 1 张 → 加 `is-single`（前后按钮和翻面都藏掉）
+- `openLightbox()`（产品单页那套）进来时必须清空 `zoomList`，否则 `step()` 会走错分支。
+所有 `.cs-docs` 也加了 `data-zoom-group`，顺带获得翻页。
+
+**资源**：15 张效果图在 `assets/work/culture-wall/render/`，webp q80/q82，共 1.7 MB。
+源文件在 `/Users/luban/Desktop/3.展厅设计/渲染图/`（PNG，1672×941 或 1448×1086）。
+`magick … -resize 1600x` 会把 1448 的图放大，4:3 那两张直接原尺寸转，别加 resize。
+
+**章节重排**（原 8 节 → 9 节）
+| 新 | 内容 |
+|---|---|
+| 04 展厅设计 | 4 张展厅效果图（背墙全景 is-wide）→ 提示这是效果图 → 落地实景 cs-docs |
+| 05 动线与公共区 | 动线平面图 → 前台效果图 → wall3d 大样 → 走廊三面墙效果图 → 实景 cs-docs |
+| 06 部门墙面 | 新增：6F 四张（IPD/攻防/党建/人资）+ 5F 三张（实训环境/沙盘/技术服务部） |
+| 07 荣誉分层 / 08 成本控制 / 09 总结 | 原 06/07/08 顺延 |
+
+**效果图里的小字是 AI 生成的乱码**，标题级文字正确、正文级不可读。页面上按正常尺寸看不出来，
+放大到全屏能看出来。文案里一律标明「效果图」，实景照单独成组，不要混着说成实拍。
+
+**版本号**：`case.css?v=115`、`case.js?v=80`。
+
 ## 项目信息
 
 - 本地目录：`/Users/luban/Documents/个人网站`

@@ -3403,6 +3403,9 @@
 .cs-lb.is-single .cs-lb-next,
 .cs-lb.is-single .cs-lb-flip { display: none; }
 .cs-lb.is-single .cs-lb-stage img { max-height: 84vh; max-width: min(94vw, 1400px); }
+/* 图组：留着前后按钮，但效果图没有背面 */
+.cs-lb.is-zoomset .cs-lb-flip { display: none; }
+.cs-lb.is-zoomset .cs-lb-stage img { max-height: 84vh; max-width: min(94vw, 1500px); }
 
 /* ════════════════════════════════════════
    内刊案例专用板块
@@ -6762,4 +6765,122 @@
 .cs-tocmap.is-route .cs-tocmap-fig::after { background: rgba(2, 2, 2, .34); }
 @media (max-width: 900px) {
   .cs-tocmap.is-route { grid-template-columns: 1fr; }
+}
+
+/* ════════════════════════════════════════════════════════════
+   效果图画廊 —— 图为主、字为辅
+   面试官滚到这一屏时看的是画面，所以图给到接近正文满宽，
+   说明压成一行贴在图下。.is-wide 占满两列，用来放主视觉。
+════════════════════════════════════════════════════════════ */
+.cs-renders {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.5vw, 22px);
+  margin-top: 26px;
+}
+.cs-render { margin: 0; min-width: 0; }
+.cs-render.is-wide { grid-column: 1 / -1; }
+
+.cs-render-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--cs-hair);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--cs-paper-2);
+  position: relative;
+  cursor: zoom-in;
+  transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+}
+.cs-render-btn img { display: block; width: 100%; height: auto; }
+.cs-render-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(2, 2, 2, .13); }
+.cs-render-btn:focus-visible { outline: 2px solid var(--cs-accent); outline-offset: 3px; }
+
+/* 编号角标：压在图上，不占版面高度 */
+.cs-render-tag {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px 5px 8px;
+  border-radius: 100px;
+  background: rgba(2, 2, 2, .58);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fbfbf4;
+  font-family: var(--f-cjk);
+  font-size: 12.5px;
+  line-height: 1;
+  letter-spacing: .01em;
+  pointer-events: none;
+}
+.cs-render-tag i {
+  font-style: normal;
+  font-family: var(--f-mono, ui-monospace, monospace);
+  font-size: 11px;
+  color: var(--cs-accent-lift);
+}
+
+/* 放大提示：只在能 hover 的设备上出现 */
+.cs-render-zoom {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(2, 2, 2, .58);
+  color: #fbfbf4;
+  opacity: 0;
+  transform: scale(.86);
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+  pointer-events: none;
+}
+.cs-render-btn:hover .cs-render-zoom { opacity: 1; transform: scale(1); }
+
+.cs-render figcaption {
+  padding-top: 11px;
+  font-family: var(--f-cjk);
+  font-size: 14px;
+  line-height: 1.72;
+  color: var(--cs-ink-2);
+}
+.cs-render figcaption b {
+  margin-right: .5em;
+  color: var(--cs-ink);
+  font-weight: 600;
+}
+
+/* 效果图与实景之间的小标：说清楚哪张是图、哪张是墙 */
+.cs-shot-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 30px 0 -6px;
+  font-family: var(--f-cjk);
+  font-size: 13px;
+  color: var(--cs-ink-3);
+}
+.cs-shot-note::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--cs-hair);
+}
+.cs-shot-note b {
+  font-weight: 600;
+  color: var(--cs-ink-2);
+}
+
+@media (hover: none) {
+  .cs-render-btn:hover { transform: none; box-shadow: none; }
+}
+@media (max-width: 760px) {
+  .cs-renders { grid-template-columns: 1fr; }
+  .cs-render.is-wide { grid-column: auto; }
 }

@@ -790,97 +790,6 @@ function initHall() {
   });
 }
 
-/* ─────────────────────────────────────────
-   展厅平面 — 点编号或图例查看内容
-   底图是用户手绘的最终布局草图，热区是覆在图上的按钮。
-   上一版这里是手算的等轴测 SVG，画的是第一版方案
-   （内容全排在一面 11400 的背墙上、还含客户案例墙），已经作废。
-   3D 起来之后这张图会隐藏，两者共用同一套 AXO_ZONES 和选中状态。
-───────────────────────────────────────── */
-const AXO_ZONES = [
-  {
-    idx: 'ZONE 01',
-    name: '产品服务',
-    copy: '进门左手第一块。产品跑在什么环境里、界面长什么样，用动态画面讲比用文字讲省一半时间。',
-    facts: [['位置', '背墙 · 西段'], ['形式', '电视 + 造型背板']],
-  },
-  {
-    idx: 'ZONE 02',
-    name: '荣誉资质',
-    copy: '背墙正中，只放最重的几张。位置和留白本身就完成了一次分级——其余的全部放到市场部那面墙上。',
-    facts: [['位置', '背墙 · 中段'], ['照明', '独立打光，与相邻区拉开']],
-  },
-  {
-    idx: 'ZONE 03',
-    name: '解决方案',
-    copy: '背墙东段，接着荣誉往下讲：能力覆盖到哪些行业、哪些场景。会变的内容交给屏幕。',
-    facts: [['位置', '背墙 · 东段'], ['分工', '与产品演示分屏，不混在一块']],
-  },
-  {
-    idx: 'ZONE 04',
-    name: '样机展示',
-    copy: '西侧整面墙的落地灯光柜，陈列实体样机。一路看下来的说法，在这里能上手。',
-    facts: [['位置', '西墙'], ['形式', '落地灯光柜 · 分层陈列']],
-  },
-  {
-    idx: 'ZONE 05',
-    name: '宣传片',
-    copy: '东侧墙面，靠近出口。参观接近尾声时用一支片子收口，比再加一面图文墙有效。',
-    facts: [['位置', '东墙'], ['作用', '收口 · 停留时间最长的一块']],
-  },
-  {
-    idx: 'ZONE 06',
-    name: '技术演进灯箱',
-    copy: '进门这一侧的长灯箱。转身出门时才看见的一条时间轴——公司的技术是怎么一步步长出来的。',
-    facts: [['位置', '进门一侧'], ['形式', '横向长灯箱 · 时间轴']],
-  },
-];
-
-function initAxo() {
-  const axo = document.querySelector('[data-axo]');
-  if (!axo) return;
-  const zones = [...axo.querySelectorAll('.cs-axo-zone')];
-  const legs  = [...axo.querySelectorAll('.cs-axo-leg')];
-  const idx   = axo.querySelector('[data-axo-idx]');
-  const name  = axo.querySelector('[data-axo-name]');
-  const copy  = axo.querySelector('[data-axo-copy]');
-  const facts = axo.querySelector('[data-axo-facts]');
-  if (!zones.length) return;
-
-  let current = -1;
-  const select = i => {
-    if (i === current) return;
-    current = i;
-    axo.__onSelect?.(i);          // 3D 模块挂在这里，两边共用一份选中状态
-    const data = AXO_ZONES[i];
-    zones.forEach((z, n) => z.classList.toggle('is-on', n === i));
-    legs.forEach((l, n) => {
-      l.classList.toggle('is-on', n === i);
-      l.setAttribute('aria-pressed', String(n === i));
-    });
-    if (idx)  idx.textContent  = data.idx;
-    if (name) name.textContent = data.name;
-    if (copy) copy.textContent = data.copy;
-    if (facts) {
-      facts.innerHTML = data.facts
-        .map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`)
-        .join('');
-    }
-  };
-
-  zones.forEach((z, i) => {
-    z.addEventListener('click', () => select(i));
-    z.addEventListener('mouseenter', () => select(i));
-  });
-  legs.forEach((l, i) => {
-    l.addEventListener('click', () => select(i));
-    l.addEventListener('mouseenter', () => select(i));
-    l.addEventListener('focus', () => select(i));
-  });
-  axo.__select = select;          // 3D 里点中展板时回调它
-  select(0);
-}
-
 function initTocMap() {
   const maps = [...document.querySelectorAll('[data-tocmap]')];
   if (!maps.length) return;
@@ -1879,21 +1788,42 @@ function openLightbox(i) {
   if (!lb) return;
   lbIndex = i;
   lbSide = 'front';
-  lb.classList.remove('is-single');
+  lb.classList.remove('is-single', 'is-zoomset');
+  zoomList = [];
   renderLightbox();
   showLightbox(lb);
 }
 
-/* 单图模式：文件凭证、场景图等与产品数组无关的图 */
-function openZoom(src, title, note) {
+/* 单图模式：文件凭证、场景图等与产品数组无关的图。
+   放在同一个 [data-zoom-group] 里的图会串成一组，可以左右翻。 */
+let zoomList = [];
+let zoomIdx = 0;
+
+function renderZoom() {
+  const lb = document.querySelector('.cs-lb');
+  const el = zoomList[zoomIdx];
+  if (!lb || !el) return;
+  const d = el.dataset;
+  const img = lb.querySelector('[data-lb-img]');
+  img.src = d.zoom;
+  img.alt = d.zoomTitle || '';
+  lb.querySelector('[data-lb-name]').textContent = d.zoomTitle || '';
+  lb.querySelector('[data-lb-meta]').textContent =
+    zoomList.length > 1
+      ? `${d.zoomNote || ''}${d.zoomNote ? '　·　' : ''}${zoomIdx + 1}/${zoomList.length}`
+      : (d.zoomNote || '');
+}
+
+function openZoom(el) {
   const lb = document.querySelector('.cs-lb');
   if (!lb) return;
-  lb.classList.add('is-single');
-  const img = lb.querySelector('[data-lb-img]');
-  img.src = src;
-  img.alt = title || '';
-  lb.querySelector('[data-lb-name]').textContent = title || '';
-  lb.querySelector('[data-lb-meta]').textContent = note || '';
+  const grp = el.closest('[data-zoom-group]');
+  zoomList = grp ? [...grp.querySelectorAll('[data-zoom]')] : [el];
+  zoomIdx = Math.max(0, zoomList.indexOf(el));
+  /* is-single 关掉前后按钮和翻面；成组时只需要翻面关掉 */
+  lb.classList.toggle('is-single', zoomList.length < 2);
+  lb.classList.toggle('is-zoomset', zoomList.length > 1);
+  renderZoom();
   showLightbox(lb);
 }
 
@@ -1921,14 +1851,24 @@ function initLightbox() {
   const lb = document.querySelector('.cs-lb');
   if (!lb) return;
 
-  const step = d => { lbIndex = (lbIndex + d + PRODUCTS.length) % PRODUCTS.length; lbSide = 'front'; renderLightbox(); };
+  /* 前后翻：图组模式走 zoomList，产品单页模式走 PRODUCTS */
+  const step = d => {
+    if (zoomList.length > 1) {
+      zoomIdx = (zoomIdx + d + zoomList.length) % zoomList.length;
+      renderZoom();
+      return;
+    }
+    lbIndex = (lbIndex + d + PRODUCTS.length) % PRODUCTS.length;
+    lbSide = 'front';
+    renderLightbox();
+  };
 
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-lb]');
     if (t) { e.preventDefault(); openLightbox(Number(t.dataset.lb)); return; }
 
     const z = e.target.closest('[data-zoom]');
-    if (z) { e.preventDefault(); openZoom(z.dataset.zoom, z.dataset.zoomTitle, z.dataset.zoomNote); }
+    if (z) { e.preventDefault(); openZoom(z); }
   });
 
   lb.querySelector('.cs-lb-close').addEventListener('click', closeLightbox);
@@ -1946,6 +1886,7 @@ function initLightbox() {
     if (lb.classList.contains('is-single')) return;   // 单图模式没有前后与翻面
     if (e.key === 'ArrowLeft')  step(-1);
     if (e.key === 'ArrowRight') step(1);
+    if (lb.classList.contains('is-zoomset')) return;  // 图组能翻页，但没有背面
     if (e.key === ' ') { e.preventDefault(); lbSide = lbSide === 'front' ? 'back' : 'front'; renderLightbox(); }
   });
 }
@@ -2284,7 +2225,6 @@ initDeck();
 initAudienceRail();
 initLine();
 initHall();
-initAxo();
 initTocMap();
 initReader();
 initPageDemo();
