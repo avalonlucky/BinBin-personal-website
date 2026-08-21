@@ -29,6 +29,38 @@ Use browser DOM evaluation, Framer's observed page assets, or built-in shell/Nod
 - **Notes**: Switched to browser/page-asset inspection and direct Framer bundle analysis.
 
 ---
+
+## [ERR-20260821-016] imagemagick-contact-sheet-font
+
+**Logged**: 2026-08-21T23:30:00+08:00
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### Summary
+ImageMagick could not label a render contact sheet because its configured font was unavailable.
+
+### Error
+```
+montage: unable to read font `'
+```
+
+### Context
+- Attempted to generate a labeled contact sheet for Chinese-named PNG render files.
+- The image inputs themselves were readable and all shared consistent dimensions.
+
+### Suggested Fix
+Generate the contact sheet without labels or inspect numbered thumbnails separately; do not make visual analysis depend on local font discovery.
+
+### Metadata
+- Reproducible: yes
+- Related Files: /Users/luban/Desktop/3.展厅设计/渲染图/
+
+### Resolution
+- **Resolved**: 2026-08-21T23:30:00+08:00
+- **Notes**: Switched to a label-free numbered montage workflow.
+
+---
 ## [ERR-20260819-007] workers-types-npm-cache-permission
 
 **Logged**: 2026-08-19T00:00:00+08:00

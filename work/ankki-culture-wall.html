@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=83">
-  <link rel="stylesheet" href="../css/case.css?v=118">
+  <link rel="stylesheet" href="../css/case.css?v=119">
   <link rel="stylesheet" href="../css/admin-auth.css?v=4">
 </head>
 <body class="case-page is-editorial is-culture">
@@ -52,19 +52,16 @@
           <p>访客只有十分钟。我先决定他们每走一步应该记住什么，再把三十多面墙编辑成一条从“看见”到“信任”的空间叙事。</p>
           <div class="culture-tour-meta"><span>2 层空间</span><span>30+ 展示点位</span><span>10+ 协作部门</span><span>29 万预算</span></div>
         </div>
-        <div class="culture-tour-stage" data-tour-stage aria-label="可拖动环视的展厅空间示意">
-          <div class="culture-room" data-tour-room>
-            <div class="culture-plane culture-floor"></div><div class="culture-plane culture-ceiling"></div>
-            <div class="culture-plane culture-back"><img src="../assets/work/culture-wall/render/hall-mainwall.webp" alt="展厅主展墙"></div>
-            <div class="culture-plane culture-left"><img src="../assets/work/culture-wall/render/hall-tech.webp" alt="技术演进灯箱"></div>
-            <div class="culture-plane culture-right"><img src="../assets/work/culture-wall/render/hall-screens.webp" alt="解决方案与宣传片屏幕"></div>
-            <button class="culture-hotspot is-active" type="button" data-tour-view="0" style="--x:50%;--y:37%"><i>01</i><span>主展墙</span></button>
-            <button class="culture-hotspot" type="button" data-tour-view="1" style="--x:21%;--y:48%"><i>02</i><span>技术演进</span></button>
-            <button class="culture-hotspot" type="button" data-tour-view="2" style="--x:79%;--y:48%"><i>03</i><span>动态屏幕</span></button>
+        <div class="culture-tour-stage" data-tour-stage aria-label="可拖动 360 度环视的展厅空间">
+          <div class="culture-panorama" data-tour-panorama>
+            <img class="culture-panorama-frame is-current" data-tour-frame-a src="../assets/work/culture-wall/render/f6-lobby.webp" alt="六楼前台空间渲染图" draggable="false">
+            <img class="culture-panorama-frame" data-tour-frame-b src="../assets/work/culture-wall/render/hall-tech.webp" alt="" draggable="false">
           </div>
           <div class="culture-tour-vignette" aria-hidden="true"></div>
-          <p class="culture-tour-hint"><span></span>拖动环视 · 点击标记聚焦展面</p>
-          <div class="culture-tour-caption" data-tour-caption><small>01 / 访客进门的第一个回答</small><strong>你们做什么，凭什么值得信任？</strong></div>
+          <div class="culture-tour-bearing" aria-hidden="true"><span data-tour-degrees>000°</span><i></i><b>360°</b></div>
+          <p class="culture-tour-hint"><span></span>左右拖动 · 360° 循环环视</p>
+          <div class="culture-tour-caption" data-tour-caption><small>01 / 前台 · 第一印象</small><strong>先让访客知道这是谁，再邀请他走进故事。</strong></div>
+          <nav class="culture-tour-index" data-tour-index aria-label="展厅环视节点"></nav>
         </div>
         <div class="culture-tour-map">
           <img src="../assets/work/culture-wall/floorplan-6f-plan.webp" alt="六楼平面布置图">
@@ -753,7 +750,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="../js/case.js?v=80"></script>
 <script src="../js/wall3d.js?v=7"></script>
-<script src="../js/culture-tour.js?v=1"></script>
+<script src="../js/culture-tour.js?v=2"></script>
 <script src="../js/admin-auth.js?v=5"></script>
 <script src="../js/site-analytics.js?v=3"></script>
 </body>

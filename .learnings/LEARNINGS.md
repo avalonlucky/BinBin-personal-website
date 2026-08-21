@@ -25,6 +25,33 @@ Before completing future visual alignment tasks, open or fetch the reference sit
 
 ---
 
+## [LRN-20260821-006] correction
+
+**Logged**: 2026-08-21T23:30:00+08:00
+**Priority**: high
+**Status**: in_progress
+**Area**: frontend
+
+### Summary
+When a supplied render library covers successive directions around a room, use the real renders as a cyclic panorama sequence instead of simulating 3D with CSS planes.
+
+### Details
+The first culture-wall hero used a perspective CSS room, which could only tilt within a bounded angle and therefore neither communicated a genuine 360-degree view nor felt smooth under drag. The user clarified that the render folder already contains views that can be combined into a full spatial circuit.
+
+### Suggested Action
+Inventory and order the render views, preload them, render a cyclic drag-controlled sequence with inertia and seamless wraparound, and validate the gesture in a real browser.
+
+### Metadata
+- Source: user_feedback
+- Related Files: work/ankki-culture-wall.html, css/case.css, js/culture-tour.js
+- Tags: panorama, 360-view, interaction, spatial-design
+- Pattern-Key: frontend.real_render_sequence_over_fake_3d
+- Recurrence-Count: 1
+- First-Seen: 2026-08-21
+- Last-Seen: 2026-08-21
+
+---
+
 ## [LRN-20260819-006] correction
 
 **Logged**: 2026-08-19T01:20:00+08:00
