@@ -989,7 +989,7 @@ function initReader() {
     }
   };
 
-  const render = async () => {
+  const render = async ({ showLoading = true } = {}) => {
     const version = ++renderVersion;
     const bookKey = book.key;
     stageBook.style.setProperty('--pg-ar', book.ar);
@@ -1012,7 +1012,9 @@ function initReader() {
     btnPrev.disabled = hitPrev.disabled = atStart;
     btnNext.disabled = hitNext.disabled = atEnd;
     preload();
-    stageBook.classList.add('is-loading');
+    const needsLoading = showLoading && [leftSrc, rightSrc]
+      .some(src => src && !decodedPages.has(src));
+    stageBook.classList.toggle('is-loading', needsLoading);
     const [readyLeft, readyRight] = await Promise.all([loadPage(leftSrc), loadPage(rightSrc)]);
     if (version !== renderVersion || book.key !== bookKey) return;
     setImgSrc(pgL, readyLeft);
@@ -1077,7 +1079,9 @@ function initReader() {
     const frontSrc = url(frontI);
     const backSrc = url(backI);
     const underSrc = url(underI);
-    stageBook.classList.add('is-loading');
+    const needsLoading = [frontSrc, backSrc, underSrc]
+      .some(src => src && !decodedPages.has(src));
+    stageBook.classList.toggle('is-loading', needsLoading);
     const [readyFront, readyBack, readyUnder] = await Promise.all([
       loadPage(frontSrc), loadPage(backSrc), loadPage(underSrc),
     ]);
@@ -1105,9 +1109,11 @@ function initReader() {
       ease: 'power2.inOut',
       onComplete: async () => {
         pos = target;
+        /* 翻动页在最后一帧继续遮住书台，先把底下的完整新跨页
+           同步好，并等待浏览器绘制完成，然后再撤掉翻动层。 */
+        await render({ showLoading: false });
         flip.classList.remove('is-on');
         gsap.set(flip, { rotateY: 0 });
-        await render();
         busy = false;
         continueQueuedTurn();
       },
