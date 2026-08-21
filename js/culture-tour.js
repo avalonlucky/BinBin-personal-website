@@ -168,6 +168,7 @@ document.querySelectorAll('[data-space-switcher]').forEach(switcher => {
       item.setAttribute('aria-selected', String(active));
     });
     media.classList.add('is-changing');
+    switcher.style.setProperty('--wall-accent', tab.dataset.accent || '#7896ff');
     const nextImage = new Image();
     nextImage.onload = () => {
       image.src = tab.dataset.image;
@@ -183,4 +184,11 @@ document.querySelectorAll('[data-space-switcher]').forEach(switcher => {
   };
 
   tabs.forEach(tab => tab.addEventListener('click', () => select(tab)));
+});
+
+document.querySelectorAll('.culture-map-pin').forEach(pin => {
+  pin.addEventListener('click', () => {
+    document.querySelectorAll('.culture-map-pin').forEach(item => item.classList.remove('is-active'));
+    pin.classList.add('is-active');
+  });
 });
