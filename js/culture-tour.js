@@ -10,31 +10,34 @@
 
   const base = '../assets/work/culture-wall/render/';
   const views = [
-    ['f6-lobby.webp', '前台 · 第一印象', '先让访客知道这是谁，再邀请他走进故事。'],
-    ['hall-tech.webp', '展厅 · 技术演进', '把抽象的技术路径，编辑成一条可以被追踪的时间线。'],
-    ['hall-screens.webp', '展厅 · 动态信息', '会持续变化的内容留给屏幕，不把它固死在墙上。'],
-    ['hall-mainwall.webp', '展厅 · 主展墙', '用一个连续的展面，回答业务、产品、资质与信任。'],
-    ['hall-awards.webp', '展厅 · 荣誉资质', '证据不是装饰，它是说服链条最后的落点。'],
-    ['f6-history.webp', '走廊 · 发展历程', '年份不平铺，用一条上扬曲线让发展变得可感知。'],
-    ['f6-network.webp', '走廊 · 服务网络', '把组织能力放进地理尺度，让服务范围一眼可见。'],
-    ['f6-arc.webp', '走廊 · 弧形文化墙', '空间转弯的地方，也成为叙事转场的地方。'],
-    ['f6-hr.webp', '人资部 · 行为文化', '文化不写成口号，而是被翻译成可识别的行为。'],
-    ['f6-party.webp', '会议区 · 保密文化', '严肃的主题仍然可以拥有清晰的层级与视觉节奏。'],
-    ['f6-ipd.webp', '研发部 · IPD 流程', '复杂流程先被重新组织，再被放大到空间中。'],
-    ['f6-lab.webp', '研发部 · 攻防演练', '信息密度最高的展面，用同心结构建立阅读入口。'],
-    ['f5-team.webp', '五楼 · 团队与架构', '从战略、组织到认证体系，展开部门的全景。'],
-    ['f5-sandbox.webp', '五楼 · 实训沙盘', '把产品能力从参数表，转译成实际应用场景。'],
-    ['f5-env.webp', '五楼 · 实训环境', '环线的最后，让视线回到数据安全的核心系统。'],
+    ['f6-lobby.webp', '前台 · 第一印象', '先让访客知道这是谁，再邀请他走进故事'],
+    ['hall-tech.webp', '展厅 · 技术演进', '把抽象的技术路径，编辑成一条可以被追踪的时间线'],
+    ['hall-screens.webp', '展厅 · 动态信息', '会持续变化的内容留给屏幕，不把它固死在墙上'],
+    ['hall-mainwall.webp', '展厅 · 主展墙', '用一个连续的展面，回答业务、产品、资质与信任'],
+    ['hall-awards.webp', '展厅 · 荣誉资质', '证据不是装饰，它是说服链条最后的落点'],
+    ['f6-history.webp', '走廊 · 发展历程', '年份不平铺，用一条上扬曲线让发展变得可感知'],
+    ['f6-network.webp', '走廊 · 服务网络', '把组织能力放进地理尺度，让服务范围一眼可见'],
+    ['f6-arc.webp', '走廊 · 弧形文化墙', '空间转弯的地方，也成为叙事转场的地方'],
+    ['f6-hr.webp', '人资部 · 行为文化', '文化不写成口号，而是被翻译成可识别的行为'],
+    ['f6-party.webp', '会议区 · 保密文化', '严肃的主题仍然可以拥有清晰的层级与视觉节奏'],
+    ['f6-ipd.webp', '研发部 · IPD 流程', '复杂流程先被重新组织，再被放大到空间中'],
+    ['f6-lab.webp', '研发部 · 攻防演练', '信息密度最高的展面，用同心结构建立阅读入口'],
+    ['f5-team.webp', '五楼 · 团队与架构', '从战略、组织到认证体系，展开部门的全景'],
+    ['f5-sandbox.webp', '五楼 · 实训沙盘', '把产品能力从参数表，转译成实际应用场景'],
+    ['f5-env.webp', '五楼 · 实训环境', '环线的最后，让视线回到数据安全的核心系统'],
   ];
 
   const urls = views.map(view => new URL(base + view[0], document.baseURI).href);
   urls.forEach(url => { const image = new Image(); image.decoding = 'async'; image.src = url; });
   indexNav.innerHTML = views.map((view, i) => `<button type="button" aria-label="${String(i + 1).padStart(2, '0')} ${view[1]}">${i + 1}</button>`).join('');
   const buttons = [...indexNav.querySelectorAll('button')];
+  const stepButtons = [...root.querySelectorAll('[data-tour-step]')];
 
   let position = 0;
   let velocity = 0;
   let dragging = false;
+  let moved = false;
+  let downX = 0;
   let lastX = 0;
   let lastTime = 0;
   let activeIndex = -1;
@@ -76,7 +79,8 @@
     cancelAnimationFrame(raf);
     raf = 0;
     dragging = true;
-    lastX = event.clientX;
+    moved = false;
+    downX = lastX = event.clientX;
     lastTime = performance.now();
     velocity = 0;
     stage.classList.add('is-dragging');
@@ -86,6 +90,7 @@
     if (!dragging) return;
     const now = performance.now();
     const dx = event.clientX - lastX;
+    if (Math.abs(event.clientX - downX) > 5) moved = true;
     const dt = Math.max(8, now - lastTime);
     position -= dx * sensitivity;
     velocity = velocity * .55 + (-dx * sensitivity) * (16 / dt) * .45;
@@ -103,10 +108,11 @@
   stage.addEventListener('pointerup', release);
   stage.addEventListener('pointercancel', release);
 
-  buttons.forEach((button, index) => button.addEventListener('click', () => {
+  function goTo(index) {
     cancelAnimationFrame(raf);
     const current = wrap(position);
-    let delta = index - current;
+    const target = wrap(index);
+    let delta = target - current;
     if (delta > views.length / 2) delta -= views.length;
     if (delta < -views.length / 2) delta += views.length;
     const from = position;
@@ -120,7 +126,25 @@
       if (t < 1) raf = requestAnimationFrame(animate);
     };
     raf = requestAnimationFrame(animate);
+  }
+
+  buttons.forEach((button, index) => button.addEventListener('click', () => goTo(index)));
+  stepButtons.forEach(button => button.addEventListener('click', () => {
+    const direction = Number(button.dataset.tourStep) || 1;
+    goTo(Math.round(wrap(position)) + direction);
   }));
+  stage.addEventListener('click', event => {
+    if (moved || event.target.closest('button')) return;
+    const rect = stage.getBoundingClientRect();
+    const ratio = (event.clientX - rect.left) / rect.width;
+    if (ratio < .32) goTo(Math.round(wrap(position)) - 1);
+    if (ratio > .68) goTo(Math.round(wrap(position)) + 1);
+  });
+  stage.addEventListener('keydown', event => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    goTo(Math.round(wrap(position)) + (event.key === 'ArrowRight' ? 1 : -1));
+  });
 
   paint();
 })();

@@ -4339,9 +4339,9 @@
 .culture-tour-copy { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(320px,.55fr); gap: 22px 70px; align-items: end; }
 .culture-tour-copy .cs-eyebrow { grid-column: 1 / -1; margin: 0; color: #8ca4ff; }
 .culture-tour-copy h1 { grid-column: 1 / -1; margin: 0; font-family: var(--f-cjk); font-size: clamp(48px,5.8vw,84px); font-weight: 600; line-height: 1.04; letter-spacing: -.055em; }
-.culture-tour-copy > p { grid-column: 2; }
+.culture-tour-copy > p { grid-column: 1; }
 .culture-tour-copy h1 em { color: #8ca4ff; font-style: normal; }
-.culture-tour-copy > p { max-width: 34em; margin: 0 0 8px; font-family: var(--f-cjk); font-size: clamp(16px,1.35vw,19px); line-height: 1.82; color: rgba(247,247,242,.62); }
+.culture-tour-copy > p { max-width: 42em; margin: 0 0 8px; font-family: var(--f-cjk); font-size: clamp(16px,1.35vw,19px); line-height: 1.82; color: rgba(247,247,242,.62); text-align: left; }
 .culture-tour-meta { grid-column: 1 / -1; display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap; }
 .culture-tour-meta span { padding: 7px 14px; border: 1px solid rgba(247,247,242,.16); border-radius: 999px; font: 12px/1.2 var(--f-cjk); color: rgba(247,247,242,.7); }
 .culture-tour-stage { width: 100vw; max-width: none; height: 100svh; min-height: 680px; margin: 76px calc(50% - 50vw) 0; overflow: hidden; background: #080b11; cursor: grab; touch-action: pan-y; user-select: none; }
@@ -4350,10 +4350,19 @@
 .culture-panorama::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 120px rgba(0,0,0,.34); pointer-events: none; }
 .case-page .culture-panorama-frame { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; filter: saturate(.92) brightness(.84) contrast(1.04); will-change: transform; pointer-events: none; }
 .culture-tour-vignette { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg,rgba(2,3,6,.28),transparent 22% 78%,rgba(2,3,6,.34)),linear-gradient(180deg,rgba(2,3,6,.18),transparent 42%,rgba(2,3,6,.86)); }
+.culture-tour-step { position: absolute; z-index: 3; top: 0; bottom: 0; width: 12%; padding: 0; border: 0; background: transparent; color: #fff; cursor: pointer; }
+.culture-tour-step.is-prev { left: 0; text-align: left; }
+.culture-tour-step.is-next { right: 0; text-align: right; }
+.culture-tour-step span { display: inline-grid; width: 46px; height: 46px; margin-inline: 3vw; place-items: center; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; background: rgba(5,7,11,.2); font: 20px/1 var(--f-body); opacity: 0; transform: translateX(var(--step-shift,0)); backdrop-filter: blur(8px); transition: opacity .25s ease,transform .25s ease,background .25s ease; }
+.culture-tour-step.is-prev span { --step-shift: -8px; }
+.culture-tour-step.is-next span { --step-shift: 8px; }
+.culture-tour-stage:hover .culture-tour-step span,.culture-tour-step:focus-visible span { opacity: 1; transform: none; }
+.culture-tour-step:hover span { background: rgba(5,7,11,.52); }
+.culture-tour-stage:focus-visible { outline: 2px solid #8ca4ff; outline-offset: -2px; }
 .culture-tour-hint { position: absolute; left: 4vw; bottom: 34px; z-index: 4; display: flex; gap: 10px; align-items: center; margin: 0; font: 12px/1.4 var(--f-cjk); letter-spacing: .08em; color: rgba(247,247,242,.72); text-shadow: 0 2px 18px rgba(0,0,0,.8); }
 .culture-tour-hint span { width: 30px; height: 18px; border: 1px solid rgba(247,247,242,.35); border-radius: 9px; }
 .culture-tour-caption { position: absolute; right: 5vw; bottom: 78px; z-index: 4; display: grid; gap: 11px; width: min(520px,42vw); padding: 0; border: 0; background: transparent; text-shadow: 0 3px 26px rgba(0,0,0,.92); }
-.culture-tour-caption small { font: 11px/1.3 var(--f-cjk); letter-spacing: .14em; color: rgba(255,255,255,.68); }
+.culture-tour-caption small { font: 14px/1.3 var(--f-cjk); letter-spacing: .11em; color: rgba(255,255,255,.76); }
 .culture-tour-caption strong { font: 500 clamp(24px,2.25vw,36px)/1.35 var(--f-cjk); color: #fff; }
 .culture-tour-bearing { position: absolute; z-index: 4; top: 30px; right: 4vw; display: grid; grid-template-columns: auto 90px auto; gap: 10px; align-items: center; color: rgba(255,255,255,.78); font: 10px/1 var(--f-body); letter-spacing: .08em; text-shadow: 0 2px 14px rgba(0,0,0,.7); }
 .culture-tour-bearing i { position: relative; display: block; height: 1px; background: rgba(255,255,255,.28); }
@@ -4377,11 +4386,13 @@
   .culture-tour { min-height: 0; padding: 112px 16px 76px; }
   .culture-tour-copy { grid-template-columns: 1fr; gap: 18px; }
   .culture-tour-copy .cs-eyebrow,.culture-tour-copy h1,.culture-tour-copy > p,.culture-tour-meta { grid-column: auto; }
-  .culture-tour-copy h1 { font-size: 42px; }
+  .culture-tour-copy h1 { font-size: 38px; }
   .culture-tour-stage { width: 100vw; min-height: 620px; height: 100svh; margin: 44px -16px 0; }
   .culture-tour-caption { right: 20px; bottom: 68px; left: 20px; width: auto; }
   .culture-tour-caption strong { font-size: 21px; line-height: 1.36; }
   .culture-tour-caption small { color: rgba(255,255,255,.72); }
+  .culture-tour-step { width: 18%; }
+  .culture-tour-step span { width: 38px; height: 38px; margin-inline: 12px; opacity: .7; font-size: 17px; }
   .culture-tour-hint { display: none; }
   .culture-tour-bearing { top: 14px; right: 14px; }
   .culture-tour-index { bottom: 26px; max-width: calc(100% - 28px); gap: 4px; }
