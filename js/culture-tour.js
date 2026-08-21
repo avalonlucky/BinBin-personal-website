@@ -148,3 +148,39 @@
 
   paint();
 })();
+
+document.querySelectorAll('[data-space-switcher]').forEach(switcher => {
+  const media = switcher.querySelector('[data-space-media]');
+  const image = media?.querySelector('img');
+  const count = media?.querySelector('span');
+  const tabs = [...switcher.querySelectorAll('[data-space-tab]')];
+  const kicker = switcher.querySelector('[data-space-kicker]');
+  const title = switcher.querySelector('[data-space-title]');
+  const reason = switcher.querySelector('[data-space-reason]');
+  const role = switcher.querySelector('[data-space-role]');
+  if (!media || !image || !tabs.length) return;
+
+  const select = tab => {
+    const index = tabs.indexOf(tab);
+    tabs.forEach(item => {
+      const active = item === tab;
+      item.classList.toggle('is-active', active);
+      item.setAttribute('aria-selected', String(active));
+    });
+    media.classList.add('is-changing');
+    const nextImage = new Image();
+    nextImage.onload = () => {
+      image.src = tab.dataset.image;
+      image.alt = tab.dataset.alt || '';
+      kicker.textContent = tab.dataset.kicker;
+      title.textContent = tab.dataset.title;
+      reason.textContent = tab.dataset.reason;
+      role.textContent = tab.dataset.role;
+      count.textContent = `顺时针参观 / ${String(index + 1).padStart(2, '0')}`;
+      requestAnimationFrame(() => media.classList.remove('is-changing'));
+    };
+    nextImage.src = tab.dataset.image;
+  };
+
+  tabs.forEach(tab => tab.addEventListener('click', () => select(tab)));
+});
