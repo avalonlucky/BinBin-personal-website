@@ -4386,6 +4386,7 @@
   .culture-tour-copy .cs-eyebrow,.culture-tour-copy h1,.culture-tour-copy > p,.culture-tour-meta { grid-column: auto; }
   .culture-tour-copy h1 { font-size: 38px; }
   .culture-tour-stage { width: 100vw; min-height: 540px; height: 74svh; margin: 44px -16px 0; }
+  .case-page .culture-panorama-frame { object-fit: contain; object-position: center; }
   .culture-tour-caption,.culture-tour-caption.has-detail { right: 16px; bottom: 54px; left: 16px; width: auto; padding: 14px 16px; gap: 6px; border: 1px solid rgba(255,255,255,.14); border-radius: 14px; background: rgba(4,8,18,.72); box-shadow: 0 12px 36px rgba(0,0,0,.28); backdrop-filter: blur(16px); text-shadow: none; pointer-events: auto; }
   .culture-tour-caption strong,.culture-tour-caption.has-detail strong { padding-right: 88px; font-size: 19px; line-height: 1.38; }
   .culture-tour-caption small { color: rgba(255,255,255,.72); }
@@ -7208,10 +7209,10 @@
 .space-film-status { margin: 12px 0 0; color: var(--cs-ink-3); font: 14px/1.6 var(--f-cjk); }
 .space-film-status[hidden] { display: none; }
 .delivery-review { width: 100vw; margin-top: 118px; margin-left: calc(50% - 50vw); padding: clamp(48px,7vw,90px) max(24px,calc((100vw - 1400px)/2 + 24px)); background: #0a1222; color: #fff; }.delivery-review h2 { margin: 20px 0 25px; font: 500 clamp(30px,3.2vw,52px)/1.16 var(--f-cjk); }.delivery-review h2 em { color: #7896ff; font-style: normal; }.delivery-review > p { max-width: none; color: rgba(255,255,255,.82); font: 18px/1.8 var(--f-cjk); }.delivery-review > div { display: grid; grid-template-columns: auto 1fr; gap: 12px 24px; margin-top: 45px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,.14); }.delivery-review span { color: #7896ff; font: 600 16px/1.6 var(--f-cjk); }.delivery-review strong { font: 500 16px/1.6 var(--f-cjk); }
-@media (max-width: 900px) { .space-brief { grid-template-columns: 1fr; padding: 40px; }.case-page.is-culture main section.space-constraint { grid-template-columns: 1fr; gap: 48px; } }
+@media (max-width: 900px) { .case-page.is-culture .space-brief { grid-template-columns: 1fr; gap: 34px; padding: 40px; }.case-page.is-culture main section.space-constraint { grid-template-columns: 1fr; gap: 48px; } }
 @media (max-width: 620px) {
   .culture-tour-stage { min-height: 540px !important; height: 74svh !important; }
-  .space-brief { width: calc(100% - 28px); margin-top: 55px; padding: 30px 24px; }
+  .case-page.is-culture .space-brief { width: calc(100% - 28px); margin-top: 55px; padding: 30px 24px; }
   .case-page.is-culture main section.space-constraint { width: calc(100% - 28px); margin-bottom: 68px; padding: 38px 24px; gap: 38px; }
   .space-constraint h2 { font-size: 31px; }
   .space-audiences div { grid-template-columns: 82px 1fr; gap: 14px; }

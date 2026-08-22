@@ -39,13 +39,28 @@
   let downX = 0;
   let lastX = 0;
   let lastTime = 0;
+  let downPosition = 0;
   let activeIndex = -1;
   let raf = 0;
-  const sensitivity = matchMedia('(pointer: coarse)').matches ? 0.018 : 0.011;
+  const isMobileTour = () => matchMedia('(max-width: 768px)').matches;
+  const sensitivity = 0.011;
   const wrap = value => ((value % views.length) + views.length) % views.length;
 
   function paint() {
     const wrapped = wrap(position);
+    if (isMobileTour()) {
+      const nearest = Math.round(wrapped) % views.length;
+      if (frameA.src !== urls[nearest]) frameA.src = urls[nearest];
+      frameA.style.transform = 'translate3d(0,0,0)';
+      frameB.style.transform = 'translate3d(100%,0,0)';
+      frameB.style.visibility = 'hidden';
+      updateActive(nearest);
+      const angle = nearest / views.length * 360;
+      degrees.textContent = `${String(Math.round(angle)).padStart(3, '0')}°`;
+      stage.style.setProperty('--tour-bearing', `${angle / 3.6}%`);
+      return;
+    }
+    frameB.style.visibility = '';
     const current = Math.floor(wrapped);
     const next = (current + 1) % views.length;
     const mix = wrapped - current;
@@ -54,6 +69,13 @@
     frameA.style.transform = `translate3d(${-mix * 100}%,0,0)`;
     frameB.style.transform = `translate3d(${(1 - mix) * 100}%,0,0)`;
     const nearest = Math.round(wrapped) % views.length;
+    updateActive(nearest);
+    const angle = wrapped / views.length * 360;
+    degrees.textContent = `${String(Math.round(angle)).padStart(3, '0')}°`;
+    stage.style.setProperty('--tour-bearing', `${angle / 3.6}%`);
+  }
+
+  function updateActive(nearest) {
     if (nearest !== activeIndex) {
       activeIndex = nearest;
       const view = views[nearest];
@@ -62,9 +84,6 @@
       caption.innerHTML = `<small>${String(nearest + 1).padStart(2, '0')} / ${view[1]}</small><strong>${view[2]}</strong>${view[3] ? `<p id="tour-caption-detail">${view[3]}</p><button class="culture-tour-detail-toggle" type="button" aria-expanded="false" aria-controls="tour-caption-detail"><span>查看说明</span><i aria-hidden="true">＋</i></button>` : ''}`;
       buttons.forEach((button, i) => button.classList.toggle('is-active', i === nearest));
     }
-    const angle = wrapped / views.length * 360;
-    degrees.textContent = `${String(Math.round(angle)).padStart(3, '0')}°`;
-    stage.style.setProperty('--tour-bearing', `${angle / 3.6}%`);
   }
 
   function coast() {
@@ -82,6 +101,7 @@
     dragging = true;
     moved = false;
     downX = lastX = event.clientX;
+    downPosition = Math.round(wrap(position));
     lastTime = performance.now();
     velocity = 0;
     stage.classList.add('is-dragging');
@@ -93,6 +113,11 @@
     const dx = event.clientX - lastX;
     if (Math.abs(event.clientX - downX) > 5) moved = true;
     const dt = Math.max(8, now - lastTime);
+    if (isMobileTour()) {
+      lastX = event.clientX;
+      lastTime = now;
+      return;
+    }
     position -= dx * sensitivity;
     velocity = velocity * .55 + (-dx * sensitivity) * (16 / dt) * .45;
     lastX = event.clientX;
@@ -104,6 +129,12 @@
     dragging = false;
     stage.classList.remove('is-dragging');
     stage.releasePointerCapture?.(event.pointerId);
+    if (isMobileTour()) {
+      const distance = lastX - downX;
+      if (Math.abs(distance) >= 36) goTo(downPosition + (distance < 0 ? 1 : -1));
+      else goTo(downPosition);
+      return;
+    }
     raf = requestAnimationFrame(coast);
   };
   stage.addEventListener('pointerup', release);
