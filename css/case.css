@@ -7187,7 +7187,9 @@
   .delivery-rail-viewport { position: relative; overflow: visible; }
   .delivery-rail { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: calc(100% / 3.5); width: 100%; will-change: transform; }
   .delivery-rail { position: sticky; top: 96px; overflow: hidden; background: var(--cs-paper); }
-  .delivery-rail article { min-height: 300px; }
+  /* 横向滚动时轨道本身占满剩余视口，不能只靠一个看不见的纵向占位层
+     换取滚动距离，否则卡片下方会像页面已经结束一样出现整屏空白。 */
+  .delivery-rail article { min-height: calc(100svh - 96px); }
 }
 .delivery-evidence { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 64px; }
 .delivery-evidence figure { display: grid; grid-template-rows: auto 1fr; margin: 0; }
