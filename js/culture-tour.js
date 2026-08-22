@@ -58,7 +58,8 @@
       activeIndex = nearest;
       const view = views[nearest];
       caption.classList.toggle('has-detail', Boolean(view[3]));
-      caption.innerHTML = `<small>${String(nearest + 1).padStart(2, '0')} / ${view[1]}</small><strong>${view[2]}</strong>${view[3] ? `<p>${view[3]}</p>` : ''}`;
+      caption.classList.remove('is-expanded');
+      caption.innerHTML = `<small>${String(nearest + 1).padStart(2, '0')} / ${view[1]}</small><strong>${view[2]}</strong>${view[3] ? `<p id="tour-caption-detail">${view[3]}</p><button class="culture-tour-detail-toggle" type="button" aria-expanded="false" aria-controls="tour-caption-detail"><span>查看说明</span><i aria-hidden="true">＋</i></button>` : ''}`;
       buttons.forEach((button, i) => button.classList.toggle('is-active', i === nearest));
     }
     const angle = wrapped / views.length * 360;
@@ -139,6 +140,15 @@
     const ratio = (event.clientX - rect.left) / rect.width;
     if (ratio < .32) goTo(Math.round(wrap(position)) - 1);
     if (ratio > .68) goTo(Math.round(wrap(position)) + 1);
+  });
+  caption.addEventListener('click', event => {
+    const toggle = event.target.closest('.culture-tour-detail-toggle');
+    if (!toggle) return;
+    event.stopPropagation();
+    const expanded = caption.classList.toggle('is-expanded');
+    toggle.setAttribute('aria-expanded', String(expanded));
+    toggle.querySelector('span').textContent = expanded ? '收起说明' : '查看说明';
+    toggle.querySelector('i').textContent = expanded ? '−' : '＋';
   });
   stage.addEventListener('keydown', event => {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
