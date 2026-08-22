@@ -2205,6 +2205,30 @@ function initCaseAccordions() {
   });
 }
 
+function initDeliveryRail() {
+  const viewport = document.querySelector('[data-delivery-rail]');
+  const rail = viewport?.querySelector('.delivery-rail');
+  if (!viewport || !rail || prefersReducedMotion.matches || hasCoarsePointer) return;
+
+  gsap.matchMedia().add('(min-width: 901px)', () => {
+    const distance = () => Math.max(0, rail.scrollWidth - viewport.clientWidth);
+    const tween = gsap.to(rail, {
+      x: () => -distance(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: viewport,
+        start: 'top top+=96',
+        end: () => `+=${distance()}`,
+        pin: true,
+        scrub: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+    return () => tween.kill();
+  });
+}
+
 function initClock() {
   const el = document.getElementById('clock');
   if (!el) return;
@@ -2249,6 +2273,7 @@ initOutro();
 initCanvasBorders();
 initClock();
 initCaseAccordions();
+initDeliveryRail();
 
 window.addEventListener('load', () => {
   ScrollTrigger.refresh();
