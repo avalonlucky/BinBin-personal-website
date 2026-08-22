@@ -4386,18 +4386,20 @@
   .culture-tour-copy .cs-eyebrow,.culture-tour-copy h1,.culture-tour-copy > p,.culture-tour-meta { grid-column: auto; }
   .culture-tour-copy h1 { font-size: 38px; }
   .culture-tour-stage { width: 100vw; min-height: 540px; height: 74svh; margin: 44px -16px 0; }
-  .case-page .culture-panorama-frame { object-fit: contain; object-position: center; }
-  .culture-tour-caption,.culture-tour-caption.has-detail { right: 16px; bottom: 54px; left: 16px; width: auto; padding: 14px 16px; gap: 6px; border: 1px solid rgba(255,255,255,.14); border-radius: 14px; background: rgba(4,8,18,.72); box-shadow: 0 12px 36px rgba(0,0,0,.28); backdrop-filter: blur(16px); text-shadow: none; pointer-events: auto; }
-  .culture-tour-caption strong,.culture-tour-caption.has-detail strong { padding-right: 88px; font-size: 19px; line-height: 1.38; }
+  .case-page .culture-panorama-frame { object-fit: contain; object-position: center top; }
+  .culture-tour-caption,.culture-tour-caption.has-detail { right: 16px; bottom: 54px; left: 16px; width: auto; padding: 14px 16px; gap: 6px; border: 0; border-radius: 14px; background: rgba(4,8,18,.72); box-shadow: 0 12px 36px rgba(0,0,0,.28); backdrop-filter: blur(16px); text-shadow: none; pointer-events: auto; }
+  .culture-tour-caption strong,.culture-tour-caption.has-detail strong { padding-right: 44px; font-size: 19px; line-height: 1.38; }
   .culture-tour-caption small { color: rgba(255,255,255,.72); }
   .culture-tour-caption p { display: none; max-height: min(34svh,260px); margin-top: 8px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.12); overflow-y: auto; color: rgba(255,255,255,.84); font-size: 16px; line-height: 1.72; text-shadow: none; overscroll-behavior: contain; }
   .culture-tour-caption.is-expanded p { display: block; }
-  .culture-tour-detail-toggle { position: absolute; top: 22px; right: 14px; display: flex; align-items: center; gap: 5px; min-height: 44px; padding: 8px 11px; border: 0; border-radius: 999px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.88); font: 16px/1 var(--f-cjk); }
-  .culture-tour-detail-toggle i { font: normal 15px/1 var(--f-sans); }
+  .culture-tour-detail-toggle { position: absolute; top: 18px; right: 10px; display: grid; width: 44px; height: 44px; padding: 0; place-items: center; border: 0; background: transparent; color: rgba(255,255,255,.82); cursor: pointer; }
+  .culture-tour-detail-toggle span { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .culture-tour-detail-toggle i { width: 0; height: 0; border-right: 6px solid transparent; border-left: 6px solid transparent; border-top: 8px solid currentColor; transition: transform .22s ease; }
+  .culture-tour-caption.is-expanded .culture-tour-detail-toggle i { transform: rotate(180deg); }
   .culture-tour-step { width: 18%; }
   .culture-tour-step span { width: 38px; height: 38px; margin-inline: 12px; opacity: .7; font-size: 17px; }
   .culture-tour-hint { display: none; }
-  .culture-tour-bearing { top: 14px; right: 14px; }
+  .culture-tour-bearing { display: none; }
   .culture-tour-index { bottom: 26px; max-width: calc(100% - 28px); gap: 4px; }
   .culture-tour-index button { width: 8px; }
   .culture-tour-index button.is-active { width: 20px; }

@@ -81,7 +81,7 @@
       const view = views[nearest];
       caption.classList.toggle('has-detail', Boolean(view[3]));
       caption.classList.remove('is-expanded');
-      caption.innerHTML = `<small>${String(nearest + 1).padStart(2, '0')} / ${view[1]}</small><strong>${view[2]}</strong>${view[3] ? `<p id="tour-caption-detail">${view[3]}</p><button class="culture-tour-detail-toggle" type="button" aria-expanded="false" aria-controls="tour-caption-detail"><span>查看说明</span><i aria-hidden="true">＋</i></button>` : ''}`;
+      caption.innerHTML = `<small>${String(nearest + 1).padStart(2, '0')} / ${view[1]}</small><strong>${view[2]}</strong>${view[3] ? `<p id="tour-caption-detail">${view[3]}</p><button class="culture-tour-detail-toggle" type="button" aria-label="展开说明" aria-expanded="false" aria-controls="tour-caption-detail"><span>展开说明</span><i aria-hidden="true"></i></button>` : ''}`;
       buttons.forEach((button, i) => button.classList.toggle('is-active', i === nearest));
     }
   }
@@ -178,8 +178,8 @@
     event.stopPropagation();
     const expanded = caption.classList.toggle('is-expanded');
     toggle.setAttribute('aria-expanded', String(expanded));
-    toggle.querySelector('span').textContent = expanded ? '收起说明' : '查看说明';
-    toggle.querySelector('i').textContent = expanded ? '−' : '＋';
+    toggle.setAttribute('aria-label', expanded ? '收起说明' : '展开说明');
+    toggle.querySelector('span').textContent = expanded ? '收起说明' : '展开说明';
   });
   stage.addEventListener('keydown', event => {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
