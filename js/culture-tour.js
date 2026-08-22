@@ -151,8 +151,8 @@
 
 document.querySelectorAll('[data-space-switcher]').forEach(switcher => {
   const media = switcher.querySelector('[data-space-media]');
-  const image = media?.querySelector('img');
-  const count = media?.querySelector('span');
+  const image = media?.querySelector('[data-space-render-image]') || media?.querySelector('img');
+  const count = media?.querySelector('[data-space-count]');
   const tabs = [...switcher.querySelectorAll('[data-space-tab]')];
   const kicker = switcher.querySelector('[data-space-kicker]');
   const title = switcher.querySelector('[data-space-title]');
@@ -168,6 +168,7 @@ document.querySelectorAll('[data-space-switcher]').forEach(switcher => {
       item.setAttribute('aria-selected', String(active));
     });
     media.classList.add('is-changing');
+    media.classList.toggle('is-single', !tab.dataset.builtImage);
     switcher.style.setProperty('--wall-accent', tab.dataset.accent || '#7896ff');
     const nextImage = new Image();
     nextImage.onload = () => {
