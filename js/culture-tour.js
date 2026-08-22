@@ -9,7 +9,7 @@
   if (!root || !stage || !frameA || !frameB || !caption || !degrees || !indexNav) return;
 
   const base = '../assets/work/culture-wall/render/';
-  const views = [
+  const allViews = [
     ['f6-lobby.webp', '前台 · 序章与定格', '品牌认知与来访记忆点', '作为空间动线的起点，门面墙既是引导访客进入展厅叙事的起点，亦是来访客户打卡与商务合影的标志性背景，实现企业身份识别与二次社交传播的双重作用。'],
     ['hall-screens.webp', '展厅 · 综合概览区', '入厅首站与企业宣传大屏', '展厅入口的核心导览区，设置在访客进门第一视角，通过宣传大屏快速建立对公司的全局了解。将需要频繁迭代的综合宣传交由屏幕动态承载，保持展示内容的实时性与可维护性。'],
     ['hall-mainwall.webp', '展厅 · 核心业务与实力展区', '方案展示、背书认证、产品交互与硬件迭代', '该主墙面自右向左按业务深度依次排布：首先展示针对各行业的“解决方案”；中间重点陈列国家级专精特新、Gartner 与 DAMA 等重量级“荣誉资质”作为实力背书；随后通过可触控交互屏展示“产品与服务”，供客户实时上手体验真实系统；最左侧设置“样机展示架”，陈列历代硬件设备（含见证公司发展的早期机型），形成从软件方案、权威背书到交互体验、硬件沉淀的完整展示闭环。'],
@@ -26,11 +26,20 @@
     ['f5-env.webp', '五楼办公区', '实训环境拓扑墙', '位于五楼技术服务部的实训环境展示墙。采用系统拓扑图形式，完整还原从多通道访问、核心防护组件联动到多源异构数据库底座（大数据/国产化等）的全流程沙盘环境，直观体现公司仿真靶场的实战化支撑能力。'],
   ];
 
-  const urls = views.map(view => new URL(base + view[0], document.baseURI).href);
-  urls.forEach(url => { const image = new Image(); image.decoding = 'async'; image.src = url; });
-  indexNav.innerHTML = views.map((view, i) => `<button type="button" aria-label="${String(i + 1).padStart(2, '0')} ${view[1]}">${i + 1}</button>`).join('');
-  const buttons = [...indexNav.querySelectorAll('button')];
+  const isMobileTour = () => matchMedia('(max-width: 768px)').matches;
+  let views = [];
+  let urls = [];
+  let buttons = [];
   const stepButtons = [...root.querySelectorAll('[data-tour-step]')];
+
+  function applyViewSet() {
+    views = allViews;
+    urls = views.map(view => new URL(base + view[0], document.baseURI).href);
+    urls.forEach(url => { const image = new Image(); image.decoding = 'async'; image.src = url; });
+    indexNav.innerHTML = views.map((view, i) => `<button type="button" aria-label="${String(i + 1).padStart(2, '0')} ${view[1]}">${i + 1}</button>`).join('');
+    buttons = [...indexNav.querySelectorAll('button')];
+    buttons.forEach((button, index) => button.addEventListener('click', () => goTo(index)));
+  }
 
   let position = 0;
   let velocity = 0;
@@ -42,22 +51,11 @@
   let downPosition = 0;
   let activeIndex = -1;
   let raf = 0;
-  const isMobileTour = () => matchMedia('(max-width: 768px)').matches;
   const sensitivity = 0.011;
   const wrap = value => ((value % views.length) + views.length) % views.length;
 
   function syncMobileStageHeight() {
-    if (!isMobileTour()) {
-      stage.style.removeProperty('--mobile-tour-height');
-      return;
-    }
-    requestAnimationFrame(() => {
-      const panorama = stage.querySelector('[data-tour-panorama]');
-      if (!panorama) return;
-      const panoramaHeight = panorama.getBoundingClientRect().height;
-      const captionHeight = caption.getBoundingClientRect().height;
-      stage.style.setProperty('--mobile-tour-height', `${Math.ceil(panoramaHeight + 12 + captionHeight + 44)}px`);
-    });
+    stage.style.removeProperty('--mobile-tour-height');
   }
 
   function paint() {
@@ -176,14 +174,14 @@
     raf = requestAnimationFrame(animate);
   }
 
-  buttons.forEach((button, index) => button.addEventListener('click', () => goTo(index)));
   stepButtons.forEach(button => button.addEventListener('click', () => {
     const direction = Number(button.dataset.tourStep) || 1;
     goTo(Math.round(wrap(position)) + direction);
   }));
   stage.addEventListener('click', event => {
-    if (moved || event.target.closest('button')) return;
-    const rect = stage.getBoundingClientRect();
+    if (moved || event.target.closest('button') || event.target.closest('[data-tour-caption]')) return;
+    const surface = isMobileTour() ? stage.querySelector('[data-tour-panorama]') : stage;
+    const rect = (surface || stage).getBoundingClientRect();
     const ratio = (event.clientX - rect.left) / rect.width;
     if (ratio < .32) goTo(Math.round(wrap(position)) - 1);
     if (ratio > .68) goTo(Math.round(wrap(position)) + 1);
@@ -204,8 +202,8 @@
     goTo(Math.round(wrap(position)) + (event.key === 'ArrowRight' ? 1 : -1));
   });
 
+  applyViewSet();
   paint();
-  addEventListener('resize', syncMobileStageHeight, { passive: true });
 })();
 
 document.querySelectorAll('[data-space-switcher]').forEach(switcher => {
