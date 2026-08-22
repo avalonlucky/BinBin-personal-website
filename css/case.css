@@ -4373,10 +4373,6 @@
 .culture-tour-index { position: absolute; z-index: 5; left: 50%; bottom: 38px; display: flex; gap: 6px; transform: translateX(-50%); }
 .culture-tour-index button { width: 16px; height: 2px; padding: 0; border: 0; background: rgba(255,255,255,.3); overflow: hidden; text-indent: -999px; cursor: pointer; transition: width .25s ease,background .25s ease; }
 .culture-tour-index button.is-active { width: 34px; background: #8ca4ff; }
-.culture-thesis { display: grid; min-height: 72vh; align-content: center; padding: 120px var(--gutter); background: #4265f5; color: #fff; }
-.culture-thesis > * { width: min(1180px,100%); margin-inline: auto; }
-.culture-thesis p { margin-bottom: 28px; font: 13px/1.4 var(--f-cjk); letter-spacing: .14em; opacity: .72; }
-.culture-thesis h2 { margin-top: 0; font: 600 clamp(44px,6vw,86px)/1.12 var(--f-cjk); letter-spacing: -.045em; }
 
 @media (min-width: 1100px) {
   .culture-tour-copy > p { white-space: nowrap; }
@@ -4399,8 +4395,6 @@
   .culture-tour-index { bottom: 26px; max-width: calc(100% - 28px); gap: 4px; }
   .culture-tour-index button { width: 8px; }
   .culture-tour-index button.is-active { width: 20px; }
-  .culture-thesis { min-height: 58vh; padding-block: 90px; }
-  .culture-thesis h2 { font-size: 40px; }
 }
 
 /* ============================================================
