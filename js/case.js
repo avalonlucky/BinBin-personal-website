@@ -2269,9 +2269,23 @@ function initDeliveryRail() {
 function initOriginalVideos() {
   document.querySelectorAll('[data-original-video]').forEach(video => {
     const parts = (video.dataset.parts || '').split(',').filter(Boolean);
-    const status = video.parentElement?.querySelector('[data-video-status]');
+    const status = video.closest('.space-film')?.querySelector('[data-video-status]');
+    const player = video.closest('.space-film-player');
+    const playButton = player?.querySelector('[data-video-play]');
     if (!parts.length) return;
     let started = false;
+    let inView = false;
+
+    const syncPlaybackState = () => {
+      const playing = !video.paused && !video.ended;
+      player?.classList.toggle('is-playing', playing);
+      playButton?.setAttribute('aria-label', playing ? '暂停展厅宣传片' : '播放展厅宣传片');
+    };
+
+    const playWhenReady = () => {
+      if (!inView || !video.src) return;
+      video.play().catch(() => syncPlaybackState());
+    };
 
     const load = async () => {
       if (started) return;
@@ -2285,11 +2299,30 @@ function initOriginalVideos() {
         video.load();
         video.setAttribute('aria-busy', 'false');
         if (status) status.hidden = true;
+        playWhenReady();
       } catch (error) {
         video.setAttribute('aria-busy', 'false');
         if (status) status.textContent = '视频加载失败，请刷新后重试';
       }
     };
+
+    playButton?.addEventListener('click', () => {
+      if (video.paused || video.ended) video.play();
+      else video.pause();
+    });
+    video.addEventListener('play', syncPlaybackState);
+    video.addEventListener('pause', syncPlaybackState);
+    video.addEventListener('ended', syncPlaybackState);
+    video.addEventListener('canplay', playWhenReady, { once: true });
+
+    if ('IntersectionObserver' in window) {
+      const playbackObserver = new IntersectionObserver(entries => {
+        inView = entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .45);
+        if (inView) playWhenReady();
+        else if (!video.paused) video.pause();
+      }, { threshold: [.45] });
+      playbackObserver.observe(video);
+    }
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(entries => {
@@ -2299,6 +2332,7 @@ function initOriginalVideos() {
       }, { rootMargin: '800px 0px' });
       observer.observe(video);
     } else {
+      inView = true;
       load();
     }
   });
