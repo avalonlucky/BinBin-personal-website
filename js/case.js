@@ -2212,32 +2212,41 @@ function initDeliveryRail() {
 
   const desktop = window.matchMedia('(min-width: 901px)');
   let distance = 0;
-  let start = 0;
-  let frame = 0;
+  let position = 0;
 
   const render = () => {
-    frame = 0;
-    if (!desktop.matches || distance <= 0) return;
-    const progress = Math.min(1, Math.max(0, (scroller.scrollTop - start) / distance));
-    rail.style.transform = `translate3d(${-distance * progress}px,0,0)`;
-  };
-
-  const schedule = () => {
-    if (!frame) frame = requestAnimationFrame(render);
+    rail.style.transform = desktop.matches
+      ? `translate3d(${-position}px,0,0)`
+      : '';
   };
 
   const measure = () => {
-    rail.style.transform = '';
-    viewport.style.height = '';
-    if (!desktop.matches) return;
     distance = Math.max(0, rail.scrollWidth - viewport.clientWidth);
-    viewport.style.height = `${rail.offsetHeight + Math.max(distance, window.innerHeight * 0.85)}px`;
-    const scrollerBox = scroller.getBoundingClientRect();
-    start = viewport.getBoundingClientRect().top - scrollerBox.top + scroller.scrollTop - 96;
+    position = Math.min(position, distance);
     render();
   };
 
-  scroller.addEventListener('scroll', schedule, { passive: true });
+  /* 只在指针位于卡片组件内时，把纵向滚轮换算成横向移动。
+     到达 01 / 07 两端立即把滚动交还页面，因此不需要任何纵向占位层，
+     下方证据图片会紧跟组件出现，不再产生“页面已经结束”的空白。 */
+  viewport.addEventListener('wheel', event => {
+    if (!desktop.matches || distance <= 0) return;
+    const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+    const canMove = (delta > 0 && position < distance) || (delta < 0 && position > 0);
+    if (!canMove) return;
+    event.preventDefault();
+    position = Math.min(distance, Math.max(0, position + delta));
+    render();
+  }, { passive: false });
+
+  viewport.tabIndex = 0;
+  viewport.addEventListener('keydown', event => {
+    if (!desktop.matches || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    position = Math.min(distance, Math.max(0, position + (event.key === 'ArrowRight' ? 240 : -240)));
+    render();
+  });
+
   window.addEventListener('resize', measure);
   desktop.addEventListener('change', measure);
   requestAnimationFrame(measure);
