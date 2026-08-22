@@ -10,7 +10,7 @@
 
   const base = '../assets/work/culture-wall/render/';
   const views = [
-    ['f6-lobby.webp', '前台 · 第一印象', '先让访客知道这是谁，再邀请他走进故事'],
+    ['f6-lobby.webp', '前台 · 序章与定格', '品牌认知与来访记忆点', '作为空间动线的起点，门面墙既是引导访客进入展厅叙事的起点，亦是来访客户打卡与商务合影的标志性背景，实现企业身份识别与二次社交传播的双重作用。'],
     ['hall-tech.webp', '展厅 · 技术演进', '把抽象的技术路径，编辑成一条可以被追踪的时间线'],
     ['hall-screens.webp', '展厅 · 动态信息', '会持续变化的内容留给屏幕，不把它固死在墙上'],
     ['hall-mainwall.webp', '展厅 · 主展墙', '用一个连续的展面，回答业务、产品、资质与信任'],
@@ -58,7 +58,8 @@
     if (nearest !== activeIndex) {
       activeIndex = nearest;
       const view = views[nearest];
-      caption.innerHTML = `<small>${String(nearest + 1).padStart(2, '0')} / ${view[1]}</small><strong>${view[2]}</strong>`;
+      caption.classList.toggle('has-detail', Boolean(view[3]));
+      caption.innerHTML = `<small>${String(nearest + 1).padStart(2, '0')} / ${view[1]}</small><strong>${view[2]}</strong>${view[3] ? `<p>${view[3]}</p>` : ''}`;
       buttons.forEach((button, i) => button.classList.toggle('is-active', i === nearest));
     }
     const angle = wrapped / views.length * 360;
