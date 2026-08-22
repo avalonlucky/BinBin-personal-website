@@ -7125,7 +7125,8 @@
 }
 
 /* Culture wall — project evidence and delivery */
-.case-page.is-culture .space-brief { display: grid; grid-template-columns: 1.08fr .92fr; gap: clamp(50px,8vw,120px); width: min(1180px, calc(100% - 48px)); margin: 92px auto 55px; padding: 56px 0; border-block: 1px solid var(--cs-hair); background: transparent !important; color: var(--cs-ink); }
+.case-page.is-culture .space-story > .space-chapter { width: min(100%, calc(1540px + var(--gutter) + var(--gutter))); max-width: none; }
+.case-page.is-culture .space-brief { display: grid; grid-template-columns: 1.08fr .92fr; gap: clamp(50px,8vw,120px); width: min(1540px, calc(100% - 48px)); margin: 92px auto 55px; padding: 56px 0; border-block: 1px solid var(--cs-hair); background: transparent !important; color: var(--cs-ink); }
 .space-brief small { color: #7896ff; font: 11px var(--f-sans); letter-spacing: .14em; }
 .space-brief h2 { margin: 18px 0 24px; font: 500 clamp(27px,3vw,46px)/1.18 var(--f-cjk); }
 .space-brief p { margin: 0; color: var(--cs-ink-2); font: 15px/1.78 var(--f-cjk); }
