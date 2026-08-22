@@ -7134,17 +7134,16 @@
 .space-brief dl { margin: 0; }
 .space-brief dl div { display: grid; grid-template-columns: 100px 1fr; gap: 22px; padding: 22px 0; border-bottom: 1px solid var(--cs-hair); }
 .space-brief dl div:last-child { border-bottom: 0; }
-.space-brief dt { color: var(--cs-ink-3); font: 16px/1.65 var(--f-cjk); }.space-brief dd { margin: 0; color: var(--cs-ink); font: 18px/1.65 var(--f-cjk); }
+.space-brief dt { color: var(--cs-ink-3); font: 600 16px/1.65 var(--f-cjk); }.space-brief dd { margin: 0; color: var(--cs-ink); font: 18px/1.65 var(--f-cjk); }
 .case-page.is-culture main section.space-constraint { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(400px, .92fr); gap: clamp(56px, 8vw, 120px); width: min(1400px, calc(100% - 48px)); margin: 0 auto 96px; padding: clamp(48px, 6vw, 82px); background: #0d121b !important; color: #f5f3ec; }
 .space-constraint small { color: rgba(255,255,255,.58); font: 11px var(--f-sans); letter-spacing: .2em; }
 .space-constraint h2 { max-width: 720px; margin: 24px 0 26px; font: 500 clamp(30px, 3.4vw, 54px)/1.16 var(--f-cjk); }
 .space-constraint h2 em { color: #f5f3ec; font-style: normal; }
-.space-constraint-lead p { max-width: 760px; margin: 0; color: rgba(255,255,255,.58); font: 15px/1.82 var(--f-cjk); }
+.space-constraint-lead p { max-width: 760px; margin: 0; color: #fff; font: 18px/1.82 var(--f-cjk); }
 .space-audiences { margin: 0; align-self: center; }
-.space-audiences div { display: grid; grid-template-columns: 100px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,.12); }
-.space-audiences div:first-child { padding-top: 0; }
-.space-audiences dt { color: #86a1ff; font: 600 13px/1.6 var(--f-cjk); }
-.space-audiences dd { margin: 0; color: rgba(255,255,255,.62); font: 14px/1.7 var(--f-cjk); }
+.space-audiences div { display: grid; grid-template-columns: 100px 1fr; gap: 22px; padding: 22px 0; border-bottom: 1px solid rgba(255,255,255,.12); }
+.space-audiences dt { color: #86a1ff; font: 600 16px/1.65 var(--f-cjk); }
+.space-audiences dd { margin: 0; color: #fff; font: 18px/1.65 var(--f-cjk); }
 .space-built-proof { display: grid; grid-template-columns: 1.2fr .8fr; gap: 1px; margin-top: 54px; background: var(--cs-hair); }
 .space-built-proof figure { margin: 0; min-height: 390px; background: #e7e8e8; }.space-built-proof .cs-render-btn { height: 100%; }.space-built-proof img { width: 100%; height: 100%; object-fit: contain; }
 .space-built-proof > div { padding: clamp(35px,5vw,70px); background: #f0eee7; }
