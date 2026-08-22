@@ -152,6 +152,7 @@
 document.querySelectorAll('[data-space-switcher]').forEach(switcher => {
   const media = switcher.querySelector('[data-space-media]');
   const image = media?.querySelector('[data-space-render-image]') || media?.querySelector('img');
+  const builtImage = media?.querySelector('[data-space-built-image]');
   const count = media?.querySelector('[data-space-count]');
   const tabs = [...switcher.querySelectorAll('[data-space-tab]')];
   const kicker = switcher.querySelector('[data-space-kicker]');
@@ -159,6 +160,13 @@ document.querySelectorAll('[data-space-switcher]').forEach(switcher => {
   const reason = switcher.querySelector('[data-space-reason]');
   const role = switcher.querySelector('[data-space-role]');
   if (!media || !image || !tabs.length) return;
+
+  const preload = source => new Promise(resolve => {
+    if (!source) { resolve(); return; }
+    const candidate = new Image();
+    candidate.onload = candidate.onerror = resolve;
+    candidate.src = source;
+  });
 
   const select = tab => {
     const index = tabs.indexOf(tab);
@@ -168,20 +176,23 @@ document.querySelectorAll('[data-space-switcher]').forEach(switcher => {
       item.setAttribute('aria-selected', String(active));
     });
     media.classList.add('is-changing');
-    media.classList.toggle('is-single', !tab.dataset.builtImage);
     switcher.style.setProperty('--wall-accent', tab.dataset.accent || '#7896ff');
-    const nextImage = new Image();
-    nextImage.onload = () => {
+    const builtSource = tab.dataset.builtImage || '';
+    Promise.all([preload(tab.dataset.image), preload(builtSource)]).then(() => {
       image.src = tab.dataset.image;
       image.alt = tab.dataset.alt || '';
+      if (builtSource && builtImage) {
+        builtImage.src = builtSource;
+        builtImage.alt = tab.dataset.builtAlt || '';
+      }
+      media.classList.toggle('is-single', !builtSource);
       kicker.textContent = tab.dataset.kicker;
       title.textContent = tab.dataset.title;
       reason.textContent = tab.dataset.reason;
       role.textContent = tab.dataset.role;
       count.textContent = `顺时针参观 / ${String(index + 1).padStart(2, '0')}`;
       requestAnimationFrame(() => media.classList.remove('is-changing'));
-    };
-    nextImage.src = tab.dataset.image;
+    });
   };
 
   tabs.forEach(tab => tab.addEventListener('click', () => select(tab)));
