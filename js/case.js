@@ -1723,6 +1723,19 @@ function initToc() {
     onToggle: self => nav.classList.toggle('is-visible', self.isActive),
   });
 
+  // 深色结尾进入目录所在的纵向区域前先隐藏目录，避免浅底导航压在黑底上。
+  const darkZone = body.querySelector('[data-toc-dark-zone]');
+  if (darkZone) ScrollTrigger.create({
+    trigger: darkZone,
+    start: () => `top ${RAIL_TOP + nav.offsetHeight + pad}px`,
+    end: 'bottom top',
+    invalidateOnRefresh: true,
+    onEnter: () => nav.classList.add('is-dark-zone'),
+    onLeaveBack: () => nav.classList.remove('is-dark-zone'),
+    onLeave: () => nav.classList.remove('is-dark-zone'),
+    onEnterBack: () => nav.classList.add('is-dark-zone'),
+  });
+
   // 当前板块高亮：相邻区间首尾相接，不会出现无高亮的空档
   items.forEach(({ sec }, i) => {
     ScrollTrigger.create({
