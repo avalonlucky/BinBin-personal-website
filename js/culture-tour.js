@@ -46,6 +46,20 @@
   const sensitivity = 0.011;
   const wrap = value => ((value % views.length) + views.length) % views.length;
 
+  function syncMobileStageHeight() {
+    if (!isMobileTour()) {
+      stage.style.removeProperty('--mobile-tour-height');
+      return;
+    }
+    requestAnimationFrame(() => {
+      const panorama = stage.querySelector('[data-tour-panorama]');
+      if (!panorama) return;
+      const panoramaHeight = panorama.getBoundingClientRect().height;
+      const captionHeight = caption.getBoundingClientRect().height;
+      stage.style.setProperty('--mobile-tour-height', `${Math.ceil(panoramaHeight + 12 + captionHeight + 44)}px`);
+    });
+  }
+
   function paint() {
     const wrapped = wrap(position);
     if (isMobileTour()) {
@@ -58,6 +72,7 @@
       const angle = nearest / views.length * 360;
       degrees.textContent = `${String(Math.round(angle)).padStart(3, '0')}°`;
       stage.style.setProperty('--tour-bearing', `${angle / 3.6}%`);
+      syncMobileStageHeight();
       return;
     }
     frameB.style.visibility = '';
@@ -83,6 +98,7 @@
       caption.classList.remove('is-expanded');
       caption.innerHTML = `<small>${String(nearest + 1).padStart(2, '0')} / ${view[1]}</small><strong>${view[2]}</strong>${view[3] ? `<p id="tour-caption-detail">${view[3]}</p><button class="culture-tour-detail-toggle" type="button" aria-label="展开说明" aria-expanded="false" aria-controls="tour-caption-detail"><span>展开说明</span><i aria-hidden="true"></i></button>` : ''}`;
       buttons.forEach((button, i) => button.classList.toggle('is-active', i === nearest));
+      syncMobileStageHeight();
     }
   }
 
@@ -180,6 +196,7 @@
     toggle.setAttribute('aria-expanded', String(expanded));
     toggle.setAttribute('aria-label', expanded ? '收起说明' : '展开说明');
     toggle.querySelector('span').textContent = expanded ? '收起说明' : '展开说明';
+    syncMobileStageHeight();
   });
   stage.addEventListener('keydown', event => {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
@@ -188,6 +205,7 @@
   });
 
   paint();
+  addEventListener('resize', syncMobileStageHeight, { passive: true });
 })();
 
 document.querySelectorAll('[data-space-switcher]').forEach(switcher => {
