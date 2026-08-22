@@ -2208,7 +2208,7 @@ function initCaseAccordions() {
 function initDeliveryRail() {
   const viewport = document.querySelector('[data-delivery-rail]');
   const rail = viewport?.querySelector('.delivery-rail');
-  if (!viewport || !rail || prefersReducedMotion.matches || hasCoarsePointer) return;
+  if (!viewport || !rail) return;
 
   gsap.matchMedia().add('(min-width: 901px)', () => {
     const distance = () => Math.max(0, rail.scrollWidth - viewport.clientWidth);
@@ -2218,7 +2218,7 @@ function initDeliveryRail() {
       scrollTrigger: {
         trigger: viewport,
         start: 'top top+=96',
-        end: () => `+=${distance()}`,
+        end: () => `+=${Math.max(distance(), window.innerHeight * 0.85)}`,
         pin: true,
         scrub: true,
         anticipatePin: 1,
