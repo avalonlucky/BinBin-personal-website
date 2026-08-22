@@ -7025,8 +7025,8 @@
 .space-jump span { color: #4166f5; font-size: 14px; }
 .space-chapter { padding-top: 118px; padding-bottom: 128px; scroll-margin-top: 70px; }
 .space-chapter + .space-chapter { border-top: 1px solid var(--cs-hair); }
-.space-heading { max-width: 1000px; margin-bottom: 54px; }
-.space-heading .cs-lede { max-width: 880px; }
+.space-heading { max-width: none; margin-bottom: 54px; }
+.space-heading .cs-lede { max-width: none; }
 .space-hero-figure, .space-cinema, .space-split figure, .space-card-gallery figure { margin: 0; }
 .space-hero-figure .cs-render-btn,
 .space-cinema .cs-render-btn { aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; background: #e7e8e8; }
