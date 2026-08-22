@@ -1880,7 +1880,7 @@ function initLightbox() {
   lb.querySelector('.cs-lb-close').addEventListener('click', closeLightbox);
   lb.querySelector('.cs-lb-prev').addEventListener('click', () => step(-1));
   lb.querySelector('.cs-lb-next').addEventListener('click', () => step(1));
-  lb.querySelector('[data-lb-flip]').addEventListener('click', () => {
+  lb.querySelector('[data-lb-flip]')?.addEventListener('click', () => {
     lbSide = lbSide === 'front' ? 'back' : 'front';
     renderLightbox();
   });
