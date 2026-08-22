@@ -2266,6 +2266,44 @@ function initDeliveryRail() {
   requestAnimationFrame(measure);
 }
 
+function initOriginalVideos() {
+  document.querySelectorAll('[data-original-video]').forEach(video => {
+    const parts = (video.dataset.parts || '').split(',').filter(Boolean);
+    const status = video.parentElement?.querySelector('[data-video-status]');
+    if (!parts.length) return;
+    let started = false;
+
+    const load = async () => {
+      if (started) return;
+      started = true;
+      try {
+        const responses = await Promise.all(parts.map(part => fetch(part)));
+        if (responses.some(response => !response.ok)) throw new Error('video part unavailable');
+        const buffers = await Promise.all(responses.map(response => response.arrayBuffer()));
+        video.src = URL.createObjectURL(new Blob(buffers, { type: 'video/mp4' }));
+        video.preload = 'metadata';
+        video.load();
+        video.setAttribute('aria-busy', 'false');
+        if (status) status.hidden = true;
+      } catch (error) {
+        video.setAttribute('aria-busy', 'false');
+        if (status) status.textContent = '视频加载失败，请刷新后重试';
+      }
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        observer.disconnect();
+        load();
+      }, { rootMargin: '800px 0px' });
+      observer.observe(video);
+    } else {
+      load();
+    }
+  });
+}
+
 function initClock() {
   const el = document.getElementById('clock');
   if (!el) return;
@@ -2311,6 +2349,7 @@ initCanvasBorders();
 initClock();
 initCaseAccordions();
 initDeliveryRail();
+initOriginalVideos();
 
 window.addEventListener('load', () => {
   ScrollTrigger.refresh();
