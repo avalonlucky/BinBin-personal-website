@@ -2235,9 +2235,10 @@ function initDeliveryRail() {
     const canMove = (delta > 0 && position < distance) || (delta < 0 && position > 0);
     if (!canMove) return;
     event.preventDefault();
+    event.stopPropagation();
     position = Math.min(distance, Math.max(0, position + delta));
     render();
-  }, { passive: false });
+  }, { passive: false, capture: true });
 
   viewport.tabIndex = 0;
   viewport.addEventListener('keydown', event => {
