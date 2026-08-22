@@ -2210,23 +2210,37 @@ function initDeliveryRail() {
   const rail = viewport?.querySelector('.delivery-rail');
   if (!viewport || !rail) return;
 
-  gsap.matchMedia().add('(min-width: 901px)', () => {
-    const distance = () => Math.max(0, rail.scrollWidth - viewport.clientWidth);
-    const tween = gsap.to(rail, {
-      x: () => -distance(),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: viewport,
-        start: 'top top+=96',
-        end: () => `+=${Math.max(distance(), window.innerHeight * 0.85)}`,
-        pin: true,
-        scrub: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    });
-    return () => tween.kill();
-  });
+  const desktop = window.matchMedia('(min-width: 901px)');
+  let distance = 0;
+  let start = 0;
+  let frame = 0;
+
+  const render = () => {
+    frame = 0;
+    if (!desktop.matches || distance <= 0) return;
+    const progress = Math.min(1, Math.max(0, (scroller.scrollTop - start) / distance));
+    rail.style.transform = `translate3d(${-distance * progress}px,0,0)`;
+  };
+
+  const schedule = () => {
+    if (!frame) frame = requestAnimationFrame(render);
+  };
+
+  const measure = () => {
+    rail.style.transform = '';
+    viewport.style.height = '';
+    if (!desktop.matches) return;
+    distance = Math.max(0, rail.scrollWidth - viewport.clientWidth);
+    viewport.style.height = `${rail.offsetHeight + Math.max(distance, window.innerHeight * 0.85)}px`;
+    const scrollerBox = scroller.getBoundingClientRect();
+    start = viewport.getBoundingClientRect().top - scrollerBox.top + scroller.scrollTop - 96;
+    render();
+  };
+
+  scroller.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', measure);
+  desktop.addEventListener('change', measure);
+  requestAnimationFrame(measure);
 }
 
 function initClock() {

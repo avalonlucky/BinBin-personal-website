@@ -7184,7 +7184,9 @@
 .delivery-rail article { padding: 25px 18px 30px; border-right: 1px solid var(--cs-hair); }.delivery-rail article:last-child { border: 0; }
 .delivery-rail i { color: #3158ea; font: normal 14px var(--f-sans); }.delivery-rail h3 { margin: 22px 0 12px; font: 600 18px/1.35 var(--f-cjk); }.delivery-rail p { margin: 0; color: var(--cs-ink-2); font: 16px/1.7 var(--f-cjk); }
 @media (min-width: 901px) {
+  .delivery-rail-viewport { position: relative; overflow: visible; }
   .delivery-rail { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: calc(100% / 3.5); width: 100%; will-change: transform; }
+  .delivery-rail { position: sticky; top: 96px; overflow: hidden; background: var(--cs-paper); }
   .delivery-rail article { min-height: 300px; }
 }
 .delivery-evidence { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 64px; }
