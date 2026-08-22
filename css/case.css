@@ -7260,10 +7260,9 @@
   .space-corridor-pair > *,
   .delivery-evidence > *,
   .delivery-decisions > * { flex: 0 0 min(82vw, 340px); width: min(82vw, 340px); min-width: min(82vw, 340px); max-width: min(82vw, 340px); height: auto; overflow: hidden; scroll-snap-align: start; }
-  .space-card-gallery figcaption,
   .delivery-evidence figcaption { overflow: hidden; }
-  .space-card-gallery figure { position: relative; }
-  .space-card-gallery figcaption { position: absolute; right: 0; bottom: 0; left: 0; padding: 48px 14px 14px; background: linear-gradient(transparent, rgba(251,251,244,.96) 42%); }
+  .space-card-gallery figure { position: static; }
+  .space-card-gallery figcaption { position: static; padding: 16px 4px 4px; background: none; }
   .space-judgement,
   .space-card-gallery,
   .space-built-grid,
