@@ -185,3 +185,11 @@ document.querySelectorAll('[data-space-switcher]').forEach(switcher => {
 
   tabs.forEach(tab => tab.addEventListener('click', () => select(tab)));
 });
+
+document.querySelectorAll('[data-space-compare]').forEach(compare => {
+  const range = compare.querySelector('[data-space-compare-range]');
+  if (!range) return;
+  const update = () => compare.style.setProperty('--split', `${range.value}%`);
+  range.addEventListener('input', update);
+  update();
+});

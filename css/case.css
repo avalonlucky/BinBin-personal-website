@@ -7031,6 +7031,16 @@
 .space-hero-figure .cs-render-btn,
 .space-cinema .cs-render-btn { aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; background: #e7e8e8; }
 .space-hero-figure img, .space-cinema img, .space-split img, .space-card-gallery img { width: 100%; height: 100%; object-fit: contain; }
+.space-before-after { position: relative; width: 100%; aspect-ratio: 16 / 9; margin: 0; overflow: hidden; border-radius: 6px; background: #dfe2e8; user-select: none; }
+.space-compare-layer { position: absolute; inset: 0; overflow: hidden; }
+.space-compare-layer img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.space-compare-layer.is-render { z-index: 2; clip-path: inset(0 calc(100% - var(--split)) 0 0); }
+.space-compare-layer span { position: absolute; bottom: 22px; padding: 8px 13px; border-radius: 999px; background: rgba(5,11,25,.66); color: #fff; font: 600 14px/1 var(--f-cjk); backdrop-filter: blur(10px); }
+.space-compare-layer.is-render span { left: 22px; }
+.space-compare-layer.is-built span { right: 22px; }
+.space-compare-divider { position: absolute; z-index: 3; top: 0; bottom: 0; left: var(--split); width: 1px; background: rgba(255,255,255,.9); pointer-events: none; }
+.space-compare-divider i { position: absolute; top: 50%; left: 50%; padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,.94); color: #111827; box-shadow: 0 8px 28px rgba(0,0,0,.18); font: normal 600 14px/1 var(--f-cjk); white-space: nowrap; transform: translate(-50%,-50%); }
+.space-before-after input[type="range"] { position: absolute; z-index: 4; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
 .space-image-index {
   position: absolute; left: 24px; bottom: 22px;
   padding: 9px 12px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px;
@@ -7123,6 +7133,10 @@
   .space-cinema figcaption { position: relative; right: auto; bottom: auto; width: auto; padding: 24px 0 0; background: none; backdrop-filter: none; }
   .space-cinema.is-blue figcaption { padding: 24px; background: #07101f; }
   .space-card-gallery .cs-render-btn { aspect-ratio: 16 / 10; }
+  .space-before-after { aspect-ratio: 4 / 3; }
+  .space-compare-layer span { bottom: 14px; }
+  .space-compare-layer.is-render span { left: 14px; }
+  .space-compare-layer.is-built span { right: 14px; }
 }
 
 /* Culture wall — project evidence and delivery */
