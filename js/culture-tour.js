@@ -185,10 +185,3 @@ document.querySelectorAll('[data-space-switcher]').forEach(switcher => {
 
   tabs.forEach(tab => tab.addEventListener('click', () => select(tab)));
 });
-
-document.querySelectorAll('.culture-map-pin').forEach(pin => {
-  pin.addEventListener('click', () => {
-    document.querySelectorAll('.culture-map-pin').forEach(item => item.classList.remove('is-active'));
-    pin.classList.add('is-active');
-  });
-});
