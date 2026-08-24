@@ -1953,7 +1953,10 @@ main footer {
 
 }
 @media (max-width: 768px) {
-  :root { --gutter: 2rem; }
+  :root {
+    --gutter: 2rem;
+    --mobile-section-title: clamp(2.25rem, 9vw, 3rem);
+  }
   html { font-size: var(--fs-xs); }
 
   main.page {
@@ -2057,7 +2060,7 @@ main footer {
 
   .ai-tools-heading h2 {
     max-width: 8ch;
-    font-size: clamp(2.5rem, 11vw, 3.5rem);
+    font-size: var(--mobile-section-title);
     line-height: 1.08;
   }
 
@@ -2120,7 +2123,7 @@ main footer {
   }
 
   .work-section-title {
-    font-size: clamp(2.5rem, 11vw, 3.5rem);
+    font-size: var(--mobile-section-title);
   }
 
   .work-section-subtitle {
@@ -2218,7 +2221,7 @@ main footer {
   }
 
   .s-design-view {
-    padding: 5rem 2rem 6rem;
+    padding: 4.5rem 2rem 5rem;
   }
 
   .design-view-heading {
@@ -2229,7 +2232,7 @@ main footer {
   }
 
   .design-view-heading h2 {
-    font-size: clamp(3.1rem, 16vw, 5rem);
+    font-size: var(--mobile-section-title);
   }
 
   .design-view-heading p {
@@ -2303,8 +2306,16 @@ main footer {
     padding: 0;
   }
 
+  .s-testimonials {
+    padding: 5.5rem 0 6rem;
+  }
+
+  .testi-inner .section-title {
+    font-size: var(--mobile-section-title);
+  }
+
   .testi-subtitle {
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
   }
 
   .testi-card {
@@ -2324,7 +2335,7 @@ main footer {
   }
 
   .s-values {
-    padding: 7rem 0 8rem;
+    padding: 5.5rem 0 6rem;
   }
 
   .s-about-reading {
@@ -2405,6 +2416,11 @@ main footer {
 
   .values-heading {
     margin-inline: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .values-heading h2 {
+    font-size: var(--mobile-section-title);
   }
 
   .values-carousel {
@@ -2439,28 +2455,88 @@ main footer {
     font-size: 3.4rem;
   }
 
+  .s-faq {
+    padding: 5rem 0;
+  }
+
+  .faq-heading {
+    margin-bottom: 2.75rem;
+    font-size: var(--mobile-section-title);
+  }
+
+  .faq-list { padding: 0 1.5rem; }
+
+  .faq-item-inner {
+    padding: 1.5rem 0 1.7rem;
+  }
+
+  .faq-question {
+    margin-right: 3.25rem;
+    font-size: 1.18rem;
+    line-height: 1.35;
+  }
+
+  .faq-answer {
+    padding-top: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .faq-toggle {
+    right: -.75rem;
+    padding: 1.45rem .75rem;
+    font-size: 1.6rem;
+  }
+
   .s-footer {
-    padding: 4rem 2rem 0;
+    --footer-copy-size: .96rem;
+    padding: 3rem 1.5rem 0;
   }
 
   .footer-top {
     grid-template-columns: 1fr;
-    gap: 4rem;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
   }
 
   .footer-left {
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+
+  .footer-col h6 {
+    margin-bottom: .9rem;
+  }
+
+  .footer-col a {
+    margin-bottom: .38rem;
+  }
+
+  .footer-right {
+    gap: 1.15rem;
+  }
+
+  .footer-contact {
+    gap: .55rem;
+  }
+
+  .footer-contact-links {
+    gap: .32rem;
+  }
+
+  .footer-wordmark {
+    padding-top: 2rem;
   }
 
   .footer-wordmark span {
-    font-size: clamp(4rem, 19vw, 7rem);
+    font-size: clamp(3rem, 14vw, 4.5rem);
   }
 
   .footer-bottom {
     align-items: flex-end;
     flex-direction: column;
-    gap: .6rem;
+    gap: .35rem;
+    padding: 1rem 0 1.25rem;
   }
 }
 
