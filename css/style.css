@@ -1955,7 +1955,7 @@ main footer {
 @media (max-width: 768px) {
   :root {
     --gutter: 2rem;
-    --mobile-section-title: clamp(2.25rem, 9vw, 3rem);
+    --mobile-section-title: clamp(1.9rem, 7.2vw, 2.25rem);
   }
   html { font-size: var(--fs-xs); }
 
