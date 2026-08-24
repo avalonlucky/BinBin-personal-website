@@ -27,7 +27,9 @@ const lenis = new Lenis({
   lerp: 0.1,            // 跟手的线性插值（贴近原站，比 duration 模式更跟随滚轮）
   wheelMultiplier: 1,
   smoothWheel: true,
-  syncTouch: true,
+  // 手机端交给浏览器处理原生触摸，避免 Android 上纵向平滑滚动
+  // 与作品区横向滑动争抢手势，造成“划了却没有反应”。
+  syncTouch: desktopMotion(),
 });
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(t => lenis.raf(t * 1000));
@@ -228,41 +230,45 @@ function initScrollAnimations() {
     return;
   }
 
-  // ── Hero video parallax while pinned on scroll ──
-  gsap.to('.hero-bg', {
-    scrollTrigger: {
-      trigger: '.s-hero',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: 1.5,
-    },
-    scale: 1.1,
-    yPercent: 6,
-  });
+  // PC 保留首屏视差与汇聚动画；手机首屏采用短画幅和静态排版，
+  // 避免整屏被动画占满，也避免 fixed 文案滑出首屏后继续压住正文。
+  if (desktopMotion()) {
+    gsap.to('.hero-bg', {
+      scrollTrigger: {
+        trigger: '.s-hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1.5,
+      },
+      scale: 1.1,
+      yPercent: 6,
+    });
 
-  // ── Hero copy converges toward center and fades, matching the reference scroll feel ──
-  const heroCopyTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.s-hero',
-      start: 'top top',
-      end: 'bottom 35%',
-      scrub: 1.2,
-    },
-  });
-  heroCopyTl
-    .to('.hero-title-left', { xPercent: 38, ease: 'none', duration: 1 }, 0)
-    .to('.hero-title-right', { xPercent: -50, ease: 'none', duration: 1 }, 0)
-    .to('.hero-title-left, .hero-title-right', { autoAlpha: 0, ease: 'none', duration: 0.28 }, 0.72);
-  gsap.to('.hero-scroll-hint', {
-    autoAlpha: 0,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.s-hero',
-      start: 'top top',
-      end: 'top+=220 top',
-      scrub: true,
-    },
-  });
+    const heroCopyTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.s-hero',
+        start: 'top top',
+        end: 'bottom 35%',
+        scrub: 1.2,
+      },
+    });
+    heroCopyTl
+      .to('.hero-title-left', { xPercent: 38, ease: 'none', duration: 1 }, 0)
+      .to('.hero-title-right', { xPercent: -50, ease: 'none', duration: 1 }, 0)
+      .to('.hero-title-left, .hero-title-right', { autoAlpha: 0, ease: 'none', duration: 0.28 }, 0.72);
+    gsap.to('.hero-scroll-hint', {
+      autoAlpha: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.s-hero',
+        start: 'top top',
+        end: 'top+=220 top',
+        scrub: true,
+      },
+    });
+  } else {
+    gsap.set('.hero-bg, .hero-title-left, .hero-title-right', { clearProps: 'transform,opacity,visibility' });
+  }
 
   // ── Section headings (scrub-linked) ──
   gsap.utils.toArray('.section-title').forEach(el => {
@@ -600,6 +606,49 @@ function initWorkCta() {
 
   setActive(-1, { force: true, fast: true });
   window.addEventListener('resize', () => setActive(activeIndex, { force: true, fast: true }));
+}
+
+/* ─────────────────────────────────────────
+   MOBILE WORK — 原生横滑 + 当前项目反馈
+   不接管手势，只根据卡片中心位置更新序号；实际滑动仍由浏览器完成。
+───────────────────────────────────────── */
+function initMobileWorkCarousel() {
+  const viewport = document.querySelector('.s-work [data-hscroll]');
+  const track = viewport?.querySelector('[data-hscroll-track]');
+  const cards = track ? [...track.querySelectorAll(':scope > .work-col')] : [];
+  const current = document.querySelector('[data-work-current]');
+  const total = document.querySelector('[data-work-total]');
+  if (!viewport || !cards.length || !current || !total) return;
+
+  total.textContent = String(cards.length).padStart(2, '0');
+  viewport.setAttribute('role', 'region');
+  viewport.setAttribute('aria-label', '精选作品，左右滑动查看');
+  viewport.tabIndex = 0;
+
+  let raf = 0;
+  const update = () => {
+    raf = 0;
+    const center = viewport.scrollLeft + viewport.clientWidth / 2;
+    let active = 0;
+    let nearest = Infinity;
+    cards.forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(cardCenter - center);
+      if (distance < nearest) {
+        nearest = distance;
+        active = index;
+      }
+    });
+    cards.forEach((card, index) => card.classList.toggle('is-mobile-current', index === active));
+    current.textContent = String(active + 1).padStart(2, '0');
+  };
+  const requestUpdate = () => {
+    if (!raf) raf = requestAnimationFrame(update);
+  };
+
+  viewport.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate, { passive: true });
+  requestUpdate();
 }
 
 /* ─────────────────────────────────────────
@@ -942,6 +991,7 @@ initNavTheme();
 initAiToolsView();
 initAiMarqueeLoops();
 initWorkCta();
+initMobileWorkCarousel();
 initDesignRows();
 initFAQ();
 initDragScroll();

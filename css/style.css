@@ -570,6 +570,7 @@ main footer {
   color: rgba(0,0,0,.64);
   margin: clamp(.9rem, 1.8vw, 1.6rem) 0 0;
 }
+.work-mobile-guide { display: none; }
 .work-grid {
   display: flex;
   align-items: flex-start;        /* 顶对齐：激活卡可向下溢出长高 */
@@ -1992,14 +1993,29 @@ main footer {
     font-size: 1.4rem;
   }
 
+  .s-hero {
+    height: clamp(31rem, 72svh, 41rem);
+    min-height: 0;
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(2,2,2,.12) 18%, rgba(2,2,2,.22) 52%, rgba(2,2,2,.82) 100%);
+  }
+
+  .hero-video { object-position: 52% center; }
+
   .hero-title {
+    position: absolute;
     top: auto;
-    bottom: 22vh;
+    bottom: 2.1rem;
     transform: none;
     flex-direction: column;
-    padding: 0 1.4rem;
+    padding: 0 1.5rem;
     align-items: flex-start;
-    gap: 1.6rem;
+    gap: .9rem;
   }
 
   .hero-title-left,
@@ -2008,21 +2024,26 @@ main footer {
   }
 
   .hero-title-left {
-    font-size: clamp(2.45rem, 8.8vw, 4rem);
-    line-height: 1.16;
+    max-width: 12ch;
+    font-size: clamp(2.2rem, 9.4vw, 3.55rem);
+    line-height: 1.08;
   }
 
   .hero-title-right {
-    font-size: clamp(1.15rem, 3.8vw, 1.45rem);
-    line-height: 1.7;
+    max-width: 31rem;
+    font-size: clamp(1rem, 3.65vw, 1.2rem);
+    line-height: 1.55;
+    color: rgba(251,251,244,.84);
   }
+
+  .hero-title-right .hero-word { display: inline; }
 
   .hero-scroll-hint {
     display: none;
   }
 
   .s-work {
-    padding: 4rem 0 0;
+    padding: 4.8rem 0 5rem;
   }
 
   .s-ai-tools {
@@ -2095,7 +2116,7 @@ main footer {
 
   .work-section-heading {
     padding: 0 2rem;
-    margin-bottom: 3.5rem;
+    margin-bottom: 1.8rem;
   }
 
   .work-section-title {
@@ -2105,6 +2126,24 @@ main footer {
   .work-section-subtitle {
     font-size: clamp(1rem, 4.4vw, 1.25rem);
     margin-top: .8rem;
+  }
+
+  .work-mobile-guide {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    margin: 0 0 1rem;
+    font-family: var(--f-cjk);
+    font-size: .88rem;
+    line-height: 1;
+    letter-spacing: .03em;
+    color: rgba(2,2,2,.54);
+  }
+
+  .work-mobile-guide b {
+    color: var(--c-black);
+    font-weight: 600;
   }
 
   .work-grid {
@@ -2128,9 +2167,9 @@ main footer {
   .work-col {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    min-height: 34rem;
-    border-left: 0;
-    border-top: 1px solid rgba(2,2,2,.08);
+    min-height: 29rem;
+    border: 0;
+    border-radius: .75rem;
   }
 
   .work-col::after {
@@ -2146,6 +2185,9 @@ main footer {
     opacity: 1;
     transform: none;
   }
+
+  .work-col-img,
+  .work-col-img img { border-radius: .75rem; }
 
   .work-col-title {
     font-size: 1.2rem;
@@ -2424,7 +2466,7 @@ main footer {
 
 @media (max-width: 480px) {
   .hero-title {
-    bottom: 18vh;
+    bottom: 2.1rem;
   }
 
   .reading-orbit-wheel {
@@ -2479,11 +2521,19 @@ main footer {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     overscroll-behavior-x: contain;
+    touch-action: pan-x pan-y;
+  }
+  .s-work > [data-hscroll] {
+    scroll-padding-inline: 1.5rem;
+    padding-inline: 1.5rem;
   }
   [data-hscroll]::-webkit-scrollbar { display: none; }
   /* 只有标了 pin 的才钉住区块、把纵向滚动借给横向 */
   [data-hscroll="pin"] { overflow: hidden; scroll-snap-type: none; }
-  [data-hscroll-track] > * { scroll-snap-align: start; }
+  [data-hscroll-track] > * {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
   [data-hscroll-track] {
     display: flex !important;
     /* 必须显式改回横向：cs-prios 之类本来就是 flex-direction:column，
@@ -2506,12 +2556,12 @@ main footer {
   }
   /* 首页作品卡：CSS 里写了 width:100% !important，要压过它 */
   .work-grid[data-hscroll-track] > .work-col {
-    width: min(78vw, 300px) !important;
+    width: min(84vw, 340px) !important;
     flex: 0 0 auto;
-    min-height: 26rem;
-    height: auto;
+    min-height: 29rem;
+    height: 29rem;
   }
-  .work-grid[data-hscroll-track] { gap: 12px; }
+  .work-grid[data-hscroll-track] { gap: 14px; }
   /* 设计观三行：图在上、文在下，横向排开 */
   .design-rows[data-hscroll-track] > .design-row { flex: 0 0 min(78vw, 300px); }
 
@@ -2542,6 +2592,7 @@ main footer {
     gap: 7px;
     margin: 20px 0 0;
   }
+  .s-work .hscroll-dots { margin-top: 1.25rem; }
   .hscroll-dots i {
     width: 6px;
     height: 6px;
