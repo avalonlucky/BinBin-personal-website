@@ -9,6 +9,13 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 const pointerFine = window.matchMedia('(pointer: fine)');
 const desktopMotion = () => window.matchMedia('(min-width: 769px)').matches && !prefersReducedMotion.matches;
 
+// 作品是面试官最优先查看的内容：首页中始终排在 AI 工具模块之前。
+const selectedWorkSection = document.querySelector('.s-work');
+const aiToolsSection = document.querySelector('.s-ai-tools');
+if (selectedWorkSection && aiToolsSection) {
+  aiToolsSection.parentNode.insertBefore(selectedWorkSection, aiToolsSection);
+}
+
 /* ─────────────────────────────────────────
    SCROLL ARCHITECTURE (1:1 原站)
    滚动容器是 main.page，不是 window。
