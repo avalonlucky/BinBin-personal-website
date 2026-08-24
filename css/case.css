@@ -105,6 +105,13 @@
   width: 17px;
   transition: color .3s var(--ease);
 }
+.cs-toc a time {
+  margin-left: auto;
+  color: var(--cs-ink-3);
+  font: 500 11px/1 var(--f-body);
+  letter-spacing: .04em;
+  font-variant-numeric: tabular-nums;
+}
 .cs-toc a:hover { color: var(--cs-ink); border-left-color: var(--cs-ink-3); }
 .cs-toc a:hover i { color: var(--cs-ink-3); }
 .cs-toc li.is-active a {
@@ -126,6 +133,7 @@
                 background .3s var(--ease), box-shadow .3s var(--ease);
   }
   .cs-toc a span { display: none; }
+  .cs-toc a time { display: none; }
   .cs-toc:hover,
   .cs-toc:focus-within {
     background: var(--cs-paper);
@@ -133,11 +141,61 @@
   }
   .cs-toc:hover a span,
   .cs-toc:focus-within a span { display: inline; white-space: nowrap; }
+  .cs-toc:hover a time,
+  .cs-toc:focus-within a time { display: inline; }
 
-  .cs-toc.is-wide { padding: 0; width: 122px; }
+  .cs-toc.is-wide { padding: 0; width: 174px; }
   .cs-toc.is-wide a span { display: inline; }
+  .cs-toc.is-wide a time { display: inline; }
   .cs-toc.is-wide:hover,
   .cs-toc.is-wide:focus-within { background: none; box-shadow: none; }
+}
+
+/* 文化墙的 10 分钟参观 HUD：只在 01—06 之间出现。 */
+.culture-timebar {
+  position: fixed;
+  z-index: 58;
+  left: 50%;
+  bottom: 18px;
+  display: grid;
+  grid-template-columns: 116px minmax(430px, 1fr) auto;
+  align-items: center;
+  width: min(940px, calc(100vw - 48px));
+  min-height: 66px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 18px;
+  color: #fff;
+  background: rgba(7,10,16,.86);
+  box-shadow: 0 18px 54px rgba(0,0,0,.2);
+  backdrop-filter: blur(18px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, 18px);
+  transition: opacity .3s var(--ease), visibility .3s var(--ease), transform .3s var(--ease);
+}
+.culture-timebar.is-visible { opacity: 1; visibility: visible; pointer-events: auto; transform: translate(-50%, 0); }
+.culture-timebar-clock { display: grid; gap: 2px; }
+.culture-timebar-clock small { color: rgba(255,255,255,.55); font: 12px/1 var(--f-cjk); }
+.culture-timebar-clock b { font: 500 23px/1 var(--f-body); font-variant-numeric: tabular-nums; }
+.culture-timebar nav { display: grid; grid-template-columns: repeat(5, 1fr); align-self: stretch; }
+.culture-timebar nav button { position: relative; display: grid; place-content: center; gap: 4px; border: 0; border-radius: 12px; color: rgba(255,255,255,.52); background: transparent; font-family: var(--f-cjk); cursor: pointer; transition: color .25s, background .25s; }
+.culture-timebar nav button small { color: #7896ff; font: 600 10px/1 var(--f-body); letter-spacing: .08em; }
+.culture-timebar nav button span { font-size: 13px; }
+.culture-timebar nav button.is-active { color: #fff; background: rgba(94,119,234,.3); }
+.culture-timebar-status { display: flex; align-items: center; gap: 8px; margin-left: 14px; padding: 10px 13px; border-radius: 999px; background: rgba(255,255,255,.08); white-space: nowrap; }
+.culture-timebar-status span { width: 7px; height: 7px; border-radius: 50%; background: #7896ff; box-shadow: 0 0 0 5px rgba(120,150,255,.13); }
+.culture-timebar-status b { font: 500 13px/1 var(--f-cjk); }
+.culture-timebar-progress { position: absolute; right: 16px; bottom: 5px; left: 16px; height: 2px; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.14); }
+.culture-timebar-progress i { display: block; width: 100%; height: 100%; background: #7896ff; transform: scaleX(0); transform-origin: left center; will-change: transform; }
+
+@media (max-width: 760px) {
+  .culture-timebar { grid-template-columns: auto 1fr; width: calc(100vw - 28px); min-height: 58px; padding: 9px 12px 11px; border-radius: 15px; }
+  .culture-timebar-clock { grid-template-columns: auto auto; align-items: baseline; gap: 6px; }
+  .culture-timebar-clock b { font-size: 18px; }
+  .culture-timebar nav { display: none; }
+  .culture-timebar-status { justify-self: end; margin-left: 10px; padding: 9px 11px; }
 }
 
 /* ────────────────────────────────────────

@@ -1669,7 +1669,11 @@ function initToc() {
     const a = document.createElement('a');
     a.href = `#${sec.id}`;
     a.title = label;
-    a.innerHTML = `<i>${num}</i><span>${label}</span>`;
+    const duration = Number(sec.dataset.tourMinutes || 0);
+    const durationLabel = duration
+      ? `${String(Math.floor(duration)).padStart(2, '0')}:${String(Math.round(duration % 1 * 60)).padStart(2, '0')}`
+      : '';
+    a.innerHTML = `<i>${num}</i><span>${label}</span>${durationLabel ? `<time>${durationLabel}</time>` : ''}`;
     li.appendChild(a);
     ol.appendChild(li);
 
@@ -1744,6 +1748,103 @@ function initToc() {
       end: 'bottom 45%',
       onToggle: self => { if (self.isActive) setActive(i); },
     });
+  });
+}
+
+/* ─────────────────────────────────────────
+   文化墙十分钟参观 — 只覆盖真实空间章节 01—06。
+   目录耗时、底部节点、剩余时间和当前状态全部读取 section 上的
+   data-tour-*；进入 07「统筹落地」前结束，不把案例复盘计入参观。
+───────────────────────────────────────── */
+function initCultureTourTimeline() {
+  const chapters = [...document.querySelectorAll('.space-chapter[data-tour-minutes]')];
+  if (!chapters.length) return;
+
+  const toSeconds = minutes => Math.round(Number(minutes) * 60);
+  const formatTime = seconds => {
+    const safe = Math.max(0, Math.round(seconds));
+    return `${String(Math.floor(safe / 60)).padStart(2, '0')}:${String(safe % 60).padStart(2, '0')}`;
+  };
+
+  let elapsed = 0;
+  const stages = chapters.map(section => {
+    const duration = toSeconds(section.dataset.tourMinutes);
+    const stage = {
+      section,
+      label: section.dataset.tourLabel || section.dataset.toc || '',
+      start: elapsed,
+      duration,
+      end: elapsed + duration,
+    };
+    elapsed += duration;
+    return stage;
+  });
+  const total = elapsed;
+  if (total !== 600) console.warn(`文化墙参观时间应为 10:00，当前为 ${formatTime(total)}`);
+
+  const timeline = document.createElement('aside');
+  timeline.className = 'culture-timebar';
+  timeline.setAttribute('aria-label', '十分钟参观进度');
+  timeline.innerHTML = `
+    <div class="culture-timebar-clock"><small>剩余</small><b data-tour-remaining>${formatTime(total)}</b></div>
+    <nav aria-label="参观时间节点"></nav>
+    <div class="culture-timebar-status"><span aria-hidden="true"></span><b data-tour-status>正在走 · ${stages[0].label}</b></div>
+    <div class="culture-timebar-progress" role="progressbar" aria-label="参观进度" aria-valuemin="0" aria-valuemax="600" aria-valuenow="0"><i></i></div>`;
+
+  const nav = timeline.querySelector('nav');
+  const nodes = stages.filter((stage, index) => index === 0 || stage.label !== stages[index - 1].label);
+  nodes.forEach(stage => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.tourTarget = stage.section.id;
+    button.innerHTML = `<small>${formatTime(stage.start)}</small><span>${stage.label}</span>`;
+    button.addEventListener('click', () => lenis.scrollTo(stage.section, { offset: -72 }));
+    nav.appendChild(button);
+  });
+  document.querySelector('.site')?.appendChild(timeline);
+
+  const remaining = timeline.querySelector('[data-tour-remaining]');
+  const status = timeline.querySelector('[data-tour-status]');
+  const progress = timeline.querySelector('.culture-timebar-progress');
+  const fill = progress.querySelector('i');
+  const buttons = [...nav.querySelectorAll('button')];
+
+  const render = (stage, seconds) => {
+    const current = Math.min(total, Math.max(0, seconds));
+    const ratio = total ? current / total : 0;
+    remaining.textContent = formatTime(total - current);
+    status.textContent = `正在走 · ${stage.label}`;
+    fill.style.transform = `scaleX(${ratio})`;
+    progress.setAttribute('aria-valuenow', String(Math.round(current)));
+    buttons.forEach(button => button.classList.toggle('is-active', button.dataset.tourTarget === stage.section.id || (
+      stage.label === '走廊' && button.dataset.tourTarget === 'space-corridor'
+    )));
+  };
+
+  stages.forEach(stage => {
+    ScrollTrigger.create({
+      trigger: stage.section,
+      start: 'top 62%',
+      end: 'bottom 38%',
+      onUpdate: self => render(stage, stage.start + stage.duration * self.progress),
+      onEnter: () => render(stage, stage.start),
+      onEnterBack: () => render(stage, stage.end),
+    });
+  });
+
+  const first = stages[0].section;
+  const last = stages[stages.length - 1].section;
+  ScrollTrigger.create({
+    trigger: first,
+    start: 'top 72%',
+    endTrigger: last,
+    end: 'bottom 38%',
+    onToggle: self => timeline.classList.toggle('is-visible', self.isActive),
+    onLeave: () => {
+      render(stages[stages.length - 1], total);
+      timeline.classList.remove('is-visible');
+    },
+    onEnterBack: () => timeline.classList.add('is-visible'),
   });
 }
 
@@ -2376,6 +2477,7 @@ initTimeline();
 initReveal();
 initProductMobileMotion();
 initToc();
+initCultureTourTimeline();
 initNavTheme();
 initLightbox();
 initOutro();
