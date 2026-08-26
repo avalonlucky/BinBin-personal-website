@@ -90,10 +90,12 @@
     boothGalleryMain.alt=button.dataset.boothAlt||'';
     if(boothGalleryCaption)boothGalleryCaption.textContent=`现场实拍 ${String(index+1).padStart(2,'0')} / ${String(boothGalleryButtons.length).padStart(2,'0')}`;
   }));
-  const archiveButtons=[...document.querySelectorAll('[data-archive-filter]')];
-  const archiveItems=[...document.querySelectorAll('.dmhc-archive [data-kind]')];
-  archiveButtons.forEach(button=>button.addEventListener('click',()=>{
-    archiveButtons.forEach(item=>item.classList.toggle('is-active',item===button));
-    archiveItems.forEach(item=>item.hidden=button.dataset.archiveFilter!=='all'&&item.dataset.kind!==button.dataset.archiveFilter);
-  }));
+  const archiveSection=document.querySelector('.dmhc-archive-section');
+  const finalSection=document.querySelector('.dmhc-final');
+  if(archiveSection&&finalSection){
+    archiveSection.parentNode.insertBefore(finalSection,archiveSection);
+    const finalNav=document.querySelector(`.cs-toc a[href="#${finalSection.id}"]`)?.parentElement;
+    const archiveNav=document.querySelector(`.cs-toc a[href="#${archiveSection.id}"]`)?.parentElement;
+    if(finalNav&&archiveNav)archiveNav.parentNode.insertBefore(finalNav,archiveNav);
+  }
 })();
