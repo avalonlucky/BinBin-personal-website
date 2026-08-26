@@ -40,6 +40,15 @@
   boothButtons.forEach((button,index)=>button.addEventListener('click',()=>{boothButtons.forEach((item,i)=>{const active=i===index;item.classList.toggle('is-active',active);item.setAttribute('aria-pressed',String(active))});boothImages.forEach((image,i)=>image.classList.toggle('is-active',i===index))}));
   const transformList=document.querySelector('.dmhc-transform-list');
   if(transformList&&matchMedia('(max-width:760px)').matches){transformList.addEventListener('scroll',()=>{const width=transformList.clientWidth;const index=Math.max(0,Math.min(transformButtons.length-1,Math.round(transformList.scrollLeft/width)));showTransform(index)},{passive:true})}
+  document.querySelectorAll('[data-compare-group]').forEach(group=>{
+    const switcher=group.previousElementSibling;
+    const buttons=[...(switcher?.querySelectorAll('[data-compare-switch]')||[])];
+    const cards=[...group.querySelectorAll('.dmhc-compare-card')];
+    buttons.forEach((button,index)=>button.addEventListener('click',()=>{
+      buttons.forEach((item,i)=>{const active=i===index;item.classList.toggle('is-active',active);item.setAttribute('aria-selected',String(active))});
+      cards.forEach((card,i)=>card.classList.toggle('is-active',i===index));
+    }));
+  });
   document.querySelectorAll('[data-compare]').forEach(compare=>{
     const input=compare.querySelector('input');
     const stage=compare.querySelector('.dmhc-compare-stage');
