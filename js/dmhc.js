@@ -43,15 +43,28 @@
   document.querySelectorAll('[data-compare]').forEach(compare=>{
     const input=compare.querySelector('input');
     const stage=compare.querySelector('.dmhc-compare-stage');
-    const after=compare.querySelector('.dmhc-compare-stage>div');
-    const line=compare.querySelector('.dmhc-compare-stage>i');
-    if(!input||!stage||!after||!line)return;
-    const paint=()=>{after.style.width=`${input.value}%`;after.querySelector('img').style.width=`${stage.clientWidth}px`;line.style.left=`${input.value}%`};
-    const setFromPointer=event=>{const rect=stage.getBoundingClientRect();input.value=String(Math.round(Math.min(1,Math.max(0,(event.clientX-rect.left)/rect.width))*100));paint()};
+    if(!input||!stage)return;
+    let paintFrame=0;
+    const paint=()=>{
+      paintFrame=0;
+      compare.style.setProperty('--compare-pos',`${input.value}%`);
+    };
+    const requestPaint=()=>{if(!paintFrame)paintFrame=requestAnimationFrame(paint)};
+    const setFromPointer=event=>{
+      const rect=stage.getBoundingClientRect();
+      const value=Math.min(1,Math.max(0,(event.clientX-rect.left)/rect.width))*100;
+      input.value=value.toFixed(1);
+      requestPaint();
+    };
     let dragging=false;
-    stage.addEventListener('pointerdown',event=>{if(event.pointerType!=='mouse')return;dragging=true;stage.setPointerCapture(event.pointerId);setFromPointer(event)});
+    stage.addEventListener('pointerdown',event=>{
+      if(event.pointerType==='mouse'&&event.button!==0)return;
+      dragging=true;
+      stage.setPointerCapture(event.pointerId);
+      setFromPointer(event);
+    });
     stage.addEventListener('pointermove',event=>{if(dragging)setFromPointer(event)});
-    stage.addEventListener('pointerup',()=>{dragging=false});
+    stage.addEventListener('pointerup',event=>{dragging=false;if(stage.hasPointerCapture(event.pointerId))stage.releasePointerCapture(event.pointerId)});
     stage.addEventListener('pointercancel',()=>{dragging=false});
     input.addEventListener('keydown',event=>{
       const current=Number(input.value);
@@ -63,10 +76,9 @@
       else return;
       event.preventDefault();
       input.value=String(Math.min(Number(input.max),Math.max(Number(input.min),next)));
-      paint();
+      requestPaint();
     });
-    input.addEventListener('input',paint);paint();
-    addEventListener('resize',paint,{passive:true});
+    input.addEventListener('input',requestPaint);paint();
   });
   const archiveButtons=[...document.querySelectorAll('[data-archive-filter]')];
   const archiveItems=[...document.querySelectorAll('.dmhc-archive [data-kind]')];
