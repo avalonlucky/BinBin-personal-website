@@ -1661,9 +1661,9 @@ function initToc() {
     if (!sec.id) sec.id = `sec-${String(i + 1).padStart(2, '0')}`;
 
     const raw = sec.querySelector('.cs-num')?.textContent.trim() || '';
-    const parts = raw.split('—').map(s => s.trim());
-    const num = parts[0] || String(i + 1).padStart(2, '0');
-    const label = sec.dataset.toc || parts[1] || '';
+    const tocMatch = raw.match(/^(\d{1,2})\s*(?:[—–\-/｜|])?\s*(.*)$/);
+    const num = tocMatch?.[1]?.padStart(2, '0') || String(i + 1).padStart(2, '0');
+    const label = sec.dataset.toc || tocMatch?.[2]?.trim() || '';
 
     const li = document.createElement('li');
     const a = document.createElement('a');
