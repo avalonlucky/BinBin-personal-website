@@ -1,6 +1,11 @@
 (() => {
   const hero=document.querySelector('[data-dmhc-hero]');
   const scroller=document.querySelector('main.page');
+  if(scroller){
+    const lockPageX=()=>{if(scroller.scrollLeft!==0)scroller.scrollLeft=0};
+    lockPageX();
+    scroller.addEventListener('scroll',lockPageX,{passive:true});
+  }
   if(hero&&scroller){
     const image=hero.querySelector('.dmhc-hero-stage img');
     const blackout=hero.querySelector('.dmhc-hero-blackout');

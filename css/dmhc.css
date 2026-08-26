@@ -50,6 +50,8 @@
 /* Mobile interaction pass: keep independent gestures on independent axes. */
 @media(max-width:760px){
   .case-page.is-dmhc{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  .case-page.is-dmhc main.page{max-width:100%;overscroll-behavior-x:none}
+  .case-page.is-dmhc .page-scroll{width:100%;max-width:100%;overflow-x:clip}
   .dmhc-hero-content .cs-tags{padding-right:18px;overscroll-behavior-x:contain;scrollbar-width:none}
   .dmhc-hero-content .cs-tags::-webkit-scrollbar{display:none}
   .dmhc-hero-content .cs-tag{flex:0 0 auto;white-space:nowrap}
