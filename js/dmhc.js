@@ -80,16 +80,6 @@
     });
     input.addEventListener('input',requestPaint);paint();
   });
-  const boothGalleryButtons=[...document.querySelectorAll('[data-booth-photo]')];
-  const boothGalleryMain=document.querySelector('[data-booth-gallery-main]');
-  const boothGalleryCaption=document.querySelector('[data-booth-gallery-caption]');
-  boothGalleryButtons.forEach((button,index)=>button.addEventListener('click',()=>{
-    if(!boothGalleryMain)return;
-    boothGalleryButtons.forEach(item=>item.classList.toggle('is-active',item===button));
-    boothGalleryMain.src=button.dataset.boothPhoto;
-    boothGalleryMain.alt=button.dataset.boothAlt||'';
-    if(boothGalleryCaption)boothGalleryCaption.textContent=`现场实拍 ${String(index+1).padStart(2,'0')} / ${String(boothGalleryButtons.length).padStart(2,'0')}`;
-  }));
   const archiveSection=document.querySelector('.dmhc-archive-section');
   const finalSection=document.querySelector('.dmhc-final');
   if(archiveSection&&finalSection){
