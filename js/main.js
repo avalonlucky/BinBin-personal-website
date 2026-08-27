@@ -655,6 +655,7 @@ function initFAQ() {
   if (!items.length) return;
 
   function splitAnswerLines(answer) {
+    if (answer.children.length) return [];
     const text = answer.dataset.text || answer.textContent.trim();
     answer.dataset.text = text;
     answer.replaceChildren();
