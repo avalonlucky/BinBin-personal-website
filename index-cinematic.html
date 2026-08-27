@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maridian Space — Cinematic Hero Preview</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23020202'/><path d='M14 48V16h8l10 16 10-16h8v32h-8V29L32 45 22 29v19z' fill='%23FBFBF4'/></svg>">
+
+  <!-- Preload real PP fonts from their server -->
+  <link rel="preload" href="fonts/PPMigra-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="css/style.css?v=102">
+  <link rel="stylesheet" href="css/hero-cinematic.css?v=1">
+  <link rel="stylesheet" href="css/admin-auth.css?v=4">
+</head>
+<body class="home-cinematic">
+<div class="site">
+
+  <!-- ══════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════ -->
+  <nav id="nav" data-theme="dark">
+    <div class="nav-inner">
+      <a href="#top" class="nav-pill nav-logo" data-border>
+        <span class="logo-text">Maridian Space</span>
+        <canvas class="border-canvas"></canvas>
+      </a>
+      <div class="nav-pill nav-links" data-border>
+        <a href="#work">Work</a>
+        <a href="about.html">About</a>
+        <a href="#contact">Contact</a>
+        <canvas class="border-canvas"></canvas>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page">
+    <div class="page-bg"></div>
+    <div class="page-scroll">
+
+    <!-- ══════════════════════════════════════
+         CINEMATIC HERO PREVIEW — scroll-scrubbed original MP4
+    ══════════════════════════════════════ -->
+    <section class="s-hero cinematic-hero" id="top" data-cinematic-hero>
+      <div class="cinematic-sticky">
+        <video class="cinematic-video" data-cinematic-video
+               data-src="assets/hero-cinematic/field-laptop-original.mp4"
+               poster="assets/hero-cinematic/field-laptop-poster.png"
+               width="1280" height="720"
+               muted playsinline preload="auto"
+               disablepictureinpicture
+               aria-label="人物在夜色花田中使用电脑，镜头随滚动逐步推进至电脑屏幕"></video>
+        <div class="cinematic-vignette" aria-hidden="true"></div>
+
+        <div class="cinematic-intro" data-cinematic-intro lang="zh-CN">
+          <div class="cinematic-meta">
+            <p><strong>Maridian</strong><span>Visual Designer &amp; AI Builder</span></p>
+            <span class="cinematic-scroll-label">Scroll to reveal</span>
+          </div>
+          <div class="cinematic-audience" aria-label="设计能力范围">
+            <span class="is-active">视觉设计</span>
+            <span>品牌</span>
+            <span>展会</span>
+            <span>AI 工作流</span>
+          </div>
+          <h1>设计不止于呈现，<em>更要抵达结果。</em></h1>
+          <p class="cinematic-deck">把复杂信息变成看得懂、记得住，也真正能够落地的视觉系统。</p>
+        </div>
+
+        <div class="cinematic-terminal" data-cinematic-terminal aria-hidden="true">
+          <div class="hero-terminal-bar"><i></i><i></i><i></i><span>maridian — claude — 80×24</span></div>
+          <div class="hero-terminal-scroll">
+            <pre class="hero-terminal-output" data-cinematic-terminal-output></pre><span class="hero-terminal-cursor">_</span>
+          </div>
+        </div>
+
+        <div class="cinematic-progress" aria-hidden="true">
+          <span>SCROLL</span><i><b data-cinematic-progress></b></i><span>SCREEN</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         AI TOOLS — scrolling logo wall
+    ══════════════════════════════════════ -->
+    <section class="s-ai-tools">
+      <div class="ai-tools-heading" lang="zh-CN">
+        <h2>AI 是我的第二支笔</h2>
+        <p>它们已经嵌进我每天的工作流里</p>
+      </div>
+
+      <div class="ai-view-switch" role="group" aria-label="AI 工具展示方式">
+        <span class="ai-view-label is-active" data-ai-view-label="marquee">滚动</span>
+        <button class="ai-view-toggle" type="button" aria-label="切换 AI 工具展示方式" aria-pressed="false">
+          <span></span>
+        </button>
+        <span class="ai-view-label" data-ai-view-label="grid">网格</span>
+      </div>
+
+      <div class="ai-marquee" aria-label="我常用的 AI 工具">
+        <div class="ai-marquee-row">
+          <div class="ai-marquee-track">
+            <div class="ai-marquee-group">
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/openai.svg" alt=""></span><span>GPT</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/claude.svg" alt=""></span><span>Claude</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/claude.svg" alt=""></span><span>Claude Code</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/antigravity.svg" alt=""></span><span>Antigravity</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/codex.svg" alt=""></span><span>Codex</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/jimeng.svg" alt=""></span><span>即梦</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo ai-tool-logo-text">S2</span><span>Seedance 2.0</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/grok.svg" alt=""></span><span>Grok</span></div>
+            </div>
+            <div class="ai-marquee-group" aria-hidden="true">
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/openai.svg" alt=""></span><span>GPT</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/claude.svg" alt=""></span><span>Claude</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/claude.svg" alt=""></span><span>Claude Code</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/antigravity.svg" alt=""></span><span>Antigravity</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/codex.svg" alt=""></span><span>Codex</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/jimeng.svg" alt=""></span><span>即梦</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo ai-tool-logo-text">S2</span><span>Seedance 2.0</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/grok.svg" alt=""></span><span>Grok</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ai-marquee-row ai-marquee-row-reverse">
+          <div class="ai-marquee-track">
+            <div class="ai-marquee-group">
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/lovart.svg" alt=""></span><span>Lovart</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/gemini.svg" alt=""></span><span>Gemini</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/midjourney.svg" alt=""></span><span>Midjourney</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/suno.svg" alt=""></span><span>Suno</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/obsidian.svg" alt=""></span><span>Obsidian</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/github.svg" alt=""></span><span>GitHub</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/cursor.svg" alt=""></span><span>Cursor</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo ai-tool-logo-text">R</span><span>Remotion</span></div>
+            </div>
+            <div class="ai-marquee-group" aria-hidden="true">
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/lovart.svg" alt=""></span><span>Lovart</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/gemini.svg" alt=""></span><span>Gemini</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/midjourney.svg" alt=""></span><span>Midjourney</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/suno.svg" alt=""></span><span>Suno</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/obsidian.svg" alt=""></span><span>Obsidian</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/github.svg" alt=""></span><span>GitHub</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo"><img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/1.91.0/files/icons/cursor.svg" alt=""></span><span>Cursor</span></div>
+              <div class="ai-tool"><span class="ai-tool-logo ai-tool-logo-text">R</span><span>Remotion</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ai-tools-grid" aria-label="我常用的 AI 工具网格"></div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         WORK — horizontal grid
+    ══════════════════════════════════════ -->
+    <section class="s-work" id="work">
+      <div class="work-section-heading" lang="zh-CN">
+        <h2 class="work-section-title">精选作品</h2>
+        <p class="work-section-subtitle">每个像素都应该有理由</p>
+      </div>
+      <div class="work-mobile-guide" aria-hidden="true">
+        <span>左右滑动查看</span>
+        <span><b data-work-current>01</b> / <span data-work-total>05</span></span>
+      </div>
+      <div data-hscroll>
+        <div class="work-grid" data-hscroll-track>
+        <!-- Project 01 -->
+        <a href="work/ankki-product-sheets.html" class="work-col work-item" data-num="01">
+          <figure class="work-col-img">
+            <img src="assets/work/ankki/card-product-sheets-2026.webp" alt="昂楷科技产品单页系列" width="414" height="468" loading="eager">
+          </figure>
+          <div class="work-col-info">
+            <span class="work-col-num">01</span>
+            <p class="work-col-client">品牌物料 · 昂楷科技</p>
+            <p class="work-col-title">为 13 款数据安全产品构建统一的视觉营销语言</p>
+            <div class="work-col-tags"><span>设计系统</span><span>品牌物料</span></div>
+          </div>
+          <span class="work-view-btn"><span class="wvb-dot"></span>查看项目</span>
+        </a>
+
+        <!-- Project 02 -->
+        <a href="work/ankki-vision-journal.html" class="work-col work-item" data-num="02">
+          <figure class="work-col-img">
+            <img src="assets/work/vision/card-vision-2026.webp" alt="《昂楷视界》企业内刊设计体系" width="1086" height="1448" loading="eager">
+          </figure>
+          <div class="work-col-info">
+            <span class="work-col-num">02</span>
+            <p class="work-col-client">内刊设计 · 昂楷科技</p>
+            <p class="work-col-title">从零建立一套企业内刊设计体系</p>
+            <div class="work-col-tags"><span>内刊体系</span><span>视觉规范</span></div>
+          </div>
+          <span class="work-view-btn"><span class="wvb-dot"></span>查看项目</span>
+        </a>
+
+        <!-- Project 03 -->
+        <a href="work/ankki-culture-wall.html" class="work-col work-item" data-num="03">
+          <figure class="work-col-img">
+            <img src="assets/work/culture-wall/card-culture-wall.webp?v=2" alt="昂楷科技文化墙展厅项目前台 Logo 墙" width="1672" height="941" loading="eager">
+          </figure>
+          <div class="work-col-info">
+            <span class="work-col-num">03</span>
+            <p class="work-col-client">公司总部文化墙统筹 · 昂楷科技</p>
+            <p class="work-col-title">文化墙 · 展厅设计</p>
+            <div class="work-col-tags"><span>展厅设计</span><span>落地统筹</span></div>
+          </div>
+          <span class="work-view-btn"><span class="wvb-dot"></span>查看项目</span>
+        </a>
+
+        <!-- Project 04 -->
+        <a href="work/ankki-livestream-launch.html" class="work-col work-item" data-num="04">
+          <figure class="work-col-img">
+            <img src="assets/work/livestream/live-scene.png" alt="昂楷 AI Native 数据安全能力发布会现场头图" width="1733" height="908" loading="eager">
+          </figure>
+          <div class="work-col-info">
+            <span class="work-col-num">04</span>
+            <p class="work-col-client">线上发布会 · 昂楷科技</p>
+            <p class="work-col-title">从预热到收官的全链路视觉体系</p>
+            <div class="work-col-tags"><span>活动视觉</span><span>直播设计</span></div>
+          </div>
+          <span class="work-view-btn"><span class="wvb-dot"></span>查看项目</span>
+        </a>
+
+        <!-- Project 05 -->
+        <a href="work/ankki-dmhc-exhibition.html" class="work-col work-item" data-num="05">
+          <figure class="work-col-img">
+            <img src="assets/work/dmhc/hero.webp" alt="昂楷科技数字医学与健康大会特装展现场" width="2400" height="1598" loading="eager">
+          </figure>
+          <div class="work-col-info">
+            <span class="work-col-num">05</span>
+            <p class="work-col-client">特装展设计 · 昂楷科技</p>
+            <p class="work-col-title">把技术方案带进国家级医疗行业大会</p>
+            <div class="work-col-tags"><span>展会视觉</span><span>现场落地</span></div>
+          </div>
+          <span class="work-view-btn"><span class="wvb-dot"></span>查看项目</span>
+        </a>
+      </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         DESIGN VIEW
+    ══════════════════════════════════════ -->
+    <section class="s-design-view" id="about">
+      <div class="design-view-heading" lang="zh-CN">
+        <h2>我怎么看设计</h2>
+        <p>我不用「好看不好看」来评价设计</p>
+      </div>
+
+      <div data-hscroll>
+      <div class="design-rows" data-hscroll-track>
+        <article class="design-row is-active">
+          <figure class="design-row-fig">
+            <img src="https://images.prismic.io/estrelastudio/aN5_a55xUNkB1acx_01.ProductStrat.jpg?w=1320&h=780&auto=compress,format" alt="" loading="lazy">
+          </figure>
+          <div class="design-row-content">
+            <div class="design-row-header">
+              <h3>产品策略与设计</h3>
+              <span>01</span>
+            </div>
+            <p class="design-row-desc">
+              <span>好产品源于对人的深刻洞察。</span>
+              <span>我会做调研、评审和用户测试，</span>
+              <span>先弄清人们真正需要什么。</span>
+            </p>
+          </div>
+        </article>
+
+        <article class="design-row">
+          <figure class="design-row-fig">
+            <img src="https://images.prismic.io/estrelastudio/aN5_bZ5xUNkB1acy_02.App%26Web.jpg?w=1320&h=780&auto=compress,format" alt="" loading="lazy">
+          </figure>
+          <div class="design-row-content">
+            <div class="design-row-header">
+              <h3>应用程序和网站设计</h3>
+              <span>02</span>
+            </div>
+            <p class="design-row-desc">
+              <span>界面要做的，</span>
+              <span>是让信息、行动和感受形成秩序。</span>
+            </p>
+          </div>
+        </article>
+
+        <article class="design-row">
+          <figure class="design-row-fig">
+            <img src="https://images.prismic.io/estrelastudio/aN5_b55xUNkB1acz_03.Brand.jpg?w=1320&h=780&auto=compress,format" alt="" loading="lazy">
+          </figure>
+          <div class="design-row-content">
+            <div class="design-row-header">
+              <h3>品牌战略和标识设计</h3>
+              <span>03</span>
+            </div>
+            <p class="design-row-desc">
+              <span>品牌是一套系统，</span>
+              <span>能被持续识别，也能被记住。</span>
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         FAQ
+    ══════════════════════════════════════ -->
+    <section class="s-faq">
+      <h2 class="faq-heading">一些你可能会问我的问题</h2>
+      <div class="faq-list">
+        <article class="faq-item">
+          <div class="faq-border" aria-hidden="true"></div>
+          <div class="faq-item-inner">
+            <h3 class="faq-question"><span class="faq-question-index">01</span><span>你到底算平面设计师、品牌设计师，还是 AI 设计师？</span></h3>
+            <div class="faq-answer-wrapper"><p class="faq-answer">我不太喜欢被单一岗位名称框住，我的核心一直是设计，只是这些年解决问题的手段越来越多。视觉、平面、展会、品牌、AI，对我来说都是不同的入口。我更关心的是：<strong>这个问题最后有没有被解决。</strong></p></div>
+          </div>
+          <button class="faq-toggle" type="button" aria-label="展开第一个问题的回答"><span class="faq-toggle-icon" aria-hidden="true"></span></button>
+        </article>
+        <article class="faq-item">
+          <div class="faq-border" aria-hidden="true"></div>
+          <div class="faq-item-inner">
+            <h3 class="faq-question"><span class="faq-question-index">02</span><span>你为什么一直强调 AI？</span></h3>
+            <div class="faq-answer-wrapper"><p class="faq-answer">从 2023 年开始，我几乎没错过一轮主流 AI 工具迭代。现在我会用它做视觉、改文案、给灵感、做 Agent、整理信息、测试想法。</p></div>
+          </div>
+          <button class="faq-toggle" type="button" aria-label="展开第二个问题的回答"><span class="faq-toggle-icon" aria-hidden="true"></span></button>
+        </article>
+        <article class="faq-item">
+          <div class="faq-border" aria-hidden="true"></div>
+          <div class="faq-item-inner">
+            <h3 class="faq-question"><span class="faq-question-index">03</span><span>你用 AI，和别人有什么不一样？</span></h3>
+            <div class="faq-answer-wrapper"><p class="faq-answer">我很少停在“会不会用这个工具”这一层。我更习惯去拆它能解决什么问题、适合放在哪个流程里、能不能真正省时间，最后再把它接进自己的工作方式里。（AI 有九个段位，有机会可以科普）</p></div>
+          </div>
+          <button class="faq-toggle" type="button" aria-label="展开第三个问题的回答"><span class="faq-toggle-icon" aria-hidden="true"></span></button>
+        </article>
+        <article class="faq-item">
+          <div class="faq-border" aria-hidden="true"></div>
+          <div class="faq-item-inner">
+            <h3 class="faq-question"><span class="faq-question-index">04</span><span>遇到你没做过的东西怎么办？</span></h3>
+            <div class="faq-answer-wrapper"><p class="faq-answer">我对陌生问题的容忍度比较高，很多时候甚至会觉得这部分更有意思。通常先拆问题。然后查、试、问 AI、做 Demo、推翻，再做一版。</p></div>
+          </div>
+          <button class="faq-toggle" type="button" aria-label="展开第四个问题的回答"><span class="faq-toggle-icon" aria-hidden="true"></span></button>
+        </article>
+        <article class="faq-item">
+          <div class="faq-border" aria-hidden="true"></div>
+          <div class="faq-item-inner">
+            <h3 class="faq-question"><span class="faq-question-index">05</span><span>你想找什么样的团队？</span></h3>
+            <div class="faq-answer-wrapper"><p class="faq-answer">我希望和重视结果、愿意讨论问题本身，也愿意尝试新方法的人一起工作。如果一个团队只希望设计师“把图做出来”，那可能不是最适合我的环境。我更喜欢设计能真正参与判断、推动项目，并且和产品、品牌、技术一起往前走的工作方式。</p></div>
+          </div>
+          <button class="faq-toggle" type="button" aria-label="展开第五个问题的回答"><span class="faq-toggle-icon" aria-hidden="true"></span></button>
+        </article>
+        <article class="faq-item">
+          <div class="faq-border" aria-hidden="true"></div>
+          <div class="faq-item-inner">
+            <h3 class="faq-question"><span class="faq-question-index">06</span><span>你会做 VI、插画、Logo 吗？</span></h3>
+            <div class="faq-answer-wrapper"><p class="faq-answer">会。但如果这是你最关心的问题，我更想聊聊 AI 时代设计师的能力边界已经变成什么了。</p></div>
+          </div>
+          <button class="faq-toggle" type="button" aria-label="展开第六个问题的回答"><span class="faq-toggle-icon" aria-hidden="true"></span></button>
+        </article>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         FOOTER
+    ══════════════════════════════════════ -->
+    <footer class="s-footer footer-compact" id="contact">
+      <div class="footer-compact-main">
+        <div class="footer-compact-contact" aria-label="联系方式">
+          <span class="footer-text-link is-pending" title="LinkedIn 链接待补充">LinkedIn</span>
+          <a class="footer-text-link" href="mailto:bh141425@gmail.com?subject=视觉设计岗位面试沟通">Email</a>
+        </div>
+
+        <div class="footer-compact-socials" aria-label="社交平台">
+          <a class="footer-icon-link brand-github" href="https://github.com/avalonlucky" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8a9.2 9.2 0 0 0-2.9 17.9c.46.08.63-.2.63-.45v-1.8c-2.57.56-3.11-1.09-3.11-1.09-.42-1.07-1.03-1.35-1.03-1.35-.84-.57.06-.56.06-.56.93.07 1.42.95 1.42.95.82 1.42 2.16 1.01 2.69.77.08-.6.32-1.01.59-1.24-2.05-.23-4.21-1.03-4.21-4.56 0-1.01.36-1.83.95-2.48-.1-.23-.41-1.17.09-2.44 0 0 .78-.25 2.53.95a8.8 8.8 0 0 1 4.61 0c1.76-1.2 2.53-.95 2.53-.95.5 1.27.19 2.21.09 2.44.59.65.95 1.47.95 2.48 0 3.54-2.16 4.32-4.22 4.55.33.29.63.85.63 1.72v2.61c0 .25.17.54.64.45A9.2 9.2 0 0 0 12 2.8Z"></path></svg>
+          </a>
+          <span class="footer-icon-link brand-linkedin is-pending" role="img" aria-label="LinkedIn，链接待补充" title="LinkedIn 链接待补充">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27ZM5.32 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.1 20.45H3.54V9H7.1v11.45Z"></path></svg>
+          </span>
+          <span class="footer-icon-link brand-youtube is-pending" role="img" aria-label="YouTube，链接待补充" title="YouTube 链接待补充">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8Z"></path><path class="youtube-play" d="m9.6 15.6 6.2-3.6-6.2-3.6Z"></path></svg>
+          </span>
+          <span class="footer-icon-link brand-x is-pending" role="img" aria-label="X，链接待补充" title="X 链接待补充">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.51 11.24h-6.66l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z"></path></svg>
+          </span>
+          <span class="footer-icon-link brand-substack is-pending" role="img" aria-label="Substack，链接待补充" title="Substack 链接待补充">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3.5h18v2.7H3V3.5Zm0 4.2h18v2.7H3V7.7Zm1.5 4.2h15V21L12 16.8 4.5 21v-9.1Z"></path></svg>
+          </span>
+          <span class="footer-icon-link brand-xiaohongshu is-pending" role="img" aria-label="小红书，链接待补充" title="小红书链接待补充">
+            <svg viewBox="0 0 28 24" aria-hidden="true"><rect x="0" y="2" width="28" height="20" rx="6"></rect><text x="14" y="15.1" text-anchor="middle">小红书</text></svg>
+          </span>
+        </div>
+
+        <p class="footer-compact-copyright">
+          <span class="copyright-full">Copyright © 2026 <strong>Maridian Space</strong>. All Rights Reserved.</span>
+          <span class="copyright-short">© 2026 <strong>Maridian Space</strong></span>
+        </p>
+      </div>
+
+      <div class="footer-admin-row footer-admin-row--compact">
+        <button class="footer-admin-access" type="button" data-admin-auth aria-label="登录" aria-haspopup="dialog" aria-expanded="false">
+          <span>登录</span>
+        </button>
+      </div>
+    </footer>
+
+    </div><!-- /.page-scroll -->
+  </main>
+
+</div><!-- /.site -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="js/work-menu.js?v=1"></script>
+  <script src="js/hscroll.js?v=1"></script>
+  <script src="js/main.js?v=46"></script>
+  <script src="js/hero-cinematic.js?v=1"></script>
+<script src="js/admin-auth.js?v=5"></script>
+<script src="js/site-analytics.js?v=3"></script>
+</body>
+</html>
