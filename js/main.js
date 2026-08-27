@@ -727,16 +727,13 @@ function initFAQ() {
   }
 
   document.fonts.ready.then(() => {
-    const mobile = window.matchMedia('(max-width: 1099px)').matches;
-
     items.forEach((item, index) => {
-      const inner = item.querySelector('.faq-item-inner');
       const answerWrapper = item.querySelector('.faq-answer-wrapper');
       const answer = item.querySelector('.faq-answer');
       const toggle = item.querySelector('.faq-toggle');
       const lines = splitAnswerLines(answer);
-      const collapsible = mobile ? answerWrapper : inner;
-      const closedHeight = mobile ? 0 : '7.5rem';
+      const collapsible = answerWrapper;
+      const closedHeight = 0;
       const answerId = `faq-answer-${index + 1}`;
 
       answerWrapper.id = answerId;
