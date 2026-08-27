@@ -458,26 +458,34 @@ button:focus-visible {
   gap: clamp(2rem,4vw,7rem);
   align-items: center;
 }
-.hero-copy { padding-top: 3rem; }
+.hero-copy { padding-top: 3rem; text-align: center; }
 .hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.8rem;
   margin: 0 0 2.4rem;
+  padding: .45rem 1.25rem;
+  border-radius: 999px;
+  background: #171714;
+  color: var(--c-white);
   font-family: var(--f-body);
-  font-size: 1.15rem;
-  letter-spacing: .13em;
-  color: rgba(23,23,20,.48);
+  font-size: 1.08rem;
+  letter-spacing: .05em;
 }
 .hero-copy h1 {
   margin: 0;
   font-family: var(--f-cjk);
-  font-weight: 500;
-  font-size: clamp(3.8rem,3.65vw,5.8rem);
+  font-weight: 700;
+  font-size: clamp(4rem,3.9vw,6.1rem);
   line-height: 1.08;
   letter-spacing: -.055em;
   text-wrap: balance;
   white-space: nowrap;
 }
 .hero-subtitle {
-  margin: 2.7rem 0 0;
+  max-width: 38em;
+  margin: 2.7rem auto 0;
   font-family: var(--f-cjk);
   font-size: clamp(1.45rem,1.45vw,2rem);
   letter-spacing: .02em;
@@ -2215,9 +2223,9 @@ main footer {
   }
   .hero-layout { width:calc(100% - 3rem); min-height:100svh; padding:9rem 0 3rem; grid-template-columns:1fr; align-content:center; gap:2.5rem; }
   .hero-copy { padding:0; }
-  .hero-kicker { margin-bottom:1.4rem; font-size:.9rem; }
-  .hero-copy h1 { font-size:clamp(3.2rem,11vw,5rem); line-height:1.08; white-space:normal; }
-  .hero-subtitle { margin-top:1.5rem; font-size:1.3rem; }
+  .hero-kicker { min-height:2.5rem; margin-bottom:1.5rem; padding:.4rem 1.05rem; font-size:.9rem; }
+  .hero-copy h1 { font-size:clamp(3.4rem,11.6vw,5.2rem); line-height:1.08; white-space:normal; }
+  .hero-subtitle { margin-top:1.6rem; font-size:1.3rem; }
   .hero-computer { width:min(100%,560px); margin:0 auto; }
   .hero-terminal { font-size:clamp(5px,1.25vw,8px); }
 
