@@ -23,9 +23,9 @@
   font-display: swap;
 }
 @font-face {
-  font-family: 'Alimama ShuHeiTi';
-  src: url('../fonts/AlimamaShuHeiTi-Bold.otf') format('opentype');
-  font-weight: 700 900;
+  font-family: 'Source Han Sans SC Hero';
+  src: url('../fonts/SourceHanSansSC-Heavy-hero.woff2') format('woff2');
+  font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
@@ -487,7 +487,7 @@ button:focus-visible {
   align-items: center;
   width: 100%;
   margin: 0;
-  font-family: 'Alimama ShuHeiTi', var(--f-cjk);
+  font-family: 'Source Han Sans SC Hero', var(--f-cjk);
   font-weight: 900;
   font-size: clamp(5.15rem,5.15vw,8rem);
   line-height: .98;

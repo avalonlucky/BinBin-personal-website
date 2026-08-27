@@ -14,22 +14,33 @@
     in vec2 v_uv; out vec4 outColor;
     uniform sampler2D u_mask; uniform float u_time; uniform vec2 u_resolution;
     void main(){
-      vec2 uv=v_uv;float t=u_time*.14;
-      float warp=.28*sin(uv.y*3.2+t*.7)+.10*sin(uv.y*7.1-t*.4);
-      float phase=uv.x*7.2+warp-t*.9;
-      float satin=.5+.5*sin(phase);
-      float fold=.5+.5*sin(phase+1.35+.32*sin(uv.y*5.4+t*.45));
-      float shadow=smoothstep(.43,.72,fold);
-      float blue=smoothstep(.18,.82,satin);
-      float rim=pow(max(0.,1.-abs(satin-.52)*2.),7.);
-      float cross=.5+.5*sin(uv.y*4.0-uv.x*1.1+t*.38);
-      vec3 ink=vec3(.002,.004,.011),navy=vec3(.006,.025,.12),cobalt=vec3(.015,.18,.94),electric=vec3(.34,.54,1.);
-      vec3 color=mix(ink,navy,blue*.48);
-      color=mix(color,cobalt,blue*.72*(.72+.28*cross));
-      color=mix(color,ink,shadow*.76);
-      color=mix(color,electric,rim*.58);
-      color*=.92+.08*cos((uv.y-.5)*3.14159);
-      float mask=texture(u_mask,vec2(uv.x,1.-uv.y)).r;outColor=vec4(color*mask,mask);
+      vec2 frag=v_uv*u_resolution;
+      vec2 p=(frag*2.-u_resolution)/u_resolution.y;
+      float t=u_time*.12;
+      float total=0.;float weight=0.;
+      for(float layer=0.;layer<4.;layer++){
+        vec2 q=p*.88;
+        q+=vec2(.42*sin(t*.31+layer*1.7),.34*cos(t*.24-layer*1.3));
+        float a=1.9+layer*.74;float d=-.8+layer*1.13;
+        for(int j=2;j<9;j++){
+          float fj=float(j);
+          q+=.28*sin(q.yx*fj*.62+t+vec2(a,d))/fj;
+          a+=cos(fj+d+q.x*1.8-t*.7);
+          d+=sin(fj*q.y+a+t*.55);
+        }
+        float v=.5+.5*sin(length(q+vec2(a,d)*.15)*1.34+layer*layer*.72);
+        float w=sin((layer+.5)*.785398);
+        total+=v*w;weight+=w;
+      }
+      float val=smoothstep(.08,.92,total/weight);
+      vec3 black=vec3(.001,.002,.008),deep=vec3(.002,.012,.09),blue=vec3(.012,.13,.92),light=vec3(.27,.42,1.);
+      vec3 color;
+      if(val<.34) color=mix(black,deep,val/.34);
+      else if(val<.58) color=mix(deep,blue,(val-.34)/.24);
+      else if(val<.80) color=mix(blue,light,(val-.58)/.22);
+      else color=mix(light,blue,(val-.80)/.20);
+      color=pow(color,vec3(.92));
+      float mask=texture(u_mask,vec2(v_uv.x,1.-v_uv.y)).r;outColor=vec4(color*mask,mask);
     }`;
 
   function compile(type, source) {
