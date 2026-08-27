@@ -2069,16 +2069,6 @@ const CONTACT = {
   },
 };
 
-document.querySelectorAll('.cs-cta-card').forEach(card=>{
-  if(card.querySelector('.cs-resume-pending'))return;
-  const entry=document.createElement('button');
-  entry.type='button';
-  entry.className='cs-resume-pending';
-  entry.disabled=true;
-  entry.innerHTML='<span>下载简历</span><small>简历整理中</small>';
-  card.appendChild(entry);
-});
-
 // 提示词里带上本页链接，AI 才能真的去读作品
 const ASK_PROMPT = `我正在评估 Maridian（${location.origin}）是否适合我们的品牌设计 / 视觉设计岗位。`
   + `请查看他的作品集网站，告诉我：他的设计能力覆盖哪些方面、最适合什么阶段和什么类型的公司、`

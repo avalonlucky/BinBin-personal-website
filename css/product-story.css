@@ -1,7 +1,7 @@
 /* 产品单页案例：四幕式作品叙事 */
 .case-page.is-product-sheets {
-  --ps-paper: #f5f1e8;
-  --ps-paper-deep: #ebe4d7;
+  --ps-paper: var(--cs-paper);
+  --ps-paper-deep: var(--cs-paper);
   --ps-ink: #171717;
   --ps-muted: #6f6a62;
   --ps-blue: #18283c;
@@ -406,7 +406,7 @@
 
 .ps-info-wrap { position: relative; margin-top: 28px; }
 .ps-info-btn { padding: 0; border: 0; background: none; color: rgb(247 242 232 / 52%); font-family: var(--f-cjk); font-size: 12px; cursor: help; }
-.ps-tooltip { position: absolute; z-index: 6; bottom: calc(100% + 12px); left: 0; width: min(300px, 82vw); margin: 0; padding: 15px 17px; background: #f5f1e8; color: #45413b; font-family: var(--f-cjk); font-size: 12.5px; line-height: 1.65; opacity: 0; pointer-events: none; transform: translateY(5px); transition: .25s var(--ease); }
+.ps-tooltip { position: absolute; z-index: 6; bottom: calc(100% + 12px); left: 0; width: min(300px, 82vw); margin: 0; padding: 15px 17px; background: var(--ps-paper); color: #45413b; font-family: var(--f-cjk); font-size: 12.5px; line-height: 1.65; opacity: 0; pointer-events: none; transform: translateY(5px); transition: .25s var(--ease); }
 .ps-info-wrap:hover .ps-tooltip,
 .ps-info-wrap:focus-within .ps-tooltip,
 .ps-info-wrap.is-open .ps-tooltip { opacity: 1; transform: none; }
@@ -489,7 +489,7 @@
 .ps-flip-step p b { color: var(--ps-ink); }
 
 /* 第四幕：横向时间轴、完整档案与现场 */
-.ps-chapter.is-delivery { background: #f7f4ed; }
+.ps-chapter.is-delivery { background: var(--ps-paper); }
 .ps-chapter.is-delivery .cs-title { font-size: clamp(60px, 6.6vw, 84px); }
 
 .ps-timeline-wrap {
