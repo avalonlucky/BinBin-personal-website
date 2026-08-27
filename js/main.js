@@ -153,7 +153,7 @@ function initNavTheme() {
     trigger: '.s-ai-tools',
     start: 'top 60px',
     onEnter:    () => nav.dataset.theme = 'light',
-    onLeaveBack:() => nav.dataset.theme = 'dark',
+    onLeaveBack:() => nav.dataset.theme = 'light',
   });
 
   ScrollTrigger.create({
@@ -240,15 +240,15 @@ function initScrollAnimations() {
   // PC 保留首屏视差与汇聚动画；手机首屏采用短画幅和静态排版，
   // 避免整屏被动画占满，也避免 fixed 文案滑出首屏后继续压住正文。
   if (desktopMotion()) {
-    gsap.to('.hero-bg', {
+    gsap.to('.hero-computer', {
       scrollTrigger: {
         trigger: '.s-hero',
         start: 'top top',
         end: 'bottom top',
         scrub: 1.5,
       },
-      scale: 1.1,
-      yPercent: 6,
+      scale: 1.045,
+      yPercent: 5,
     });
 
     const heroCopyTl = gsap.timeline({
@@ -260,9 +260,9 @@ function initScrollAnimations() {
       },
     });
     heroCopyTl
-      .to('.hero-title-left', { xPercent: 38, ease: 'none', duration: 1 }, 0)
-      .to('.hero-title-right', { xPercent: -50, ease: 'none', duration: 1 }, 0)
-      .to('.hero-title-left, .hero-title-right', { autoAlpha: 0, ease: 'none', duration: 0.28 }, 0.72);
+      .to('.hero-copy', { xPercent: 16, ease: 'none', duration: 1 }, 0)
+      .to('.hero-computer', { xPercent: -8, ease: 'none', duration: 1 }, 0)
+      .to('.hero-copy, .hero-computer', { autoAlpha: 0, ease: 'none', duration: 0.28 }, 0.72);
     gsap.to('.hero-scroll-hint', {
       autoAlpha: 0,
       ease: 'none',
@@ -274,7 +274,7 @@ function initScrollAnimations() {
       },
     });
   } else {
-    gsap.set('.hero-bg, .hero-title-left, .hero-title-right', { clearProps: 'transform,opacity,visibility' });
+    gsap.set('.hero-copy, .hero-computer', { clearProps: 'transform,opacity,visibility' });
   }
 
   // ── Section headings (scrub-linked) ──
@@ -914,23 +914,22 @@ function initDragScroll() {
 }
 
 /* ─────────────────────────────────────────
-   HERO TITLE — subtle mouse tilt
+   HERO — subtle mouse tilt
 ───────────────────────────────────────── */
 function initHeroTilt() {
   if (!pointerFine.matches || prefersReducedMotion.matches) return;
 
   const hero = document.querySelector('.s-hero');
-  const left  = hero?.querySelector('.hero-title-left');
-  const right = hero?.querySelector('.hero-title-right');
-  if (!hero || !left) return;
+  const computer = hero?.querySelector('.hero-computer');
+  if (!hero || !computer) return;
 
   hero.addEventListener('mousemove', e => {
     const dx = (e.clientX / window.innerWidth  - 0.5) * 14;
     const dy = (e.clientY / window.innerHeight - 0.5) *  8;
-    gsap.to([left, right], { x: dx, y: dy, duration: 1, ease: 'expo.out' });
+    gsap.to(computer, { x: dx, y: dy, duration: 1, ease: 'expo.out' });
   });
   hero.addEventListener('mouseleave', () => {
-    gsap.to([left, right], { x: 0, y: 0, duration: 1.2, ease: 'expo.out' });
+    gsap.to(computer, { x: 0, y: 0, duration: 1.2, ease: 'expo.out' });
   });
 }
 
@@ -984,13 +983,6 @@ function initClock() {
 /* ─────────────────────────────────────────
    INIT
 ───────────────────────────────────────── */
-
-// Seek hero video to the vibrant colorful frame
-const heroVideo = document.querySelector('.hero-video');
-if (heroVideo) {
-  const seek = () => { heroVideo.currentTime = 7.5; };
-  heroVideo.readyState >= 1 ? seek() : heroVideo.addEventListener('loadedmetadata', seek, { once: true });
-}
 
 initCanvasBorders();
 initScrollAnimations();

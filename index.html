@@ -11,7 +11,7 @@
   <link rel="preload" href="fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/style.css?v=91">
+  <link rel="stylesheet" href="css/style.css?v=92">
   <link rel="stylesheet" href="css/admin-auth.css?v=4">
 </head>
 <body>
@@ -20,7 +20,7 @@
   <!-- ══════════════════════════════════════
        NAVIGATION
   ══════════════════════════════════════ -->
-  <nav id="nav" data-theme="dark">
+  <nav id="nav" data-theme="light">
     <div class="nav-inner">
       <a href="#top" class="nav-pill nav-logo" data-border>
         <span class="logo-text">Maridian Space</span>
@@ -40,34 +40,31 @@
     <div class="page-scroll">
 
     <!-- ══════════════════════════════════════
-         HERO — black, full-screen, 3D video
+         HERO — cream, split layout, terminal animation
     ══════════════════════════════════════ -->
     <section class="s-hero" id="top">
-      <!-- Full-bleed video background -->
-      <div class="hero-bg">
-        <video
-          class="hero-video"
-          autoplay muted loop playsinline
-          src="https://estrelastudio.cdn.prismic.io/estrelastudio/aK8JRWGNHVfTOXgT_estrela-hero.mp4">
-        </video>
-      </div>
+      <div class="hero-cream-field" aria-hidden="true"></div>
+      <div class="hero-layout">
+        <div class="hero-copy" lang="zh-CN">
+          <p class="hero-kicker">MARIDIAN SPACE / DESIGN PRACTICE</p>
+          <h1>设计不止于呈现，<br>更要抵达结果</h1>
+          <p class="hero-subtitle">视觉体验与 AI 之间的设计实践</p>
+        </div>
 
-      <!-- Title: left + right -->
-      <h1 class="hero-title">
-        <span class="hero-title-left" lang="zh-CN">
-          <span class="hero-word">以子午为线，</span>
-          <span class="hero-word">连接视觉、空间与思想</span>
-        </span>
-        <span class="hero-title-right" lang="zh-CN">
-          <span class="hero-word">设计的价值，不止于制造视觉——</span>
-          <span class="hero-word">而在于帮助品牌确认方向、建立身份，</span>
-          <span class="hero-word">并在复杂的商业场景中，被准确感知。</span>
-        </span>
-      </h1>
+        <figure class="hero-computer" aria-label="复古电脑中的 AI 实践终端动画">
+          <img src="assets/hero-retro-computer.png" alt="米白色复古电脑" width="1448" height="1086">
+          <div class="hero-terminal" aria-hidden="true">
+            <div class="hero-terminal-bar"><i></i><i></i><i></i><span>maridian — claude — 80×24</span></div>
+            <div class="hero-terminal-scroll">
+              <pre class="hero-terminal-output" data-terminal-output></pre><span class="hero-terminal-cursor">_</span>
+            </div>
+          </div>
+        </figure>
+      </div>
 
       <!-- Scroll hint -->
       <div class="hero-scroll-hint">
-        <span>Scroll to discover my world</span>
+        <span>Scroll to discover my work</span>
       </div>
     </section>
 
@@ -509,7 +506,8 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/work-menu.js?v=1"></script>
   <script src="js/hscroll.js?v=1"></script>
-  <script src="js/main.js?v=44"></script>
+  <script src="js/main.js?v=45"></script>
+  <script src="js/hero-terminal.js?v=1"></script>
 <script src="js/admin-auth.js?v=5"></script>
 <script src="js/site-analytics.js?v=3"></script>
 </body>
