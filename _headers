@@ -11,3 +11,6 @@
 
 /assets/work/culture-wall/showroom-film-*.mp4
   Cache-Control: public, max-age=31536000, immutable
+
+/assets/work/dmhc/hero-plaza-panel-*.jpg
+  Cache-Control: public, max-age=31536000, immutable

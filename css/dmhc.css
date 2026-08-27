@@ -1,8 +1,8 @@
 .case-page.is-dmhc{--cs-accent:#1769ff;--cs-accent-rgb:23 105 255;--cs-accent-deep:#084fc8;--cs-accent-lift:#75a7ff}
 .dmhc-hero{position:relative;height:185svh;background:#02050b}
 .dmhc-hero-sticky{position:sticky;top:0;display:flex;align-items:flex-end;width:100%;height:100svh;min-height:640px;overflow:hidden}
-.dmhc-hero-stage,.dmhc-hero-stage img,.dmhc-hero-blackout,.dmhc-hero-light{position:absolute;inset:0;width:100%;height:100%}
-.dmhc-hero-stage{margin:0;overflow:hidden}
+.dmhc-hero-stage,.dmhc-hero-stage picture,.dmhc-hero-stage img,.dmhc-hero-blackout,.dmhc-hero-light{position:absolute;inset:0;width:100%;height:100%}
+.dmhc-hero-stage{margin:0;overflow:hidden;background:#02050b url("../assets/work/dmhc/hero-plaza-panel-preview.jpg") center 72%/cover no-repeat}
 .dmhc-hero-stage img{object-fit:cover;object-position:center 72%;filter:brightness(.28);transform:scale(1.08);will-change:filter,transform}
 .dmhc-hero-blackout{background:#000;opacity:.5;pointer-events:none}
 .dmhc-hero-light{opacity:0;mix-blend-mode:screen;pointer-events:none;background:radial-gradient(ellipse 50% 40% at 50% 58%,rgba(78,162,255,.34),transparent 70%),radial-gradient(ellipse 30% 24% at 18% 30%,rgba(80,140,255,.2),transparent 70%),radial-gradient(ellipse 80% 28% at 50% 100%,rgba(40,90,180,.24),transparent 70%)}
