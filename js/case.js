@@ -2379,13 +2379,21 @@ function initDeliveryRail() {
 
 function initOriginalVideos() {
   document.querySelectorAll('[data-original-video]').forEach(video => {
-    const parts = (video.dataset.parts || '').split(',').filter(Boolean);
+    const lowSource = video.dataset.videoLow;
+    const highSource = video.dataset.videoHigh;
     const status = video.closest('.space-film')?.querySelector('[data-video-status]');
     const player = video.closest('.space-film-player');
     const playButton = player?.querySelector('[data-video-play]');
-    if (!parts.length) return;
+    if (!lowSource) return;
     let started = false;
     let inView = false;
+
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const useHighQuality = () => {
+      if (!highSource || connection?.saveData || innerWidth < 1024) return false;
+      if (!connection) return true;
+      return connection.effectiveType === '4g' && (connection.downlink || 10) >= 5;
+    };
 
     const syncPlaybackState = () => {
       const playing = !video.paused && !video.ended;
@@ -2398,32 +2406,32 @@ function initOriginalVideos() {
       video.play().catch(() => syncPlaybackState());
     };
 
-    const load = async () => {
+    const load = () => {
       if (started) return;
       started = true;
-      try {
-        const responses = await Promise.all(parts.map(part => fetch(part)));
-        if (responses.some(response => !response.ok)) throw new Error('video part unavailable');
-        const buffers = await Promise.all(responses.map(response => response.arrayBuffer()));
-        video.src = URL.createObjectURL(new Blob(buffers, { type: 'video/mp4' }));
-        video.preload = 'metadata';
-        video.load();
-        video.setAttribute('aria-busy', 'false');
-        if (status) status.hidden = true;
-        playWhenReady();
-      } catch (error) {
-        video.setAttribute('aria-busy', 'false');
-        if (status) status.textContent = '视频加载失败，请刷新后重试';
-      }
+      const highQuality = useHighQuality();
+      video.src = highQuality ? highSource : lowSource;
+      video.preload = 'auto';
+      video.load();
+      if (status) status.textContent = highQuality ? '正在加载高清版本' : '正在加载流畅版本';
     };
 
     playButton?.addEventListener('click', () => {
-      if (video.paused || video.ended) video.play();
+      if (!started) load();
+      if (video.paused || video.ended) video.play().catch(() => syncPlaybackState());
       else video.pause();
     });
     video.addEventListener('play', syncPlaybackState);
     video.addEventListener('pause', syncPlaybackState);
     video.addEventListener('ended', syncPlaybackState);
+    video.addEventListener('loadedmetadata', () => {
+      video.setAttribute('aria-busy', 'false');
+      if (status) status.hidden = true;
+    }, { once: true });
+    video.addEventListener('error', () => {
+      video.setAttribute('aria-busy', 'false');
+      if (status) { status.hidden = false; status.textContent = '视频加载失败，请刷新后重试'; }
+    });
     video.addEventListener('canplay', playWhenReady, { once: true });
 
     if ('IntersectionObserver' in window) {
@@ -2440,7 +2448,7 @@ function initOriginalVideos() {
         if (!entries.some(entry => entry.isIntersecting)) return;
         observer.disconnect();
         load();
-      }, { rootMargin: '800px 0px' });
+      }, { rootMargin: '1200px 0px' });
       observer.observe(video);
     } else {
       inView = true;
