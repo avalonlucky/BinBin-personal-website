@@ -53,9 +53,12 @@
 .dmhc-archive-masonry figure[data-archive-lead]{box-shadow:none}
 
 @media(min-width:761px){
-  .dmhc-archive-wall{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;columns:auto;align-items:start}
-  .dmhc-archive-masonry figure{margin:0}
-  .dmhc-archive-masonry figure[data-archive-lead]{grid-column:2;grid-row:1}
+  .dmhc-archive-experience{height:320svh}
+  .dmhc-archive-viewport{top:0;height:100svh;min-height:0;display:block}
+  .dmhc-archive-legend{display:none}
+  .dmhc-archive-wall{top:50%;left:50%;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;columns:auto;align-items:start;translate:-50% -50%;transform-origin:center}
+  .dmhc-archive-masonry figure{margin:0;aspect-ratio:16/12;border:0}
+  .dmhc-archive-masonry img{width:100%;height:100%;object-fit:cover}
 }
 
 /* Mobile interaction pass: keep independent gestures on independent axes. */
