@@ -110,13 +110,16 @@
     const lead=archiveExperience.querySelector('[data-archive-lead]');
     const mobile=matchMedia('(max-width:760px)');
     const reduce=matchMedia('(prefers-reduced-motion:reduce)');
-    let metrics=[];
-    let wallTravel=0;
+    let initialScale=1;
+    let centerX=0;
+    let centerY=0;
+    let endY=0;
     let frame=0;
     const clamp=value=>Math.min(1,Math.max(0,value));
     const ease=value=>1-Math.pow(1-value,3);
     const reset=()=>{
       wall.style.transform='';
+      wall.style.transformOrigin='';
       figures.forEach(figure=>{figure.style.transform='';figure.style.opacity='';figure.style.zIndex=''});
       archiveExperience.style.removeProperty('--archive-height');
       archiveExperience.style.removeProperty('--archive-caption');
@@ -125,39 +128,33 @@
       reset();
       if(mobile.matches||reduce.matches||!viewport||!wall||!lead)return;
       const viewportRect=viewport.getBoundingClientRect();
+      const wallRect=wall.getBoundingClientRect();
       const leadRect=lead.getBoundingClientRect();
-      const centerX=viewportRect.left+viewportRect.width/2;
-      const centerY=viewportRect.top+viewportRect.height/2;
-      const desiredWidth=Math.min(viewportRect.width*.46,620);
-      metrics=figures.map(figure=>{
-        const rect=figure.getBoundingClientRect();
-        return {
-          figure,
-          x:centerX-(rect.left+rect.width/2),
-          y:centerY-(rect.top+rect.height/2),
-          scale:figure===lead?desiredWidth/Math.max(1,leadRect.width):.22
-        };
-      });
-      wallTravel=Math.max(0,wall.scrollHeight-viewport.clientHeight+80);
-      archiveExperience.style.setProperty('--archive-height',`${viewport.clientHeight+900+wallTravel}px`);
+      const leadCenterX=leadRect.left+leadRect.width/2;
+      const leadCenterY=leadRect.top+leadRect.height/2;
+      const localX=leadCenterX-wallRect.left;
+      const localY=leadCenterY-wallRect.top;
+      initialScale=Math.max(1,viewportRect.width*.76/Math.max(1,leadRect.width));
+      centerX=viewportRect.left+viewportRect.width/2-leadCenterX;
+      centerY=viewportRect.top+viewportRect.height/2-leadCenterY;
+      endY=Math.min(0,viewport.clientHeight-wall.scrollHeight-60);
+      wall.style.transformOrigin=`${localX}px ${localY}px`;
+      archiveExperience.style.setProperty('--archive-height',`${viewport.clientHeight+1100+Math.max(viewport.clientHeight,wall.scrollHeight)}px`);
       paint();
     };
     const paint=()=>{
       frame=0;
-      if(mobile.matches||reduce.matches||!metrics.length)return;
+      if(mobile.matches||reduce.matches||!initialScale)return;
       const rect=archiveExperience.getBoundingClientRect();
       const travel=Math.max(1,archiveExperience.offsetHeight-viewport.clientHeight);
       const progress=clamp(-rect.top/travel);
-      const split=ease(clamp(progress/.24));
-      const gallery=clamp((progress-.24)/.76);
-      metrics.forEach(({figure,x,y,scale})=>{
-        const currentScale=scale+(1-scale)*split;
-        figure.style.transform=`translate3d(${x*(1-split)}px,${y*(1-split)}px,0) scale(${currentScale})`;
-        figure.style.opacity=figure===lead?'1':String(clamp((split-.08)/.92));
-        figure.style.zIndex=figure===lead&&split<.98?'4':'';
-      });
-      wall.style.transform=`translate3d(0,${-wallTravel*gallery}px,0)`;
-      archiveExperience.style.setProperty('--archive-caption',String(clamp((split-.7)/.3)));
+      const split=ease(clamp(progress/.34));
+      const gallery=ease(clamp((progress-.34)/.66));
+      const scale=initialScale+(1-initialScale)*split;
+      const x=centerX*(1-gallery);
+      const y=centerY+(endY-centerY)*gallery;
+      wall.style.transform=`translate3d(${x}px,${y}px,0) scale(${scale})`;
+      archiveExperience.style.setProperty('--archive-caption',String(clamp((split-.78)/.22)));
     };
     const requestPaint=()=>{if(!frame)frame=requestAnimationFrame(paint)};
     const requestMeasure=()=>requestAnimationFrame(measure);

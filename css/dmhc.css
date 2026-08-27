@@ -48,6 +48,9 @@
   .dmhc-final{padding-bottom:64px!important}.dmhc-lessons{display:block;margin-top:30px}.dmhc-lessons article{padding:24px 0 28px}.dmhc-lessons h3{font-size:22px}.dmhc-lessons p{font-size:16px}.dmhc-archive-wall{margin-top:38px}.dmhc-archive-group+.dmhc-archive-group{margin-top:56px;padding-top:42px}.dmhc-archive-group header{display:block}.dmhc-archive-group header small{display:block;margin-bottom:10px}.dmhc-archive-group header h3{font-size:26px}.dmhc-archive-group header p{margin-top:10px;font-size:15px}.dmhc-archive-masonry{columns:2;column-gap:10px;margin-top:24px}.dmhc-archive-masonry figure{margin-bottom:20px}.dmhc-archive-masonry figcaption{font-size:12px}
 }
 
+/* The archive lead belongs to the continuous wall, so it must not read as a card. */
+.dmhc-archive-masonry figure[data-archive-lead]{box-shadow:none}
+
 /* Mobile interaction pass: keep independent gestures on independent axes. */
 @media(max-width:760px){
   .case-page.is-dmhc{-webkit-text-size-adjust:100%;text-size-adjust:100%}
