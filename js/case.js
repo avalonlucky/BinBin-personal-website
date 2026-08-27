@@ -1670,7 +1670,7 @@ function initToc() {
     a.href = `#${sec.id}`;
     a.title = label;
     const duration = Number(sec.dataset.tourMinutes || 0);
-    const durationLabel = duration
+    const durationLabel = duration && !document.body.classList.contains('is-culture')
       ? `${String(Math.floor(duration)).padStart(2, '0')}:${String(Math.round(duration % 1 * 60)).padStart(2, '0')}`
       : '';
     a.innerHTML = `<i>${num}</i><span>${label}</span>${durationLabel ? `<time>${durationLabel}</time>` : ''}`;
