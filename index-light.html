@@ -6,7 +6,7 @@
   <title>Maridian Space · 浅色首页预览</title>
   <meta name="description" content="视觉设计师个人作品集浅色首页预览">
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/home-light.css?v=2">
+  <link rel="stylesheet" href="css/home-light.css?v=3">
 </head>
 <body>
   <div class="light-shell">
@@ -36,20 +36,39 @@
         </div>
 
         <div class="light-proof-grid">
-          <article class="light-skill-stage" data-skill-stage>
-            <div class="skill-cloud" aria-hidden="true">
-              <span>品牌视觉</span><span>信息设计</span><span>展会设计</span><span>AI 工作流</span><span>空间叙事</span><span>落地统筹</span>
+          <article class="light-skill-stage" data-skill-wheel aria-label="能力轮盘，可上下拖动或点击选项切换">
+            <div class="skill-wheel-viewport">
+              <div class="skill-wheel-track" data-skill-track></div>
+              <span class="skill-wheel-arrow" aria-hidden="true">→</span>
             </div>
-            <div class="skill-focus">
-              <small>当前能力焦点</small>
-              <strong data-skill-title>信息设计</strong>
-              <p data-skill-copy>把专业、密集的技术内容重新组织成可阅读、可传播的视觉结构。</p>
+            <div class="skill-stack" aria-live="polite">
+              <span class="skill-stack-layer skill-stack-layer--top2"></span>
+              <span class="skill-stack-layer skill-stack-layer--top1"></span>
+              <div class="skill-focus">
+                <strong data-skill-title>信息设计</strong>
+                <p data-skill-copy>把专业、密集的技术内容重新组织成可阅读、可传播的视觉结构。</p>
+              </div>
+              <span class="skill-stack-layer skill-stack-layer--bottom1"></span>
+              <span class="skill-stack-layer skill-stack-layer--bottom2"></span>
             </div>
           </article>
-          <article class="light-quote">
-            <div class="quote-meta"><span>我的工作方式</span><b>01 / 03</b></div>
-            <blockquote>“设计不是最后一步的美化。我会先理解业务、内容与真实受众，再决定信息应该以什么次序被看见。”</blockquote>
-            <div class="quote-tags"><span>先判断</span><span>再设计</span><span>跟到落地</span></div>
+
+          <article class="light-quote" data-testimonial>
+            <header class="light-testimonial-head">
+              <div class="light-testimonial-author">
+                <span class="light-testimonial-avatar" data-testimonial-avatar aria-hidden="true">CN</span>
+                <div>
+                  <strong data-testimonial-name>Craig Newborn</strong>
+                  <span data-testimonial-role>Former CEO, PayJustNow</span>
+                </div>
+              </div>
+              <div class="light-testimonial-nav" aria-label="评价切换">
+                <button type="button" data-testimonial-prev aria-label="上一条评价">←</button>
+                <button type="button" data-testimonial-next aria-label="下一条评价">→</button>
+              </div>
+            </header>
+            <blockquote data-testimonial-quote>“The work here brings together a sharp eye for design and a calm, thoughtful approach to digital experience.”</blockquote>
+            <div class="light-testimonial-dots" data-testimonial-dots aria-label="评价分页"></div>
           </article>
         </div>
       </section>
@@ -128,6 +147,6 @@
       <footer class="light-footer"><span>2026 © Maridian Space</span><a href="index.html">查看当前深色首页</a></footer>
     </main>
   </div>
-  <script src="js/home-light.js?v=1"></script>
+  <script src="js/home-light.js?v=2"></script>
 </body>
 </html>
