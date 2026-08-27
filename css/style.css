@@ -207,6 +207,199 @@ button:focus-visible {
 }
 .nav-links a:hover { opacity: 1; }
 
+/* Work 下拉作品总览 */
+.nav-work {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.nav-work-trigger::after {
+  display: inline-block;
+  width: .55rem;
+  height: .55rem;
+  margin: 0 0 .28rem .7rem;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  content: '';
+  opacity: .62;
+  transform: rotate(45deg);
+  transition: transform .28s var(--ease);
+}
+
+.nav-work:hover .nav-work-trigger::after,
+.nav-work:focus-within .nav-work-trigger::after,
+.nav-work.is-open .nav-work-trigger::after {
+  transform: translateY(.2rem) rotate(225deg);
+}
+
+.nav-work-menu {
+  position: fixed;
+  top: 8rem;
+  left: 50%;
+  width: min(112rem, calc(100vw - 4rem));
+  padding: 2rem;
+  border-radius: 1.2rem;
+  background: rgba(245, 241, 232, .96);
+  color: #171717;
+  box-shadow: 0 2.4rem 7rem rgba(2, 2, 2, .18);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -1rem);
+  transition: opacity .25s var(--ease), transform .32s var(--ease), visibility .25s var(--ease);
+  white-space: normal;
+}
+
+.nav-work::before {
+  position: fixed;
+  top: 6.8rem;
+  left: 50%;
+  width: min(112rem, calc(100vw - 4rem));
+  height: 2rem;
+  content: '';
+  transform: translateX(-50%);
+}
+
+#nav.is-work-open .nav-work-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.nav-work-menu-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 0 .2rem;
+}
+
+.nav-work-menu-head strong {
+  font-family: var(--f-cjk);
+  font-size: 2.1rem;
+  font-weight: 600;
+}
+
+.nav-work-menu-head span {
+  color: rgba(23, 23, 23, .48);
+  font-size: 1.15rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.nav-work-menu-grid {
+  display: grid;
+  grid-template-columns: minmax(27rem, .78fr) minmax(0, 1.45fr);
+  gap: 1.4rem;
+}
+
+.nav-work-compact {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: .8rem;
+}
+
+.nav-work-compact a {
+  display: grid;
+  grid-template-columns: 8.4rem minmax(0, 1fr) auto;
+  gap: 1.3rem;
+  align-items: center;
+  min-height: 9rem;
+  padding: .8rem;
+  border-radius: .7rem;
+  background: rgba(23, 23, 23, .035);
+  color: #171717;
+  transition: background .25s var(--ease), transform .25s var(--ease);
+}
+
+.nav-work-compact a:hover,
+.nav-work-featured a:hover {
+  background: rgba(23, 23, 23, .075);
+  transform: translateY(-.2rem);
+}
+
+.nav-work-thumb {
+  display: block;
+  width: 100%;
+  height: 7.4rem;
+  overflow: hidden;
+  border-radius: .45rem;
+  background: #ddd8ce;
+}
+
+.nav-work-thumb img,
+.nav-work-featured img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nav-work-copy b {
+  display: block;
+  font-family: var(--f-cjk);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.nav-work-copy small {
+  display: block;
+  margin-top: .45rem;
+  color: rgba(23, 23, 23, .5);
+  font-size: 1.05rem;
+}
+
+.nav-work-index {
+  color: rgba(23, 23, 23, .34);
+  font-size: 1.1rem;
+}
+
+.nav-work-featured {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+}
+
+.nav-work-featured a {
+  position: relative;
+  min-height: 13.8rem;
+  overflow: hidden;
+  border-radius: .7rem;
+  background: #d8d4cc;
+  color: #fff;
+  transition: transform .25s var(--ease);
+}
+
+.nav-work-featured figure {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+}
+
+.nav-work-featured figure::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(2,2,2,.05) 32%, rgba(2,2,2,.8) 100%);
+  content: '';
+}
+
+.nav-work-featured .nav-work-copy {
+  position: absolute;
+  z-index: 1;
+  right: 1.7rem;
+  bottom: 1.6rem;
+  left: 1.7rem;
+}
+
+.nav-work-featured .nav-work-copy b { font-size: 1.75rem; }
+.nav-work-featured .nav-work-copy small { color: rgba(255,255,255,.68); }
+.nav-work-featured .nav-work-index { position: absolute; z-index: 1; top: 1.5rem; left: 1.6rem; color: rgba(255,255,255,.76); }
+
 .nav-menu {
   position: relative;
   width: 7.2rem;
@@ -1975,6 +2168,7 @@ main footer {
   }
 
   .nav-links { display: none; }
+  .nav-work-menu { display: none; }
 
   .nav-pill {
     height: 4.6rem;
