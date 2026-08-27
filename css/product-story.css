@@ -19,6 +19,56 @@
 
 .ps-progress { display: none; }
 
+/* 本案例的四幕目录始终展示章节名，并跟随章节底色切换明暗。 */
+@media (min-width: 1024px) {
+  .case-page.is-product-sheets .cs-toc.is-product-toc {
+    width: 190px;
+  }
+
+  .case-page.is-product-sheets .cs-toc.is-product-toc a {
+    color: rgb(23 23 23 / 58%);
+    border-left-color: rgb(23 23 23 / 12%);
+  }
+
+  .case-page.is-product-sheets .cs-toc.is-product-toc a i {
+    color: rgb(23 23 23 / 42%);
+  }
+
+  .case-page.is-product-sheets .cs-toc.is-product-toc li.is-active a {
+    color: var(--ps-ink);
+    border-left-color: var(--ps-orange);
+  }
+
+  .case-page.is-product-sheets .cs-toc.is-product-toc li.is-active a i {
+    color: var(--ps-orange);
+  }
+
+  .case-page.is-product-sheets .cs-toc.is-product-toc[data-theme="dark"] a {
+    color: rgb(255 255 255 / 62%);
+    border-left-color: rgb(255 255 255 / 16%);
+  }
+
+  .case-page.is-product-sheets .cs-toc.is-product-toc[data-theme="dark"] a i {
+    color: rgb(255 255 255 / 54%);
+  }
+
+  .case-page.is-product-sheets .cs-toc.is-product-toc[data-theme="dark"] li.is-active a {
+    color: #fff;
+    border-left-color: var(--ps-orange);
+  }
+
+  .case-page.is-product-sheets .cs-toc.is-product-toc[data-theme="dark"] li.is-active a i {
+    color: var(--ps-orange);
+  }
+}
+
+/* 中等桌面宽度没有足够的自然页边距，主动为完整目录让出左栏。 */
+@media (min-width: 1024px) and (max-width: 1680px) {
+  .case-page.is-product-sheets .ps-chapter.cs-section {
+    padding-left: 220px;
+  }
+}
+
 .ps-chapter.cs-section {
   max-width: none;
   margin: 0;

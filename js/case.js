@@ -1647,13 +1647,14 @@ function initProductMobileMotion() {
 function initToc() {
   const body = document.querySelector('[data-ps-story]') || document.querySelector('.cs-body');
   if (!body) return;
+  const isProductStory = body.matches('[data-ps-story]');
 
   const sections = [...body.querySelectorAll('.cs-section, .cs-deck')]
     .filter(section => section.offsetParent !== null);
   if (sections.length < 3) return;
 
   const nav = document.createElement('nav');
-  nav.className = 'cs-toc';
+  nav.className = `cs-toc${isProductStory ? ' is-product-toc' : ''}`;
   nav.setAttribute('aria-label', '页面内导航');
 
   const ol = document.createElement('ol');
@@ -1694,6 +1695,10 @@ function initToc() {
   // 正文容器宽度以后再调，这里会自动跟着变，不需要维护断点。
   const fitToc = () => {
     if (window.innerWidth < 1024) return;
+    if (isProductStory) {
+      nav.classList.add('is-wide');
+      return;
+    }
     nav.classList.add('is-wide');                       // 先按完整宽度量一次
     const sec = sections[0];
     const contentLeft = sec.getBoundingClientRect().left
@@ -1707,11 +1712,14 @@ function initToc() {
   window.addEventListener('load', fitToc);
   document.fonts?.ready.then(fitToc);
 
-  const setActive = idx => items.forEach(({ li, a }, i) => {
-    const on = i === idx;
-    li.classList.toggle('is-active', on);
-    on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current');
-  });
+  const setActive = idx => {
+    items.forEach(({ li, a }, i) => {
+      const on = i === idx;
+      li.classList.toggle('is-active', on);
+      on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current');
+    });
+    if (isProductStory) nav.dataset.theme = items[idx].sec.dataset.navTheme === 'dark' ? 'dark' : 'light';
+  };
   setActive(0);
 
   // 只在「目录整体压在浅色正文上」时显示。
