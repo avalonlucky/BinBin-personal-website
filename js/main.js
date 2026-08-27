@@ -157,7 +157,7 @@ function initNavTheme() {
   });
 
   ScrollTrigger.create({
-    trigger: '.s-values',
+    trigger: '.s-faq',
     start: 'top 60px',
     onEnter:    () => nav.dataset.theme = 'dark',
     onLeaveBack:() => nav.dataset.theme = 'light',
@@ -230,7 +230,7 @@ function initScrollAnimations() {
   _scrollAnimsDone = true;
 
   if (prefersReducedMotion.matches) {
-    gsap.set('.reveal-up, .ai-tools-heading, .work-col, .work-section-title, .testi-card, .values-heading, .value-card', {
+    gsap.set('.reveal-up, .ai-tools-heading, .work-col, .work-section-title, .testi-card', {
       clearProps: 'all',
       opacity: 1,
     });
@@ -361,20 +361,6 @@ function initScrollAnimations() {
         delay: i * 0.04,
       });
   });
-
-  gsap.fromTo('.values-heading',
-    { y: 44, opacity: 0 },
-    {
-      y: 0, opacity: 1, ease: 'expo.out',
-      scrollTrigger: { trigger: '.s-values', start: 'top 88%', end: 'top 62%', scrub: true },
-    });
-
-  gsap.fromTo('.value-card',
-    { y: 44, opacity: 0 },
-    {
-      y: 0, opacity: 1, ease: 'expo.out', stagger: 0.08,
-      scrollTrigger: { trigger: '.values-track', start: 'top 90%', end: 'top 58%', scrub: true },
-    });
 
   // ── Image parallax on scroll ──
   gsap.utils.toArray('.about-img img').forEach(img => {
@@ -925,36 +911,6 @@ function initHeroTilt() {
   });
 }
 
-function initValuesCarousel() {
-  const track = document.querySelector('.values-track');
-  const carousel = document.querySelector('.values-carousel');
-  const hint = document.querySelector('.values-swipe-hint');
-  if (!track || !carousel || !hint || prefersReducedMotion.matches) return;
-
-  let hintPlayed = false;
-  const playHint = () => {
-    if (hintPlayed) return;
-    hintPlayed = true;
-    carousel.classList.remove('is-hinting');
-    void hint.offsetWidth;
-    carousel.classList.add('is-hinting');
-    hint.addEventListener('animationend', () => carousel.classList.remove('is-hinting'), { once: true });
-  };
-
-  const observer = new IntersectionObserver(entries => {
-    if (entries.some(entry => entry.isIntersecting)) {
-      playHint();
-      observer.disconnect();
-    }
-  }, {
-    root: scroller,
-    threshold: 0.42,
-    rootMargin: '-12% 0px -18% 0px',
-  });
-
-  observer.observe(carousel);
-}
-
 /* ─────────────────────────────────────────
    REAL-TIME CLOCK (Cape Town GMT+2)
 ───────────────────────────────────────── */
@@ -987,7 +943,6 @@ initDesignRows();
 initFAQ();
 initDragScroll();
 initHeroTilt();
-initValuesCarousel();
 initClock();
 
 window.addEventListener('resize', () => ScrollTrigger.refresh());
