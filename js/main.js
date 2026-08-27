@@ -157,7 +157,7 @@ function initNavTheme() {
   });
 
   ScrollTrigger.create({
-    trigger: '.s-faq',
+    trigger: '.s-footer',
     start: 'top 60px',
     onEnter:    () => nav.dataset.theme = 'dark',
     onLeaveBack:() => nav.dataset.theme = 'light',
