@@ -8,6 +8,33 @@
   const indexNav = root?.querySelector('[data-tour-index]');
   if (!root || !stage || !frameA || !frameB || !caption || !degrees || !indexNav) return;
 
+  const scroller = document.querySelector('main.page');
+  const door = root.querySelector('.culture-tour-door');
+  const intro = root.querySelector('.culture-tour-copy');
+  const enter = root.querySelector('.culture-tour-enter');
+  let entranceFrame = 0;
+  const paintEntrance = () => {
+    entranceFrame = 0;
+    if (!scroller || !door || !intro) return;
+    const total = Math.max(1, root.offsetHeight - scroller.clientHeight);
+    const progress = Math.min(1, Math.max(0, -root.getBoundingClientRect().top / total));
+    const introOpacity = Math.max(0, 1 - progress * 2.15);
+    const uiOpacity = Math.max(0, Math.min(1, (progress - .52) / .3));
+    root.style.setProperty('--culture-progress', progress.toFixed(3));
+    root.style.setProperty('--culture-intro-opacity', introOpacity.toFixed(3));
+    root.style.setProperty('--culture-ui-opacity', uiOpacity.toFixed(3));
+    door.style.opacity = String(.68 * (1 - progress));
+    intro.style.transform = `translate3d(0,${-progress * 18}px,0)`;
+    if (enter) enter.style.opacity = String(Math.max(0, 1 - progress * 2.4));
+    root.classList.toggle('is-entered', progress > .58);
+  };
+  const requestEntrancePaint = () => {
+    if (!entranceFrame) entranceFrame = requestAnimationFrame(paintEntrance);
+  };
+  paintEntrance();
+  scroller?.addEventListener('scroll', requestEntrancePaint, { passive: true });
+  addEventListener('resize', requestEntrancePaint, { passive: true });
+
   const base = '../assets/work/culture-wall/render/';
   const allViews = [
     ['f6-lobby.webp', '前台 · 序章与定格', '品牌认知与来访记忆点', '作为空间动线的起点，门面墙既是引导访客进入展厅叙事的起点，亦是来访客户打卡与商务合影的标志性背景，实现企业身份识别与二次社交传播的双重作用。'],

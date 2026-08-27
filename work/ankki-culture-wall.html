@@ -12,7 +12,7 @@
   <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="../css/style.css?v=89">
-<link rel="stylesheet" href="../css/case.css?v=118">
+<link rel="stylesheet" href="../css/case.css?v=119">
   <link rel="stylesheet" href="../css/admin-auth.css?v=4">
 </head>
 <body class="case-page is-editorial is-culture">
@@ -46,23 +46,27 @@
            或 Three.js 的 canvas 放进去，点灯时序不用动。
       ══════════════════════════════════════ -->
       <section class="culture-tour" id="top" data-culture-tour>
-        <div class="culture-tour-copy">
-          <h1>把一层办公室<br><em>编成一场有次序的参观</em></h1>
-          <p>访客只有十分钟。我先决定他们每走一步应该记住什么，再把三十多面墙编辑成一条从“看见”到“信任”的空间叙事。</p>
-          <div class="culture-tour-meta"><span>项目负责人</span><span>全链路统筹</span><span>2 层空间</span><span>30+ 落地点位</span><span>10+ 协作部门</span><span>约 29 万项目规模</span></div>
-        </div>
-        <div class="culture-tour-stage" data-tour-stage aria-label="可拖动 360 度环视的展厅空间" tabindex="0">
-          <div class="culture-panorama" data-tour-panorama>
-            <img class="culture-panorama-frame is-current" data-tour-frame-a src="../assets/work/culture-wall/render/f6-lobby.webp" alt="六楼前台空间渲染图" draggable="false">
-            <img class="culture-panorama-frame" data-tour-frame-b src="../assets/work/culture-wall/render/hall-tech.webp" alt="" draggable="false">
+        <div class="culture-tour-sticky">
+          <div class="culture-tour-stage" data-tour-stage aria-label="可拖动 360 度环视的展厅空间" tabindex="0">
+            <div class="culture-panorama" data-tour-panorama>
+              <img class="culture-panorama-frame is-current" data-tour-frame-a src="../assets/work/culture-wall/render/f6-lobby.webp" alt="六楼前台空间渲染图" draggable="false">
+              <img class="culture-panorama-frame" data-tour-frame-b src="../assets/work/culture-wall/render/hall-tech.webp" alt="" draggable="false">
+            </div>
+            <div class="culture-tour-vignette" aria-hidden="true"></div>
+            <button class="culture-tour-step is-prev" type="button" data-tour-step="-1" aria-label="上一个视角"><span>←</span></button>
+            <button class="culture-tour-step is-next" type="button" data-tour-step="1" aria-label="下一个视角"><span>→</span></button>
+            <div class="culture-tour-bearing" aria-hidden="true"><span data-tour-degrees>000°</span><i></i><b>360°</b></div>
+            <p class="culture-tour-hint"><span></span>左右滑动切换空间</p>
+            <div class="culture-tour-caption has-detail" data-tour-caption><small>01 / 前台 · 序章与定格</small><strong>品牌认知与来访记忆点</strong><p>作为空间动线的起点，门面墙既是引导访客进入展厅叙事的起点，亦是来访客户打卡与商务合影的标志性背景，实现企业身份识别与二次社交传播的双重作用。</p></div>
+            <nav class="culture-tour-index" data-tour-index aria-label="展厅环视节点"></nav>
           </div>
-          <div class="culture-tour-vignette" aria-hidden="true"></div>
-          <button class="culture-tour-step is-prev" type="button" data-tour-step="-1" aria-label="上一个视角"><span>←</span></button>
-          <button class="culture-tour-step is-next" type="button" data-tour-step="1" aria-label="下一个视角"><span>→</span></button>
-          <div class="culture-tour-bearing" aria-hidden="true"><span data-tour-degrees>000°</span><i></i><b>360°</b></div>
-          <p class="culture-tour-hint"><span></span>左右滑动切换空间</p>
-          <div class="culture-tour-caption has-detail" data-tour-caption><small>01 / 前台 · 序章与定格</small><strong>品牌认知与来访记忆点</strong><p>作为空间动线的起点，门面墙既是引导访客进入展厅叙事的起点，亦是来访客户打卡与商务合影的标志性背景，实现企业身份识别与二次社交传播的双重作用。</p></div>
-          <nav class="culture-tour-index" data-tour-index aria-label="展厅环视节点"></nav>
+          <div class="culture-tour-door" aria-hidden="true"></div>
+          <div class="culture-tour-copy">
+            <h1>把一层办公室<br><em>编成一场有次序的参观</em></h1>
+            <p>访客只有十分钟。我先决定他们每走一步应该记住什么，再把三十多面墙编辑成一条从“看见”到“信任”的空间叙事。</p>
+            <div class="culture-tour-meta"><span>项目负责人</span><span>全链路统筹</span><span>2 层空间</span><span>30+ 落地点位</span><span>10+ 协作部门</span><span>约 29 万项目规模</span></div>
+          </div>
+          <div class="culture-tour-enter" aria-hidden="true"><span></span><p>向下滑动，点亮空间</p><i></i></div>
         </div>
       </section>
       <!-- ══════════════════════════════════════
@@ -308,7 +312,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="../js/case.js?v=93"></script>
-<script src="../js/culture-tour.js?v=mobile-6"></script>
+<script src="../js/culture-tour.js?v=entrance-7"></script>
 <script src="../js/admin-auth.js?v=5"></script>
 <script src="../js/site-analytics.js?v=3"></script>
 </body>
