@@ -124,50 +124,19 @@
       button.type = 'button';
       button.className = 'ps-color-item';
       button.style.setProperty('--product-color', product.color);
+      button.setAttribute('aria-label', `查看${product.name}单页`);
       button.setAttribute('aria-pressed', String(index === 0));
-      button.innerHTML = `<i></i><b>${product.name.replace(/^昂楷/, '')}</b><small>${product.code}</small>`;
+      button.innerHTML = `
+        <span class="ps-color-thumb"><img src="${thumbUrl(product)}" alt="" width="420" height="543" loading="lazy" decoding="async"></span>
+        <span class="ps-color-order" aria-hidden="true">${String(index + 1).padStart(2, '0')}</span>
+      `;
       button.addEventListener('click', () => show(index));
       button.addEventListener('focus', () => show(index));
+      button.addEventListener('mouseenter', () => {
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) show(index);
+      });
       list.appendChild(button);
     });
-
-    const syncDesktop = () => {
-      if (window.innerWidth <= 768) return;
-      const labRect = lab.getBoundingClientRect();
-      if (labRect.bottom < 0 || labRect.top > window.innerHeight) return;
-      const target = window.innerHeight * .52;
-      const buttons = [...list.children];
-      const nearest = buttons.reduce((best, button, index) => {
-        const distance = Math.abs(button.getBoundingClientRect().top + button.offsetHeight / 2 - target);
-        return distance < best.distance ? { index, distance } : best;
-      }, { index: activeIndex, distance: Infinity });
-      show(nearest.index);
-    };
-
-    let railFrame = 0;
-    list.addEventListener('scroll', () => {
-      if (window.innerWidth > 768 || railFrame) return;
-      railFrame = requestAnimationFrame(() => {
-        railFrame = 0;
-        const center = list.getBoundingClientRect().left + list.clientWidth / 2;
-        const buttons = [...list.children];
-        const nearest = buttons.reduce((best, button, index) => {
-          const rect = button.getBoundingClientRect();
-          const distance = Math.abs(rect.left + rect.width / 2 - center);
-          return distance < best.distance ? { index, distance } : best;
-        }, { index: activeIndex, distance: Infinity });
-        show(nearest.index);
-      });
-    }, { passive: true });
-
-    let scrollFrame = 0;
-    scrollHost?.addEventListener('scroll', () => {
-      if (scrollFrame) return;
-      scrollFrame = requestAnimationFrame(() => {
-        scrollFrame = 0;
-        syncDesktop();
-      });
-    }, { passive: true });
 
     preview.addEventListener('click', () => showProductLightbox(activeIndex));
     show(0, false);
