@@ -989,7 +989,7 @@ main footer {
    ============================================================ */
 .s-design-view {
   background: var(--c-white);
-  padding: clamp(5.5rem, 10vw, 9rem) 0 clamp(6rem, 11vw, 10rem);
+  padding: clamp(5.5rem, 10vw, 9rem) 0 0;
   overflow: hidden;
 }
 .design-view-heading {
