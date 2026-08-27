@@ -1697,6 +1697,102 @@ main footer {
   color: rgba(251,251,244,.25);
 }
 
+/* Compact homepage footer — inspired by the reference site's quiet copyright bar. */
+.s-footer.footer-compact {
+  position: relative;
+  padding: 0 var(--gutter) 1.1rem;
+  background: var(--c-white) !important;
+  color: var(--c-black);
+}
+.footer-compact-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 7.5rem;
+  border-top: 1px solid rgba(23,23,20,.14);
+}
+.footer-compact-contact,
+.footer-compact-socials {
+  display: flex;
+  align-items: center;
+}
+.footer-compact-contact { gap: 1.5rem; }
+.footer-compact-socials { gap: 1rem; }
+.footer-text-link {
+  color: rgba(23,23,20,.72);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.2;
+  transition: color .25s ease;
+}
+a.footer-text-link:hover { color: var(--c-black); }
+.footer-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  color: rgba(23,23,20,.58);
+  transition: color .25s ease, transform .25s ease;
+}
+a.footer-icon-link:hover {
+  color: var(--c-black);
+  transform: translateY(-2px);
+}
+.footer-icon-link svg {
+  display: block;
+  width: 1.35rem;
+  height: 1.35rem;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.footer-icon-link:first-child svg { fill: currentColor; stroke: none; }
+.footer-icon-link .icon-fill { fill: currentColor; stroke: none; }
+.footer-icon-link-red svg text {
+  fill: currentColor;
+  stroke: none;
+  font-family: var(--f-body);
+  font-size: 5.4px;
+  font-weight: 700;
+  letter-spacing: -.03em;
+}
+.footer-compact .is-pending { cursor: default; }
+.footer-compact-bottom {
+  display: flex;
+  align-items: center;
+  min-height: 3.5rem;
+  border-top: 1px solid rgba(23,23,20,.1);
+}
+.footer-compact-bottom p {
+  color: rgba(23,23,20,.5);
+  font-size: .88rem;
+  line-height: 1.4;
+}
+.footer-compact-bottom strong {
+  color: rgba(23,23,20,.76);
+  font-weight: 500;
+}
+.footer-compact .footer-admin-row--compact {
+  position: absolute;
+  right: var(--gutter);
+  bottom: .35rem;
+  padding: 0;
+}
+.footer-compact .footer-admin-access {
+  color: rgba(23,23,20,.14);
+  font-size: .7rem;
+}
+.footer-compact .footer-admin-access:hover,
+.footer-compact .footer-admin-access:focus-visible,
+.footer-compact .footer-admin-access.is-authenticated {
+  color: rgba(23,23,20,.52);
+}
+
 /* ============================================================
    ABOUT PAGE — rotating reading orbit
    ============================================================ */
@@ -2564,6 +2660,51 @@ main footer {
     flex-direction: column;
     gap: .35rem;
     padding: 1rem 0 1.25rem;
+  }
+
+  .s-footer.footer-compact {
+    padding: 0 1.5rem .85rem;
+  }
+
+  .footer-compact-main {
+    min-height: 6rem;
+    gap: 1rem;
+  }
+
+  .footer-compact-contact {
+    gap: .85rem;
+  }
+
+  .footer-compact-socials {
+    gap: .35rem;
+  }
+
+  .footer-text-link {
+    font-size: .88rem;
+  }
+
+  .footer-icon-link {
+    width: 1.65rem;
+    height: 1.65rem;
+  }
+
+  .footer-icon-link svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .footer-compact-bottom {
+    min-height: 3.25rem;
+    padding-right: 2.5rem;
+  }
+
+  .footer-compact-bottom p {
+    font-size: .76rem;
+  }
+
+  .footer-compact .footer-admin-row--compact {
+    right: 1.5rem;
+    bottom: .2rem;
   }
 }
 
