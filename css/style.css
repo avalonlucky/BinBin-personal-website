@@ -1491,7 +1491,6 @@ main footer {
   cursor: pointer;
   transition: transform .8s cubic-bezier(.8,0,.17,1);
 }
-.faq-toggle-bracket,
 .faq-toggle-icon {
   transition: transform .6s var(--ease);
 }
@@ -1499,7 +1498,7 @@ main footer {
   position: relative;
   width: .8rem;
   height: .8rem;
-  margin: 0 .4rem 0 .6rem;
+  margin: 0;
 }
 .faq-toggle-icon::before,
 .faq-toggle-icon::after {
@@ -1528,8 +1527,6 @@ main footer {
   opacity: 0;
 }
 @media (hover: hover) and (pointer: fine) {
-  .faq-toggle:hover .faq-toggle-bracket.left { transform: translateX(-.6rem); }
-  .faq-toggle:hover .faq-toggle-bracket.right { transform: translateX(.6rem); }
   .faq-toggle:hover .faq-toggle-icon { transform: scale(1.2); }
 }
 
