@@ -239,7 +239,7 @@ button:focus-visible {
   position: fixed;
   top: 8rem;
   left: 50%;
-  width: min(112rem, calc(100vw - 4rem));
+  width: min(94rem, calc(100vw - 4rem));
   padding: 2rem;
   border-radius: 1.2rem;
   background: rgba(245, 241, 232, .96);
@@ -257,7 +257,7 @@ button:focus-visible {
   position: fixed;
   top: 6.8rem;
   left: 50%;
-  width: min(112rem, calc(100vw - 4rem));
+  width: min(94rem, calc(100vw - 4rem));
   height: 2rem;
   content: '';
   transform: translateX(-50%);
@@ -293,7 +293,7 @@ button:focus-visible {
 
 .nav-work-menu-grid {
   display: grid;
-  grid-template-columns: minmax(27rem, .78fr) minmax(0, 1.45fr);
+  grid-template-columns: minmax(34rem, .92fr) minmax(0, 1.18fr);
   gap: 1.4rem;
 }
 
