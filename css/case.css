@@ -2349,7 +2349,7 @@
   min-height: 0;
   padding: 0;
   overflow: visible;
-  background: #020306;
+  background: var(--cs-paper);
 }
 .case-page.is-culture .culture-tour::before { display: none; }
 .case-page.is-culture .culture-tour-sticky {
@@ -2374,10 +2374,11 @@
 }
 .case-page.is-culture .culture-tour.is-entered .culture-tour-stage { pointer-events: auto; }
 .case-page.is-culture .culture-panorama-frame {
-  filter: saturate(calc(.76 + var(--culture-progress,0) * .22)) brightness(calc(.3 + var(--culture-progress,0) * .68)) contrast(1.04);
-  transform: scale(calc(1.06 - var(--culture-progress,0) * .04));
+  filter: saturate(calc(.76 + var(--culture-light-progress,0) * .24)) brightness(calc(.3 + var(--culture-light-progress,0) * .7)) contrast(1.02);
+  transform: scale(calc(1.06 - var(--culture-light-progress,0) * .04));
   transition: filter .08s linear;
 }
+.case-page.is-culture .culture-tour-vignette { background: none; }
 .case-page.is-culture .culture-tour-door {
   position: absolute;
   inset: 0;
@@ -7170,7 +7171,7 @@
 }
 
 /* Culture wall — spatial story */
-.space-story { overflow: clip; }
+.space-story { display: flow-root; overflow: clip; }
 .space-jump {
   position: sticky;
   top: 18px;
