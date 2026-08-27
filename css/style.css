@@ -1700,17 +1700,16 @@ main footer {
 /* Compact homepage footer — inspired by the reference site's quiet copyright bar. */
 .s-footer.footer-compact {
   position: relative;
-  padding: 0 var(--gutter) 1.1rem;
+  padding: 0 var(--gutter);
   background: var(--c-white) !important;
   color: var(--c-black);
 }
 .footer-compact-main {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 2rem;
-  min-height: 7.5rem;
-  border-top: 1px solid rgba(23,23,20,.14);
+  min-height: 6.5rem;
 }
 .footer-compact-contact,
 .footer-compact-socials {
@@ -1718,7 +1717,10 @@ main footer {
   align-items: center;
 }
 .footer-compact-contact { gap: 1.5rem; }
-.footer-compact-socials { gap: 1rem; }
+.footer-compact-socials {
+  justify-self: end;
+  gap: 1rem;
+}
 .footer-text-link {
   color: rgba(23,23,20,.72);
   font-size: 1rem;
@@ -1762,18 +1764,14 @@ a.footer-icon-link:hover {
   letter-spacing: -.03em;
 }
 .footer-compact .is-pending { cursor: default; }
-.footer-compact-bottom {
-  display: flex;
-  align-items: center;
-  min-height: 3.5rem;
-  border-top: 1px solid rgba(23,23,20,.1);
-}
-.footer-compact-bottom p {
+.footer-compact-copyright {
+  margin: 0;
   color: rgba(23,23,20,.5);
   font-size: .88rem;
   line-height: 1.4;
+  white-space: nowrap;
 }
-.footer-compact-bottom strong {
+.footer-compact-copyright strong {
   color: rgba(23,23,20,.76);
   font-weight: 500;
 }
@@ -2663,43 +2661,42 @@ a.footer-icon-link:hover {
   }
 
   .s-footer.footer-compact {
-    padding: 0 1.5rem .85rem;
+    padding: 0 1.25rem;
   }
 
   .footer-compact-main {
-    min-height: 6rem;
-    gap: 1rem;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    min-height: 5rem;
+    gap: .55rem;
   }
 
   .footer-compact-contact {
-    gap: .85rem;
+    gap: .55rem;
   }
 
   .footer-compact-socials {
-    gap: .35rem;
+    gap: .1rem;
   }
 
   .footer-text-link {
-    font-size: .88rem;
+    font-size: .72rem;
   }
 
   .footer-icon-link {
-    width: 1.65rem;
-    height: 1.65rem;
+    width: 1.35rem;
+    height: 1.35rem;
   }
 
   .footer-icon-link svg {
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 1rem;
+    height: 1rem;
   }
 
-  .footer-compact-bottom {
-    min-height: 3.25rem;
-    padding-right: 2.5rem;
-  }
-
-  .footer-compact-bottom p {
-    font-size: .76rem;
+  .footer-compact-copyright {
+    overflow: hidden;
+    font-size: .64rem;
+    text-align: center;
+    text-overflow: ellipsis;
   }
 
   .footer-compact .footer-admin-row--compact {
