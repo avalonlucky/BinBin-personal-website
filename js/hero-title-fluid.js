@@ -14,13 +14,21 @@
     in vec2 v_uv; out vec4 outColor;
     uniform sampler2D u_mask; uniform float u_time; uniform vec2 u_resolution;
     void main(){
-      vec2 uv=v_uv;float t=u_time*.22;
-      float center=.5+.34*sin(t*.42);float bend=.12*sin(uv.y*4.2+t*.55)+.045*sin(uv.y*8.5-t*.3);float d=uv.x-center-bend;
-      float body=exp(-d*d*4.4);float blueFold=exp(-pow(d-.045,2.)*19.);float darkFold=exp(-pow(d+.025,2.)*68.);float shine=exp(-pow(d-.14,2.)*105.);
-      float secondCenter=.5+.2*sin(uv.x*3.4-t*.38);float d2=uv.y-secondCenter;float second=exp(-d2*d2*17.)*(.5+.5*sin(t*.26+uv.x*2.));
-      vec3 ink=vec3(.004,.006,.014),midnight=vec3(.01,.035,.17),cobalt=vec3(.025,.20,.92),electric=vec3(.38,.56,1.);
-      vec3 color=mix(ink,midnight,body*.88);color=mix(color,cobalt,blueFold*.82+second*.2);color=mix(color,ink,darkFold*.8);color=mix(color,electric,shine*.72);
-      color+=cobalt*second*.16;color*=.94+.06*cos(uv.y*3.14159);
+      vec2 uv=v_uv;float t=u_time*.14;
+      float warp=.28*sin(uv.y*3.2+t*.7)+.10*sin(uv.y*7.1-t*.4);
+      float phase=uv.x*7.2+warp-t*.9;
+      float satin=.5+.5*sin(phase);
+      float fold=.5+.5*sin(phase+1.35+.32*sin(uv.y*5.4+t*.45));
+      float shadow=smoothstep(.43,.72,fold);
+      float blue=smoothstep(.18,.82,satin);
+      float rim=pow(max(0.,1.-abs(satin-.52)*2.),7.);
+      float cross=.5+.5*sin(uv.y*4.0-uv.x*1.1+t*.38);
+      vec3 ink=vec3(.002,.004,.011),navy=vec3(.006,.025,.12),cobalt=vec3(.015,.18,.94),electric=vec3(.34,.54,1.);
+      vec3 color=mix(ink,navy,blue*.48);
+      color=mix(color,cobalt,blue*.72*(.72+.28*cross));
+      color=mix(color,ink,shadow*.76);
+      color=mix(color,electric,rim*.58);
+      color*=.92+.08*cos((uv.y-.5)*3.14159);
       float mask=texture(u_mask,vec2(uv.x,1.-uv.y)).r;outColor=vec4(color*mask,mask);
     }`;
 
