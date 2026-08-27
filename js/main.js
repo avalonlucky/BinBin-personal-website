@@ -157,7 +157,7 @@ function initNavTheme() {
   });
 
   ScrollTrigger.create({
-    trigger: '.s-testimonials',
+    trigger: '.s-values',
     start: 'top 60px',
     onEnter:    () => nav.dataset.theme = 'dark',
     onLeaveBack:() => nav.dataset.theme = 'light',
@@ -361,14 +361,6 @@ function initScrollAnimations() {
         delay: i * 0.04,
       });
   });
-
-  // ── Testimonial carousel (scrub-linked) ──
-  gsap.fromTo('.testi-carousel',
-    { y: 50, opacity: 0 },
-    {
-      y: 0, opacity: 1, ease: 'expo.out',
-      scrollTrigger: { trigger: '.testi-carousel', start: 'top 90%', end: 'top 55%', scrub: true },
-    });
 
   gsap.fromTo('.values-heading',
     { y: 44, opacity: 0 },
