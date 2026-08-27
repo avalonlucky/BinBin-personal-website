@@ -463,17 +463,20 @@ button:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.8rem;
+  min-height: 3.2rem;
   margin: 0 0 2.4rem;
-  padding: .45rem 1.25rem;
+  padding: .58rem 1.55rem;
   border-radius: 999px;
   background: #171714;
   color: var(--c-white);
   font-family: var(--f-body);
-  font-size: 1.08rem;
+  font-size: 1.2rem;
   letter-spacing: .05em;
 }
 .hero-copy h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 0;
   font-family: var(--f-cjk);
   font-weight: 700;
@@ -483,6 +486,7 @@ button:focus-visible {
   text-wrap: balance;
   white-space: nowrap;
 }
+.hero-copy h1 span { display: block; width: max-content; max-width: 100%; text-align: center; }
 .hero-subtitle {
   max-width: 38em;
   margin: 2.7rem auto 0;
@@ -2223,7 +2227,7 @@ main footer {
   }
   .hero-layout { width:calc(100% - 3rem); min-height:100svh; padding:9rem 0 3rem; grid-template-columns:1fr; align-content:center; gap:2.5rem; }
   .hero-copy { padding:0; }
-  .hero-kicker { min-height:2.5rem; margin-bottom:1.5rem; padding:.4rem 1.05rem; font-size:.9rem; }
+  .hero-kicker { min-height:2.8rem; margin-bottom:1.5rem; padding:.48rem 1.25rem; font-size:1rem; }
   .hero-copy h1 { font-size:clamp(3.4rem,11.6vw,5.2rem); line-height:1.08; white-space:normal; }
   .hero-subtitle { margin-top:1.6rem; font-size:1.3rem; }
   .hero-computer { width:min(100%,560px); margin:0 auto; }
