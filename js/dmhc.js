@@ -134,7 +134,7 @@
       const leadCenterY=leadRect.top+leadRect.height/2;
       const localX=leadCenterX-wallRect.left;
       const localY=leadCenterY-wallRect.top;
-      initialScale=Math.max(1,viewportRect.width*.76/Math.max(1,leadRect.width));
+      initialScale=Math.max(1,viewportRect.width*1.04/Math.max(1,leadRect.width));
       centerX=viewportRect.left+viewportRect.width/2-leadCenterX;
       centerY=viewportRect.top+viewportRect.height/2-leadCenterY;
       endY=Math.min(0,viewport.clientHeight-wall.scrollHeight-60);
@@ -151,7 +151,7 @@
       const split=ease(clamp(progress/.34));
       const gallery=ease(clamp((progress-.34)/.66));
       const scale=initialScale+(1-initialScale)*split;
-      const x=centerX*(1-gallery);
+      const x=centerX;
       const y=centerY+(endY-centerY)*gallery;
       wall.style.transform=`translate3d(${x}px,${y}px,0) scale(${scale})`;
       archiveExperience.style.setProperty('--archive-caption',String(clamp((split-.78)/.22)));
