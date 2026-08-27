@@ -1550,6 +1550,7 @@ main footer {
   transition: background .3s ease;
 }
 .footer-cta-btn:hover { background: rgba(251,251,244,.12); }
+.footer-resume-pending{cursor:default}.footer-resume-pending small{color:rgba(251,251,244,.48);font:inherit;font-size:.82em}.footer-resume-pending:hover{background:rgba(251,251,244,.07)}
 .footer-dot {
   width: .45rem;
   height: .45rem;

@@ -2051,8 +2051,8 @@ async function copyText(text) {
 const CONTACT = {
   email: {
     value: 'bh141425@gmail.com',
-    href:  'mailto:bh141425@gmail.com?subject=' + encodeURIComponent('聊聊设计合作'),
-    cta:   '写邮件',
+    href:  'mailto:bh141425@gmail.com?subject=' + encodeURIComponent('视觉设计岗位面试沟通'),
+    cta:   '发邮件',
   },
   phone: {
     value: '131 0633 3009',
@@ -2060,6 +2060,16 @@ const CONTACT = {
     cta:   '拨打',
   },
 };
+
+document.querySelectorAll('.cs-cta-card').forEach(card=>{
+  if(card.querySelector('.cs-resume-pending'))return;
+  const entry=document.createElement('button');
+  entry.type='button';
+  entry.className='cs-resume-pending';
+  entry.disabled=true;
+  entry.innerHTML='<span>下载简历</span><small>简历整理中</small>';
+  card.appendChild(entry);
+});
 
 // 提示词里带上本页链接，AI 才能真的去读作品
 const ASK_PROMPT = `我正在评估 Maridian（${location.origin}）是否适合我们的品牌设计 / 视觉设计岗位。`
