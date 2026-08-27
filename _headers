@@ -8,3 +8,6 @@
   Cache-Control: no-store
   Referrer-Policy: no-referrer
   X-Frame-Options: DENY
+
+/assets/work/culture-wall/showroom-film-*.mp4
+  Cache-Control: public, max-age=31536000, immutable
