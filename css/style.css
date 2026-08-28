@@ -1756,47 +1756,47 @@ main footer {
   color: var(--c-black);
 }
 .footer-compact-main {
-  display: grid;
-  grid-template-columns: minmax(36rem, 1fr) auto auto;
+  display: flex;
   align-items: center;
-  gap: clamp(2rem, 4vw, 5rem);
-  min-height: 31rem;
-  padding: 3.5rem 0;
+  gap: clamp(2.4rem, 3vw, 4rem);
+  min-height: 18rem;
+  padding: 2.4rem 0;
 }
 .footer-compact-socials {
   display: flex;
   align-items: center;
 }
 .footer-contact-card {
-  width: min(54rem, 100%);
-  padding: clamp(2.4rem, 3vw, 3.6rem) clamp(2.4rem, 4vw, 4.6rem);
-  border-radius: clamp(2.6rem, 4vw, 4.8rem);
+  width: min(40rem, 100%);
+  flex: 0 1 40rem;
+  padding: 2rem 2.5rem 2.3rem;
+  border-radius: 2.8rem;
   background: #f8f0e5;
   color: var(--c-black);
 }
 .footer-contact-title {
-  margin: 0 0 2.2rem;
+  margin: 0 0 1.4rem;
   font-family: var(--f-cjk);
-  font-size: clamp(2rem, 2.5vw, 3rem);
-  font-weight: 800;
+  font-size: 1.75rem;
+  font-weight: 700;
   line-height: 1.25;
   text-align: center;
 }
 .footer-contact-switch {
   display: flex;
   width: fit-content;
-  margin: 0 auto 2.4rem;
+  margin: 0 auto 1.5rem;
   padding: .35rem;
   border-radius: 100rem;
   background: rgba(2,2,2,.055);
 }
 .footer-contact-switch button {
-  min-width: 7rem;
-  padding: .9rem 1.8rem;
+  min-width: 5.5rem;
+  padding: .65rem 1.35rem;
   border-radius: 100rem;
   color: rgba(23,23,20,.55);
   font-family: var(--f-cjk);
-  font-size: 1.35rem;
+  font-size: 1.1rem;
   transition: background .25s ease, color .25s ease, box-shadow .25s ease;
 }
 .footer-contact-switch button.is-active {
@@ -1815,7 +1815,7 @@ main footer {
   flex: 1 1 auto;
   min-width: 0;
   align-items: center;
-  padding: .45rem .45rem .45rem 2.2rem;
+  padding: .35rem .35rem .35rem 1.5rem;
   border: 1px solid rgba(2,2,2,.08);
   border-radius: 100rem;
   background: rgba(255,255,255,.8);
@@ -1825,14 +1825,14 @@ main footer {
   flex: 1;
   overflow: hidden;
   color: var(--c-black);
-  font-size: 1.65rem;
+  font-size: 1.2rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .footer-contact-copy {
   display: grid;
-  width: 4.8rem;
-  height: 4.8rem;
+  width: 3.8rem;
+  height: 3.8rem;
   flex: 0 0 auto;
   place-items: center;
   border: 1px solid rgba(2,2,2,.07);
@@ -1840,27 +1840,27 @@ main footer {
   background: #fff;
   color: rgba(23,23,20,.58);
 }
-.footer-contact-copy svg { width: 2rem; height: 2rem; }
+.footer-contact-copy svg { width: 1.55rem; height: 1.55rem; }
 .footer-contact-action {
   display: flex;
-  min-height: 5.7rem;
+  min-height: 4.5rem;
   align-items: center;
   justify-content: center;
   gap: 1.4rem;
-  padding: 0 2.8rem;
+  padding: 0 2rem;
   border-radius: 100rem;
   background: var(--c-orange);
   color: #fff;
   box-shadow: 0 .35rem 0 #e96e18, 0 .8rem 1.6rem rgba(255,133,45,.2);
   font-family: var(--f-cjk);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   white-space: nowrap;
   transition: transform .25s ease, box-shadow .25s ease;
 }
 .footer-contact-action:hover { transform: translateY(-.2rem); box-shadow: 0 .5rem 0 #e96e18, 0 1rem 2rem rgba(255,133,45,.24); }
 .footer-compact-socials {
-  justify-self: center;
+  flex: 0 0 auto;
   gap: 1.05rem;
 }
 .footer-text-link {
@@ -1911,7 +1911,7 @@ a.footer-icon-link:hover {
 }
 .footer-compact .is-pending { cursor: default; opacity: .82; }
 .footer-compact-copyright {
-  justify-self: end;
+  margin-left: auto;
   margin: 0;
   color: rgba(23,23,20,.5);
   font-size: .8rem;
@@ -2814,6 +2814,7 @@ a.footer-icon-link:hover {
   }
 
   .footer-compact-main {
+    display: grid;
     grid-template-columns: 1fr;
     min-height: 0;
     gap: 2rem;
@@ -2822,13 +2823,13 @@ a.footer-icon-link:hover {
 
   .footer-contact-card {
     width: 100%;
-    padding: 2.4rem 1.4rem;
+    padding: 2rem 1.4rem 2.2rem;
     border-radius: 2.4rem;
   }
 
   .footer-contact-title {
     margin-bottom: 1.6rem;
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 
   .footer-contact-switch { margin-bottom: 1.8rem; }
@@ -2869,6 +2870,7 @@ a.footer-icon-link:hover {
   }
 
   .footer-compact-copyright {
+    margin-left: 0;
     justify-self: center;
     font-size: .6rem;
     text-align: center;
