@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#241a69" />
+    <title>OS63 | ATOM63</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@500;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/atom63-os.css?v=1" />
+  </head>
+  <body>
+    <main class="os63" id="os63" data-theme="violet">
+      <div class="wallpaper" aria-hidden="true"><i></i><b></b><em></em><strong></strong></div>
+      <header class="menu-bar">
+        <button class="home-button" aria-label="Open home menu" data-action="home">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 10 8-7 8 7v9a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>
+        </button>
+        <div class="menu-right">
+          <button class="sliders-button" aria-label="Choose a theme" data-action="themes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h14M9 4v4M15 10v4M11 16v4"/></svg></button>
+          <time id="menu-time">Sat, Aug 29&nbsp;&nbsp;2:47 AM</time>
+        </div>
+      </header>
+
+      <section class="theme-popover" id="theme-popover" aria-label="Choose a theme" hidden>
+        <span>Choose a theme</span>
+        <div class="theme-swatches">
+          <button data-theme="violet" aria-label="Violet theme"></button>
+          <button data-theme="rose" aria-label="Rose theme"></button>
+          <button data-theme="lime" aria-label="Lime theme"></button>
+          <button data-theme="night" aria-label="Night theme"></button>
+        </div>
+      </section>
+
+      <section class="home-popover" id="home-popover" hidden>
+        <b>OS63</b>
+        <span>ATOM63 desktop</span>
+        <button data-action="reset">Reset desktop</button>
+      </section>
+
+      <section class="dashboard" aria-label="Desktop widgets">
+        <article class="widget profile-card">
+          <div class="widget-top"><span><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>Profile</span><mark>Available</mark></div>
+          <div class="profile-heading">
+            <div><h1>You Zhang <small>ATOM63</small></h1><p>Design Engineer</p><p class="profile-meta">◉&nbsp; Los Angeles, CA &nbsp;•&nbsp; ▦&nbsp; Microsoft</p></div>
+            <img src="https://os.atom63.io/images/avatars/avatar-07.jpg" alt="You Zhang" />
+          </div>
+          <div class="profile-stats"><div><b>7+</b><span>Years of Experience</span></div><div><b>INTJ</b><span>The Architect</span></div><div><b>🐱</b><span>Cat Person</span></div></div>
+          <p class="profile-copy">👋 Hi, I'm You Zhang — a Design Engineer blending systems thinking, engineering precision, and motion storytelling to craft cohesive brand and product experiences. I design scalable visual and interaction systems that bring clarity, consistency, and emotion across platforms—from concept to code.</p>
+          <div class="profile-actions"><a href="mailto:hello.youzhang@gmail.com">✉&nbsp; Let's chat</a><a href="https://www.linkedin.com/in/you-zhang/" target="_blank" rel="noreferrer">in&nbsp; LinkedIn</a></div>
+        </article>
+
+        <article class="widget time-card">
+          <div class="widget-top"><span>Local time</span><mark>Los Angeles</mark></div>
+          <div class="clock"><span id="clock-day">SAT<br /><small>08/29</small></span><b id="clock-time">02:47:02</b></div>
+        </article>
+
+        <article class="widget github-card" data-action="github">
+          <div class="widget-top"><span>GitHub</span><mark>6 Mo</mark></div>
+          <b class="contributions">5248</b><span>contributions</span><p><b>15</b>&nbsp; day streak</p>
+        </article>
+
+        <article class="widget sticky-card">
+          <label for="sticky-note">Write a note...</label><textarea id="sticky-note" spellcheck="false" aria-label="Write a note"></textarea>
+        </article>
+
+        <article class="widget listening-card" data-action="listening">
+          <div class="widget-top"><span>◖&nbsp; Recent listening</span><button aria-label="Shuffle listening" data-action="shuffle">↗</button></div>
+          <div class="albums" id="albums"></div>
+        </article>
+
+        <article class="widget weather-card" data-action="weather">
+          <div class="weather-current"><b>Los Angeles</b><strong><span id="weather-temp">96</span>°F</strong><em>Clear</em><small>H:101° L:74°</small><i>☀</i></div>
+          <div class="forecast"><div><b>Sat</b><span>☀</span><strong>96° <i>72°</i></strong></div><div><b>Sun</b><span>☀</span><strong>91° <i>71°</i></strong></div><div><b>Mon</b><span>☀</span><strong>88° <i>72°</i></strong></div><div><b>Tue</b><span>☀</span><strong>88° <i>72°</i></strong></div><div><b>Wed</b><span>☁</span><strong>90° <i>74°</i></strong></div></div>
+        </article>
+      </section>
+
+      <section class="window-layer" id="window-layer" aria-live="polite"></section>
+
+      <nav class="dock" aria-label="Application dock">
+        <button data-app="launcher" aria-label="App center" class="dock-icon icon-launcher"><i></i><i></i><i></i><i></i></button>
+        <button data-app="finder" aria-label="Finder" class="dock-icon icon-finder"><span>▣</span></button>
+        <button data-app="messages" aria-label="Messages" class="dock-icon icon-messages">●●</button>
+        <button data-app="projects" aria-label="Projects" class="dock-icon icon-projects">▰</button>
+        <button data-app="settings" aria-label="Settings" class="dock-icon icon-settings">⚙</button>
+        <button data-app="gallery" aria-label="Gallery" class="dock-icon icon-gallery">▧</button>
+        <button data-app="profile" aria-label="Profile" class="dock-icon icon-profile">◉</button>
+        <button data-app="calculator" aria-label="Calculator" class="dock-icon icon-calculator">⌘</button>
+        <button data-app="notes" aria-label="Notes" class="dock-icon icon-notes">✎</button>
+      </nav>
+      <p class="desktop-status"><i></i> desktop online</p>
+    </main>
+    <script src="js/atom63-os.js?v=1"></script>
+  </body>
+</html>
