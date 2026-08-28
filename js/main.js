@@ -979,6 +979,19 @@ function initFooterContact() {
   render();
 }
 
+function initFooterAI() {
+  const links = document.querySelectorAll('[data-footer-ai-base]');
+  if (!links.length) return;
+
+  const prompt = '我正在评估 Meridian（https://chaoshanai.com/）是否适合我们的品牌设计 / 视觉设计岗位。'
+    + '请查看他的作品集网站，告诉我：他的设计能力覆盖哪些方面、最适合什么阶段和什么类型的公司、'
+    + '如果录用他我实际能得到什么。请具体一些，引用他的案例和经历。';
+
+  links.forEach(link => {
+    link.href = link.dataset.footerAiBase + encodeURIComponent(prompt);
+  });
+}
+
 /* ─────────────────────────────────────────
    INIT
 ───────────────────────────────────────── */
@@ -996,5 +1009,6 @@ initDragScroll();
 initHeroTilt();
 initClock();
 initFooterContact();
+initFooterAI();
 
 window.addEventListener('resize', () => ScrollTrigger.refresh());
