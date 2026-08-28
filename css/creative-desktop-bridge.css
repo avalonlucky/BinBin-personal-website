@@ -1,8 +1,9 @@
 /*
  * Creative Desktop bridge
  *
- * The OS63 page stays unmodified inside the iframe below. This layer only adds
- * the eight projects that already lived at /creative-desktop and their windows.
+ * The OS63 React desktop and Maridian's eight applications now share one
+ * document and one desktop runtime. This layer contains launchers and app
+ * windows only; there is no second wallpaper, menu bar, widget system or dock.
  */
 html,
 body.os-page {
@@ -13,45 +14,19 @@ body.os-page {
   background: #111;
 }
 
-.os63-mirror {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  background: #111;
-}
-
 body.os-page > .os-root {
   position: fixed;
   inset: 0;
-  z-index: 10;
+  z-index: 40;
   min-height: 0;
   overflow: visible;
   pointer-events: none;
   background: transparent;
 }
 
-.os-root > .os-wall,
-.os-root > .os-wall-b,
-.os-root > .os-lock,
-.os-root .os-menubar,
-.os-root .os-widgets,
-.os-root .os-dock-wrap,
-.os-root > .os-settings {
-  display: none !important;
-}
-
 .os-root .os-desktop,
 .os-root .os-desktop[hidden] {
   display: block !important;
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-}
-
-.os-root .os-stage {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -73,6 +48,10 @@ body.os-page > .os-root {
 }
 
 .os-root .os-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   width: 94px;
   min-height: 108px;
   padding: 6px 3px;
@@ -82,7 +61,8 @@ body.os-page > .os-root {
   color: #fff;
   background: transparent;
   text-shadow: 0 1px 4px rgba(0, 0, 0, .8), 0 0 12px rgba(0, 0, 0, .32);
-  cursor: default;
+  font: inherit;
+  cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -164,8 +144,8 @@ body.os-page > .os-root {
     border-radius: 17px;
     background: rgba(25, 26, 31, .48);
     box-shadow: 0 12px 32px rgba(0, 0, 0, .34);
-    backdrop-filter: blur(22px) saturate(150%);
-    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     scrollbar-width: none;
   }
 
