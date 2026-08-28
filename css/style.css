@@ -64,6 +64,7 @@
   --border-c:  rgba(251, 251, 244, 0.18);
   --border-c-dark: rgba(2, 2, 2, 0.12);
   --gutter: 4.5rem;
+  --home-content-inset: clamp(var(--gutter), 8.9vw, 13.7rem);
 }
 
 /* ============================================================
@@ -1443,7 +1444,7 @@ main footer {
   margin: 0 auto 5rem;
 }
 .faq-list {
-  padding: 0 13.7rem;
+  padding: 0 var(--home-content-inset);
   display: flex;
   flex-direction: column;
 }
@@ -1751,20 +1752,32 @@ main footer {
 /* Compact homepage footer — inspired by the reference site's quiet copyright bar. */
 .s-footer.footer-compact {
   position: relative;
-  padding: 0 var(--gutter);
+  padding: 0 var(--home-content-inset);
   background: var(--c-white) !important;
   color: var(--c-black);
 }
 .footer-compact-main {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: clamp(2.4rem, 3vw, 4rem);
+  gap: clamp(1.5rem, 2.4vw, 3.5rem);
+  width: 100%;
   min-height: 18rem;
   padding: 2.4rem 0;
+}
+.footer-compact-contact,
+.footer-contact-card {
+  justify-self: start;
+}
+.footer-compact-contact {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
 }
 .footer-compact-socials {
   display: flex;
   align-items: center;
+  justify-self: center;
 }
 .footer-contact-card {
   width: min(40rem, 100%);
@@ -1911,8 +1924,8 @@ a.footer-icon-link:hover {
 }
 .footer-compact .is-pending { cursor: default; opacity: .82; }
 .footer-compact-copyright {
-  margin-left: auto;
   margin: 0;
+  justify-self: end;
   color: rgba(23,23,20,.5);
   font-size: .8rem;
   line-height: 1.4;
@@ -2822,6 +2835,7 @@ a.footer-icon-link:hover {
   }
 
   .footer-contact-card {
+    justify-self: stretch;
     width: 100%;
     padding: 2rem 1.4rem 2.2rem;
     border-radius: 2.4rem;
@@ -2844,6 +2858,10 @@ a.footer-icon-link:hover {
   .footer-contact-action { min-height: 5rem; }
 
   .footer-compact-socials {
+    justify-self: center;
+  }
+
+  .footer-compact-contact {
     justify-self: center;
   }
 
