@@ -11,7 +11,8 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2310213b'/%3E%3Cpath d='M15 48V16h8l9 15 9-15h8v32h-8V31L32 46 23 31v17z' fill='%23f6f3ec'/%3E%3C/svg%3E">
   <link rel="preload" href="fonts/PPMigra-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/creative-desktop.css?v=2">
+  <link rel="stylesheet" href="css/creative-desktop.css?v=3">
+  <link rel="stylesheet" href="css/creative-desktop-apps.css?v=4">
 </head>
 <body class="creative-desktop-page">
   <main class="desktop-experience" aria-label="Desktop Portfolio">
@@ -52,37 +53,40 @@
         <p class="desktop-intro"> </p>
         <div class="desktop-help"><span class="desktop-help-desktop">double-click an icon · ESC closes a window</span><span class="desktop-help-mobile">tap an icon to open</span></div>
 
-        <button class="desktop-icon icon-work" data-open="works" type="button">
-          <span class="icon-art icon-folder" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/408e8d28-b305-4ca0-8f08-6f8af55ef315/ico-folder.png" alt=""></span>
-          <span class="icon-label">case studies</span><small>selected work</small>
+        <button class="desktop-icon icon-work" data-open="works" type="button" aria-label="Case Studies">
+          <span class="icon-art icon-folder" aria-hidden="true">
+            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/408e8d28-b305-4ca0-8f08-6f8af55ef315/ico-folder.png" alt="">
+            <span class="cs-lock-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+          </span>
+          <span class="icon-label">Case Studies</span>
         </button>
-        <button class="desktop-icon icon-notes" data-open="notes" type="button">
+        <button class="desktop-icon icon-notes" data-open="notes" type="button" aria-label="Sticky Notes">
           <span class="icon-art icon-notebook" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/7574ae5f-d0ce-48d4-9fac-217c75d55734/ico-stickies.png" alt=""></span>
-          <span class="icon-label">sticky notes</span><small>draw &amp; pin</small>
+          <span class="icon-label">Sticky Notes</span>
         </button>
-        <button class="desktop-icon icon-archive" data-open="archive" type="button">
-          <span class="icon-art icon-archive-art" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/7988a710-b103-474e-8746-648832c7d93b/ico-resume-v2.png" alt=""></span>
-          <span class="icon-label">resume</span><small>pdf · 2026</small>
-        </button>
-        <button class="desktop-icon icon-toolkit" data-open="toolkit" type="button">
-          <span class="icon-art icon-tool" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/e93e6147-2870-4dd3-b81e-a8d4153730c7/ico-synth.png" alt=""></span>
-          <span class="icon-label">synthesizer</span><small>sound toy</small>
-        </button>
-        <button class="desktop-icon icon-about" data-open="about" type="button">
+        <button class="desktop-icon icon-about" data-open="about" type="button" aria-label="My Shelf">
           <span class="icon-art icon-profile" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/e2b7bd71-3f8b-4633-8da8-e9223707c069/ico-books.png" alt=""></span>
-          <span class="icon-label">my shelf</span><small>books · films · music</small>
+          <span class="icon-label">My Shelf</span>
         </button>
-        <button class="desktop-icon icon-chess" data-open="chess" type="button">
-          <span class="icon-art icon-chess-art" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/2963b46d-7d78-4929-9d0a-762e192b9b2b/ico-chess.png" alt=""></span>
-          <span class="icon-label">chess</span><small>play the computer</small>
+        <button class="desktop-icon icon-archive" data-open="archive" type="button" aria-label="Resume">
+          <span class="icon-art icon-archive-art" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/7988a710-b103-474e-8746-648832c7d93b/ico-resume-v2.png" alt=""></span>
+          <span class="icon-label">Resume</span>
         </button>
-        <button class="desktop-icon icon-notebook-app" data-open="notebook" type="button">
+        <button class="desktop-icon icon-notebook-app" data-open="notebook" type="button" aria-label="Notebook">
           <span class="icon-art icon-notebook-app-art" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/ee46b032-332d-4700-9a32-0ff3f21957a9/ico-notebook.png" alt=""></span>
-          <span class="icon-label">notebook</span><small>essays &amp; notes</small>
+          <span class="icon-label">Notebook</span>
         </button>
-        <button class="desktop-icon icon-camera" data-open="photos" type="button">
+        <button class="desktop-icon icon-chess" data-open="chess" type="button" aria-label="Chess">
+          <span class="icon-art icon-chess-art" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/2963b46d-7d78-4929-9d0a-762e192b9b2b/ico-chess.png" alt=""></span>
+          <span class="icon-label">Chess</span>
+        </button>
+        <button class="desktop-icon icon-toolkit" data-open="toolkit" type="button" aria-label="Synthesizer">
+          <span class="icon-art icon-tool" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/e93e6147-2870-4dd3-b81e-a8d4153730c7/ico-synth.png" alt=""></span>
+          <span class="icon-label">Synthesizer</span>
+        </button>
+        <button class="desktop-icon icon-camera" data-open="photos" type="button" aria-label="Photos">
           <span class="icon-art icon-camera-art" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/b449ad14-25ab-4db8-9339-df3c53e5779d/ico-camera-v2.png" alt=""></span>
-          <span class="icon-label">photos</span><small>personal archive</small>
+          <span class="icon-label">Photos</span>
         </button>
       </div>
 
@@ -98,90 +102,174 @@
       </nav>
       <div class="desktop-status"><span class="status-dot"></span> desktop online</div>
 
-      <section class="window window-about" data-window="about" role="dialog" aria-modal="false" aria-label="My shelf" hidden>
-        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>my_shelf.app</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
-        <div class="window-body about-body">
-          <p class="window-kicker">MY SHELF / A PLACEHOLDER</p>
-          <h1>books, films,<br>and things to keep.</h1>
-          <p>This shelf is intentionally empty for now. Its contents will be replaced after the desktop structure is approved.</p>
-          <div class="about-points"><span>books</span><span>films</span><span>music</span><span>in progress</span></div>
+      <div id="collectionModal" class="app-modal" role="dialog" aria-modal="true">
+        <div class="cm-card">
+          <div class="cm-head">
+            <button type="button" class="win-close" id="cmClose" aria-label="Close"></button>
+            <span class="win-title" id="cmTitle">My Shelf</span>
+          </div>
+          <div class="cm-body" id="cmBody"></div>
         </div>
-      </section>
+      </div>
 
-      <section class="window window-works" data-window="works" role="dialog" aria-modal="false" aria-label="Case studies" hidden>
-        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>case_studies / 03</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
-        <div class="window-body works-body">
-          <div class="window-heading"><div><p class="window-kicker">FOLDER / CASE STUDIES</p><h2>case studies</h2></div><span>03 items</span></div>
-          <div class="work-files">
-            <button type="button"><span class="file-thumb file-tint-one" aria-hidden="true"></span><span><b>01 / case study</b><small>content placeholder</small></span><i>↗</i></button>
-            <button type="button"><span class="file-thumb file-tint-two" aria-hidden="true"></span><span><b>02 / case study</b><small>content placeholder</small></span><i>↗</i></button>
-            <button type="button"><span class="file-thumb file-tint-three" aria-hidden="true"></span><span><b>03 / case study</b><small>content placeholder</small></span><i>↗</i></button>
+      <div id="previewModal" class="app-modal" role="dialog" aria-modal="true">
+        <div class="pv-card">
+          <div class="pv-head">
+            <button type="button" class="win-close" id="pvClose" aria-label="Close"></button>
+            <span class="win-title" id="pvFilename">Resume</span>
+          </div>
+          <div id="pvScroll">
+            <div style="padding:24px 32px 10px;display:flex;justify-content:center">
+              <img id="pvImg" alt="">
+            </div>
+            <div style="padding:14px 32px 6px;text-align:center">
+              <div id="pvTitle" style="font-size:24px;font-weight:700;color:#111"></div>
+              <div id="pvSub" style="font-size:13px;color:#6a6a70;margin-top:4px"></div>
+              <a id="pvPdf" href="https://www.parinazkassemi.com/__l5e/assets-v1/5a1f2e98-e513-4a1b-a003-5369caa89bcc/Parinaz_Kassemi_Resume.pdf" target="_blank" rel="noopener noreferrer">open_pdf ↗</a>
+            </div>
+            <div style="padding:14px 40px 22px"><div id="pvMeta"></div></div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section class="window window-notes" data-window="notes" role="dialog" aria-modal="false" aria-label="Sticky notes" hidden>
-        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>sticky_notes.app</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
-        <div class="window-body notes-body">
-          <p class="window-kicker">STICKY NOTES / SCRATCHPAD</p>
-          <h2>pin a thought.</h2>
-          <ul>
-            <li><time>01</time><span>Leave a note for a future story.</span></li>
-            <li><time>02</time><span>Keep the details that do not fit on the main site.</span></li>
-            <li><time>03</time><span>Change the text later, without changing the desktop.</span></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="window window-archive" data-window="archive" role="dialog" aria-modal="false" aria-label="Resume" hidden>
-        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>resume.pdf</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
-        <div class="window-body archive-body">
-          <div class="window-heading"><div><p class="window-kicker">DOCUMENT / PDF</p><h2>resume</h2></div><span>2026</span></div>
-          <div class="archive-grid">
-            <div class="resume-paper"><b>curriculum vitae</b><span></span><span></span><span></span><i></i><span></span><span></span></div>
-            <div class="resume-copy"><b>A small preview.</b><p>The actual contents can be inserted after the desktop is approved.</p><button type="button" disabled>download PDF</button></div>
+      <div id="notebookModal" class="app-modal" role="dialog" aria-modal="true">
+        <div class="nb-frame" data-view="note">
+          <div class="nb-titlebar">
+            <button type="button" class="win-close" id="notebookClose" aria-label="Close"></button>
+            <button type="button" class="nb-back" id="notebookBack">notes</button>
+            <span class="win-title">Notebook</span>
+          </div>
+          <div class="nb-body">
+            <aside class="nb-sidebar">
+              <div class="nb-side-h">notes</div>
+              <button type="button" class="nb-item active" data-note="ai">artificial_intelligence.md</button>
+              <button type="button" class="nb-item" data-note="philosophy">philosophy.md</button>
+              <button type="button" class="nb-item" data-note="values">values.md</button>
+            </aside>
+            <main class="nb-page">
+              <div class="nb-datebar" id="nbDate">Note</div>
+              <div class="nb-title-box" id="nbTitle">title</div>
+              <div class="nb-content" id="nbContent"></div>
+            </main>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section class="window window-toolkit" data-window="toolkit" role="dialog" aria-modal="false" aria-label="Synthesizer" hidden>
-        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>synthesizer.app</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
-        <div class="window-body toolkit-body">
-          <p class="window-kicker">SYNTHESIZER / PLAYGROUND</p>
-          <h2>make a little noise.</h2>
-          <div class="synth-board" aria-label="视觉合成器"><button type="button">A</button><button type="button">B</button><button type="button">C</button><button type="button">D</button><button type="button">E</button><button type="button">F</button><button type="button">G</button><button type="button">H</button></div>
-          <p class="toolkit-note">An intentionally lightweight interaction. It can become a proper creative experiment later.</p>
-        </div>
-      </section>
-
-      <section class="window window-chess" data-window="chess" role="dialog" aria-modal="false" aria-label="Chess" hidden>
-        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>chess.app</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
-        <div class="window-body chess-body"><p class="window-kicker">CHESS / MINI APP</p><h2>take a break.</h2><div class="chess-board" aria-label="棋盘"></div></div>
-      </section>
-
-      <section class="window window-notebook" data-window="notebook" role="dialog" aria-modal="false" aria-label="Notebook" hidden>
-        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>notebook.txt</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
-        <div class="window-body notes-body"><p class="window-kicker">NOTEBOOK / LONG FORM</p><h2>write it down.</h2><ul><li><time>001</time><span>A space held for essays, ideas and longer notes.</span></li><li><time>002</time><span>The information will come later. The form is ready first.</span></li></ul></div>
-      </section>
-
-      <section class="window window-photos" data-window="photos" role="dialog" aria-modal="false" aria-label="Photos" hidden>
-        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>photos.app</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
-        <div class="window-body photos-body">
-          <div class="window-heading"><div><p class="window-kicker">PERSONAL ARCHIVE</p><h2>photos</h2></div><span>library</span></div>
-          <div class="photo-grid">
-            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/c1f3604a-9c67-4a9a-9ad3-dd6284c5fc31/photo-sunflower-v2.png" alt="Sunflowers">
-            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/83250b2e-2de8-4575-81eb-7284e4b5d804/photo-botanical_garden.png" alt="Botanical garden">
-            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/5f7e6c8f-3b3e-4c94-adba-ea44e20c274e/photo-golden_gate.png" alt="Golden Gate Bridge">
-            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/e3b7e125-3f95-4ee9-89e3-7efe55d8ca0e/photo-4th_of_july.png" alt="Fourth of July fireworks">
-            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/fae56235-59de-4558-98fc-cec0656f099b/photo-hawaii_tree2.png" alt="Palm tree in Hawaii">
-            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/f41fee25-87b8-4532-b22b-d434f5ffbaa5/photo-cat_sf.png" alt="Cat in San Francisco">
+      <div id="chessModal" class="app-modal" role="dialog" aria-modal="true" aria-label="Chess">
+        <div class="chm-frame">
+          <div class="chm-bar">
+            <button type="button" class="win-close" id="chessClose" aria-label="Close"></button>
+            <span class="win-title">Chess</span>
+          </div>
+          <div class="chm-body">
+            <div class="ch-app">
+              <div class="w-title"><span>chess</span><span class="ch-side">you · white</span></div>
+              <div class="ch-board" id="chBoard" role="grid" aria-label="Chess board"></div>
+              <div class="ch-meta"><span id="chStatus">your move</span><button type="button" id="chReset">new game</button></div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <div class="image-preview" data-preview-modal hidden role="dialog" aria-modal="true" aria-label="查看档案图片"><button type="button" data-preview-close aria-label="关闭预览">×</button><img data-preview-image alt=""></div>
+      <div id="pk01Modal" class="app-modal" role="dialog" aria-modal="true">
+        <div id="pk01Card">
+          <div style="height:44px;display:flex;align-items:center;padding:0 16px;gap:8px;border-bottom:1px solid #111;background:#0e0e12;position:relative">
+            <button type="button" class="win-close" id="pk01Close" aria-label="Close"></button>
+            <span class="win-title" style="color:#ddd">Synthesizer</span>
+          </div>
+          <div style="position:relative;flex:1;min-height:0;display:flex">
+            <canvas id="pk01Canvas" style="display:block;flex:1;min-height:0;width:100%;cursor:crosshair;background:radial-gradient(120% 90% at 50% 40%,#14161c 0%,#06070a 70%,#000 100%)"></canvas>
+          </div>
+          <div id="pk01Panel" style="background:#0a0a0a;border-top:1px solid #1a1a1a;padding:10px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <div style="background:#060606;border:1px solid #111;border-radius:2px;padding:3px 8px;min-width:44px;text-align:center"><span id="pk01Note" style="font-size:11px;color:#7a7a7a">--</span></div>
+            <div class="pk01-knob-group" data-key="decay"><div class="pk01-knob"><div class="pk01-knob-dot"></div></div><span class="pk01-knob-lbl">decay</span><span class="pk01-knob-val">0.80</span></div>
+            <div class="pk01-knob-group" data-key="reverb"><div class="pk01-knob"><div class="pk01-knob-dot"></div></div><span class="pk01-knob-lbl">reverb</span><span class="pk01-knob-val">0.30</span></div>
+            <div class="pk01-knob-group" data-key="size"><div class="pk01-knob"><div class="pk01-knob-dot"></div></div><span class="pk01-knob-lbl">size</span><span class="pk01-knob-val">0.50</span></div>
+            <div class="pk01-knob-group" data-key="spread"><div class="pk01-knob"><div class="pk01-knob-dot"></div></div><span class="pk01-knob-lbl">spread</span><span class="pk01-knob-val">0.50</span></div>
+            <div class="pk01-wave-row" style="display:flex;gap:4px">
+              <button type="button" class="pk01-wave selected" data-wave="sine" aria-label="sine"><svg width="16" height="12" viewBox="0 0 16 12"><path d="M1 6 C3 1 5 1 8 6 C11 11 13 11 15 6" stroke="#fff" stroke-width="1.5" fill="none"/></svg></button>
+              <button type="button" class="pk01-wave" data-wave="triangle" aria-label="triangle"><svg width="16" height="12" viewBox="0 0 16 12"><polyline points="1,10 5,2 8,10 12,2 15,10" stroke="#fff" stroke-width="1.5" fill="none"/></svg></button>
+              <button type="button" class="pk01-wave" data-wave="sawtooth" aria-label="sawtooth"><svg width="16" height="12" viewBox="0 0 16 12"><polyline points="1,10 5,2 5,10 9,2 9,10 13,2 13,10 15,10" stroke="#fff" stroke-width="1.5" fill="none"/></svg></button>
+              <button type="button" class="pk01-wave" data-wave="square" aria-label="square"><svg width="16" height="12" viewBox="0 0 16 12"><polyline points="1,10 1,2 7,2 7,10 9,10 9,2 15,2 15,10" stroke="#fff" stroke-width="1.5" fill="none"/></svg></button>
+            </div>
+            <button type="button" id="pk01Clear" aria-label="Clear" style="width:24px;height:24px;background:#111;border:1px solid #2a2a2a;border-radius:50%;cursor:pointer;padding:0;color:#777">×</button>
+            <span style="margin-left:auto;font-size:9px;color:#4a4a4a;letter-spacing:.14em;text-transform:uppercase">click or drag to play · scroll knobs</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="stickiesModal" class="app-modal" role="dialog" aria-modal="true">
+        <div class="st-card">
+          <div id="stickiesHeader">
+            <button type="button" class="win-close" id="stickiesClose" aria-label="Close"></button>
+            <span class="win-title">Sticky Notes</span>
+            <div style="margin-left:auto;display:flex;gap:10px">
+              <button type="button" class="st-icobtn" id="stViewWallBtn"><span class="st-icobtn-ico">▦</span><span class="st-icobtn-lbl">wall</span></button>
+              <button type="button" class="st-icobtn" id="stClear"><span class="st-icobtn-ico">⌫</span><span class="st-icobtn-lbl">clear</span></button>
+            </div>
+          </div>
+          <div id="stBody" style="display:flex;flex:1;min-height:0">
+            <aside id="stSidebar">
+              <button type="button" class="st-tool active" data-brush="pen" title="pen">✎</button>
+              <button type="button" class="st-brush" data-brush="marker" title="marker">▮</button>
+              <button type="button" class="st-brush" data-brush="eraser" title="eraser">⌫</button>
+              <button type="button" class="st-tool" data-tab="sticker" title="stickers">😊</button>
+              <input type="range" id="stSize" min="1" max="26" value="4" aria-label="Brush size" style="width:44px">
+              <div id="stColors" style="display:grid;grid-template-columns:repeat(2,18px);gap:6px"></div>
+              <button type="button" class="st-tool" id="stPaperBtn" title="paper">▢</button>
+            </aside>
+            <div id="stPanes" style="flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden">
+              <div id="stDrawPane" style="display:flex;flex-direction:column;overflow:auto">
+                <canvas id="stCanvas" width="1120" height="820" style="display:block;width:100%;height:auto;background:#fff;cursor:crosshair;touch-action:none"></canvas>
+                <div id="stForm" style="padding:10px 14px 12px;display:flex;gap:8px;align-items:center;background:#fafaf7;border-top:1px solid rgba(0,0,0,.06)">
+                  <input type="text" id="stName" class="st-meta-input" placeholder="Your name (optional)" maxlength="40" style="flex:1;padding:7px 10px;border-radius:6px;border:1px solid rgba(0,0,0,.12)">
+                  <input type="text" id="stMessage" class="st-meta-input" placeholder="Say hi 👋" maxlength="200" style="flex:2;padding:7px 10px;border-radius:6px;border:1px solid rgba(0,0,0,.12)">
+                  <button type="button" id="stPost" class="st-post" style="padding:7px 14px;border:0;border-radius:8px;background:#1a1a1a;color:#fff;font-weight:700;cursor:pointer">post ↗</button>
+                </div>
+                <div id="stPostStatus" style="padding:0 14px 10px;font-size:11px;color:#8a857a;background:#fafaf7">Draw a little sticky · tap paper to change the background · add your name and say hi.</div>
+              </div>
+              <div id="stWallPane" style="display:none;flex-direction:column;overflow:hidden;background:#f5f2ec">
+                <div style="padding:12px 16px;font-size:10px;color:#6b655a;letter-spacing:.14em;text-transform:uppercase">a little wall of hellos.</div>
+                <div id="stWallGrid" style="display:grid;grid-template-columns:repeat(3,1fr);overflow:auto;max-height:70vh"></div>
+              </div>
+              <div id="stStickerPane" style="display:none;flex-direction:column;overflow:hidden">
+                <div style="padding:14px 16px 6px;font-size:10px;color:#6b655a;letter-spacing:.16em;text-transform:uppercase">pick an emoji · then tap your sticky to decorate it.</div>
+                <div class="st-emoji-grid" id="stStickerGrid"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="caseHubModal" class="app-modal" role="dialog" aria-modal="true">
+        <div class="ch-card">
+          <div class="ch-head">
+            <button type="button" class="win-close" id="chClose" aria-label="Close"></button>
+            <span class="win-title">Case Studies</span>
+          </div>
+          <div class="ch-body">
+            <nav class="ch-sidebar" aria-label="Case studies">
+              <button type="button" class="ch-tab" data-case="daydreamz"><span class="ch-tab-num">Case 01</span><span class="ch-tab-name">Daydreamz</span><span class="ch-tab-sub">Self-Built Mobile Web App</span></button>
+              <button type="button" class="ch-tab" data-case="ondemand"><span class="ch-tab-num">Case 02</span><span class="ch-tab-name">On Demand</span><span class="ch-tab-sub">New Product Launch</span></button>
+              <button type="button" class="ch-tab" data-case="laic"><span class="ch-tab-num">Case 03</span><span class="ch-tab-name">L·AI·C</span><span class="ch-tab-sub">AI Chatbot</span></button>
+            </nav>
+            <section class="ch-main" id="chMain"></section>
+          </div>
+        </div>
+      </div>
+
+      <div id="caseWriteup" class="case-writeup" role="dialog" aria-modal="true">
+        <div class="cs-card">
+          <div class="cs-header">
+            <button type="button" class="win-close" id="caseWriteupClose" aria-label="Close"></button>
+            <span class="win-title" id="caseWriteupTitle">Case study</span>
+          </div>
+          <div class="cs-scroll" id="caseWriteupBody"></div>
+        </div>
+      </div>
     </section>
   </main>
-  <script src="js/creative-desktop.js?v=2"></script>
+  <script src="js/creative-desktop.js?v=3"></script>
+  <script src="js/creative-desktop-apps.js?v=3"></script>
 </body>
 </html>
