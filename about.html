@@ -10,7 +10,7 @@
   <link rel="preload" href="fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/style.css?v=91">
+  <link rel="stylesheet" href="css/style.css?v=105">
   <link rel="stylesheet" href="css/admin-auth.css?v=4">
 </head>
 <body class="about-page">
@@ -35,7 +35,32 @@
     <div class="page-bg"></div>
     <div class="page-scroll">
 
-      <section class="s-about-reading" id="top" aria-labelledby="about-reading-title">
+      <section class="s-hero" id="top">
+        <div class="hero-cream-field" aria-hidden="true"></div>
+        <div class="hero-layout">
+          <div class="hero-copy" lang="zh-CN">
+            <p class="hero-kicker">AI-Native 设计师</p>
+            <h1><canvas class="hero-title-fluid" data-hero-title-fluid aria-hidden="true"></canvas><span>设计不止于呈现</span><span>更要抵达结果</span></h1>
+            <p class="hero-subtitle">狂热的 AI 实践派。用代码与模型重塑设计手段，只用 AI 搞定工作中的一切不可能。</p>
+          </div>
+
+          <figure class="hero-computer" aria-label="复古电脑中的 AI 实践终端动画">
+            <img src="assets/hero-retro-computer.png" alt="米白色复古电脑" width="1448" height="1086">
+            <div class="hero-terminal" aria-hidden="true">
+              <div class="hero-terminal-bar"><i></i><i></i><i></i><span>maridian — claude — 80×24</span></div>
+              <div class="hero-terminal-scroll">
+                <pre class="hero-terminal-output" data-terminal-output></pre><span class="hero-terminal-cursor">_</span>
+              </div>
+            </div>
+          </figure>
+        </div>
+
+        <div class="hero-scroll-hint">
+          <span>Scroll to discover more about me</span>
+        </div>
+      </section>
+
+      <section class="s-about-reading" aria-labelledby="about-reading-title">
         <div class="about-reading-glow" aria-hidden="true"></div>
         <div class="reading-orbit" data-reading-orbit>
           <div class="reading-center">
@@ -240,7 +265,9 @@
 
 <script src="js/work-menu.js?v=1"></script>
 <script src="js/hscroll.js?v=1"></script>
-  <script src="js/about.js?v=4"></script>
+<script src="js/about.js?v=4"></script>
+<script src="js/hero-terminal.js?v=1"></script>
+<script src="js/hero-title-fluid.js?v=4"></script>
 <script src="js/admin-auth.js?v=5"></script>
 <script src="js/site-analytics.js?v=3"></script>
 </body>
