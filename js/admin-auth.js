@@ -123,9 +123,11 @@
     var accountTitle = element('h2', '', '个人中心');
     accountTitle.id = 'adminAccountTitle';
     accountEmail = element('p', 'admin-auth-identity');
-    var accountIntro = element('p', 'admin-auth-copy', '管理员身份已验证。你可以进入运营后台，或直接在这里修改登录密码。');
-    var dashboardLink = element('a', 'admin-auth-primary', '进入运营后台  ↗');
-    dashboardLink.href = '/ops/';
+    var accountIntro = element('p', 'admin-auth-copy', '管理员身份已验证。你可以编辑 Side B 的个人资料、查看运营数据，或直接在这里修改登录密码。');
+    var dashboardLink = element('a', 'admin-auth-primary', '编辑 Side B 资料  ↗');
+    dashboardLink.href = '/admin/';
+    var metricsLink = element('a', 'admin-auth-secondary', '查看运营数据  ↗');
+    metricsLink.href = '/ops/';
 
     passwordDetails = element('details', 'admin-auth-password');
     var passwordSummary = element('summary', '', '修改密码');
@@ -148,7 +150,7 @@
     accountMessage = element('p', 'admin-auth-message');
     accountMessage.setAttribute('role', 'status');
     accountMessage.setAttribute('aria-live', 'polite');
-    accountView.append(accountEyebrow, accountTitle, accountEmail, accountIntro, dashboardLink, passwordDetails, logoutButton, accountMessage);
+    accountView.append(accountEyebrow, accountTitle, accountEmail, accountIntro, dashboardLink, metricsLink, passwordDetails, logoutButton, accountMessage);
 
     dialogPanel.append(panelTop, loginView, accountView);
     layer.append(backdrop, dialogPanel);

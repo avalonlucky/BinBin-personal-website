@@ -224,6 +224,12 @@
   color: #171715;
 }
 
+a.admin-auth-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .admin-auth-password {
   margin-top: 1.2rem;
   border: 1px solid #c8c6bb;

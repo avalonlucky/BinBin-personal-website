@@ -9,6 +9,28 @@
   Referrer-Policy: no-referrer
   X-Frame-Options: DENY
 
+/admin/*
+  Cache-Control: no-store
+  Referrer-Policy: no-referrer
+  X-Frame-Options: DENY
+  X-Robots-Tag: noindex, nofollow, noarchive
+  X-Content-Type-Options: nosniff
+
+/api/admin/*
+  Cache-Control: no-store
+  Referrer-Policy: no-referrer
+  X-Frame-Options: DENY
+
+/api/notion/*
+  Cache-Control: no-store
+  X-Content-Type-Options: nosniff
+
+/assets/index-BFexWVS5.js
+  Cache-Control: no-cache
+
+/assets/profile-widget-CTVwCRWr.js
+  Cache-Control: no-cache
+
 /assets/work/culture-wall/showroom-film-*.mp4
   Cache-Control: public, max-age=31536000, immutable
 

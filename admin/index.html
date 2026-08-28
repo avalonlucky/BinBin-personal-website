@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>内容后台 · Maridian Space</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23020202'/><path d='M14 48V16h8l10 16 10-16h8v32h-8V29L32 45 22 29v19z' fill='%23FBFBF4'/></svg>">
+  <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="admin.css?v=1">
+</head>
+<body>
+  <section class="access" id="accessView" hidden>
+    <div class="access-brand">MARIDIAN SPACE</div>
+    <form class="access-form" id="loginForm">
+      <p class="eyebrow">PRIVATE CONTENT</p>
+      <h1>登录后，编辑<br>Side B 的个人资料。</h1>
+      <p>这里与网站首页右下角的登录入口使用同一个管理员账号。</p>
+      <label for="email">管理员邮箱</label>
+      <input id="email" name="email" type="email" autocomplete="username" required placeholder="name@example.com">
+      <label for="password">密码</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="请输入密码">
+      <button type="submit">登录并进入后台</button>
+      <p class="form-message" id="loginMessage" role="status" aria-live="polite"></p>
+      <a href="../index.html">← 返回网站首页</a>
+    </form>
+  </section>
+
+  <div class="admin" id="adminView" hidden>
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="返回 Maridian Space"><span>M</span>Maridian Space</a>
+      <nav aria-label="后台导航">
+        <a class="is-active" href="./">内容编辑</a>
+        <a href="../ops/">运营数据</a>
+        <a href="../creative-desktop">查看 Side B ↗</a>
+      </nav>
+      <button class="save save-top" id="saveTop" type="button">保存修改</button>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">SIDE B CONTENT</p>
+          <h1>把写死的信息，<br>变成你随时能改的内容。</h1>
+        </div>
+        <div class="intro-copy">
+          <p>这里不依赖 Notion。你保存的内容会进入网站自己的数据库，并同步到 Side B 桌面的个人名片、最近在听、成就、影片和冷知识组件。</p>
+          <p class="updated" id="updatedText">正在读取最近保存的数据…</p>
+        </div>
+      </section>
+
+      <nav class="section-nav" id="sectionNav" aria-label="内容分组"></nav>
+      <div id="formApp"></div>
+    </main>
+
+    <div class="savebar">
+      <p id="saveStatus" role="status" aria-live="polite"></p>
+      <button class="save" id="saveBottom" type="button">保存修改</button>
+    </div>
+  </div>
+  <script src="admin.js?v=1"></script>
+</body>
+</html>
