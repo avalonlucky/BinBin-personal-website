@@ -12,9 +12,10 @@
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="css/style.css?v=107">
+  <link rel="stylesheet" href="css/hero-cinematic.css?v=3">
   <link rel="stylesheet" href="css/admin-auth.css?v=4">
 </head>
-<body>
+<body class="home-cinematic">
 <div class="site">
 
   <!-- ══════════════════════════════════════
@@ -40,31 +41,30 @@
     <div class="page-scroll">
 
     <!-- ══════════════════════════════════════
-         HERO — cream, split layout, terminal animation
+         CINEMATIC HERO — scroll-scrubbed original MP4
     ══════════════════════════════════════ -->
-    <section class="s-hero" id="top">
-      <div class="hero-cream-field" aria-hidden="true"></div>
-      <div class="hero-layout">
-        <div class="hero-copy" lang="zh-CN">
-          <p class="hero-kicker">AI-Native 设计师</p>
-          <h1><canvas class="hero-title-fluid" data-hero-title-fluid aria-hidden="true"></canvas><span>设计不止于呈现</span><span>更要抵达结果</span></h1>
-          <p class="hero-subtitle">狂热的 AI 实践派。用代码与模型重塑设计手段，只用 AI 搞定工作中的一切不可能。</p>
-        </div>
+    <section class="s-hero cinematic-hero" id="top" data-cinematic-hero>
+      <div class="cinematic-sticky">
+        <div class="cinematic-scene" data-cinematic-scene>
+          <video class="cinematic-video" data-cinematic-video
+                 data-src="assets/hero-cinematic/field-laptop-original.mp4"
+                 poster="assets/hero-cinematic/field-laptop-poster.png"
+                 width="1280" height="720"
+                 muted playsinline preload="auto"
+                 disablepictureinpicture
+                 aria-label="人物在夜色花田中使用电脑，镜头随滚动逐步推进至电脑屏幕"></video>
+          <div class="cinematic-vignette" data-cinematic-vignette aria-hidden="true"></div>
 
-        <figure class="hero-computer" aria-label="复古电脑中的 AI 实践终端动画">
-          <img src="assets/hero-retro-computer.png" alt="米白色复古电脑" width="1448" height="1086">
-          <div class="hero-terminal" aria-hidden="true">
-            <div class="hero-terminal-bar"><i></i><i></i><i></i><span>maridian — claude — 80×24</span></div>
+          <div class="cinematic-terminal" data-cinematic-terminal aria-hidden="true">
             <div class="hero-terminal-scroll">
-              <pre class="hero-terminal-output" data-terminal-output></pre><span class="hero-terminal-cursor">_</span>
+              <pre class="hero-terminal-output" data-cinematic-terminal-output></pre><span class="hero-terminal-cursor">_</span>
             </div>
           </div>
-        </figure>
-      </div>
+        </div>
 
-      <!-- Scroll hint -->
-      <div class="hero-scroll-hint">
-        <span>Scroll to discover my work</span>
+        <div class="cinematic-intro" data-cinematic-intro lang="zh-CN">
+          <h1>设计不止于呈现，<br>更要抵达结果。</h1>
+        </div>
       </div>
     </section>
 
@@ -422,8 +422,7 @@
   <script src="js/work-menu.js?v=2"></script>
   <script src="js/hscroll.js?v=1"></script>
   <script src="js/main.js?v=48"></script>
-  <script src="js/hero-terminal.js?v=1"></script>
-  <script src="js/hero-title-fluid.js?v=4"></script>
+  <script src="js/hero-cinematic.js?v=3"></script>
 <script src="js/admin-auth.js?v=5"></script>
 <script src="js/site-analytics.js?v=3"></script>
 </body>
