@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#10213b">
+  <title>Maridian Desktop — a small corner of Meridian Space</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2310213b'/%3E%3Cpath d='M15 48V16h8l9 15 9-15h8v32h-8V31L32 46 23 31v17z' fill='%23f6f3ec'/%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/PPMigra-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/creative-desktop.css?v=1">
+</head>
+<body class="creative-desktop-page">
+  <main class="desktop-experience" aria-label="Maridian Desktop 创意档案">
+    <section class="lock-screen" data-lock-screen aria-label="Maridian Desktop 锁屏">
+      <div class="lock-sky" aria-hidden="true"></div>
+      <div class="lock-grain" aria-hidden="true"></div>
+      <div class="lock-top">
+        <p data-lock-date>—</p>
+        <time data-lock-time>—</time>
+      </div>
+      <div class="lock-center">
+        <div class="lock-mark" aria-hidden="true">M</div>
+        <p class="lock-name">Maridian Space</p>
+        <p class="lock-role">Visual designer · AI builder</p>
+      </div>
+      <button class="unlock-button" type="button" data-unlock>
+        <span>进入这张桌面</span><i aria-hidden="true">↗</i>
+      </button>
+      <p class="lock-foot">一些不放在主站，却同样构成我的信息。</p>
+    </section>
+
+    <section class="desktop-shell" data-desktop hidden aria-label="Maridian Desktop">
+      <div class="desktop-wallpaper" aria-hidden="true"></div>
+      <div class="desktop-grain" aria-hidden="true"></div>
+
+      <header class="desktop-menubar">
+        <button class="menu-logo" type="button" data-open="about"><span>M</span> Maridian</button>
+        <p class="menu-caption">个人信息档案 / 01</p>
+        <div class="menu-actions">
+          <button type="button" data-theme-toggle aria-label="切换桌面背景">调色</button>
+          <a href="index.html" aria-label="返回主站">返回主站 ↗</a>
+        </div>
+      </header>
+
+      <div class="desktop-stage" data-stage>
+        <p class="desktop-intro">把可被展开的信息，<br>留在另一张桌面。</p>
+        <div class="desktop-help"><span class="desktop-help-desktop">双击图标打开 · ESC 关闭窗口</span><span class="desktop-help-mobile">点击图标打开</span></div>
+
+        <button class="desktop-icon icon-work" data-open="works" type="button">
+          <span class="icon-art icon-folder" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="icon-label">精选作品</span><small>05 projects</small>
+        </button>
+        <button class="desktop-icon icon-notes" data-open="notes" type="button">
+          <span class="icon-art icon-notebook" aria-hidden="true"><i></i><i></i></span>
+          <span class="icon-label">随手记录</span><small>notes.txt</small>
+        </button>
+        <button class="desktop-icon icon-archive" data-open="archive" type="button">
+          <span class="icon-art icon-archive-art" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="icon-label">过程档案</span><small>archive / 12</small>
+        </button>
+        <button class="desktop-icon icon-toolkit" data-open="toolkit" type="button">
+          <span class="icon-art icon-tool" aria-hidden="true">✦</span>
+          <span class="icon-label">我的工具箱</span><small>workflow.app</small>
+        </button>
+        <button class="desktop-icon icon-about" data-open="about" type="button">
+          <span class="icon-art icon-profile" aria-hidden="true">M</span>
+          <span class="icon-label">关于 Meridian</span><small>read me</small>
+        </button>
+      </div>
+
+      <nav class="desktop-dock" aria-label="桌面快捷入口">
+        <button type="button" data-open="works" aria-label="打开精选作品"><span>▦</span></button>
+        <button type="button" data-open="notes" aria-label="打开随手记录"><span>⌁</span></button>
+        <button type="button" data-open="archive" aria-label="打开过程档案"><span>◫</span></button>
+        <button type="button" data-open="toolkit" aria-label="打开工具箱"><span>✦</span></button>
+        <a href="index.html" aria-label="返回主站"><span>↖</span></a>
+      </nav>
+      <div class="desktop-status"><span class="status-dot"></span> 这是一张可探索的桌面</div>
+
+      <section class="window window-about" data-window="about" role="dialog" aria-modal="false" aria-label="关于 Meridian" hidden>
+        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>about_meridian.md</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
+        <div class="window-body about-body">
+          <p class="window-kicker">HELLO, I AM MERIDIAN.</p>
+          <h1>不只把事情设计出来，也把它们推进下去。</h1>
+          <p>这张桌面是主站之外的一个小角落。它不替代作品集，而是收纳一些过程、偏好、试验和还没准备好成为“案例”的信息。</p>
+          <div class="about-points"><span>视觉 / 品牌</span><span>空间 / 展会</span><span>AI / 工作流</span></div>
+          <a class="window-link" href="about.html">打开完整介绍 <b>↗</b></a>
+        </div>
+      </section>
+
+      <section class="window window-works" data-window="works" role="dialog" aria-modal="false" aria-label="精选作品" hidden>
+        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>selected_work / 05</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
+        <div class="window-body works-body">
+          <div class="window-heading"><div><p class="window-kicker">FOLDER / SELECTED WORK</p><h2>精选作品</h2></div><span>05 items</span></div>
+          <div class="work-files">
+            <a href="work/ankki-product-sheets.html"><img src="assets/work/ankki/card-product-sheets-2026.webp" alt="昂楷科技产品单页系列"><span><b>01 / 产品单页</b><small>13 款产品的视觉营销语言</small></span><i>↗</i></a>
+            <a href="work/ankki-vision-journal.html"><img src="assets/work/vision/card-vision-2026.webp" alt="昂楷视界企业内刊"><span><b>02 / 昂楷视界</b><small>企业内刊设计体系</small></span><i>↗</i></a>
+            <a href="work/ankki-livestream-launch.html"><img src="assets/work/livestream/live-cover.jpg" alt="线上发布会视觉体系"><span><b>03 / 线上发布会</b><small>从预热到收官的视觉体系</small></span><i>↗</i></a>
+            <a href="work/ankki-dmhc-exhibition.html"><img src="assets/work/dmhc/hero-plaza-panel-960.jpg" alt="DMHC 特装展"><span><b>04 / DMHC 特装展</b><small>国家级特装展，从筹备到落地</small></span><i>↗</i></a>
+            <a href="work/ankki-culture-wall.html"><img src="assets/work/culture-wall/card-culture-wall.webp" alt="文化墙展厅"><span><b>05 / 文化墙展厅</b><small>把办公室编成有次序的参观</small></span><i>↗</i></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="window window-notes" data-window="notes" role="dialog" aria-modal="false" aria-label="随手记录" hidden>
+        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>notes.txt</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
+        <div class="window-body notes-body">
+          <p class="window-kicker">NOTES / OUTSIDE THE CASE STUDY</p>
+          <h2>一些还在生长的内容。</h2>
+          <ul>
+            <li><time>2026</time><span>把设计排期、质检和资料整理接进 AI Agent。</span></li>
+            <li><time>ONGOING</time><span>持续记录 AI 工具如何真正进入设计流程。</span></li>
+            <li><time>SIDE</time><span>在 YouTube 和小红书，分享真实的试验和工作方法。</span></li>
+            <li><time>NEXT</time><span>这个文件夹会慢慢补上：失败的草稿、过程的判断，以及没有被放进作品集的东西。</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="window window-archive" data-window="archive" role="dialog" aria-modal="false" aria-label="过程档案" hidden>
+        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>archive / fragments</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
+        <div class="window-body archive-body">
+          <div class="window-heading"><div><p class="window-kicker">ARCHIVE / PROCESS</p><h2>过程档案</h2></div><span>click to enlarge</span></div>
+          <div class="archive-grid">
+            <button type="button" data-preview="assets/work/dmhc/ai-draft-1.png" aria-label="查看草稿一"><img src="assets/work/dmhc/ai-draft-1.png" alt="展会视觉草稿"></button>
+            <button type="button" data-preview="assets/work/dmhc/ai-copy-2.png" aria-label="查看草稿二"><img src="assets/work/dmhc/ai-copy-2.png" alt="文案草稿"></button>
+            <button type="button" data-preview="assets/work/vision/doc/logo-sketch.webp" aria-label="查看 Logo 草图"><img src="assets/work/vision/doc/logo-sketch.webp" alt="Logo 草图"></button>
+            <button type="button" data-preview="assets/work/culture-wall/showroom-elevation-card.webp" aria-label="查看展厅图纸"><img src="assets/work/culture-wall/showroom-elevation-card.webp" alt="展厅设计图"></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="window window-toolkit" data-window="toolkit" role="dialog" aria-modal="false" aria-label="我的工具箱" hidden>
+        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>toolkit.app</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
+        <div class="window-body toolkit-body">
+          <p class="window-kicker">TOOLKIT / NOT A STACK, A WORKFLOW</p>
+          <h2>工具不是能力的替身，<br>而是推进问题的方式。</h2>
+          <div class="toolkit-list"><span>视觉系统</span><span>信息整理</span><span>文案推演</span><span>AI Agent</span><span>原型 / Demo</span><span>质量检查</span></div>
+          <p class="toolkit-note">我更关心它们何时该进入流程、解决什么、以及是否真的让工作更清楚。</p>
+        </div>
+      </section>
+
+      <div class="image-preview" data-preview-modal hidden role="dialog" aria-modal="true" aria-label="查看档案图片"><button type="button" data-preview-close aria-label="关闭预览">×</button><img data-preview-image alt=""></div>
+    </section>
+  </main>
+  <script src="js/creative-desktop.js?v=1"></script>
+</body>
+</html>
