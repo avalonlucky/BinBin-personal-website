@@ -1,0 +1,1 @@
+var e=new Intl.NumberFormat(`en`,{maximumFractionDigits:0,notation:`compact`});function t(t){return!Number.isFinite(t)||t<0?`—`:e.format(t)}export{t};

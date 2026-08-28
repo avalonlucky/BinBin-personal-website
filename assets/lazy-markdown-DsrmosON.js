@@ -1,0 +1,1 @@
+import{bi as e}from"./app-agent-DHEP3k0d.js";import{r as t,t as n}from"./mdx-E8ZjO5bH.js";var r=e();function i({children:e,components:i}){return(0,r.jsx)(t,{components:i,remarkPlugins:[n],children:e})}export{i as LazyMarkdownRenderer};
