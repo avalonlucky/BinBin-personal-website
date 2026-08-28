@@ -85,7 +85,12 @@
     const writeup = document.querySelector('.case-writeup.open');
     if (writeup) { writeup.classList.remove('open'); return; }
     const modal = [...document.querySelectorAll('.app-modal.open')].pop();
-    if (modal) { modal.classList.remove('open'); modal.style.display = 'none'; return; }
+    if (modal) {
+      if (modal.id === 'pk01Modal') window.__closeSynth?.();
+      modal.classList.remove('open');
+      modal.style.display = 'none';
+      return;
+    }
     const preview = document.querySelector('[data-preview-modal]');
     if (preview && !preview.hidden) { preview.hidden = true; return; }
     const open = windows.filter(win => !win.hidden).sort((a, b) => Number(b.style.zIndex || 0) - Number(a.style.zIndex || 0))[0];

@@ -87,10 +87,32 @@
     const list = body.querySelector('#msSuggestList');
     const countEl = body.querySelector('#msSuggestCount');
     const stored = JSON.parse(localStorage.getItem('desk-shelf-suggestions') || '[]');
+    // Suggestions are persisted in localStorage, so treat every stored value as
+    // untrusted text. Building the rows with textContent prevents a suggestion
+    // from being interpreted as markup when the shelf is opened again.
     const paint = rows => {
-      if (!rows.length) return;
-      list.innerHTML = rows.map(r => `<li><span>${r.body}</span>${r.name ? `<span class="who">— ${r.name}</span>` : ''}</li>`).join('');
-      countEl.textContent = `(${rows.length})`;
+      list.replaceChildren();
+      if (!rows.length) {
+        const empty = document.createElement('li');
+        empty.className = 'ms-empty';
+        empty.textContent = 'no suggestions yet — be the first.';
+        list.append(empty);
+      } else {
+        rows.forEach(row => {
+          const item = document.createElement('li');
+          const body = document.createElement('span');
+          body.textContent = String(row?.body || '');
+          item.append(body);
+          if (row?.name) {
+            const name = document.createElement('span');
+            name.className = 'who';
+            name.textContent = `— ${String(row.name)}`;
+            item.append(name);
+          }
+          list.append(item);
+        });
+      }
+      countEl.textContent = rows.length ? `(${rows.length})` : '';
     };
     paint(stored);
     form.addEventListener('submit', e => {
@@ -634,6 +656,14 @@
     const NOTES = ['C4', 'D4', 'E4', 'G4', 'A4', 'C5', 'D5', 'E5', 'G5', 'A5'];
     const FREQ = { C4: 261.63, D4: 293.66, E4: 329.63, G4: 392, A4: 440, C5: 523.25, D5: 587.33, E5: 659.25, G5: 783.99, A5: 880 };
     let raf = 0;
+    function stop() {
+      if (raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+      state.particles.length = 0;
+      if (state.audio && state.audio.state === 'running') state.audio.suspend();
+    }
     function resize() { const r = canvas.getBoundingClientRect(); canvas.width = r.width * devicePixelRatio; canvas.height = r.height * devicePixelRatio; }
     function initAudio() {
       if (state.audio) return;
@@ -702,7 +732,13 @@
       g.querySelector('.pk01-knob').addEventListener('wheel', e => { e.preventDefault(); set(Math.min(1, Math.max(0, state[key] + (e.deltaY > 0 ? -0.04 : 0.04)))); }, { passive: false });
     });
     clearB?.addEventListener('click', () => { state.particles.length = 0; noteEl.textContent = '--'; });
-    window.__openSynth = () => { openModal(modal); requestAnimationFrame(() => { resize(); if (!raf) frame(); }); };
+    closeB?.addEventListener('click', stop);
+    modal.addEventListener('click', event => { if (event.target === modal) stop(); });
+    window.__openSynth = () => {
+      openModal(modal);
+      requestAnimationFrame(() => { resize(); if (!raf) frame(); });
+    };
+    window.__closeSynth = stop;
     window.addEventListener('resize', () => { if (modal.classList.contains('open')) resize(); });
   })();
 
