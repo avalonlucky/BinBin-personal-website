@@ -926,6 +926,59 @@ function initClock() {
   setInterval(tick, 1000);
 }
 
+function initFooterContact() {
+  const card = document.querySelector('[data-footer-contact]');
+  if (!card) return;
+
+  const contacts = {
+    email: {
+      value: 'bh141425@gmail.com',
+      href: 'mailto:bh141425@gmail.com?subject=' + encodeURIComponent('视觉设计岗位面试沟通'),
+      action: '发邮件',
+      copyLabel: '复制邮箱',
+    },
+    phone: {
+      value: '131 0633 3009',
+      href: 'tel:+8613106333009',
+      action: '拨打',
+      copyLabel: '复制电话',
+    },
+  };
+  const value = card.querySelector('[data-footer-contact-value]');
+  const action = card.querySelector('[data-footer-contact-action]');
+  const copy = card.querySelector('[data-footer-contact-copy]');
+  let mode = 'email';
+
+  const render = () => {
+    const contact = contacts[mode];
+    value.textContent = contact.value;
+    action.href = contact.href;
+    action.querySelector('span').textContent = contact.action;
+    copy.setAttribute('aria-label', contact.copyLabel);
+    card.querySelectorAll('[data-footer-contact-mode]').forEach(button => {
+      button.classList.toggle('is-active', button.dataset.footerContactMode === mode);
+    });
+  };
+
+  card.querySelectorAll('[data-footer-contact-mode]').forEach(button => {
+    button.addEventListener('click', () => {
+      mode = button.dataset.footerContactMode;
+      render();
+    });
+  });
+  copy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(contacts[mode].value);
+      const original = copy.getAttribute('aria-label');
+      copy.setAttribute('aria-label', '已复制');
+      window.setTimeout(() => copy.setAttribute('aria-label', original), 1200);
+    } catch (_) {
+      window.prompt('复制联系方式', contacts[mode].value);
+    }
+  });
+  render();
+}
+
 /* ─────────────────────────────────────────
    INIT
 ───────────────────────────────────────── */
@@ -942,5 +995,6 @@ initFAQ();
 initDragScroll();
 initHeroTilt();
 initClock();
+initFooterContact();
 
 window.addEventListener('resize', () => ScrollTrigger.refresh());

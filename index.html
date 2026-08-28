@@ -11,7 +11,7 @@
   <link rel="preload" href="fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/style.css?v=103">
+  <link rel="stylesheet" href="css/style.css?v=104">
   <link rel="stylesheet" href="css/admin-auth.css?v=4">
 </head>
 <body>
@@ -353,9 +353,23 @@
     ══════════════════════════════════════ -->
     <footer class="s-footer footer-compact" id="contact">
       <div class="footer-compact-main">
-        <div class="footer-compact-contact" aria-label="联系方式">
-          <span class="footer-text-link is-pending" title="LinkedIn 链接待补充">LinkedIn</span>
-          <a class="footer-text-link" href="mailto:bh141425@gmail.com?subject=视觉设计岗位面试沟通">Email</a>
+        <div class="footer-contact-card" aria-label="联系方式" data-footer-contact>
+          <p class="footer-contact-title">期待一次面试聊聊的机会。</p>
+          <div class="footer-contact-switch" role="group" aria-label="选择联系方式">
+            <button type="button" class="is-active" data-footer-contact-mode="email">邮箱</button>
+            <button type="button" data-footer-contact-mode="phone">电话</button>
+          </div>
+          <div class="footer-contact-controls">
+            <div class="footer-contact-value-wrap">
+              <span class="footer-contact-value" data-footer-contact-value>bh141425@gmail.com</span>
+              <button class="footer-contact-copy" type="button" data-footer-contact-copy aria-label="复制邮箱">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="5.6" y="5.6" width="8" height="8" rx="1.6"/><path d="M10.4 5.6v-2A1.6 1.6 0 0 0 8.8 2H4a1.6 1.6 0 0 0-1.6 1.6v4.8A1.6 1.6 0 0 0 4 10h1.6"/></svg>
+              </button>
+            </div>
+            <a class="footer-contact-action" data-footer-contact-action href="mailto:bh141425@gmail.com?subject=视觉设计岗位面试沟通">
+              <span>发邮件</span><span aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
 
         <div class="footer-compact-socials" aria-label="社交平台">
@@ -402,7 +416,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/work-menu.js?v=2"></script>
   <script src="js/hscroll.js?v=1"></script>
-  <script src="js/main.js?v=46"></script>
+  <script src="js/main.js?v=47"></script>
   <script src="js/hero-terminal.js?v=1"></script>
   <script src="js/hero-title-fluid.js?v=4"></script>
 <script src="js/admin-auth.js?v=5"></script>
