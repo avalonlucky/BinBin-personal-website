@@ -67,7 +67,10 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
    of pill/card elements (matches original)
 ───────────────────────────────────────── */
 function initCanvasBorders() {
-  if (prefersReducedMotion.matches) return;
+  // The animated canvas edge is a desktop detail.  On touch devices it keeps
+  // an unnecessary requestAnimationFrame loop alive above the cinematic hero
+  // while the user is trying to scroll natively.
+  if (prefersReducedMotion.matches || !pointerFine.matches) return;
 
   document.querySelectorAll('[data-border]').forEach(el => {
     const canvas = el.querySelector('.border-canvas');
@@ -229,7 +232,10 @@ function initScrollAnimations() {
   if (_scrollAnimsDone) return;
   _scrollAnimsDone = true;
 
-  if (prefersReducedMotion.matches) {
+  // Mobile uses native scroll deliberately.  Keeping every scrub animation
+  // active while a finger is scrolling competes with compositor scrolling,
+  // especially while the hero poster/video is on screen.
+  if (prefersReducedMotion.matches || !desktopMotion()) {
     gsap.set('.reveal-up, .ai-tools-heading, .work-col, .work-section-title, .testi-card', {
       clearProps: 'all',
       opacity: 1,

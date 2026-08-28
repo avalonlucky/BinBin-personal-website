@@ -11,6 +11,7 @@
   if (!hero || !scene || !video || !vignette || !intro || !terminal || !output || !window.gsap || !window.ScrollTrigger) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const mobileLayout = window.matchMedia('(max-width: 768px)').matches;
   const sourceWidth = 1280;
   const sourceHeight = 720;
   const sourceFps = 24;
@@ -248,6 +249,23 @@
   video.addEventListener('seeked', scheduleSeek);
 
   async function loadSource() {
+    // A scroll-scrubbed video means frequent `currentTime` seeks.  That is
+    // smooth with a mouse wheel, but costly on iOS/Android where it competes
+    // with native touch scrolling and causes the page to catch.  Mobile keeps
+    // the intentional opening frame as a poster and hands the next section
+    // back to the browser's native scroll immediately.
+    if (mobileLayout) {
+      hero.classList.add('is-mobile-static');
+      video.pause();
+      terminal.style.display = 'none';
+      intro.style.opacity = '1';
+      intro.style.visibility = 'visible';
+      vignette.style.opacity = '1';
+      scene.style.transform = 'none';
+      if (nav) nav.dataset.theme = 'dark';
+      return;
+    }
+
     const sourceUrl = video.dataset.src;
     if (!sourceUrl) return;
     try {

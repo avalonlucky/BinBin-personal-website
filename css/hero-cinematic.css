@@ -116,8 +116,24 @@
 }
 
 @media (max-width: 768px) {
-  .home-cinematic .cinematic-hero { height: 270vh; }
-  .home-cinematic .cinematic-sticky { min-height: 100svh; }
+  /* Mobile is a native-scroll composition, not a smaller desktop scrub.
+     The poster eliminates repeated video seeks during a touch gesture. */
+  .home-cinematic .cinematic-hero { height: 100svh; }
+  .home-cinematic .cinematic-hero.is-mobile-static .cinematic-sticky {
+    height: 100svh;
+    min-height: 0;
+  }
+  .home-cinematic .cinematic-hero.is-mobile-static .cinematic-scene {
+    transform: none !important;
+  }
+  .home-cinematic .cinematic-hero.is-mobile-static .cinematic-terminal {
+    display: none !important;
+  }
+  .home-cinematic .s-work {
+    margin-top: 0;
+    opacity: 1;
+    will-change: auto;
+  }
   .home-cinematic .cinematic-video { object-position: 58% center; }
   .home-cinematic .cinematic-intro {
     justify-content: flex-start;
