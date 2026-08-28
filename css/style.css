@@ -270,7 +270,7 @@ button:focus-visible {
   transform: translateX(-50%);
 }
 
-#nav.is-work-open .nav-work-menu {
+.nav-work-menu.is-open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -406,6 +406,56 @@ button:focus-visible {
 .nav-work-featured .nav-work-copy b { font-size: 1.75rem; }
 .nav-work-featured .nav-work-copy small { color: rgba(255,255,255,.68); }
 .nav-work-featured .nav-work-index { position: absolute; z-index: 1; top: 1.5rem; left: 1.6rem; color: rgba(255,255,255,.76); }
+
+.nav-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.nav-product-grid a {
+  position: relative;
+  min-height: 28.6rem;
+  overflow: hidden;
+  border-radius: .7rem;
+  background: #d8d4cc;
+  color: #fff;
+  transition: transform .25s var(--ease);
+}
+
+.nav-product-grid a:hover { transform: translateY(-.2rem); }
+
+.nav-product-grid figure {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+}
+
+.nav-product-grid figure::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(2,2,2,.04) 35%, rgba(2,2,2,.82) 100%);
+  content: '';
+}
+
+.nav-product-grid img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nav-product-grid .nav-work-copy {
+  position: absolute;
+  z-index: 1;
+  right: 1.7rem;
+  bottom: 1.6rem;
+  left: 1.7rem;
+}
+
+.nav-product-grid .nav-work-copy b { font-size: 1.75rem; }
+.nav-product-grid .nav-work-copy small { color: rgba(255,255,255,.72); }
+.nav-product-grid .nav-work-index { position: absolute; z-index: 1; top: 1.5rem; left: 1.6rem; color: rgba(255,255,255,.8); }
 
 .nav-menu {
   position: relative;
