@@ -11,96 +11,159 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2310213b'/%3E%3Cpath d='M15 48V16h8l9 15 9-15h8v32h-8V31L32 46 23 31v17z' fill='%23f6f3ec'/%3E%3C/svg%3E">
   <link rel="preload" href="fonts/PPMigra-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/creative-desktop.css?v=3">
-  <link rel="stylesheet" href="css/creative-desktop-apps.css?v=4">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/os-desktop.css?v=3">
+  <link rel="stylesheet" href="css/creative-desktop-apps.css?v=5">
 </head>
-<body class="creative-desktop-page">
-  <main class="desktop-experience" aria-label="Desktop Portfolio">
-    <section class="lock-screen" data-lock-screen aria-label="Desktop Portfolio 锁屏">
-      <div class="lock-sky" aria-hidden="true"></div>
-      <div class="lock-grain" aria-hidden="true"></div>
-      <div class="lock-top">
-        <p data-lock-date>—</p>
-        <time data-lock-time>—</time>
+<body class="os-page">
+  <div class="os-root" aria-label="Desktop Portfolio">
+    <div class="os-wall" data-wall-a></div>
+    <div class="os-wall-b" data-wall-b></div>
+
+    <section class="os-lock" data-lock-screen aria-label="Lock screen">
+      <div class="os-lock-clock">
+        <p class="os-lock-date" data-lock-date>—</p>
+        <p class="os-lock-time" data-lock-time>—</p>
       </div>
-      <div class="lock-center">
-        <div class="lock-mark" aria-hidden="true">◌</div>
-        <p class="lock-name">Desktop Portfolio</p>
-        <p class="lock-role">click to explore</p>
-      </div>
-      <button class="unlock-button" type="button" data-unlock>
-        <span>click to unlock</span><i aria-hidden="true">↗</i>
+      <button class="os-lock-user" type="button" data-unlock>
+        <span class="os-lock-avatar"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/13e7437d-6783-4c76-b153-1ec0427f4596/photo-headshot.png" alt=""></span>
+        <span>Guest</span>
+        <p class="os-lock-hint">Click to unlock</p>
       </button>
-      <p class="lock-foot">A personal desktop, made to be explored.</p>
     </section>
 
-    <section class="desktop-shell" data-desktop hidden aria-label="Desktop Portfolio">
-      <div class="desktop-wallpaper" aria-hidden="true"></div>
-      <div class="desktop-grain" aria-hidden="true"></div>
-
-      <header class="desktop-menubar">
-        <button class="menu-logo" type="button" data-open="about"><span>◌</span> portfolio</button>
-        <p class="menu-caption">personal desktop / 01</p>
-        <div class="menu-actions">
-          <button type="button" data-theme-toggle aria-label="切换桌面背景">wallpaper</button>
-          <a href="index.html" aria-label="close desktop">close ↗</a>
+    <section class="os-desktop" data-desktop hidden>
+      <header class="os-menubar">
+        <button class="os-apple" type="button" data-apple aria-haspopup="menu" aria-expanded="false" aria-label="System menu"></button>
+        <span class="os-app-name">Portfolio</span>
+        <button class="os-menu-btn" type="button" data-open="settings">Settings</button>
+        <button class="os-menu-btn" type="button" data-open="works">Work</button>
+        <a class="os-menu-btn" href="index.html">Home</a>
+        <div class="os-menubar-right">
+          <button class="os-menu-btn" type="button" data-open="settings" aria-label="Control Center">●●●</button>
+          <button class="os-menu-btn" type="button"><span data-os-date>—</span> <span data-os-time>—</span></button>
+        </div>
+        <div class="os-menu-pop" data-apple-menu role="menu">
+          <button type="button" data-open="settings">System Settings…</button>
+          <button type="button" data-open="about">My Shelf</button>
+          <div class="os-menu-sep"></div>
+          <button type="button" data-lock>Lock Screen</button>
+          <a href="index.html">Back to site</a>
         </div>
       </header>
 
-      <div class="desktop-profile"><div class="profile-avatar"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/13e7437d-6783-4c76-b153-1ec0427f4596/photo-headshot.png" alt=""></div><div><b>product designer</b><span></span><span></span><span></span><a href="#">more about me →</a></div></div>
+      <div class="os-stage">
+        <aside class="os-widgets">
+          <article class="os-widget os-profile">
+            <div class="os-widget-head"><span>Profile</span><span>Available</span></div>
+            <div class="os-profile-hero"></div>
+            <div class="os-profile-row">
+              <img src="https://www.parinazkassemi.com/__l5e/assets-v1/13e7437d-6783-4c76-b153-1ec0427f4596/photo-headshot.png" alt="">
+              <div><b>Product Designer</b><small>Maridian Space</small></div>
+            </div>
+            <p>A personal desktop for selected work, notes, photos and small experiments. Double-click an icon to open an app.</p>
+          </article>
+          <article class="os-widget">
+            <div class="os-widget-head"><span>Local Time</span><span>Now</span></div>
+            <div class="os-clock-body">
+              <div class="os-clock-big" data-widget-clock>—</div>
+              <div class="os-clock-sub" data-widget-day>—</div>
+            </div>
+          </article>
+        </aside>
 
-      <div class="desktop-stage" data-stage>
-        <p class="desktop-intro"> </p>
-        <div class="desktop-help"><span class="desktop-help-desktop">double-click an icon · ESC closes a window</span><span class="desktop-help-mobile">tap an icon to open</span></div>
-
-        <button class="desktop-icon icon-work" data-open="works" type="button" aria-label="Case Studies">
-          <span class="icon-art icon-folder" aria-hidden="true">
-            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/408e8d28-b305-4ca0-8f08-6f8af55ef315/ico-folder.png" alt="">
-            <span class="cs-lock-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
-          </span>
-          <span class="icon-label">Case Studies</span>
-        </button>
-        <button class="desktop-icon icon-notes" data-open="notes" type="button" aria-label="Sticky Notes">
-          <span class="icon-art icon-notebook" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/7574ae5f-d0ce-48d4-9fac-217c75d55734/ico-stickies.png" alt=""></span>
-          <span class="icon-label">Sticky Notes</span>
-        </button>
-        <button class="desktop-icon icon-about" data-open="about" type="button" aria-label="My Shelf">
-          <span class="icon-art icon-profile" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/e2b7bd71-3f8b-4633-8da8-e9223707c069/ico-books.png" alt=""></span>
-          <span class="icon-label">My Shelf</span>
-        </button>
-        <button class="desktop-icon icon-archive" data-open="archive" type="button" aria-label="Resume">
-          <span class="icon-art icon-archive-art" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/7988a710-b103-474e-8746-648832c7d93b/ico-resume-v2.png" alt=""></span>
-          <span class="icon-label">Resume</span>
-        </button>
-        <button class="desktop-icon icon-notebook-app" data-open="notebook" type="button" aria-label="Notebook">
-          <span class="icon-art icon-notebook-app-art" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/ee46b032-332d-4700-9a32-0ff3f21957a9/ico-notebook.png" alt=""></span>
-          <span class="icon-label">Notebook</span>
-        </button>
-        <button class="desktop-icon icon-chess" data-open="chess" type="button" aria-label="Chess">
-          <span class="icon-art icon-chess-art" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/2963b46d-7d78-4929-9d0a-762e192b9b2b/ico-chess.png" alt=""></span>
-          <span class="icon-label">Chess</span>
-        </button>
-        <button class="desktop-icon icon-toolkit" data-open="toolkit" type="button" aria-label="Synthesizer">
-          <span class="icon-art icon-tool" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/e93e6147-2870-4dd3-b81e-a8d4153730c7/ico-synth.png" alt=""></span>
-          <span class="icon-label">Synthesizer</span>
-        </button>
-        <button class="desktop-icon icon-camera" data-open="photos" type="button" aria-label="Photos">
-          <span class="icon-art icon-camera-art" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/b449ad14-25ab-4db8-9339-df3c53e5779d/ico-camera-v2.png" alt=""></span>
-          <span class="icon-label">Photos</span>
-        </button>
+        <div class="os-icons">
+          <button class="os-icon" data-open="works" type="button" aria-label="Case Studies">
+            <span class="icon-art icon-folder" aria-hidden="true">
+              <img src="https://www.parinazkassemi.com/__l5e/assets-v1/408e8d28-b305-4ca0-8f08-6f8af55ef315/ico-folder.png" alt="">
+              <span class="cs-lock-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+            </span>
+            <span class="icon-label">Case Studies</span>
+          </button>
+          <button class="os-icon" data-open="notes" type="button" aria-label="Sticky Notes">
+            <span class="icon-art"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/7574ae5f-d0ce-48d4-9fac-217c75d55734/ico-stickies.png" alt=""></span>
+            <span class="icon-label">Sticky Notes</span>
+          </button>
+          <button class="os-icon" data-open="about" type="button" aria-label="My Shelf">
+            <span class="icon-art"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/e2b7bd71-3f8b-4633-8da8-e9223707c069/ico-books.png" alt=""></span>
+            <span class="icon-label">My Shelf</span>
+          </button>
+          <button class="os-icon" data-open="archive" type="button" aria-label="Resume">
+            <span class="icon-art"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/7988a710-b103-474e-8746-648832c7d93b/ico-resume-v2.png" alt=""></span>
+            <span class="icon-label">Resume</span>
+          </button>
+          <button class="os-icon" data-open="notebook" type="button" aria-label="Notebook">
+            <span class="icon-art"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/ee46b032-332d-4700-9a32-0ff3f21957a9/ico-notebook.png" alt=""></span>
+            <span class="icon-label">Notebook</span>
+          </button>
+          <button class="os-icon" data-open="chess" type="button" aria-label="Chess">
+            <span class="icon-art"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/2963b46d-7d78-4929-9d0a-762e192b9b2b/ico-chess.png" alt=""></span>
+            <span class="icon-label">Chess</span>
+          </button>
+          <button class="os-icon" data-open="toolkit" type="button" aria-label="Synthesizer">
+            <span class="icon-art"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/e93e6147-2870-4dd3-b81e-a8d4153730c7/ico-synth.png" alt=""></span>
+            <span class="icon-label">Synthesizer</span>
+          </button>
+          <button class="os-icon" data-open="photos" type="button" aria-label="Photos">
+            <span class="icon-art"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/b449ad14-25ab-4db8-9339-df3c53e5779d/ico-camera-v2.png" alt=""></span>
+            <span class="icon-label">Photos</span>
+          </button>
+        </div>
       </div>
 
-      <nav class="desktop-dock" aria-label="Tech Stack">
-        <button type="button" data-open="works" data-dock-label="Figma" aria-label="Figma"><img src="https://www.google.com/s2/favicons?sz=128&domain=figma.com" alt="Figma"></button>
-        <button type="button" data-open="notes" data-dock-label="Framer" aria-label="Framer"><img src="https://www.google.com/s2/favicons?sz=128&domain=framer.com" alt="Framer"></button>
-        <button type="button" data-open="chess" data-dock-label="Claude" aria-label="Claude"><img src="https://www.google.com/s2/favicons?sz=128&domain=claude.ai" alt="Claude"></button>
-        <button type="button" data-open="toolkit" data-dock-label="OpenAI" aria-label="OpenAI"><img src="https://www.google.com/s2/favicons?sz=128&domain=openai.com" alt="OpenAI"></button>
-        <button type="button" data-open="about" data-dock-label="Lovable" aria-label="Lovable"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/753fda58-36a7-4516-844f-e2cf98752930/lovable-heart.jpeg" alt="Lovable"></button>
-        <button type="button" data-open="archive" data-dock-label="Cursor" aria-label="Cursor"><img src="https://www.google.com/s2/favicons?sz=128&domain=cursor.com" alt="Cursor"></button>
-        <button type="button" data-open="notebook" data-dock-label="Notion" aria-label="Notion"><img src="https://www.google.com/s2/favicons?sz=128&domain=notion.so" alt="Notion"></button>
-        <button type="button" data-open="about" data-dock-label="Midjourney" aria-label="Midjourney"><img src="https://www.parinazkassemi.com/midjourney-emblem.svg" alt="Midjourney"></button>
-      </nav>
-      <div class="desktop-status"><span class="status-dot"></span> desktop online</div>
+      <div class="os-dock-wrap">
+        <nav class="os-dock" data-dock aria-label="Dock">
+          <button type="button" data-open="works" data-dock-label="Case Studies" aria-label="Case Studies"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/408e8d28-b305-4ca0-8f08-6f8af55ef315/ico-folder.png" alt=""><i class="os-dock-dot"></i></button>
+          <button type="button" data-open="notes" data-dock-label="Sticky Notes" aria-label="Sticky Notes"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/7574ae5f-d0ce-48d4-9fac-217c75d55734/ico-stickies.png" alt=""><i class="os-dock-dot"></i></button>
+          <button type="button" data-open="about" data-dock-label="My Shelf" aria-label="My Shelf"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/e2b7bd71-3f8b-4633-8da8-e9223707c069/ico-books.png" alt=""><i class="os-dock-dot"></i></button>
+          <button type="button" data-open="archive" data-dock-label="Resume" aria-label="Resume"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/7988a710-b103-474e-8746-648832c7d93b/ico-resume-v2.png" alt=""><i class="os-dock-dot"></i></button>
+          <button type="button" data-open="notebook" data-dock-label="Notebook" aria-label="Notebook"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/ee46b032-332d-4700-9a32-0ff3f21957a9/ico-notebook.png" alt=""><i class="os-dock-dot"></i></button>
+          <button type="button" data-open="chess" data-dock-label="Chess" aria-label="Chess"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/2963b46d-7d78-4929-9d0a-762e192b9b2b/ico-chess.png" alt=""><i class="os-dock-dot"></i></button>
+          <button type="button" data-open="toolkit" data-dock-label="Synthesizer" aria-label="Synthesizer"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/e93e6147-2870-4dd3-b81e-a8d4153730c7/ico-synth.png" alt=""><i class="os-dock-dot"></i></button>
+          <button type="button" data-open="photos" data-dock-label="Photos" aria-label="Photos"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/b449ad14-25ab-4db8-9339-df3c53e5779d/ico-camera-v2.png" alt=""><i class="os-dock-dot"></i></button>
+          <button type="button" data-open="settings" data-dock-label="Settings" aria-label="Settings"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%238e8e93'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%23d8d8dc'/%3E%3Cpath d='M32 6l3 8h-6zM32 58l3-8h-6zM6 32l8-3v6zM58 32l-8-3v6z' fill='%23d8d8dc'/%3E%3C/svg%3E" alt=""><i class="os-dock-dot"></i></button>
+        </nav>
+      </div>
+
+      <div class="os-settings" data-settings role="dialog" aria-label="System Settings">
+        <div class="os-settings-card">
+          <div class="os-settings-bar">
+            <button type="button" class="win-close" data-settings-close aria-label="Close"></button>
+            <span class="os-settings-title">System Settings</span>
+          </div>
+          <div class="os-settings-body">
+            <aside class="os-settings-side">
+              <button type="button" class="is-on">Appearance</button>
+            </aside>
+            <div class="os-settings-main">
+              <h3>Mode</h3>
+              <div class="os-choice-row">
+                <button type="button" class="os-choice" data-mode="light">Light</button>
+                <button type="button" class="os-choice" data-mode="dark">Dark</button>
+                <button type="button" class="os-choice" data-mode="auto">Auto</button>
+              </div>
+              <h3>Accent</h3>
+              <div class="os-choice-row">
+                <button type="button" class="os-choice" data-accent="aqua"><i class="os-swatch" style="background:#0a84ff"></i>Aqua</button>
+                <button type="button" class="os-choice" data-accent="violet"><i class="os-swatch" style="background:#bf5af2"></i>Violet</button>
+                <button type="button" class="os-choice" data-accent="orange"><i class="os-swatch" style="background:#ff9f0a"></i>Orange</button>
+                <button type="button" class="os-choice" data-accent="green"><i class="os-swatch" style="background:#30d158"></i>Green</button>
+                <button type="button" class="os-choice" data-accent="graphite"><i class="os-swatch" style="background:#8e8e93"></i>Graphite</button>
+              </div>
+              <h3>Wallpaper</h3>
+              <div class="os-walls" data-wall-grid></div>
+              <label class="os-toggle-row">Carousel interval
+                <select data-carousel>
+                  <option value="off">Off</option>
+                  <option value="15s">15 sec</option>
+                  <option value="30s">30 sec</option>
+                  <option value="1m">1 min</option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div id="collectionModal" class="app-modal" role="dialog" aria-modal="true">
         <div class="cm-card">
@@ -268,8 +331,8 @@
         </div>
       </div>
     </section>
-  </main>
-  <script src="js/creative-desktop.js?v=4"></script>
+  </div>
+  <script src="js/os-desktop.js?v=2"></script>
   <script src="js/creative-desktop-apps.js?v=4"></script>
 </body>
 </html>

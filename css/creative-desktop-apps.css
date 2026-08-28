@@ -1,5 +1,6 @@
 /* App windows and 1:1 icon chrome, measured from parinazkassemi.com/desktop.html */
 
+.os-icon .icon-art{position:relative}
 .desktop-icon{
   width:148px!important;
   gap:10px!important;

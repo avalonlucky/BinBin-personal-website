@@ -12,6 +12,13 @@
 - 内容除了案例，也容纳个人资料、工具、笔记、照片与轻量交互，形成“作品集之外的信息层”；
 - 触屏端将桌面交互降级为直接打开窗口，避免把桌面拖拽强塞到手机上。
 
+## OS 桌面层（2026-08-29）
+
+- 系统壳参考 `os.atom63.io`：锁屏、顶栏、玻璃小组件、底部 Dock、System Settings。
+- 自选主题：Light / Dark / Auto，以及 Aqua / Violet / Orange / Green / Graphite 强调色。
+- 壁纸可在设置里点选，并支持 15s / 30s / 1min 轮播。
+- 仍保留原来的 8 个图标及其窗口内容（Case Studies、Sticky Notes、My Shelf、Resume、Notebook、Chess、Synthesizer、Photos）。
+
 ## 当前复刻阶段
 
 - 用户要求先以参考站的初始桌面作为逐像素验收基准，内容替换留待下一阶段。
