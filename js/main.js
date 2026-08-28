@@ -727,44 +727,102 @@ function initFAQ() {
   }
 
   document.fonts.ready.then(() => {
+    const duration = prefersReducedMotion.matches ? 0 : 1;
+
     items.forEach((item, index) => {
       const answerWrapper = item.querySelector('.faq-answer-wrapper');
       const answer = item.querySelector('.faq-answer');
       const toggle = item.querySelector('.faq-toggle');
+      const border = item.querySelector('.faq-border');
       const lines = splitAnswerLines(answer);
       const collapsible = answerWrapper;
-      const closedHeight = 0;
       const answerId = `faq-answer-${index + 1}`;
 
       answerWrapper.id = answerId;
       toggle.setAttribute('aria-controls', answerId);
       toggle.setAttribute('aria-expanded', 'false');
-      gsap.set(collapsible, { height: closedHeight, overflow: 'hidden' });
+      gsap.set(collapsible, { height: 0, autoAlpha: 0, overflow: 'hidden' });
       gsap.set(answer, { yPercent: 10 });
       gsap.set(lines, { yPercent: 110 });
 
-      const accordionTimeline = gsap.timeline({
-        paused: true,
-        defaults: { overwrite: 'auto' },
-        onComplete: refreshScroll,
-        onReverseComplete: refreshScroll,
-      });
-      accordionTimeline.to(collapsible, { height: 'auto', duration: 0.8, ease: 'power3.out' }, 0);
-      accordionTimeline.to(answer, { yPercent: 0, duration: 1.4, ease: 'power3.out' }, 0.1);
-      accordionTimeline.to(lines, { yPercent: 0, duration: 1.4, ease: 'power3.out', stagger: 0.05 }, 0.1);
+      function setItemState(opening) {
+        if (opening === item.classList.contains('open')) return;
+
+        item.classList.toggle('open', opening);
+        toggle.setAttribute('aria-expanded', String(opening));
+
+        gsap.killTweensOf([collapsible, answer, ...lines]);
+
+        if (opening) {
+          // Measure the natural height first, then reveal into it. This keeps the
+          // spring-like motion smooth even when a wrapped answer has several lines.
+          gsap.set(collapsible, { height: 'auto', autoAlpha: 1 });
+          const openHeight = collapsible.offsetHeight;
+          gsap.set(collapsible, { height: 0 });
+
+          const timeline = gsap.timeline({ defaults: { overwrite: 'auto' } });
+          timeline
+            .to(collapsible, {
+              height: openHeight,
+              duration: 0.58 * duration,
+              ease: 'back.out(1.12)',
+            }, 0)
+            .to(answer, {
+              yPercent: 0,
+              duration: 0.52 * duration,
+              ease: 'back.out(1.04)',
+            }, 0.06 * duration)
+            .to(lines, {
+              yPercent: 0,
+              duration: 0.46 * duration,
+              ease: 'back.out(1.18)',
+              stagger: 0.045 * duration,
+            }, 0.08 * duration)
+            .set(collapsible, { height: 'auto' })
+            .add(refreshScroll);
+        } else {
+          const timeline = gsap.timeline({ defaults: { overwrite: 'auto' } });
+          timeline
+            .to(lines, {
+              yPercent: 110,
+              duration: 0.22 * duration,
+              ease: 'power2.in',
+              stagger: 0.018 * duration,
+            }, 0)
+            .to(answer, {
+              yPercent: 8,
+              duration: 0.24 * duration,
+              ease: 'power2.in',
+            }, 0)
+            .to(collapsible, {
+              height: 0,
+              autoAlpha: 0,
+              duration: 0.38 * duration,
+              ease: 'power3.inOut',
+            }, 0.04 * duration)
+            .add(refreshScroll);
+        }
+
+        if (!prefersReducedMotion.matches && border && index > 0) {
+          gsap.fromTo(border,
+            { '--faq-glow-opacity': 0.85 },
+            { '--faq-glow-opacity': 0, duration: 0.72, ease: 'power2.out', overwrite: 'auto' },
+          );
+        }
+      }
 
       const toggleItem = () => {
         const opening = !item.classList.contains('open');
-        item.classList.toggle('open', opening);
-        toggle.setAttribute('aria-expanded', String(opening));
-        if (opening) {
-          accordionTimeline.invalidate().play();
-        } else {
-          accordionTimeline.reverse();
-        }
+        if (opening) items.forEach(other => {
+          if (other !== item && other.classList.contains('open')) {
+            other.dispatchEvent(new CustomEvent('faq:close'));
+          }
+        });
+        setItemState(opening);
       };
 
       item.addEventListener('click', toggleItem);
+      item.addEventListener('faq:close', () => setItemState(false));
 
       addBorderFollow(item);
     });
