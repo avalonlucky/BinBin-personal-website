@@ -1,5 +1,5 @@
 (() => {
-  const ASSET = 'https://www.parinazkassemi.com/__l5e/assets-v1';
+  const ASSET = '/assets/creative-desktop/legacy';
   const openModal = el => { if (!el) return; el.classList.add('open'); el.style.display = 'flex'; };
   const closeModal = el => { if (!el) return; el.classList.remove('open'); el.style.display = 'none'; };
   const bindClose = (modal, btn) => {
@@ -9,22 +9,22 @@
 
   /* ---------- My Shelf ---------- */
   const BOOKS = [
-    { title: 'Gone with the Wind', sub: 'Margaret Mitchell · 1936', cover: '14817133' },
-    { title: 'My Brilliant Friend', sub: 'Elena Ferrante · 2012', cover: '12706346', isbn: '1609450787' },
-    { title: 'Martyr!', sub: 'Kaveh Akbar · 2024', cover: '14562207' }
+    { title: 'Gone with the Wind', sub: 'Margaret Mitchell · 1936', img: `${ASSET}/library/book-gone-with-the-wind.jpg` },
+    { title: 'My Brilliant Friend', sub: 'Elena Ferrante · 2012', img: `${ASSET}/library/book-my-brilliant-friend.jpg`, isbn: '1609450787' },
+    { title: 'Martyr!', sub: 'Kaveh Akbar · 2024', img: `${ASSET}/library/book-martyr.jpg` }
   ];
   const FILMS = [
-    { title: 'The Odyssey', sub: 'Christopher Nolan · 2026', poster: 'https://image.tmdb.org/t/p/w500/5rhTDKUhPYvpdQIijFIs5VoWsON.jpg' }
+    { title: 'The Odyssey', sub: 'Christopher Nolan · 2026', poster: `${ASSET}/library/film-the-odyssey.jpg` }
   ];
   const TV = [
-    { title: 'Game of Thrones', sub: 'HBO · 2011', poster: 'https://image.tmdb.org/t/p/w500/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg' },
-    { title: 'Planet Earth', sub: 'BBC · 2006', poster: 'https://image.tmdb.org/t/p/w500/bNcNxUtZ520d5de5s78onoiSiwQ.jpg' }
+    { title: 'Game of Thrones', sub: 'HBO · 2011', poster: `${ASSET}/library/tv-game-of-thrones.jpg` },
+    { title: 'Planet Earth', sub: 'BBC · 2006', poster: `${ASSET}/library/tv-planet-earth.jpg` }
   ];
   const ARTISTS = [
-    { title: "L'Impératrice", sub: 'french nu-disco', img: 'https://cdn-images.dzcdn.net/images/artist/72fe426a3cca83f1c26d4fc5a11086dd/500x500-000000-80-0-0.jpg' },
-    { title: 'Parcels', sub: 'australian disco-pop', img: 'https://cdn-images.dzcdn.net/images/artist/a113c773971815e0680c1039980f1be4/500x500-000000-80-0-0.jpg' },
-    { title: 'Peggy Gou', sub: 'korean house', img: 'https://cdn-images.dzcdn.net/images/artist/5a7ecd46b78038fbc212012fca631cc8/500x500-000000-80-0-0.jpg' },
-    { title: 'Daft Punk', sub: 'french electronic', img: 'https://cdn-images.dzcdn.net/images/artist/638e69b9caaf9f9f3f8826febea7b543/500x500-000000-80-0-0.jpg' }
+    { title: "L'Impératrice", sub: 'french nu-disco', img: `${ASSET}/library/artist-limperatrice.jpg` },
+    { title: 'Parcels', sub: 'australian disco-pop', img: `${ASSET}/library/artist-parcels.jpg` },
+    { title: 'Peggy Gou', sub: 'korean house', img: `${ASSET}/library/artist-peggy-gou.jpg` },
+    { title: 'Daft Punk', sub: 'french electronic', img: `${ASSET}/library/artist-daft-punk.jpg` }
   ];
   const ARCHIVE = [
     { title: 'Breaking Bad', sub: 'AMC · 2008' },
@@ -36,7 +36,7 @@
   function renderShelf() {
     const body = document.getElementById('cmBody');
     const ITEMS = [
-      ...BOOKS.map(b => ({ group: 'reading', kind: 'Book', title: b.title, sub: b.sub, img: `https://covers.openlibrary.org/b/id/${b.cover}-L.jpg`, fallback: `https://covers.openlibrary.org/b/id/${b.cover}-M.jpg` })),
+      ...BOOKS.map(b => ({ group: 'reading', kind: 'Book', title: b.title, sub: b.sub, img: b.img })),
       ...TV.map(t => ({ group: 'watching', kind: 'Television', title: t.title, sub: t.sub, img: t.poster })),
       ...FILMS.map(f => ({ group: 'watching', kind: 'Film', title: f.title, sub: f.sub, img: f.poster })),
       ...ARTISTS.map(a => ({ group: 'listening', kind: 'Artist', title: a.title, sub: a.sub, img: a.img }))
