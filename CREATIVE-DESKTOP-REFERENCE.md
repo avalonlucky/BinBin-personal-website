@@ -15,7 +15,7 @@
 ## 当前复刻阶段
 
 - 用户要求先以参考站的初始桌面作为逐像素验收基准，内容替换留待下一阶段。
-- 初始桌面已对齐：蓝色背景、头像、左侧荣誉栏、八个物件图标、右侧主题／天气／播放／语言组件、右下角电脑，以及八项 Tech Stack Dock。
+- 当前桌面保留蓝色背景、头像、八个物件图标与八项 Tech Stack Dock；左侧荣誉／提示轨道以及右侧主题、天气、播放器、语言与电脑组件已按用户要求移除。
 - Dock 顺序固定为：Figma、Framer、Claude、OpenAI、Lovable、Cursor、Notion、Midjourney；hover 显示工具名。
 - 桌面图标固定为：Case Studies、Sticky Notes、My Shelf、Resume、Notebook、Chess、Synthesizer、Photos；与参考布局一一对应。
 - 电脑端保留锁屏、桌面、双击打开、窗口聚焦／拖动；手机端以触控布局展示桌面，Dock 可在组件内部横向滚动且不造成整页溢出。
