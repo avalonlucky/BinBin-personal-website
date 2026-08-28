@@ -952,8 +952,11 @@ function initFooterContact() {
   const render = () => {
     const contact = contacts[mode];
     value.textContent = contact.value;
-    action.href = contact.href;
-    action.querySelector('span').textContent = contact.action;
+    if (action) {
+      action.href = contact.href;
+      const actionLabel = action.querySelector('span');
+      if (actionLabel) actionLabel.textContent = contact.action;
+    }
     copy.setAttribute('aria-label', contact.copyLabel);
     card.querySelectorAll('[data-footer-contact-mode]').forEach(button => {
       button.classList.toggle('is-active', button.dataset.footerContactMode === mode);
