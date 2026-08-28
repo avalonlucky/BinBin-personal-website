@@ -1001,6 +1001,7 @@ main footer {
 .s-design-view {
   background: var(--c-white);
   padding: clamp(5.5rem, 10vw, 9rem) 0 0;
+  scroll-margin-top: 7.5rem;
   overflow: hidden;
 }
 .design-view-heading {
