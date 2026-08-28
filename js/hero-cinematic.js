@@ -237,7 +237,7 @@
           scrollTrigger: {
             trigger: workSection,
             start: 'top 4%',
-            end: 'top -2%',
+            end: 'top top',
             scrub: true,
           },
         });
