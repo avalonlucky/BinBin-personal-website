@@ -1469,6 +1469,9 @@ main footer {
   border-top: 1px solid rgba(23,23,20,.12);
   pointer-events: none;
 }
+.faq-item:first-child .faq-border {
+  display: none;
+}
 .faq-border::after {
   content: "";
   position: absolute;
@@ -1476,15 +1479,6 @@ main footer {
   background: radial-gradient(8rem 2px at var(--faq-glow-x) 50%, rgba(215,150,255,.95), rgba(215,150,255,0));
   opacity: var(--faq-glow-opacity, 0);
   transition: opacity .35s var(--ease);
-}
-.faq-item:last-child::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: rgba(23,23,20,.12);
 }
 .faq-question,
 .faq-answer {
@@ -1752,7 +1746,7 @@ main footer {
 /* Compact homepage footer — inspired by the reference site's quiet copyright bar. */
 .s-footer.footer-compact {
   position: relative;
-  padding: 2.4rem var(--home-content-inset);
+  padding: 2.4rem var(--home-content-inset) 4rem;
   background: var(--c-white) !important;
   color: var(--c-black);
 }
@@ -2849,7 +2843,7 @@ a.footer-icon-link:hover {
   }
 
   .s-footer.footer-compact {
-    padding: 1.5rem 1.25rem 2.5rem;
+    padding: 1.5rem 1.25rem 3.75rem;
   }
 
   .footer-compact-main {
