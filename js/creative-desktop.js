@@ -26,6 +26,8 @@
     if (!win) return;
     win.hidden = false;
     bringToFront(win);
+    document.querySelectorAll('.desktop-icon.is-selected').forEach(item => item.classList.remove('is-selected'));
+    document.querySelector(`.desktop-icon[data-open="${name}"]`)?.classList.add('is-selected');
     const close = win.querySelector('[data-close]');
     close?.focus({ preventScroll: true });
   }
@@ -45,17 +47,12 @@
   });
 
   document.querySelectorAll('[data-open]').forEach(button => {
-    let lastTap = 0;
-    const trigger = event => {
-      const now = Date.now();
-      const isCoarse = window.matchMedia('(pointer: coarse)').matches;
-      if (!isCoarse && event.type === 'click' && now - lastTap < 260) return;
-      if (event.type === 'dblclick' || isCoarse || button.closest('.desktop-dock')) openWindow(button.dataset.open);
-      lastTap = now;
-    };
-    button.addEventListener('click', trigger);
-    button.addEventListener('dblclick', event => {
+    button.addEventListener('click', event => {
       event.preventDefault();
+      if (button.classList.contains('desktop-icon')) {
+        document.querySelectorAll('.desktop-icon.is-selected').forEach(item => item.classList.remove('is-selected'));
+        button.classList.add('is-selected');
+      }
       openWindow(button.dataset.open);
     });
   });

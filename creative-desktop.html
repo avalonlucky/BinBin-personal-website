@@ -11,7 +11,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2310213b'/%3E%3Cpath d='M15 48V16h8l9 15 9-15h8v32h-8V31L32 46 23 31v17z' fill='%23f6f3ec'/%3E%3C/svg%3E">
   <link rel="preload" href="fonts/PPMigra-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/creative-desktop.css?v=1">
+  <link rel="stylesheet" href="css/creative-desktop.css?v=2">
 </head>
 <body class="creative-desktop-page">
   <main class="desktop-experience" aria-label="Desktop Portfolio">
@@ -80,7 +80,7 @@
           <span class="icon-art icon-notebook-app-art" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/ee46b032-332d-4700-9a32-0ff3f21957a9/ico-notebook.png" alt=""></span>
           <span class="icon-label">notebook</span><small>essays &amp; notes</small>
         </button>
-        <button class="desktop-icon icon-camera" data-open="archive" type="button">
+        <button class="desktop-icon icon-camera" data-open="photos" type="button">
           <span class="icon-art icon-camera-art" aria-hidden="true"><img src="https://www.parinazkassemi.com/__l5e/assets-v1/b449ad14-25ab-4db8-9339-df3c53e5779d/ico-camera-v2.png" alt=""></span>
           <span class="icon-label">photos</span><small>personal archive</small>
         </button>
@@ -164,9 +164,24 @@
         <div class="window-body notes-body"><p class="window-kicker">NOTEBOOK / LONG FORM</p><h2>write it down.</h2><ul><li><time>001</time><span>A space held for essays, ideas and longer notes.</span></li><li><time>002</time><span>The information will come later. The form is ready first.</span></li></ul></div>
       </section>
 
+      <section class="window window-photos" data-window="photos" role="dialog" aria-modal="false" aria-label="Photos" hidden>
+        <header class="window-bar" data-window-handle><span class="window-dots"><i></i><i></i><i></i></span><b>photos.app</b><button type="button" data-close aria-label="关闭窗口">×</button></header>
+        <div class="window-body photos-body">
+          <div class="window-heading"><div><p class="window-kicker">PERSONAL ARCHIVE</p><h2>photos</h2></div><span>library</span></div>
+          <div class="photo-grid">
+            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/c1f3604a-9c67-4a9a-9ad3-dd6284c5fc31/photo-sunflower-v2.png" alt="Sunflowers">
+            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/83250b2e-2de8-4575-81eb-7284e4b5d804/photo-botanical_garden.png" alt="Botanical garden">
+            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/5f7e6c8f-3b3e-4c94-adba-ea44e20c274e/photo-golden_gate.png" alt="Golden Gate Bridge">
+            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/e3b7e125-3f95-4ee9-89e3-7efe55d8ca0e/photo-4th_of_july.png" alt="Fourth of July fireworks">
+            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/fae56235-59de-4558-98fc-cec0656f099b/photo-hawaii_tree2.png" alt="Palm tree in Hawaii">
+            <img src="https://www.parinazkassemi.com/__l5e/assets-v1/f41fee25-87b8-4532-b22b-d434f5ffbaa5/photo-cat_sf.png" alt="Cat in San Francisco">
+          </div>
+        </div>
+      </section>
+
       <div class="image-preview" data-preview-modal hidden role="dialog" aria-modal="true" aria-label="查看档案图片"><button type="button" data-preview-close aria-label="关闭预览">×</button><img data-preview-image alt=""></div>
     </section>
   </main>
-  <script src="js/creative-desktop.js?v=1"></script>
+  <script src="js/creative-desktop.js?v=2"></script>
 </body>
 </html>
