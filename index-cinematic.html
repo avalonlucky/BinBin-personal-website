@@ -12,7 +12,7 @@
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="css/style.css?v=102">
-  <link rel="stylesheet" href="css/hero-cinematic.css?v=1">
+  <link rel="stylesheet" href="css/hero-cinematic.css?v=3">
   <link rel="stylesheet" href="css/admin-auth.css?v=4">
 </head>
 <body class="home-cinematic">
@@ -45,39 +45,25 @@
     ══════════════════════════════════════ -->
     <section class="s-hero cinematic-hero" id="top" data-cinematic-hero>
       <div class="cinematic-sticky">
-        <video class="cinematic-video" data-cinematic-video
-               data-src="assets/hero-cinematic/field-laptop-original.mp4"
-               poster="assets/hero-cinematic/field-laptop-poster.png"
-               width="1280" height="720"
-               muted playsinline preload="auto"
-               disablepictureinpicture
-               aria-label="人物在夜色花田中使用电脑，镜头随滚动逐步推进至电脑屏幕"></video>
-        <div class="cinematic-vignette" aria-hidden="true"></div>
+        <div class="cinematic-scene" data-cinematic-scene>
+          <video class="cinematic-video" data-cinematic-video
+                 data-src="assets/hero-cinematic/field-laptop-original.mp4"
+                 poster="assets/hero-cinematic/field-laptop-poster.png"
+                 width="1280" height="720"
+                 muted playsinline preload="auto"
+                 disablepictureinpicture
+                 aria-label="人物在夜色花田中使用电脑，镜头随滚动逐步推进至电脑屏幕"></video>
+          <div class="cinematic-vignette" data-cinematic-vignette aria-hidden="true"></div>
+
+          <div class="cinematic-terminal" data-cinematic-terminal aria-hidden="true">
+            <div class="hero-terminal-scroll">
+              <pre class="hero-terminal-output" data-cinematic-terminal-output></pre><span class="hero-terminal-cursor">_</span>
+            </div>
+          </div>
+        </div>
 
         <div class="cinematic-intro" data-cinematic-intro lang="zh-CN">
-          <div class="cinematic-meta">
-            <p><strong>Maridian</strong><span>Visual Designer &amp; AI Builder</span></p>
-            <span class="cinematic-scroll-label">Scroll to reveal</span>
-          </div>
-          <div class="cinematic-audience" aria-label="设计能力范围">
-            <span class="is-active">视觉设计</span>
-            <span>品牌</span>
-            <span>展会</span>
-            <span>AI 工作流</span>
-          </div>
-          <h1>设计不止于呈现，<em>更要抵达结果。</em></h1>
-          <p class="cinematic-deck">把复杂信息变成看得懂、记得住，也真正能够落地的视觉系统。</p>
-        </div>
-
-        <div class="cinematic-terminal" data-cinematic-terminal aria-hidden="true">
-          <div class="hero-terminal-bar"><i></i><i></i><i></i><span>maridian — claude — 80×24</span></div>
-          <div class="hero-terminal-scroll">
-            <pre class="hero-terminal-output" data-cinematic-terminal-output></pre><span class="hero-terminal-cursor">_</span>
-          </div>
-        </div>
-
-        <div class="cinematic-progress" aria-hidden="true">
-          <span>SCROLL</span><i><b data-cinematic-progress></b></i><span>SCREEN</span>
+          <h1>设计不止于呈现，<br>更要抵达结果。</h1>
         </div>
       </div>
     </section>
@@ -415,7 +401,7 @@
   <script src="js/work-menu.js?v=1"></script>
   <script src="js/hscroll.js?v=1"></script>
   <script src="js/main.js?v=46"></script>
-  <script src="js/hero-cinematic.js?v=1"></script>
+  <script src="js/hero-cinematic.js?v=3"></script>
 <script src="js/admin-auth.js?v=5"></script>
 <script src="js/site-analytics.js?v=3"></script>
 </body>
