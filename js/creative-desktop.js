@@ -73,12 +73,14 @@
     closeWindow(open);
   });
 
-  const themeToggle = document.querySelector('[data-theme-toggle]');
   const themes = ['', 'paper', 'violet'];
-  themeToggle.addEventListener('click', () => {
+  const cycleTheme = () => {
     const index = themes.indexOf(desktop.dataset.theme || '');
     const next = themes[(index + 1) % themes.length];
     if (next) desktop.dataset.theme = next; else delete desktop.dataset.theme;
+  };
+  document.querySelectorAll('[data-theme-toggle]').forEach(toggle => {
+    toggle.addEventListener('click', cycleTheme);
   });
 
   let parallaxFrame = 0;
