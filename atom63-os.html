@@ -8,14 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Doto:wght@500;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/atom63-os.css?v=2" />
+    <link rel="stylesheet" href="css/atom63-os.css?v=3" />
   </head>
   <body>
     <main class="os63" id="os63" data-theme="violet">
       <div class="wallpaper" aria-hidden="true"><i></i><b></b><em></em><strong></strong></div>
       <div class="brightness-overlay" aria-hidden="true"></div>
       <header class="menu-bar">
-        <button class="home-button" aria-label="Open home menu" data-action="home">
+        <button class="home-button" aria-label="System menu" data-action="home">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 10 8-7 8 7v9a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>
         </button>
         <div class="menu-right">
@@ -37,13 +37,17 @@
       </section>
 
       <section class="home-popover" id="home-popover" hidden>
-        <b>OS63</b>
-        <span>ATOM63 desktop</span>
-        <button data-launch="about-system">About this system</button>
-        <button data-launch="launcher">App Center</button>
-        <button data-launch="agent-chat">Agent chat</button>
-        <button data-launch="timeline">Timeline</button>
-        <button data-action="reset">Reset desktop</button>
+        <button data-launch="about-system"><i aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 10.6v5.1m0-8.2h.01"/></svg></i>About This System</button>
+        <span class="menu-divider" aria-hidden="true"></span>
+        <button data-launch="settings"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16M8 4v6m7-1v6m-3-1v6"/></svg></i>System Settings...</button>
+        <button data-action="overview"><i aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg></i>Window Overview</button>
+        <span class="menu-divider" aria-hidden="true"></span>
+        <button data-action="lock"><i aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5.5" y="10" width="13" height="10" rx="1.5"/><path d="M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10"/></svg></i>Lock Screen</button>
+        <button data-action="reboot"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 1-2.35-5.65M20 4v7h-7"/></svg></i>Reboot</button>
+      </section>
+
+      <section class="lock-screen" id="lock-screen" hidden aria-label="Lock screen">
+        <div><span>OS63</span><strong id="lock-time">00:00</strong><button data-action="unlock">Click to unlock</button></div>
       </section>
 
       <section class="dashboard" aria-label="Desktop widgets">
@@ -63,24 +67,6 @@
           <div class="clock"><span id="clock-day">SAT<br /><small>08/29</small></span><b id="clock-time">02:47:02</b></div>
         </article>
 
-        <article class="widget github-card" data-action="github">
-          <div class="widget-top"><span>GitHub</span><mark>6 Mo</mark></div>
-          <b class="contributions">5248</b><span>contributions</span><p><b>15</b>&nbsp; day streak</p>
-        </article>
-
-        <article class="widget sticky-card">
-          <label for="sticky-note">Write a note...</label><textarea id="sticky-note" spellcheck="false" aria-label="Write a note"></textarea>
-        </article>
-
-        <article class="widget listening-card" data-action="listening">
-          <div class="widget-top"><span>◖&nbsp; Recent listening</span><button aria-label="Shuffle listening" data-action="shuffle">↗</button></div>
-          <div class="albums" id="albums"></div>
-        </article>
-
-        <article class="widget weather-card" data-action="weather">
-          <div class="weather-current"><b>Los Angeles</b><strong><span id="weather-temp">96</span>°F</strong><em>Clear</em><small>H:101° L:74°</small><i>☀</i></div>
-          <div class="forecast"><div><b>Sat</b><span>☀</span><strong>96° <i>72°</i></strong></div><div><b>Sun</b><span>☀</span><strong>91° <i>71°</i></strong></div><div><b>Mon</b><span>☀</span><strong>88° <i>72°</i></strong></div><div><b>Tue</b><span>☀</span><strong>88° <i>72°</i></strong></div><div><b>Wed</b><span>☁</span><strong>90° <i>74°</i></strong></div></div>
-        </article>
       </section>
 
       <section class="window-layer" id="window-layer" aria-live="polite"></section>
@@ -99,6 +85,6 @@
       </nav>
       <p class="desktop-status"><i></i> desktop online</p>
     </main>
-    <script src="js/atom63-os.js?v=2"></script>
+    <script src="js/atom63-os.js?v=3"></script>
   </body>
 </html>
