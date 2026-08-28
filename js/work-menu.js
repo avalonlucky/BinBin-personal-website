@@ -64,12 +64,18 @@
 
     const menu = document.createElement('div');
     menu.className = `nav-work-menu nav-${config.layout}-menu`;
+    const menuId = `nav-${config.layout}-menu`;
+    config.link.id = `${menuId}-trigger`;
+    config.link.setAttribute('aria-controls', menuId);
     const body = config.layout === 'product'
       ? `<div class="nav-product-grid">${config.projects.map(card).join('')}</div>`
       : `<div class="nav-work-menu-grid">
           <div class="nav-work-compact">${config.projects.filter(project => !project.featured).map(compact).join('')}</div>
           <div class="nav-work-featured">${config.projects.filter(project => project.featured).sort((a, b) => b.num.localeCompare(a.num)).map(card).join('')}</div>
         </div>`;
+    menu.id = menuId;
+    menu.setAttribute('role', 'region');
+    menu.setAttribute('aria-labelledby', config.link.id);
     menu.innerHTML = `<div class="nav-work-menu-head"><strong>${config.title}</strong><span>${config.label}</span></div>${body}`;
     nav.appendChild(menu);
 
@@ -95,6 +101,11 @@
     menu.addEventListener('mouseleave', scheduleClose);
     menu.addEventListener('focusin', () => setOpen(true));
     menu.addEventListener('focusout', event => { if (!menu.contains(event.relatedTarget) && !wrap.contains(event.relatedTarget)) scheduleClose(); });
+  });
+
+  document.addEventListener('pointerdown', event => {
+    if (event.target.closest('.nav-work, .nav-work-menu')) return;
+    controllers.forEach(controller => controller.setOpen(false));
   });
 
   document.addEventListener('keydown', event => {

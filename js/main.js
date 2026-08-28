@@ -239,10 +239,15 @@ function initScrollAnimations() {
 
   // PC 保留首屏视差与汇聚动画；手机首屏采用短画幅和静态排版，
   // 避免整屏被动画占满，也避免 fixed 文案滑出首屏后继续压住正文。
-  if (desktopMotion()) {
-    gsap.to('.hero-computer', {
+  const heroSection = document.querySelector('.s-hero');
+  const heroComputer = heroSection?.querySelector('.hero-computer');
+  const heroCopy = heroSection?.querySelector('.hero-copy');
+  const heroScrollHint = heroSection?.querySelector('.hero-scroll-hint');
+
+  if (desktopMotion() && heroSection) {
+    if (heroComputer) gsap.to(heroComputer, {
       scrollTrigger: {
-        trigger: '.s-hero',
+        trigger: heroSection,
         start: 'top top',
         end: 'bottom top',
         scrub: 1.5,
@@ -251,30 +256,32 @@ function initScrollAnimations() {
       yPercent: 5,
     });
 
-    const heroCopyTl = gsap.timeline({
+    if (heroCopy && heroComputer) {
+      const heroCopyTl = gsap.timeline({
       scrollTrigger: {
-        trigger: '.s-hero',
+        trigger: heroSection,
         start: 'top top',
         end: 'bottom 35%',
         scrub: 1.2,
       },
-    });
-    heroCopyTl
-      .to('.hero-copy', { xPercent: 16, ease: 'none', duration: 1 }, 0)
-      .to('.hero-computer', { xPercent: -8, ease: 'none', duration: 1 }, 0)
-      .to('.hero-copy, .hero-computer', { autoAlpha: 0, ease: 'none', duration: 0.28 }, 0.72);
-    gsap.to('.hero-scroll-hint', {
+      });
+      heroCopyTl
+        .to(heroCopy, { xPercent: 16, ease: 'none', duration: 1 }, 0)
+        .to(heroComputer, { xPercent: -8, ease: 'none', duration: 1 }, 0)
+        .to([heroCopy, heroComputer], { autoAlpha: 0, ease: 'none', duration: 0.28 }, 0.72);
+    }
+    if (heroScrollHint) gsap.to(heroScrollHint, {
       autoAlpha: 0,
       ease: 'none',
       scrollTrigger: {
-        trigger: '.s-hero',
+        trigger: heroSection,
         start: 'top top',
         end: 'top+=220 top',
         scrub: true,
       },
     });
-  } else {
-    gsap.set('.hero-copy, .hero-computer', { clearProps: 'transform,opacity,visibility' });
+  } else if (heroCopy || heroComputer) {
+    gsap.set([heroCopy, heroComputer].filter(Boolean), { clearProps: 'transform,opacity,visibility' });
   }
 
   // ── Section headings (scrub-linked) ──
@@ -327,9 +334,11 @@ function initScrollAnimations() {
     });
 
   // ── ABOUT section — pin (matches original ~3836px scroll height) ──
-  if (desktopMotion()) {
+  const aboutSection = document.querySelector('.s-about');
+  const aboutImage = document.querySelector('.about-img');
+  if (desktopMotion() && aboutSection) {
     ScrollTrigger.create({
-      trigger: '.s-about',
+      trigger: aboutSection,
       start: 'top top',
       end: '+=200%',
       pin: true,
@@ -338,11 +347,11 @@ function initScrollAnimations() {
   }
 
   // ── About image (scrub-linked) ──
-  gsap.fromTo('.about-img',
+  if (aboutSection && aboutImage) gsap.fromTo(aboutImage,
     { y: 50, opacity: 0 },
     {
       y: 0, opacity: 1, ease: 'expo.out',
-      scrollTrigger: { trigger: '.s-about', start: 'top 88%', end: 'top 55%', scrub: true },
+      scrollTrigger: { trigger: aboutSection, start: 'top 88%', end: 'top 55%', scrub: true },
     });
 
   gsap.fromTo('.design-view-heading',
@@ -658,6 +667,13 @@ function initFAQ() {
     if (answer.children.length) return [];
     const text = answer.dataset.text || answer.textContent.trim();
     answer.dataset.text = text;
+
+    // Chinese answers normally have no spaces.  Treating one full paragraph as
+    // a non-wrapping "word" used to clip the text to a single line.  Keep CJK
+    // paragraphs as natural flowing copy; the wrapper still gets the same
+    // height/opacity animation and remains readable at every breakpoint.
+    if (!/\s/.test(text) && /[\u3400-\u9fff]/.test(text)) return [];
+
     answer.replaceChildren();
 
     const words = text.split(/\s+/);
@@ -726,7 +742,7 @@ function initFAQ() {
     });
   }
 
-  document.fonts.ready.then(() => {
+  (document.fonts?.ready || Promise.resolve()).then(() => {
     const duration = prefersReducedMotion.matches ? 0 : 1;
 
     items.forEach((item, index) => {
@@ -821,7 +837,17 @@ function initFAQ() {
         setItemState(opening);
       };
 
-      item.addEventListener('click', toggleItem);
+      // The entire question row is a convenient pointer target, while the
+      // dedicated button remains the keyboard control.  Do not let its click
+      // bubble to the row: that previously toggled twice and made the answer
+      // appear to refuse to open.
+      item.addEventListener('click', event => {
+        if (!event.target.closest('.faq-toggle')) toggleItem();
+      });
+      toggle.addEventListener('click', event => {
+        event.stopPropagation();
+        toggleItem();
+      });
       item.addEventListener('faq:close', () => setItemState(false));
 
       addBorderFollow(item);
@@ -1017,7 +1043,9 @@ function initFooterContact() {
     }
     copy.setAttribute('aria-label', contact.copyLabel);
     card.querySelectorAll('[data-footer-contact-mode]').forEach(button => {
-      button.classList.toggle('is-active', button.dataset.footerContactMode === mode);
+      const active = button.dataset.footerContactMode === mode;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
     });
   };
 

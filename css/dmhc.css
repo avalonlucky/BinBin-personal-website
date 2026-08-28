@@ -119,8 +119,9 @@
 @media(max-width:760px){
  .dmhc-ai-process-group header p{justify-self:start;width:100%;text-align:left}
  .dmhc-compare-switch{display:flex;gap:8px;margin-top:30px}
- .dmhc-compare-switch button{min-width:88px;padding:9px 16px;border-radius:999px;background:#ebe8df;color:var(--cs-ink-2);font-size:14px;white-space:nowrap}
+ .dmhc-compare-switch button{min-width:88px;min-height:44px;padding:9px 16px;border-radius:999px;background:#ebe8df;color:var(--cs-ink-2);font-size:14px;white-space:nowrap}
  .dmhc-compare-switch button.is-active{background:var(--cs-ink);color:#fff}
+ .dmhc-compare-switch button:focus-visible{outline:2px solid var(--cs-accent);outline-offset:3px}
  .dmhc-compare-grid{display:block;width:100%;margin:18px 0 0;padding:0;overflow:visible;scroll-snap-type:none}
  .dmhc-compare-card{display:none;width:100%;min-width:0;flex:none;scroll-snap-align:none}
  .dmhc-compare-card.is-active{display:block}

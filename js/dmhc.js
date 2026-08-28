@@ -49,10 +49,41 @@
     const switcher=group.previousElementSibling;
     const buttons=[...(switcher?.querySelectorAll('[data-compare-switch]')||[])];
     const cards=[...group.querySelectorAll('.dmhc-compare-card')];
-    buttons.forEach((button,index)=>button.addEventListener('click',()=>{
-      buttons.forEach((item,i)=>{const active=i===index;item.classList.toggle('is-active',active);item.setAttribute('aria-selected',String(active))});
-      cards.forEach((card,i)=>card.classList.toggle('is-active',i===index));
-    }));
+    const mobileCompare=matchMedia('(max-width:760px)');
+    let selected=0;
+    const renderCompareTabs=()=>{
+      buttons.forEach((button,i)=>{
+        const active=i===selected;
+        button.classList.toggle('is-active',active);
+        button.setAttribute('aria-selected',String(active));
+        button.tabIndex=active?0:-1;
+      });
+      cards.forEach((card,i)=>{
+        const active=i===selected;
+        card.classList.toggle('is-active',active);
+        // Both comparisons are intentionally visible on desktop. On mobile,
+        // the segmented control presents one complete comparison at a time
+        // instead of turning the case study into a second horizontal scroller.
+        card.hidden=mobileCompare.matches&&!active;
+      });
+    };
+    const selectCompare=index=>{selected=Math.max(0,Math.min(cards.length-1,index));renderCompareTabs()};
+    buttons.forEach((button,index)=>{
+      button.addEventListener('click',()=>selectCompare(index));
+      button.addEventListener('keydown',event=>{
+        let next=index;
+        if(event.key==='ArrowRight'||event.key==='ArrowDown')next=(index+1)%buttons.length;
+        else if(event.key==='ArrowLeft'||event.key==='ArrowUp')next=(index-1+buttons.length)%buttons.length;
+        else if(event.key==='Home')next=0;
+        else if(event.key==='End')next=buttons.length-1;
+        else return;
+        event.preventDefault();
+        selectCompare(next);
+        buttons[next].focus();
+      });
+    });
+    mobileCompare.addEventListener('change',renderCompareTabs);
+    renderCompareTabs();
   });
   document.querySelectorAll('[data-compare]').forEach(compare=>{
     const input=compare.querySelector('input');

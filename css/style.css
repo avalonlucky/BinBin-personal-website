@@ -1979,6 +1979,103 @@ a.footer-icon-link:hover {
 }
 
 /* ============================================================
+   COMPONENT SYSTEM — quiet shared surfaces
+   The footer and work switcher use a selected fill for state, not stacks of
+   cards, outlines or shadows. This keeps the cream page continuous and gives
+   the three footer columns equal visual weight.
+   ============================================================ */
+.nav-work-menu {
+  background: var(--c-white);
+  box-shadow: none;
+}
+.nav-work-compact a {
+  border-radius: 0;
+  background: transparent;
+  box-shadow: inset 0 -1px 0 rgba(2,2,2,.09);
+}
+.nav-work-compact a:hover,
+.nav-work-featured a:hover {
+  background: rgba(2,2,2,.055);
+  transform: none;
+}
+.nav-work-thumb,
+.nav-work-featured a,
+.nav-product-grid a {
+  border-radius: 0;
+}
+.nav-work-featured a,
+.nav-product-grid a {
+  box-shadow: none;
+}
+
+.footer-contact-switch,
+.footer-contact-value-wrap,
+.footer-compact-socials,
+.footer-ai-pill {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.footer-contact-switch { padding: 0; }
+.footer-contact-switch button {
+  min-width: 4.3rem;
+  padding: .72rem 1rem;
+}
+.footer-contact-switch button.is-active {
+  background: rgba(2,2,2,.09);
+  box-shadow: none;
+}
+.footer-contact-value-wrap { padding: 0; }
+.footer-contact-value { font-size: 1.15rem; }
+.footer-contact-copy {
+  width: 3.2rem;
+  height: 3.2rem;
+  margin-left: .35rem;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.footer-contact-copy:hover,
+.footer-contact-copy:focus-visible {
+  background: rgba(2,2,2,.07);
+}
+.footer-compact-socials { gap: .5rem; padding: 0; }
+.footer-icon-link {
+  width: 3.3rem;
+  height: 3.3rem;
+}
+.footer-icon-link svg { width: 1.85rem; height: 1.85rem; }
+.footer-icon-link.brand-xiaohongshu svg { width: 2.1rem; }
+a.footer-icon-link:hover {
+  transform: translateY(-.16rem);
+  background: rgba(2,2,2,.06);
+}
+.footer-ai-pill { gap: .42rem; padding: 0; }
+.footer-ai-btn {
+  width: 3.25rem;
+  height: 3.25rem;
+  background: transparent;
+}
+.footer-ai-btn:hover,
+.footer-ai-btn:focus-visible {
+  transform: translateY(-.16rem);
+  background: rgba(2,2,2,.07);
+  box-shadow: none;
+}
+
+@media (max-width: 1099px) {
+  .footer-contact-card { justify-self: stretch; }
+  .footer-contact-value-wrap { flex: 1 1 auto; }
+  .footer-contact-value { min-width: 0; }
+}
+
+@media (max-width: 760px) {
+  .footer-contact-controls { flex: 1 1 auto; }
+  .footer-contact-value-wrap { min-width: 0; }
+  .footer-contact-value { overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* ============================================================
    ABOUT PAGE — rotating reading orbit
    ============================================================ */
 .about-page {
