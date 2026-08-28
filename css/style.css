@@ -1754,8 +1754,11 @@ main footer {
 }
 .footer-compact-main {
   display: grid;
-  grid-template-columns: auto auto auto;
-  justify-content: space-between;
+  /* Keep the social group at the content container's true center.  The
+     contact value changes between email and phone, so auto-sized columns
+     would otherwise push the middle group horizontally on every toggle. */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  justify-content: normal;
   align-items: center;
   gap: clamp(1.2rem, 2vw, 2.8rem);
   width: 100%;
