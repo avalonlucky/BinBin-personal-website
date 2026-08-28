@@ -100,6 +100,24 @@
   document.querySelector('[data-preview-close]').addEventListener('click', () => preview.hidden = true);
   preview.addEventListener('click', event => { if (event.target === preview) preview.hidden = true; });
 
+  const chessBoard = document.querySelector('.chess-board');
+  if (chessBoard) {
+    const pieces = ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜', '♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '♙', '♙', '♙', '♙', '♙', '♙', '♙', '♙', '♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖'];
+    while (pieces.length < 64) pieces.push('');
+    pieces.forEach(piece => {
+      const cell = document.createElement('button');
+      cell.type = 'button';
+      cell.textContent = piece;
+      cell.setAttribute('aria-label', piece ? `棋子 ${piece}` : '空格');
+      cell.addEventListener('click', () => cell.classList.toggle('is-selected'));
+      chessBoard.append(cell);
+    });
+  }
+
+  document.querySelectorAll('.synth-board button').forEach(key => {
+    key.addEventListener('click', () => key.classList.toggle('is-active'));
+  });
+
   if (!window.matchMedia('(pointer: coarse)').matches) {
     windows.forEach(win => {
       const handle = win.querySelector('[data-window-handle]');
