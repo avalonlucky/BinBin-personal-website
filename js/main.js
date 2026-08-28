@@ -105,7 +105,7 @@ function initCanvasBorders() {
       const w = el.offsetWidth;
       const h = el.offsetHeight;
       const r = Math.min(w, h) / 2;
-      const radius = el.classList.contains('nav-pill') ? 6 : 8;
+      const radius = el.classList.contains('nav-pill') ? Math.min(w, h) / 2 : 8;
 
       ctx.clearRect(0, 0, w, h);
 

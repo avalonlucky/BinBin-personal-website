@@ -2266,7 +2266,7 @@ function initCanvasBorders() {
 
     function tick() {
       const w = el.offsetWidth, h = el.offsetHeight;
-      const radius = el.classList.contains('nav-pill') ? 6 : 8;
+      const radius = el.classList.contains('nav-pill') ? Math.min(w, h) / 2 : 8;
       const isLight = document.getElementById('nav')?.dataset.theme === 'light';
 
       ctx.clearRect(0, 0, w, h);
