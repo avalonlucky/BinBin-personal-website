@@ -27,19 +27,22 @@
       label: 'Products · 03',
       layout: 'product',
       projects: [
-        { num: '01', title: 'Giverny', meta: '设计协作与 AI 质检', href: '#product-giverny', image: 'assets/products/giverny.webp' },
-        { num: '02', title: '粿条 AI', meta: 'AI 学习与内容实践', href: '#product-guotiao', image: 'assets/products/guotiao-ai.webp' },
-        { num: '03', title: '星织', meta: '命理与 AI 解读', href: '#product-xingzhi', image: 'assets/products/xingzhi.webp' }
+        { num: '01', title: 'Giverny', meta: '设计协作与 AI 质检', href: 'https://mayeai.com', image: 'assets/products/giverny.webp' },
+        { num: '02', title: '粿条 AI', meta: 'AI 学习与内容实践', href: 'https://www.guotiaoai.com', image: 'assets/products/guotiao-ai.webp' },
+        { num: '03', title: '星织', meta: '命理与 AI 解读', href: 'https://xingzhi.app', image: 'assets/products/xingzhi.webp' }
       ]
     }] : [])
   ];
 
-  const card = project => `
-    <a href="${root}${project.href}">
+  const card = project => {
+    const external = /^https?:\/\//.test(project.href);
+    return `
+    <a href="${external ? project.href : root + project.href}"${external ? ' target="_blank" rel="noopener noreferrer"' : ''}>
       <figure><img src="${root}${project.image}" alt="" width="640" height="420" loading="lazy"></figure>
       <span class="nav-work-copy"><b>${project.title}</b><small>${project.meta}</small></span>
       <span class="nav-work-index">${project.num}</span>
     </a>`;
+  };
 
   const compact = project => `
     <a href="${root}${project.href}">
