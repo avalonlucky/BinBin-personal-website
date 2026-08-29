@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文章 · Maridian Space</title>
+  <meta name="description" content="Maridian Space 的个人博客文章。">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23020202'/><path d='M14 48V16h8l10 16 10-16h8v32h-8V29L32 45 22 29v19z' fill='%23FBFBF4'/></svg>">
+
+  <link rel="preload" href="fonts/PPMigra-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="css/style.css?v=114">
+  <link rel="stylesheet" href="css/blog.css?v=1">
+  <link rel="stylesheet" href="css/admin-auth.css?v=4">
+</head>
+<body class="blog-post-page">
+<div class="site">
+
+  <!-- ══════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════ -->
+  <nav id="nav" data-theme="dark">
+    <div class="nav-inner">
+      <a href="index.html#top" class="nav-pill nav-logo" data-border>
+        <span class="logo-text">Maridian Space</span>
+        <canvas class="border-canvas"></canvas>
+      </a>
+      <div class="nav-pill nav-links" data-border>
+        <a href="index.html#work">Work</a>
+        <a href="creative-desktop.html">Side B</a>
+        <a href="about.html" aria-current="page">About</a>
+        <a href="index.html#contact">Contact</a>
+        <canvas class="border-canvas"></canvas>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page">
+    <div class="page-bg"></div>
+    <div class="page-scroll">
+
+      <!-- ══════════════════════════════════════
+           POST HERO
+      ══════════════════════════════════════ -->
+      <section class="bp-hero" id="top">
+        <div class="bp-hero-inner">
+          <a class="bp-back" href="about.html#blog">← 全部文章</a>
+          <div class="bp-hero-meta" data-bp-meta></div>
+          <h1 class="bp-hero-title" data-bp-title></h1>
+          <p class="bp-hero-excerpt" data-bp-excerpt></p>
+          <div class="bp-hero-cover" data-bp-cover></div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           POST BODY
+      ══════════════════════════════════════ -->
+      <section class="bp-body">
+        <div class="bp-body-inner">
+          <div class="blog-prose" data-bp-prose></div>
+          <div class="bp-tags" data-bp-tags></div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           PREV / NEXT
+      ══════════════════════════════════════ -->
+      <section class="bp-nav" data-bp-nav-if></section>
+
+      <!-- ══════════════════════════════════════
+           FOOTER
+      ══════════════════════════════════════ -->
+      <footer class="bp-footer">
+        <div class="bp-footer-inner">
+          <a class="bp-back-home" href="about.html#blog">← 返回全部文章</a>
+          <p>Maridian Space · 期待一次面试聊聊的机会</p>
+          <a class="bp-email" href="mailto:bh141425@gmail.com">bh141425@gmail.com</a>
+        </div>
+        <div class="footer-admin-row">
+          <button class="footer-admin-access" type="button" data-admin-auth aria-label="登录" aria-haspopup="dialog" aria-expanded="false">
+            <span>登录</span>
+          </button>
+        </div>
+      </footer>
+
+    </div><!-- /.page-scroll -->
+  </main>
+
+</div><!-- /.site -->
+
+<script src="js/work-menu.js?v=3"></script>
+<script src="js/admin-auth.js?v=5"></script>
+<script src="js/site-analytics.js?v=3"></script>
+<script src="js/blog-post.js?v=1"></script>
+</body>
+</html>

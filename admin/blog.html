@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>博客管理 · Maridian Space</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23020202'/><path d='M14 48V16h8l10 16 10-16h8v32h-8V29L32 45 22 29v19z' fill='%23FBFBF4'/></svg>">
+  <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="admin.css?v=1">
+  <style>
+    .blog-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 0 0 1.6rem; flex-wrap: wrap; }
+    .blog-count { color: var(--c-muted, #777); font-size: 1rem; }
+    .blog-post-list { display: grid; gap: .7rem; }
+    .blog-post-row { display: flex; align-items: center; gap: 1rem; padding: .85rem 1rem; border: 1px solid rgba(2,2,2,.12); border-radius: 8px; }
+    .blog-post-row .t { flex: 1; }
+    .blog-post-row .t b { display: block; font-weight: 600; }
+    .blog-post-row .t small { color: #888; }
+    .blog-post-row .status { font-size: .85rem; padding: .2rem .6rem; border-radius: 999px; }
+    .blog-post-row .status.on { background: #e6f5e9; color: #2b7a3b; }
+    .blog-post-row .status.off { background: #f4f4f4; color: #999; }
+    .blog-row-actions { display: flex; gap: .5rem; }
+    .editor { display: grid; gap: 1.1rem; }
+    .editor .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+    .editor textarea.md { min-height: 300px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.7; }
+    .editor-actions { display: flex; gap: .7rem; align-items: center; }
+    .editor-actions .danger { color: #c0392b; }
+    .form-feedback { margin-left: auto; font-size: .95rem; }
+    @media (max-width: 640px) { .editor .row-2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <section class="access" id="accessView" hidden>
+    <div class="access-brand">MARIDIAN SPACE</div>
+    <form class="access-form" id="loginForm">
+      <p class="eyebrow">PRIVATE CONTENT</p>
+      <h1>登录后，管理<br>个人博客文章。</h1>
+      <p>这里与网站首页右下角的登录入口使用同一个管理员账号。</p>
+      <label for="email">管理员邮箱</label>
+      <input id="email" name="email" type="email" autocomplete="username" required placeholder="name@example.com">
+      <label for="password">密码</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="请输入密码">
+      <button type="submit">登录并进入后台</button>
+      <p class="form-message" id="loginMessage" role="status" aria-live="polite"></p>
+      <a href="../index.html">← 返回网站首页</a>
+    </form>
+  </section>
+
+  <div class="admin" id="adminView" hidden>
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="返回 Maridian Space"><span>M</span>Maridian Space</a>
+      <nav aria-label="后台导航">
+        <a href="./">Side B 内容</a>
+        <a class="is-active" href="./blog.html">博客管理</a>
+        <a href="../ops/">运营数据</a>
+        <a href="../creative-desktop">查看 Side B ↗</a>
+      </nav>
+      <button class="save save-top" id="newPost" type="button">＋ 新建文章</button>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">BLOG CONTENT</p>
+          <h1>把方法沉淀下来，<br>写给你的面试官看。</h1>
+        </div>
+        <div class="intro-copy">
+          <p>用 Markdown 写博客，保存后发布到 About 页与文章页。正文在保存时自动转成页面，并计算阅读时长。</p>
+          <p class="updated" id="updatedText">正在读取文章…</p>
+        </div>
+      </section>
+
+      <section id="listArea">
+        <div class="blog-toolbar">
+          <p class="blog-count" id="blogCount">共 0 篇</p>
+          <button class="save" id="newPost2" type="button">＋ 新建文章</button>
+        </div>
+        <div class="blog-post-list" id="postList"></div>
+        <div class="form-feedback" id="listFeedback" role="status" aria-live="polite"></div>
+      </section>
+
+      <section id="editorArea" hidden>
+        <div class="editor" id="editorForm"></div>
+      </section>
+    </main>
+
+    <div class="savebar">
+      <p id="saveStatus" role="status" aria-live="polite"></p>
+      <button class="save" id="save" type="button">保存文章</button>
+    </div>
+  </div>
+  <script src="blog.js?v=1"></script>
+</body>
+</html>
