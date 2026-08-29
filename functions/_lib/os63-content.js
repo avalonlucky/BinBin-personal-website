@@ -2,20 +2,20 @@ export const DEFAULT_SITE_DATA = {
   profile: {
     Name: 'Maridian',
     Alias: 'MARIDIAN',
-    Title: '设计',
-    Company: '你的公司',
-    Location: '城市, 国家',
-    Status: '可用',
-    Bio: 'Hi，我是 Maridian —— 一位设计师与工程师，正在打造兼具思考与美感的数字体验。',
-    Description: '短描述占位内容 —— 可在后台表单中编辑。',
-    Images: '',
+    Title: '品牌设计 / B 端视觉设计',
+    Company: '昂楷科技',
+    Location: '',
+    Status: '开放机会',
+    Bio: '10 年品牌设计与 B 端视觉设计经验，主导全产品线从视觉系统搭建到落地，并把 AI 融入日常设计工作流。',
+    Description: '把复杂信息变得清晰、好用，并让设计真正抵达结果。',
+    Images: '/assets/side-b/maridian-avatar.jpg',
     Cover: '',
-    LinkedIn: 'https://www.linkedin.com/in/your-handle',
-    Email: 'you@example.com',
+    LinkedIn: '',
+    Email: 'bh141425@gmail.com',
     Highlights: [
-      { label: '7+', value: '年经验' },
-      { label: 'INTJ', value: '架构师' },
-      { label: '🐱', value: '爱猫人' }
+      { label: '10年', value: '品牌设计' },
+      { label: 'B端', value: '视觉设计' },
+      { label: '🐶', value: '爱狗人' }
     ],
     Tags: ['profile'],
     Category: '个人',
@@ -143,6 +143,30 @@ export async function ensureSiteContent(db) {
     INSERT OR IGNORE INTO os63_site_content (id, data_json, updated_at, updated_by)
     VALUES (1, ?, ?, 'initial-import')
   `).bind(JSON.stringify(normalizeSiteData(DEFAULT_SITE_DATA)), Math.floor(Date.now() / 1000)).run();
+
+  // The first Side B admin release seeded a complete-looking but fictional
+  // profile. Upgrade only that exact placeholder record so an administrator's
+  // later edits are never overwritten by a deployment.
+  const row = await db.prepare('SELECT data_json FROM os63_site_content WHERE id = 1').first();
+  let stored = null;
+  try { stored = JSON.parse(row && row.data_json ? row.data_json : ''); } catch {}
+  const profile = stored && stored.profile;
+  const isLegacyPlaceholder = profile
+    && profile.Company === '你的公司'
+    && profile.Location === '城市, 国家'
+    && profile.Description === '短描述占位内容 —— 可在后台表单中编辑。'
+    && profile.Email === 'you@example.com'
+    && profile.LinkedIn === 'https://www.linkedin.com/in/your-handle';
+  if (isLegacyPlaceholder) {
+    stored.profile = { ...DEFAULT_SITE_DATA.profile };
+    await db.prepare(`
+      UPDATE os63_site_content SET data_json = ?, updated_at = ?, updated_by = ? WHERE id = 1
+    `).bind(
+      JSON.stringify(normalizeSiteData(stored)),
+      Math.floor(Date.now() / 1000),
+      'profile-migration-20260829'
+    ).run();
+  }
 }
 
 export async function readSiteContent(db) {
