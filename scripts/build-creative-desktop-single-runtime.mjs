@@ -60,7 +60,7 @@ async function buildSingleRuntimePage() {
   const output = `${head}<body class="os-page creative-os63-page">
     <div id="root"></div>
 ${appLayer}
-    <script src="/js/creative-desktop-apps.js?v=6"></script>
+    <script src="/js/creative-desktop-apps.js?v=7"></script>
     <script src="/js/creative-desktop-bridge.js?v=2"></script>
   </body>
 </html>

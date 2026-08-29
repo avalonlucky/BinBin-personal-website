@@ -1,5 +1,6 @@
 (() => {
   const ASSET = '/assets/creative-desktop/legacy';
+  const PERSONAL_PHOTO_ASSET = '/assets/creative-desktop/personal-photos';
   const openModal = el => { if (!el) return; el.classList.add('open'); el.style.display = 'flex'; };
   const closeModal = el => { if (!el) return; el.classList.remove('open'); el.style.display = 'none'; };
   const bindClose = (modal, btn) => {
@@ -128,35 +129,20 @@
   }
 
   const PHOTOS = [
-    ['c1f3604a-9c67-4a9a-9ad3-dd6284c5fc31/photo-sunflower-v2.png', 'sunflowers.jpg', 'North Dakota'],
-    ['83250b2e-2de8-4575-81eb-7284e4b5d804/photo-botanical_garden.png', 'botanical_garden.jpg', 'NYBG'],
-    ['5f7e6c8f-3b3e-4c94-adba-ea44e20c274e/photo-golden_gate.png', 'golden_gate.jpg', 'San Francisco'],
-    ['e3b7e125-3f95-4ee9-89e3-7efe55d8ca0e/photo-4th_of_july.png', 'fourth_of_july.jpg', 'Minneapolis'],
-    ['fae56235-59de-4558-98fc-cec0656f099b/photo-hawaii_tree2.png', 'palm_tree.jpg', 'Maui HI'],
-    ['f41fee25-87b8-4532-b22b-d434f5ffbaa5/photo-cat_sf.png', 'street_cat.jpg', 'San Francisco'],
-    ['9d169720-5307-44f4-a3c3-a59a5b14dec8/photo-meadows.png', 'meadows.jpg', 'Minnesota'],
-    ['ec9df530-245c-4544-a7f0-0bd92b7a1d5c/photo-snorkel.png', 'snorkeling.jpg', 'Maui HI'],
-    ['8b61832f-a9f7-43cc-afea-3a6d0a3088b0/photo-mountain.png', 'mountain.jpg', 'Boulder CO'],
-    ['90341329-e9e4-4924-a8c2-9961da38b618/photo-pottery.png', 'pottery.jpg', 'Minnesota'],
-    ['c853ed60-2ceb-48ef-a11b-68fc47bf6d9b/photo-nyc.png', 'rockefeller.jpg', 'NYC'],
-    ['4269cf58-b3d2-41bf-ba3b-6bfcb980c1d0/photo-crimepunishment.png', 'reading.jpg', 'Dostoevsky'],
-    ['d3003c28-388a-46da-8495-1d83c8b6cf5a/photo-cave.png', 'sea_cave.jpg', 'Hawaii'],
-    ['a80446dc-f741-4dad-8f70-f321afcca535/photo-joshua.png', 'joshua_tree.jpg', 'Mojave'],
-    ['07a47736-9e99-4ca5-86b8-a4067891aefa/photo-kitten.jpg', 'kit-kat.jpg', 'Backyard'],
-    ['67a61281-2f54-4276-a130-58afae1507dd/photo-festival-v2.png', 'music_festival.jpg', 'Wisconsin'],
-    ['308f289d-28aa-4634-829a-c911ec4224ea/photo-scuba.jpg', 'scuba.jpg', 'Maui HI'],
-    ['a6275ffa-ef56-4e92-ae36-9eacf70fa3b3/photo-iceland.png', 'cliffside.jpg', 'Iceland'],
-    ['c5a70798-7f25-4354-97cc-d54e8917db4c/photo-lagoon-v2.png', 'blue_lagoon.jpg', 'Iceland'],
-    ['6c23a98d-2717-40d0-82e5-f6376efa0b04/photo-karate.png', 'karate.jpg', 'Green Belt'],
-    ['d2de58f5-464a-4484-ab20-3e38d519de60/photo-climb.png', 'bouldering.jpg', 'Minnesota'],
-    ['a6b19239-56c4-491c-9759-4989c8655652/photo-eiffel.png', 'eiffel_tower.jpg', 'Paris'],
-    ['b2389bff-1e92-416d-9d31-aeca369b32a0/photo-barcelona.png', 'arc_de_triomf.jpg', 'Barcelona'],
-    ['8ba14587-1849-457a-8ad7-e9d8b91d5882/photo-grandcanyon.png', 'grand_canyon.jpg', 'Arizona'],
-    ['d5682fd0-3d56-4004-8a2f-9172c4c92603/photo-maui-beach.png', 'moonrise.jpg', 'Maui HI'],
-    ['c188ad23-6b05-48c0-9d91-689455889007/photo-waterfalls.png', 'wall_of_tears.jpg', 'Maui HI'],
-    ['ec9c7aa1-fba3-4fa2-a7a6-d552b199040d/photo-clouds-v2.png', 'cotton_sky.jpg', 'Golden hour'],
-    ['3b07bfd4-bb64-4944-8397-f1ae5963e13e/photo-seljalandsfoss.png', 'seljalandsfoss.jpg', 'Iceland']
-  ].map(([path, title, sub]) => ({ src: `${ASSET}/${path}`, title, sub }));
+    'f1adcdb788770f0ed43814f285b91921.jpg',
+    'c27e32a156c49e355d6d1237a4f43372.jpg',
+    'c6b2da4c7fd38ce1c858e17b004e5ad0.jpg',
+    'b30bd8983f44afca19d68bbfd03ba6a5.jpg',
+    '302daca882230b993429c64dc4ec2723.jpg',
+    'd619bac5495dc01f7063adfb9cc0ba5a.jpg',
+    '0dbfb3b06103b0d2a20eaa4081baf243.jpg',
+    'f03fa133db49bcdd743976538292e903.jpg',
+    '7d6cf3bc9339a1a19f982dcb5ba92aa0.jpg'
+  ].map((file, index) => ({
+    src: `${PERSONAL_PHOTO_ASSET}/${file}`,
+    title: `Personal photo ${String(index + 1).padStart(2, '0')}`,
+    sub: 'Personal archive'
+  }));
 
   function openPhotoLightbox(items, startIdx) {
     document.getElementById('iosLightbox')?.remove();
