@@ -7,10 +7,14 @@
     [/OS63/g, 'Meridian OS'],
     [/ATOM63/g, 'Meridian'],
     [/You Zhang/g, 'Meridian'],
+    [/Parinaz Kassemi/g, 'Meridian'],
+    [/Los Angeles/g, 'China'],
     [/Built with Meridian/g, 'Built by Meridian'],
     [/hello\.youzhang@gmail\.com/gi, 'bh141425@gmail.com'],
     [/os\.atom63\.io/gi, 'chaoshanai.com'],
     [/atom63\.io/gi, 'chaoshanai.com'],
+    [/atom63\.com/gi, 'chaoshanai.com'],
+    [/@atom63\/slides/gi, 'Meridian Slides'],
     [/@yz_atom63/gi, 'Meridian'],
     [/@atom63_/gi, 'Meridian']
   ];
@@ -47,7 +51,7 @@
             .replace(/https?:\/\/www\.linkedin\.com\/in\/you-zhang\/?/i, 'https://chaoshanai.com/about.html')
             .replace(/https?:\/\/github\.com\/atom63\/?/i, 'https://github.com/avalonlucky')
             .replace(/https?:\/\/www\.behance\.net\/youzhang\/?/i, 'https://chaoshanai.com/#work');
-          if (/atom63|youzhang|you-zhang/i.test(translated)) translated = 'https://chaoshanai.com/';
+          if (/atom63|youzhang|you-zhang|parinaz/i.test(translated)) translated = 'https://chaoshanai.com/';
           if (translated !== href) element.setAttribute('href', translated);
         }
       });

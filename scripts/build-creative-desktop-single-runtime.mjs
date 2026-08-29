@@ -62,7 +62,7 @@ async function buildSingleRuntimePage() {
 ${appLayer}
     <script src="/js/creative-desktop-apps.js?v=8"></script>
     <script src="/js/creative-desktop-bridge.js?v=2"></script>
-    <script src="/js/side-b-personalization.js?v=2"></script>
+    <script src="/js/side-b-personalization.js?v=3"></script>
   </body>
 </html>
 `
