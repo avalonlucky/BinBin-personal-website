@@ -11,7 +11,7 @@
   <link rel="preload" href="fonts/PPMigra-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/style.css?v=116">
+  <link rel="stylesheet" href="css/style.css?v=117">
   <link rel="stylesheet" href="css/hero-cinematic.css?v=5">
   <link rel="stylesheet" href="css/admin-auth.css?v=4">
 </head>
@@ -34,6 +34,11 @@
         <a href="about.html">About</a>
         <canvas class="border-canvas"></canvas>
       </div>
+      <button class="nav-pill nav-resume" type="button" data-resume-url="" aria-label="打开个人简历 PDF" title="个人简历正在更新，PDF 稍后开放">
+        <span>Resume</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        <span class="nav-resume-status" role="status" aria-live="polite"></span>
+      </button>
     </div>
   </nav>
 
@@ -418,6 +423,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/work-menu.js?v=3"></script>
+<script src="js/resume-link.js?v=1"></script>
   <script src="js/hscroll.js?v=1"></script>
   <script src="js/footer-compact.js?v=1"></script>
   <script src="js/main.js?v=52"></script>

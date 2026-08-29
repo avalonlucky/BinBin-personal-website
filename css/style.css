@@ -215,6 +215,59 @@ button:focus-visible {
 }
 .nav-links a:hover { opacity: 1; }
 
+.nav-resume {
+  min-width: 12.8rem;
+  border: 0;
+  background: var(--c-black) !important;
+  color: var(--c-white) !important;
+  cursor: pointer;
+  font-family: var(--f-body);
+  font-size: 1.65rem;
+  font-weight: 600;
+  line-height: 1;
+  transition: transform .22s var(--ease), opacity .22s ease;
+}
+
+#nav[data-theme="dark"] .nav-resume {
+  background: var(--c-white) !important;
+  color: var(--c-black) !important;
+}
+
+.nav-resume:hover {
+  transform: translateY(-2px);
+}
+
+.nav-resume:active {
+  transform: translateY(0);
+}
+
+.nav-resume svg {
+  position: relative;
+  z-index: 1;
+  width: 1.65rem;
+  height: 1.65rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.nav-resume > span:first-child {
+  position: relative;
+  z-index: 1;
+}
+
+.nav-resume-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* Work 下拉作品总览 */
 .nav-work {
   position: relative;
@@ -2456,6 +2509,19 @@ a.footer-icon-link:hover {
     min-width: 0;
     flex: 1;
     justify-content: flex-start;
+  }
+
+  .nav-resume {
+    min-width: 10.4rem;
+    flex: 0 0 auto;
+    justify-content: center;
+    gap: .85rem;
+    font-size: 1.35rem;
+  }
+
+  .nav-resume svg {
+    width: 1.4rem;
+    height: 1.4rem;
   }
 
   .logo-text {
