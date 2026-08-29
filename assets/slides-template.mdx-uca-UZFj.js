@@ -1,7 +1,7 @@
 var e=`---
 title: "Slide Templates"
 date: "2026-04-16"
-description: "Reference deck for ATOM63 slide layouts — editorial flow, bentos, full-bleed, quotes, primitives."
+description: "Reference deck for Meridian slide layouts — editorial flow, bentos, full-bleed, quotes, primitives."
 ---
 
 import {
@@ -45,7 +45,7 @@ import {
 } from "@atom63/slides";
 
 <CoverSlide
-  credit="You Zhang · ATOM63"
+  credit="Meridian · Meridian"
   eyebrow="2026"
   title="A grammar for decks"
 />
@@ -99,7 +99,7 @@ import {
   <SplitHalf.Panel>
     <div className="flex min-h-0 flex-1 items-stretch">
       <img
-        alt="OS63 desktop environment"
+        alt="Meridian OS desktop environment"
         className="size-full flex-1 object-cover"
         height={1080}
         src="/slide-media/sys63-04.svg"
@@ -377,7 +377,7 @@ import {
   />
   <SplitWithStat.Media
     src="/slide-media/sys63-02.svg"
-    alt="OS63 window chrome"
+    alt="Meridian OS window chrome"
   />
   <SplitWithStat.Stat value="60" label="FPS target" />
   <SplitWithStat.Stat value="WCAG" label="Contrast" />
@@ -394,11 +394,11 @@ import {
   />
   <TextLead.Media
     src="/slide-media/sys63-01.svg"
-    alt="OS63 cover artwork"
+    alt="Meridian OS cover artwork"
   />
   <TextLead.Media
     src="/slide-media/sys63-03.svg"
-    alt="OS63 secondary still"
+    alt="Meridian OS secondary still"
   />
   <TextLead.Media
     alt="Placeholder — replace with final image"
@@ -415,7 +415,7 @@ import {
   />
   <TextLead.Media
     src="/slide-media/sys63-02.svg"
-    alt="OS63 window chrome detail"
+    alt="Meridian OS window chrome detail"
   />
 </TextLead>
 
@@ -458,7 +458,7 @@ import {
 
 <FullBleedSlide
   label="FullBleedSlide"
-  mediaAlt="OS63 desktop environment"
+  mediaAlt="Meridian OS desktop environment"
   mediaSrc="/slide-media/sys63-04.svg"
   title="Still or motion to the edge; caption band optional"
 />
@@ -490,7 +490,7 @@ import {
 ---
 
 <ImageSlide
-  alt="OS63 desktop environment"
+  alt="Meridian OS desktop environment"
   caption="ImageSlide — single image, edge to edge"
   src="/slide-media/sys63-04.svg"
 />
@@ -499,8 +499,8 @@ import {
 
 <ImageDuoSlide
   caption="ImageDuoSlide — two images side by side"
-  left={{ src: "/slide-media/sys63-01.svg", alt: "OS63 cover artwork" }}
-  right={{ src: "/slide-media/sys63-02.svg", alt: "OS63 window chrome" }}
+  left={{ src: "/slide-media/sys63-01.svg", alt: "Meridian OS cover artwork" }}
+  right={{ src: "/slide-media/sys63-02.svg", alt: "Meridian OS window chrome" }}
 />
 
 ---

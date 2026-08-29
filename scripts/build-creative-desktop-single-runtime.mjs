@@ -57,11 +57,12 @@ async function buildSingleRuntimePage() {
   </head>`
   )
 
-  const output = `${head}<body class="os-page creative-os63-page">
+  const output = `${head}<body class="os-page creative-meridian-page">
     <div id="root"></div>
 ${appLayer}
-    <script src="/js/creative-desktop-apps.js?v=7"></script>
+    <script src="/js/creative-desktop-apps.js?v=8"></script>
     <script src="/js/creative-desktop-bridge.js?v=2"></script>
+    <script src="/js/side-b-personalization.js?v=2"></script>
   </body>
 </html>
 `
@@ -73,7 +74,7 @@ async function trimWallpaperCatalog() {
   let bundle = await read(wallpaperBundlePath)
   const arrayStart = bundle.indexOf('zl=[')
   const arrayEnd = bundle.indexOf('];function Bl', arrayStart)
-  if (arrayStart < 0 || arrayEnd < 0) throw new Error('Wallpaper catalog was not found in the OS63 bundle')
+  if (arrayStart < 0 || arrayEnd < 0) throw new Error('Wallpaper catalog was not found in the Meridian desktop bundle')
 
   const fullCatalog = bundle.slice(arrayStart, arrayEnd + 1)
   const floralStart = fullCatalog.indexOf('},{id:`floral-')

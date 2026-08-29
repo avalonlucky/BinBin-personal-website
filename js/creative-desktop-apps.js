@@ -207,15 +207,15 @@
   function openResume() {
     previewModal.classList.add('resume-preview');
     document.getElementById('pvFilename').textContent = 'resume.pdf';
-    document.getElementById('pvImg').src = `${ASSET}/bb729e37-05b2-4eac-9f41-fce42724fcf4/resume-page-v11.png`;
-    document.getElementById('pvTitle').textContent = 'resume.pdf';
-    document.getElementById('pvSub').textContent = 'Parinaz Kassemi · Senior Product Designer';
-    document.getElementById('pvPdf').style.display = 'inline-block';
+    document.getElementById('pvImg').src = '/assets/meridian-mark.svg';
+    document.getElementById('pvTitle').textContent = 'Meridian Resume';
+    document.getElementById('pvSub').textContent = '个人简历正在更新，PDF 稍后开放';
+    document.getElementById('pvPdf').style.display = 'none';
     document.getElementById('pvMeta').innerHTML = [
       ['Kind', 'PDF Document'],
-      ['Size', '1 MB'],
+      ['Status', 'Updating'],
       ['Where', 'Desktop'],
-      ['Modified', 'Jul 2026']
+      ['Owner', 'Meridian']
     ].map(([k, v]) => `<div style="color:#8a8a90;text-align:right">${k}</div><div>${v}</div>`).join('');
     openModal(previewModal);
   }

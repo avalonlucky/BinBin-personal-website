@@ -7,44 +7,44 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
     <!-- SEO (source of truth: @atom63/brand/seo → endpoint "os63") -->
-    <title>OS63 | ATOM63</title>
+    <title>Meridian OS | Meridian</title>
     <meta
       name="description"
-      content="OS63 — A web-based desktop environment by ATOM63, exploring spatial UI, window management, and expressive desktop interactions."
+      content="Meridian OS — A web-based desktop environment by Meridian, exploring spatial UI, window management, and expressive desktop interactions."
     />
     <meta
       name="keywords"
-      content="You Zhang, ATOM63, web desktop, desktop environment, spatial UI, window management, design engineer, visual systems"
+      content="Meridian, Meridian, web desktop, desktop environment, spatial UI, window management, design engineer, visual systems"
     />
-    <meta name="author" content="You Zhang" />
+    <meta name="author" content="Meridian" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#000000" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://os.atom63.io" />
-    <meta property="og:title" content="OS63 — Web Desktop by ATOM63" />
+    <meta property="og:url" content="https://chaoshanai.com" />
+    <meta property="og:title" content="Meridian OS — Web Desktop by Meridian" />
     <meta
       property="og:description"
-      content="OS63 — A web-based desktop environment by ATOM63, exploring spatial UI, window management, and expressive desktop interactions."
+      content="Meridian OS — A web-based desktop environment by Meridian, exploring spatial UI, window management, and expressive desktop interactions."
     />
-    <meta property="og:image" content="https://os.atom63.io/og.png" />
+    <meta property="og:image" content="https://chaoshanai.com/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="OS63" />
-    <meta property="og:site_name" content="ATOM63" />
+    <meta property="og:image:alt" content="Meridian OS" />
+    <meta property="og:site_name" content="Meridian" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="OS63 — Web Desktop by ATOM63" />
+    <meta name="twitter:title" content="Meridian OS — Web Desktop by Meridian" />
     <meta
       name="twitter:description"
-      content="OS63 — A web-based desktop environment by ATOM63, exploring spatial UI, window management, and expressive desktop interactions."
+      content="Meridian OS — A web-based desktop environment by Meridian, exploring spatial UI, window management, and expressive desktop interactions."
     />
-    <meta name="twitter:image" content="https://os.atom63.io/og.png" />
-    <meta name="twitter:site" content="@yz_atom63" />
-    <meta name="twitter:creator" content="@yz_atom63" />
+    <meta name="twitter:image" content="https://chaoshanai.com/og.png" />
+    <meta name="twitter:site" content="Meridian" />
+    <meta name="twitter:creator" content="Meridian" />
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96" />

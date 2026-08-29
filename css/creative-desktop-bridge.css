@@ -1,7 +1,7 @@
 /*
  * Creative Desktop bridge
  *
- * The OS63 React desktop and Meridian's eight applications now share one
+ * The Meridian React desktop and Meridian's eight applications now share one
  * document and one desktop runtime. This layer contains launchers and app
  * windows only; there is no second wallpaper, menu bar, widget system or dock.
  */

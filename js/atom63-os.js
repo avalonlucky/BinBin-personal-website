@@ -12,9 +12,9 @@
   const homeButton = document.querySelector('.home-button');
   const appDetails = {
     launcher: { title: 'App Center', icon: '▦', description: 'Open applications', kind: 'launcher', size: 'wide', width: 820, height: 610 },
-    'about-system': { title: 'About This System', icon: '◈', description: 'System information and OS63 details', kind: 'about', size: 'regular', width: 520, height: 380 },
+    'about-system': { title: 'About This System', icon: '◈', description: 'System information and Meridian OS details', kind: 'about', size: 'regular', width: 520, height: 380 },
     'agent-chat': { title: 'Agent Chat', icon: '✦', description: 'Chat with A63', kind: 'agent', size: 'tall', width: 500, height: 700 },
-    timeline: { title: 'Timeline', icon: '◫', description: "Browse You Zhang's work, notes, and milestones", kind: 'timeline', size: 'wide', width: 840, height: 700 },
+    timeline: { title: 'Timeline', icon: '◫', description: "Browse Meridian's work, notes, and milestones", kind: 'timeline', size: 'wide', width: 840, height: 700 },
     slides: { title: 'Slides', icon: '▤', description: 'Present and browse slide decks', kind: 'slides', size: 'wide', width: 1100, height: 760 },
     settings: { title: 'Settings', icon: '⚙', description: 'System and personalization settings', kind: 'settings', size: 'regular', width: 700, height: 600 },
     halftone: { title: 'Halftone Studio', icon: '◌', description: 'Generate graphic halftone treatments and export images', kind: 'halftone', size: 'wide', width: 880, height: 620 },
@@ -105,10 +105,10 @@
   }
 
   function appContent(kind) {
-    if (kind === 'launcher') return `<div class="app-center-header"><b>All apps</b><span>OS63 applications</span></div><div class="app-grid">${Object.entries(appDetails).filter(([id]) => !['launcher', 'github'].includes(id)).map(([id, app]) => `<button data-launch="${id}"><i class="app-icon">${app.icon}</i><b>${app.title}</b><span>${app.description}</span></button>`).join('')}</div>`;
-    if (kind === 'about') return `<section class="about-system source-about"><span class="system-glyph">63</span><h2>OS63</h2><p>Designed by You Zhang · ATOM63</p><dl><div><dt>Version</dt><dd>OS63 2026.08</dd></div><div><dt>Display</dt><dd>Desktop portfolio</dd></div><div><dt>Status</dt><dd><i></i> Available</dd></div></dl><p class="about-footnote">A collection of work, utilities, and small experiments.</p></section>`;
-    if (kind === 'agent') return `<section class="agent-chat"><div class="agent-thread"><article><b>ATOM63 Agent</b><p>Hi — this is the desktop assistant. Ask about the system, projects, or tools.</p></article></div><form class="agent-form"><input aria-label="Message Agent Chat" placeholder="Message the agent…" /><button>Send</button></form></section>`;
-    if (kind === 'timeline') return `<section class="timeline"><article><time>2018</time><div><b>Visual foundations</b><p>Built the language for systems, products, and stories.</p></div></article><article><time>2021</time><div><b>Design engineering</b><p>Began connecting interaction detail directly to implementation.</p></div></article><article><time>2024</time><div><b>Motion systems</b><p>Scaled identity, interface, and motion across digital surfaces.</p></div></article><article><time>Now</time><div><b>ATOM63</b><p>A place to explore work as an operating system.</p></div></article></section>`;
+    if (kind === 'launcher') return `<div class="app-center-header"><b>All apps</b><span>Meridian OS applications</span></div><div class="app-grid">${Object.entries(appDetails).filter(([id]) => !['launcher', 'github'].includes(id)).map(([id, app]) => `<button data-launch="${id}"><i class="app-icon">${app.icon}</i><b>${app.title}</b><span>${app.description}</span></button>`).join('')}</div>`;
+    if (kind === 'about') return `<section class="about-system source-about"><span class="system-glyph">M</span><h2>Meridian OS</h2><p>Designed by Meridian</p><dl><div><dt>Version</dt><dd>Meridian OS 2026.08</dd></div><div><dt>Display</dt><dd>Desktop portfolio</dd></div><div><dt>Status</dt><dd><i></i> Available</dd></div></dl><p class="about-footnote">A collection of work, utilities, and small experiments.</p></section>`;
+    if (kind === 'agent') return `<section class="agent-chat"><div class="agent-thread"><article><b>Meridian Agent</b><p>Hi — this is the desktop assistant. Ask about the system, projects, or tools.</p></article></div><form class="agent-form"><input aria-label="Message Agent Chat" placeholder="Message the agent…" /><button>Send</button></form></section>`;
+    if (kind === 'timeline') return `<section class="timeline"><article><time>2016</time><div><b>Brand foundations</b><p>Built visual systems for brands, products, and business communication.</p></div></article><article><time>2021</time><div><b>B-end visual systems</b><p>Connected complex product information with clear visual expression.</p></div></article><article><time>2024</time><div><b>AI workflow</b><p>Integrated AI into daily design and production workflows.</p></div></article><article><time>Now</time><div><b>Meridian</b><p>A place to explore work and the stories beyond the main portfolio.</p></div></article></section>`;
     if (kind === 'slides') return `<section class="slides"><div class="slide-stage" data-slide="0"><span>01 / 03</span><h2>Interfaces can<br />carry a story.</h2><p>System thinking, engineering precision, and motion.</p></div><div class="slide-controls"><button data-slide-direction="-1">← Previous</button><button data-slide-direction="1">Next →</button></div></section>`;
     if (kind === 'settings') return `<section class="settings-app" data-settings-app>
       <header class="settings-toolbar"><span></span><div><button data-settings-history="undo" aria-label="Undo" disabled>↶</button><button data-settings-history="redo" aria-label="Redo" disabled>↷</button><button data-settings-reset>Reset</button></div></header>
@@ -126,14 +126,14 @@
           ${settingChoice('Font', 'font', [['geist','Geist'],['mono','Mono'],['system','System']])}
           ${settingChoice('Icon theme', 'iconTheme', [['classic','Classic'],['minimal','Minimal'],['color','Color']])}
           <hr />
-          <section class="wallpaper-setting"><div><b>Wallpaper</b><span>Choose a desktop image or let OS63 shuffle.</span></div><div class="wallpaper-actions"><button data-wallpaper="default">Default</button><button data-wallpaper="none">None</button><button data-wallpaper="shuffle">Shuffle</button></div></section>
+          <section class="wallpaper-setting"><div><b>Wallpaper</b><span>Choose a desktop image or let Meridian OS shuffle.</span></div><div class="wallpaper-actions"><button data-wallpaper="default">Default</button><button data-wallpaper="none">None</button><button data-wallpaper="shuffle">Shuffle</button></div></section>
         </section>
         <section class="settings-page" data-settings-panel="system" hidden><article class="settings-card"><h3>Developer Settings</h3><label class="settings-switch"><span><b>Debug Mode</b><small>Show window and interaction diagnostics.</small></span><input type="checkbox" data-setting-toggle="debug" /><i></i></label><hr /><div class="settings-shortcut"><span>Keyboard shortcut</span><kbd>Ctrl</kbd><b>+</b><kbd>Shift</kbd><b>+</b><kbd>D</kbd></div></article></section>
-        <section class="settings-page" data-settings-panel="about" hidden><article class="settings-card about-settings"><div><span class="settings-about-icon">63</span><p><b>ATOM63 Portfolio</b><small>v0.1.0 (f853f83)</small></p></div></article><article class="settings-card credits-card"><h3>Credits</h3><p>Designed and developed by You Zhang</p><hr /><p>Inspired by <a href="https://ryo.lu" target="_blank" rel="noreferrer">Ryo Lu</a></p><hr /><p>© 2026 ATOM63. All rights reserved.</p></article></section>
+        <section class="settings-page" data-settings-panel="about" hidden><article class="settings-card about-settings"><div><span class="settings-about-icon">M</span><p><b>Meridian Space</b><small>Side B · 2026</small></p></div></article><article class="settings-card credits-card"><h3>Credits</h3><p>Designed and developed by Meridian</p><hr /><p>Creative desktop experience</p><hr /><p>© 2026 Meridian. All rights reserved.</p></article></section>
       </div></div>
     </section>`;
     if (kind === 'halftone') return `<section class="halftone-empty"><span>◌</span><h2>Halftone Studio is queued up</h2><p>Image import, dot controls, previews, and exports are coming soon.</p></section>`;
-    if (kind === 'resume') return `<section class="resume resume-viewer"><header><span>RESUME.PDF</span><button data-print-resume>Save to PDF</button></header><article><div class="resume-head"><span>YOU ZHANG</span><h2>Design Engineer</h2><p>Los Angeles, CA · Microsoft</p></div><hr /><section><b>Profile</b><p>Design engineer working across visual systems, motion, interaction, and implementation.</p></section><section><b>Experience</b><p><strong>Microsoft</strong><br />Designing scalable interfaces and expressive product systems.</p></section><section><b>Practice</b><p>Brand systems · Design systems · Prototyping · Creative development</p></section></article></section>`;
+    if (kind === 'resume') return `<section class="resume resume-viewer"><header><span>RESUME.PDF</span><button data-print-resume>Save to PDF</button></header><article><div class="resume-head"><span>MERIDIAN</span><h2>Brand &amp; B-end Visual Designer</h2><p>10 years of design experience</p></div><hr /><section><b>Profile</b><p>Brand and B-end visual designer working across visual systems, product communication, and implementation.</p></section><section><b>Experience</b><p><strong>Full product-line ownership</strong><br />Building scalable visual systems and leading delivery from concept to launch.</p></section><section><b>Practice</b><p>Brand systems · B-end visual design · AI workflows · Design delivery</p></section></article></section>`;
     if (kind === 'finder') return `<section class="finder source-finder" data-finder>
       <header class="finder-toolbar"><div><button data-finder-sidebar aria-label="Show Sidebar">☰</button><span class="toolbar-group"><button data-finder-nav="back" aria-label="Go Back">←</button><button data-finder-nav="forward" aria-label="Go Forward">→</button><button data-finder-nav="up" aria-label="Go Up One Level">↑</button></span></div><b data-finder-path>/Home</b><div><button data-finder-view="grid" class="is-active" aria-label="Grid View">▦</button><button data-finder-view="list" aria-label="List View">☷</button><button data-finder-inspector aria-label="Inspector">ⓘ</button></div></header>
       <aside data-finder-sidebar-panel><b>Favorites</b><button data-finder-location="home">⌂ Home</button><button data-finder-location="documents">▤ Documents</button><button data-launch="timeline">▣ Case studies</button><button data-launch="notes">✎ Notes</button><button data-launch="preview">▧ Photos</button><b>Locations</b><button data-launch="resume">▤ Resume</button></aside>
@@ -429,7 +429,7 @@
     const agentForm = win.querySelector('.agent-form');
     if (agentForm) agentForm.addEventListener('submit', event => {
       event.preventDefault(); const input = agentForm.querySelector('input'); const message = input.value.trim(); if (!message) return;
-      const reply = document.createElement('article'); reply.innerHTML = `<b>ATOM63 Agent</b><p>${escapeHTML(`I received: “${message}” — this desktop keeps the interaction local and responsive.`)}</p>`;
+      const reply = document.createElement('article'); reply.innerHTML = `<b>Meridian Agent</b><p>${escapeHTML(`I received: “${message}” — this desktop keeps the interaction local and responsive.`)}</p>`;
       win.querySelector('.agent-thread').append(reply); input.value = '';
     });
     const stage = win.querySelector('.slide-stage');
@@ -534,7 +534,7 @@
         ${category('Texture','Materials, fabrics, surfaces, and macro detail',[['Woven','texture']])}
         ${category('Floral','Flowers, botanicals, and garden scenes',[['Botanical','floral']])}
         ${category('Retro','Vaporwave, pixel art, and early-web aesthetics',[['Vaporwave','retro']])}
-        ${category('Archived','Legacy wallpapers from earlier versions',[['OS63 Classic','archived']])}
+        ${category('Archived','Legacy wallpapers from earlier versions',[['Meridian Classic','archived']])}
       </div></div><hr /><button data-desktop-dark><span>Dark Mode</span><b>${root.dataset.mode === 'dark' ? '✓' : ''}</b></button><hr /><button data-launch="settings">Settings</button><button data-desktop-refresh>Refresh</button>`;
   }
 
@@ -544,7 +544,7 @@
     dialog = document.createElement('section');
     dialog.className = 'refresh-dialog';
     dialog.hidden = true;
-    dialog.innerHTML = `<div role="alertdialog" aria-modal="true" aria-labelledby="refresh-title"><span class="refresh-icon">↻</span><h2 id="refresh-title">Refresh Desktop</h2><p>This will reset OS63 desktop layout, window state, dock pins, and recent items. Host app data and personalization settings are left untouched.</p><footer><button data-refresh-cancel>Cancel</button><button data-refresh-confirm>Refresh</button></footer></div>`;
+    dialog.innerHTML = `<div role="alertdialog" aria-modal="true" aria-labelledby="refresh-title"><span class="refresh-icon">↻</span><h2 id="refresh-title">Refresh Desktop</h2><p>This will reset Meridian OS desktop layout, window state, dock pins, and recent items. Host app data and personalization settings are left untouched.</p><footer><button data-refresh-cancel>Cancel</button><button data-refresh-confirm>Refresh</button></footer></div>`;
     root.append(dialog);
     dialog.querySelector('[data-refresh-cancel]').addEventListener('click', () => { dialog.hidden = true; });
     dialog.querySelector('[data-refresh-confirm]').addEventListener('click', () => {
@@ -650,7 +650,7 @@
         view: `<button data-app-command="finder-grid"><span>as Icons</span><b>✓</b></button><button data-app-command="finder-list">as List</button><hr /><button data-app-command="finder-sidebar">Show Sidebar ⌘S</button><button data-app-command="finder-inspector">Show Inspector ⌥⌘I</button>`,
         go: `<button data-app-command="finder-back">Back ⌘[</button><button data-app-command="finder-forward">Forward ⌘]</button><button data-app-command="finder-up">Enclosing Folder ⌘↑</button><hr /><button data-app-command="finder-home">Home ⇧⌘H</button><button data-app-command="finder-documents">Documents</button>`,
         window: `<button data-app-command="minimize">Minimize</button><button data-app-command="zoom">Zoom</button><hr /><button data-app-command="overview">Show All Windows</button>`,
-        help: `<button data-app-command="help">OS63 Help</button>`,
+        help: `<button data-app-command="help">Meridian OS Help</button>`,
       };
       menu.innerHTML = common[group] || common.help;
       const bounds = trigger.getBoundingClientRect();

@@ -40,7 +40,7 @@ import {
 } from "@atom63/slides";
 
 <CoverSlide
-  credit="You Zhang · ATOM63"
+  credit="Meridian · Meridian"
   eyebrow="2026 · internet voice test"
   subtitle="an MDX-powered field guide to the cats that quietly run the feed"
   title="Cat Meme Hall of Fame"
@@ -547,7 +547,7 @@ import {
   <TextLead.Text
     body="The topic is unserious on purpose. If the slide engine can make cat memes feel structured, paced, sourced, animated, and presentable, it can carry real portfolio stories too."
     bullets={[
-      "frontmatter drives the OS63 deck picker",
+      "frontmatter drives the Meridian OS deck picker",
       "MDX keeps prose, JSX templates, media, and talk tracks together",
       "templates give rhythm; primitives let weird internet-native layouts happen",
     ]}
@@ -573,7 +573,7 @@ import {
       <Body>
         Frontmatter defines title, date, and description. JSX chooses slide
         templates. Markdown-like prose becomes talk track. Media paths stay
-        portable inside OS63.
+        portable inside Meridian OS.
       </Body>
     </Stack>
   </SplitHalf.Panel>
@@ -596,7 +596,7 @@ import {
 </SplitHalf>
 
 <TalkTrack>
-  This is a technical slide disguised as an editorial slide. It names the OS63
+  This is a technical slide disguised as an editorial slide. It names the Meridian OS
   integration without breaking the vibe.
 </TalkTrack>
 
@@ -717,7 +717,7 @@ import {
   handles={[
     { label: "Format", value: "copy the grammar" },
     { label: "Media", value: "use your own cat" },
-    { label: "Built with", value: "MDX · OS63 · @atom63/slides" },
+    { label: "Built with", value: "MDX · Meridian OS · @atom63/slides" },
   ]}
   title="long may they reign"
   website="atom63.com"
