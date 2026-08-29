@@ -287,6 +287,30 @@ export async function ensureBlogTable(db) {
   `).run();
   await db.prepare(`CREATE INDEX IF NOT EXISTS idx_blog_posts_slug ON ${TABLE}(slug)`).run();
   await db.prepare(`CREATE INDEX IF NOT EXISTS idx_blog_posts_published ON ${TABLE}(published, created_at)`).run();
+
+  // Correct the former public name in existing database content without
+  // replacing any other article edits made through the blog admin.
+  await db.prepare(`
+    UPDATE ${TABLE}
+    SET
+      slug = CASE
+        WHEN slug = '你好-这里是-maridian-的个人博客'
+          AND NOT EXISTS (
+            SELECT 1 FROM ${TABLE} AS existing
+            WHERE existing.slug = '你好-这里是-meridian-的个人博客'
+          )
+        THEN '你好-这里是-meridian-的个人博客'
+        ELSE slug
+      END,
+      title = REPLACE(title, 'Maridian', 'Meridian'),
+      excerpt = REPLACE(excerpt, 'Maridian', 'Meridian'),
+      body_md = REPLACE(body_md, 'Maridian', 'Meridian'),
+      body_html = REPLACE(body_html, 'Maridian', 'Meridian')
+    WHERE title LIKE '%Maridian%'
+      OR excerpt LIKE '%Maridian%'
+      OR body_md LIKE '%Maridian%'
+      OR body_html LIKE '%Maridian%'
+  `).run();
 }
 
 export async function listPosts(db, opts = {}) {
