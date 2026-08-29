@@ -1,7 +1,7 @@
 export const DEFAULT_SITE_DATA = {
   profile: {
-    Name: 'Maridian',
-    Alias: 'MARIDIAN',
+    Name: 'Meridian',
+    Alias: 'MERIDIAN',
     Title: '品牌设计 / B 端视觉设计',
     Company: '昂楷科技',
     Location: '',
@@ -21,7 +21,7 @@ export const DEFAULT_SITE_DATA = {
     Category: '个人',
     Published: true,
     Created: '2026-01-01',
-    Author: 'Maridian'
+    Author: 'Meridian'
   },
   listening: [
     {
@@ -165,6 +165,29 @@ export async function ensureSiteContent(db) {
       JSON.stringify(normalizeSiteData(stored)),
       Math.floor(Date.now() / 1000),
       'profile-migration-20260829'
+    ).run();
+  }
+
+  // Correct the former public-facing spelling without replacing any other
+  // profile fields the owner may already have edited in the admin form.
+  const currentProfile = stored && stored.profile;
+  const usesFormerName = currentProfile
+    && (currentProfile.Name === 'Maridian'
+      || currentProfile.Alias === 'MARIDIAN'
+      || currentProfile.Author === 'Maridian');
+  if (usesFormerName) {
+    stored.profile = {
+      ...currentProfile,
+      Name: currentProfile.Name === 'Maridian' ? 'Meridian' : currentProfile.Name,
+      Alias: currentProfile.Alias === 'MARIDIAN' ? 'MERIDIAN' : currentProfile.Alias,
+      Author: currentProfile.Author === 'Maridian' ? 'Meridian' : currentProfile.Author
+    };
+    await db.prepare(`
+      UPDATE os63_site_content SET data_json = ?, updated_at = ?, updated_by = ? WHERE id = 1
+    `).bind(
+      JSON.stringify(normalizeSiteData(stored)),
+      Math.floor(Date.now() / 1000),
+      'profile-name-migration-20260829'
     ).run();
   }
 }

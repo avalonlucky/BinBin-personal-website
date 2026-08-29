@@ -1,8 +1,8 @@
 (() => {
   const clock = document.getElementById('clock');
+  if (!clock) return;
 
   function updateClock() {
-    if (!clock) return;
     const now = new Date();
     clock.textContent = now.toLocaleTimeString('en-GB', {
       hour: '2-digit',

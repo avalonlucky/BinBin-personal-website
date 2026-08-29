@@ -33,7 +33,7 @@
     }
   }
 
-  window.MaridianPrivacy = {
+  window.MeridianPrivacy = {
     getConsent: function () { return readStorage(localStorage, CONSENT_KEY) || 'unset'; },
     allow: function () { setConsent('granted'); location.reload(); },
     optOut: function () { setConsent('denied'); location.reload(); }
@@ -326,6 +326,6 @@
     setInterval(flushEngagement, FLUSH_INTERVAL);
     observeVitals();
 
-    window.MaridianAnalytics = { track: send, flush: flushEngagement };
+    window.MeridianAnalytics = { track: send, flush: flushEngagement };
   }
 })();

@@ -95,7 +95,7 @@
     dialogPanel.setAttribute('aria-labelledby', 'adminAuthTitle');
 
     var panelTop = element('div', 'admin-auth-top');
-    var brand = element('span', 'admin-auth-brand', 'MARIDIAN SPACE');
+    var brand = element('span', 'admin-auth-brand', 'MERIDIAN SPACE');
     var close = element('button', 'admin-auth-close', '×');
     close.type = 'button';
     close.setAttribute('aria-label', '关闭');

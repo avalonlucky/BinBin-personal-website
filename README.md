@@ -1,4 +1,4 @@
-# Maridian Space 个人网站
+# Meridian Space 个人网站
 
 **正式网站：** https://chaoshanai.com  
 **视觉参考：** https://estrela.studio  

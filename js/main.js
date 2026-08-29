@@ -1016,77 +1016,6 @@ function initClock() {
   setInterval(tick, 1000);
 }
 
-function initFooterContact() {
-  const card = document.querySelector('[data-footer-contact]');
-  if (!card) return;
-
-  const contacts = {
-    email: {
-      value: 'bh141425@gmail.com',
-      href: 'mailto:bh141425@gmail.com?subject=' + encodeURIComponent('视觉设计岗位面试沟通'),
-      action: '发邮件',
-      copyLabel: '复制邮箱',
-    },
-    phone: {
-      value: '131 0633 3009',
-      href: 'tel:+8613106333009',
-      action: '拨打',
-      copyLabel: '复制电话',
-    },
-  };
-  const value = card.querySelector('[data-footer-contact-value]');
-  const action = card.querySelector('[data-footer-contact-action]');
-  const copy = card.querySelector('[data-footer-contact-copy]');
-  let mode = 'email';
-
-  const render = () => {
-    const contact = contacts[mode];
-    value.textContent = contact.value;
-    if (action) {
-      action.href = contact.href;
-      const actionLabel = action.querySelector('span');
-      if (actionLabel) actionLabel.textContent = contact.action;
-    }
-    copy.setAttribute('aria-label', contact.copyLabel);
-    card.querySelectorAll('[data-footer-contact-mode]').forEach(button => {
-      const active = button.dataset.footerContactMode === mode;
-      button.classList.toggle('is-active', active);
-      button.setAttribute('aria-pressed', String(active));
-    });
-  };
-
-  card.querySelectorAll('[data-footer-contact-mode]').forEach(button => {
-    button.addEventListener('click', () => {
-      mode = button.dataset.footerContactMode;
-      render();
-    });
-  });
-  copy.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(contacts[mode].value);
-      const original = copy.getAttribute('aria-label');
-      copy.setAttribute('aria-label', '已复制');
-      window.setTimeout(() => copy.setAttribute('aria-label', original), 1200);
-    } catch (_) {
-      window.prompt('复制联系方式', contacts[mode].value);
-    }
-  });
-  render();
-}
-
-function initFooterAI() {
-  const links = document.querySelectorAll('[data-footer-ai-base]');
-  if (!links.length) return;
-
-  const prompt = '我正在评估 Meridian（https://chaoshanai.com/）是否适合我们的品牌设计 / 视觉设计岗位。'
-    + '请查看他的作品集网站，告诉我：他的设计能力覆盖哪些方面、最适合什么阶段和什么类型的公司、'
-    + '如果录用他我实际能得到什么。请具体一些，引用他的案例和经历。';
-
-  links.forEach(link => {
-    link.href = link.dataset.footerAiBase + encodeURIComponent(prompt);
-  });
-}
-
 /* ─────────────────────────────────────────
    INIT
 ───────────────────────────────────────── */
@@ -1103,7 +1032,5 @@ initFAQ();
 initDragScroll();
 initHeroTilt();
 initClock();
-initFooterContact();
-initFooterAI();
 
 window.addEventListener('resize', () => ScrollTrigger.refresh());

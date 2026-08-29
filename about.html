@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About · Maridian Space</title>
+  <title>About · Meridian Space</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23020202'/><path d='M14 48V16h8l10 16 10-16h8v32h-8V29L32 45 22 29v19z' fill='%23FBFBF4'/></svg>">
 
   <link rel="preload" href="fonts/PPMigra-Regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -20,14 +20,14 @@
   <nav id="nav" data-theme="light">
     <div class="nav-inner">
       <a href="index.html#top" class="nav-pill nav-logo" data-border>
-        <span class="logo-text">Maridian Space</span>
+        <span class="logo-text">Meridian Space</span>
         <canvas class="border-canvas"></canvas>
       </a>
       <div class="nav-pill nav-links" data-border>
         <a href="index.html#work">Work</a>
+        <a href="index.html#product">Product</a>
         <a href="creative-desktop.html">Side B</a>
         <a href="about.html" aria-current="page">About</a>
-        <a href="index.html#contact">Contact</a>
         <canvas class="border-canvas"></canvas>
       </div>
     </div>
@@ -49,7 +49,7 @@
           <figure class="hero-computer" aria-label="复古电脑中的 AI 实践终端动画">
             <img src="assets/hero-retro-computer.png" alt="米白色复古电脑" width="1448" height="1086">
             <div class="hero-terminal" aria-hidden="true">
-              <div class="hero-terminal-bar"><i></i><i></i><i></i><span>maridian — claude — 80×24</span></div>
+              <div class="hero-terminal-bar"><i></i><i></i><i></i><span>meridian — claude — 80×24</span></div>
               <div class="hero-terminal-scroll">
                 <pre class="hero-terminal-output" data-terminal-output></pre><span class="hero-terminal-cursor">_</span>
               </div>
@@ -222,67 +222,61 @@
         </div>
       </section>
 
-      <footer class="s-footer" id="contact">
-        <div class="footer-top">
-          <div class="footer-left">
-            <div class="footer-col">
-              <h6>Navigation</h6>
-              <a href="index.html#top">Home</a>
-              <a href="index.html#work">Work</a>
-              <a href="about.html">About</a>
-              <a href="index.html#contact">Contact</a>
-            </div>
-            <div class="footer-col">
-              <h6>Social</h6>
-              <a class="footer-social-link" href="#" aria-label="LinkedIn">
-                <svg class="footer-social-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 10v7M8 7.5v.01M12 17v-4a3 3 0 0 1 6 0v4M12 10v7"></path></svg>
-                <span>LinkedIn</span>
-              </a>
-              <a class="footer-social-link" href="#" aria-label="Instagram">
-                <svg class="footer-social-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r=".7" class="icon-fill"></circle></svg>
-                <span>Instagram</span>
-              </a>
-              <a class="footer-social-link" href="#" aria-label="Twitter">
-                <svg class="footer-social-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 4.1a8.5 8.5 0 0 1-2.5 1 4.2 4.2 0 0 0-7.3 2.9v1A10 10 0 0 1 3 4.4s-3.7 8.5 4.8 12.3A10.7 10.7 0 0 1 2 18.3c8.5 4.8 19 0 19-10.8v-.4A7 7 0 0 0 22 4.1Z"></path></svg>
-                <span>Twitter</span>
-              </a>
-              <a class="footer-social-link" href="#" aria-label="Facebook">
-                <svg class="footer-social-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M14.5 8.5h-1.2c-1 0-1.8.8-1.8 1.8V21M9 13h6"></path></svg>
-                <span>Facebook</span>
-              </a>
-              <a class="footer-social-link" href="#" aria-label="TikTok">
-                <svg class="footer-social-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4v11a4 4 0 1 1-4-4M15 4c.6 2.4 2.4 4 5 4"></path></svg>
-                <span>TikTok</span>
-              </a>
-            </div>
+    <footer class="s-footer footer-compact" id="contact">
+      <div class="footer-compact-main">
+        <div class="footer-contact-card" aria-label="联系方式" data-footer-contact>
+          <div class="footer-contact-switch" role="group" aria-label="选择联系方式">
+            <button type="button" class="is-active" data-footer-contact-mode="email">邮箱</button>
+            <button type="button" data-footer-contact-mode="phone">电话</button>
           </div>
-          <div class="footer-right">
-            <span class="footer-cta-btn footer-resume-pending" aria-disabled="true">下载简历 <small>整理中</small></span>
-            <div class="footer-contact">
-              <p>期待一次面试聊聊的机会。<br>Available for design opportunities.</p>
-              <div class="footer-contact-links">
-                <p><span class="f-bullet">•</span> <a href="tel:+8613106333009">+86 13106333009</a> / <a href="tel:+85254151285">+85254151285</a></p>
-                <p><span class="f-bullet">•</span> <a href="mailto:bh141425@gmail.com?subject=视觉设计岗位面试沟通">联系面试</a></p>
-                <p><span class="f-bullet">•</span> <a href="privacy.html">Privacy & Analytics</a></p>
-              </div>
-            </div>
-            <div class="footer-clock-row">
-              <span id="clock">00:00:00</span> <span class="footer-tz">(GMT+2)</span>
+          <div class="footer-contact-controls">
+            <div class="footer-contact-value-wrap">
+              <span class="footer-contact-value" data-footer-contact-value>bh141425@gmail.com</span>
+              <button class="footer-contact-copy" type="button" data-footer-contact-copy aria-label="复制邮箱">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="5.6" y="5.6" width="8" height="8" rx="1.6"/><path d="M10.4 5.6v-2A1.6 1.6 0 0 0 8.8 2H4a1.6 1.6 0 0 0-1.6 1.6v4.8A1.6 1.6 0 0 0 4 10h1.6"/></svg>
+              </button>
             </div>
           </div>
         </div>
-        <div class="footer-wordmark">
-          <span>Maridian Space</span>
+
+        <div class="footer-compact-socials" aria-label="社交平台">
+          <a class="footer-icon-link brand-github" href="https://github.com/avalonlucky" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8a9.2 9.2 0 0 0-2.9 17.9c.46.08.63-.2.63-.45v-1.8c-2.57.56-3.11-1.09-3.11-1.09-.42-1.07-1.03-1.35-1.03-1.35-.84-.57.06-.56.06-.56.93.07 1.42.95 1.42.95.82 1.42 2.16 1.01 2.69.77.08-.6.32-1.01.59-1.24-2.05-.23-4.21-1.03-4.21-4.56 0-1.01.36-1.83.95-2.48-.1-.23-.41-1.17.09-2.44 0 0 .78-.25 2.53.95a8.8 8.8 0 0 1 4.61 0c1.76-1.2 2.53-.95 2.53-.95.5 1.27.19 2.21.09 2.44.59.65.95 1.47.95 2.48 0 3.54-2.16 4.32-4.22 4.55.33.29.63.85.63 1.72v2.61c0 .25.17.54.64.45A9.2 9.2 0 0 0 12 2.8Z"></path></svg>
+          </a>
+          <span class="footer-icon-link brand-linkedin is-pending" role="img" aria-label="LinkedIn，链接待补充" title="LinkedIn 链接待补充">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27ZM5.32 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.1 20.45H3.54V9H7.1v11.45Z"></path></svg>
+          </span>
+          <a class="footer-icon-link brand-youtube" href="https://www.youtube.com/@waiwaimusic" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8Z"></path><path class="youtube-play" d="m9.6 15.6 6.2-3.6-6.2-3.6Z"></path></svg>
+          </a>
+          <span class="footer-icon-link brand-x is-pending" role="img" aria-label="X，链接待补充" title="X 链接待补充">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.51 11.24h-6.66l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z"></path></svg>
+          </span>
+          <a class="footer-icon-link brand-substack" href="https://substack.com/@evanhuigan" target="_blank" rel="noopener noreferrer" aria-label="Substack">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3.5h18v2.7H3V3.5Zm0 4.2h18v2.7H3V7.7Zm1.5 4.2h15V21L12 16.8 4.5 21v-9.1Z"></path></svg>
+          </a>
+          <a class="footer-icon-link brand-xiaohongshu" href="https://xhslink.cn/m/62cSDEgzMbg" target="_blank" rel="noopener noreferrer" aria-label="小红书">
+            <img class="footer-icon-image" src="assets/social/xiaohongshu.svg" width="200" height="200" alt="" aria-hidden="true">
+          </a>
         </div>
-        <div class="footer-bottom">
-          <p>Vienna · Cape Town</p>
+
+        <div class="footer-ai" aria-label="问问 AI 关于 Meridian">
+          <p class="footer-ai-title">问问 AI 关于 Meridian</p>
+          <div class="footer-ai-pill">
+            <a class="footer-ai-btn" data-footer-ai-base="https://chatgpt.com/?q=" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" aria-label="用 ChatGPT 了解 Meridian" title="用 ChatGPT 了解 Meridian"><i aria-hidden="true" style="--ai-icon:url(../assets/ai/openai.svg)"></i></a>
+            <a class="footer-ai-btn" data-footer-ai-base="https://chat.deepseek.com/?q=" href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer" aria-label="用 DeepSeek 了解 Meridian" title="用 DeepSeek 了解 Meridian"><i aria-hidden="true" style="--ai-icon:url(../assets/ai/deepseek.svg)"></i></a>
+            <a class="footer-ai-btn" data-footer-ai-base="https://www.google.com/search?udm=50&amp;q=" href="https://www.google.com/search?udm=50" target="_blank" rel="noopener noreferrer" aria-label="用 Gemini 了解 Meridian" title="用 Gemini 了解 Meridian"><i aria-hidden="true" style="--ai-icon:url(../assets/ai/gemini.svg)"></i></a>
+            <a class="footer-ai-btn" data-footer-ai-base="https://x.com/i/grok?text=" href="https://x.com/i/grok" target="_blank" rel="noopener noreferrer" aria-label="用 Grok 了解 Meridian" title="用 Grok 了解 Meridian"><i aria-hidden="true" style="--ai-icon:url(../assets/ai/grok.svg)"></i></a>
+          </div>
         </div>
-        <div class="footer-admin-row">
-          <button class="footer-admin-access" type="button" data-admin-auth aria-label="登录" aria-haspopup="dialog" aria-expanded="false">
-            <span>登录</span>
-          </button>
-        </div>
-      </footer>
+      </div>
+
+      <div class="footer-admin-row footer-admin-row--compact">
+        <button class="footer-admin-access" type="button" data-admin-auth aria-label="登录" aria-haspopup="dialog" aria-expanded="false">
+          <span>登录</span>
+        </button>
+      </div>
+    </footer>
 
     </div>
   </main>
@@ -290,6 +284,7 @@
 
 <script src="js/work-menu.js?v=3"></script>
 <script src="js/hscroll.js?v=1"></script>
+<script src="js/footer-compact.js?v=1"></script>
 <script src="js/about.js?v=4"></script>
 <script src="js/hero-terminal.js?v=1"></script>
 <script src="js/hero-title-fluid.js?v=4"></script>

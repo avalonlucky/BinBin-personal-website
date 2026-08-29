@@ -51,7 +51,7 @@
   }
 
   function renderNotFound() {
-    document.title = '文章不存在 · Maridian Space';
+    document.title = '文章不存在 · Meridian Space';
     setText('[data-bp-title]', '这篇文章不存在');
     setText('[data-bp-excerpt]', '它可能已被作者删除，或链接有误。你可以回到全部文章看看其他内容。');
     var nav = qs('[data-bp-nav-if]');
@@ -59,7 +59,7 @@
   }
 
   function render(post, adjacent) {
-    document.title = post.title + ' · Maridian Space';
+    document.title = post.title + ' · Meridian Space';
     setText('[data-bp-title]', post.title);
     setText('[data-bp-excerpt]', post.excerpt || '');
 

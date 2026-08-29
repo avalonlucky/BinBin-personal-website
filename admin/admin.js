@@ -6,7 +6,7 @@
       key: 'profile', type: 'single', title: 'Profile', note: '个人名片卡片',
       fields: [
         ['Name', '姓名', 'text', '你的名字', 'PROFILE 卡片中的姓名。'],
-        ['Alias', '署名 / 徽章名', 'text', 'MARIDIAN', '姓名旁边的英文或品牌徽章。'],
+        ['Alias', '署名 / 徽章名', 'text', 'MERIDIAN', '姓名旁边的英文或品牌徽章。'],
         ['Title', '职位', 'text', '设计师', '你的职业与角色。'],
         ['Company', '公司', 'text', '公司名称', '个人名片中的公司名称。'],
         ['Location', '城市', 'text', '城市, 国家', '个人名片中的所在地。'],

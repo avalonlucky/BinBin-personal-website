@@ -2070,7 +2070,7 @@ const CONTACT = {
 };
 
 // 提示词里带上本页链接，AI 才能真的去读作品
-const ASK_PROMPT = `我正在评估 Maridian（${location.origin}）是否适合我们的品牌设计 / 视觉设计岗位。`
+const ASK_PROMPT = `我正在评估 Meridian（${location.origin}）是否适合我们的品牌设计 / 视觉设计岗位。`
   + `请查看他的作品集网站，告诉我：他的设计能力覆盖哪些方面、最适合什么阶段和什么类型的公司、`
   + `如果录用他我实际能得到什么。请具体一些，引用他的案例和经历。`;
 
@@ -2124,8 +2124,8 @@ function initOutro() {
       a.href = t.url + encodeURIComponent(ASK_PROMPT);
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
-      a.title = `用 ${t.name} 了解 Maridian`;
-      a.setAttribute('aria-label', `用 ${t.name} 了解 Maridian`);
+      a.title = `用 ${t.name} 了解 Meridian`;
+      a.setAttribute('aria-label', `用 ${t.name} 了解 Meridian`);
       a.innerHTML = `<i aria-hidden="true" style="--ai-icon:url(../assets/ai/${t.icon}.svg)"></i>`;
       a.addEventListener('click', async () => {
         const ok = await copyText(ASK_PROMPT);

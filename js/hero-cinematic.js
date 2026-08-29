@@ -28,7 +28,7 @@
   let currentProgress = 0;
   let seekRaf = 0;
 
-  const terminalScript = `> boot maridian.practice\n\n[2023] 第一次用 Midjourney 和 GPT-3 做海报。\n\n[2024] 嫌重复劳动太浪费时间，顺手做了设计排期与质检 AI Agent。\n\n[2025] 给 150+ 人做公司全员 AI 培训，试着把大家从重复加班里捞出来。\n\n[2026] 搭了一个 AI 学习站，顺便上线了一个塔罗牌网站。\n\n[Side Project] 在 YouTube 和小红书聊内容，做出了 20W+ 和 10W+ 的爆款。\n\n[Core Command] 持续学习，持续测试，持续构建。\n\nAI 每天都在变，我也一样。\n\n> Ready to execute. `;
+  const terminalScript = `> boot meridian.practice\n\n[2023] 第一次用 Midjourney 和 GPT-3 做海报。\n\n[2024] 嫌重复劳动太浪费时间，顺手做了设计排期与质检 AI Agent。\n\n[2025] 给 150+ 人做公司全员 AI 培训，试着把大家从重复加班里捞出来。\n\n[2026] 搭了一个 AI 学习站，顺便上线了一个塔罗牌网站。\n\n[Side Project] 在 YouTube 和小红书聊内容，做出了 20W+ 和 10W+ 的爆款。\n\n[Core Command] 持续学习，持续测试，持续构建。\n\nAI 每天都在变，我也一样。\n\n> Ready to execute. `;
 
   // The video cuts to a closer laptop shot at 6.60s. These four corners follow
   // the luminous screen on that shot so the HTML copy inherits its perspective.

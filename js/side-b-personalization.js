@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const title = 'Side B | Maridian Space';
+  const title = 'Side B | Meridian Space';
 
   function applyPersonalMetadata() {
     document.title = title;

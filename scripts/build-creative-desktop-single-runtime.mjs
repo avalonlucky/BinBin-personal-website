@@ -30,7 +30,7 @@ async function ensureAppLayerFragment() {
 
   const icons = legacy.slice(iconStart, iconEnd).replace(/^ {8}/gm, '    ')
   const modals = legacy.slice(modalStart, modalEnd).replace(/^ {6}/gm, '    ')
-  const fragment = `<div id="maridian-app-layer" class="os-root" aria-label="Maridian desktop applications">
+  const fragment = `<div id="maridian-app-layer" class="os-root" aria-label="Meridian desktop applications">
   <section class="os-desktop" data-desktop>
 ${icons}
 
