@@ -1877,14 +1877,18 @@ a.footer-icon-link:hover {
   transform: translateY(-3px) scale(1.06);
   background: rgba(2,2,2,.045);
 }
-.footer-icon-link svg {
+.footer-icon-link svg,
+.footer-icon-link .footer-icon-image {
   display: block;
   width: 2rem;
   height: 2rem;
+}
+.footer-icon-link svg {
   overflow: visible;
   fill: currentColor;
   stroke: none;
 }
+.footer-icon-link .footer-icon-image { object-fit: contain; }
 .footer-icon-link.brand-github,
 .footer-icon-link.brand-x { color: #111; }
 .footer-icon-link.brand-linkedin { color: #0a66c2; }
@@ -2036,8 +2040,8 @@ a.footer-icon-link:hover {
   width: 3.3rem;
   height: 3.3rem;
 }
-.footer-icon-link svg { width: 1.85rem; height: 1.85rem; }
-.footer-icon-link.brand-xiaohongshu svg { width: 2.1rem; }
+.footer-icon-link svg,
+.footer-icon-link .footer-icon-image { width: 1.85rem; height: 1.85rem; }
 a.footer-icon-link:hover {
   transform: translateY(-.16rem);
   background: rgba(2,2,2,.06);
@@ -2994,13 +2998,10 @@ a.footer-icon-link:hover {
     height: 3.25rem;
   }
 
-  .footer-icon-link svg {
+  .footer-icon-link svg,
+  .footer-icon-link .footer-icon-image {
     width: 1.75rem;
     height: 1.75rem;
-  }
-
-  .footer-icon-link.brand-xiaohongshu svg {
-    width: 2rem;
   }
 
   .footer-ai {
