@@ -6,7 +6,7 @@
 
 /* ---------- About 页内嵌博客区块 ---------- */
 .blog-section {
-  background: var(--c-n-6, #F4F4E8);
+  background: var(--c-white);
   color: var(--c-black);
   padding: clamp(4rem, 9vw, 8rem) 0;
 }
@@ -89,7 +89,7 @@
   flex-direction: column;
   color: inherit;
   text-decoration: none;
-  background: var(--c-white);
+  background: var(--c-n-6);
   padding: 1rem;
   border-radius: 6px;
   overflow: hidden;
