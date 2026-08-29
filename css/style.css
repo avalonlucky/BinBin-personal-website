@@ -760,14 +760,6 @@ main footer {
   height: 100%;
   object-fit: contain;
 }
-.ai-tool-logo-text {
-  border-radius: 50%;
-  background: var(--c-black);
-  color: var(--c-white);
-  font-size: clamp(var(--fs-xs), .82vw, .9rem);
-  font-weight: 600;
-  letter-spacing: -.06em;
-}
 .ai-tools-grid {
   display: none;
   grid-template-columns: repeat(8, minmax(0, 1fr));
