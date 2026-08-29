@@ -156,7 +156,7 @@ button:focus-visible {
 .nav-pill::before,
 .nav-pill::after { content: none; }
 
-/* Frosted light glass reads on dark + cream; text stays dark for contrast */
+/* Frosted light glass reads on both dark + cream; text stays dark for contrast */
 #nav[data-theme="dark"] .nav-pill,
 #nav[data-theme="light"] .nav-pill {
   background: linear-gradient(263deg, rgba(255,255,255,.9), rgba(255,255,255,.52));
@@ -202,9 +202,9 @@ button:focus-visible {
   opacity: .92;
   transition: background-color .22s var(--ease), color .22s var(--ease), opacity .22s var(--ease);
 }
-.nav-links a:hover { background: rgb(136, 140, 152); color: #fff; opacity: 1; }
-.nav-links a[aria-current="page"],
-.nav-logo[aria-current="page"] {
+#nav .nav-links a:hover { background: rgb(136, 140, 152); color: #fff; opacity: 1; }
+#nav .nav-links a[aria-current="page"],
+#nav .nav-logo[aria-current="page"] {
   background: rgb(104, 110, 125);
   color: #fff;
   opacity: 1;
