@@ -190,9 +190,9 @@ button:focus-visible {
   z-index: 1;
   justify-self: start;
   display: block;
-  width: 5.2rem;
-  height: 5.2rem;
-  border-radius: 1.35rem;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1rem;
   transition: transform .22s var(--ease), opacity .22s ease;
 }
 .nav-logo:hover { transform: translateY(-2px); }
@@ -228,21 +228,23 @@ button:focus-visible {
 .nav-resume {
   grid-column: 3;
   justify-self: end;
-  min-width: 12.8rem;
+  min-width: 10.2rem;
+  height: 4.4rem;
+  padding: 0 1.8rem;
   border: 0;
-  background: var(--c-black) !important;
-  color: var(--c-white) !important;
+  background: rgba(188, 188, 188, 0.12);
+  color: var(--c-black);
   cursor: pointer;
   font-family: var(--f-body);
-  font-size: 1.65rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 500;
   line-height: 1;
   transition: transform .22s var(--ease), opacity .22s ease;
 }
 
 #nav[data-theme="dark"] .nav-resume {
-  background: var(--c-white) !important;
-  color: var(--c-black) !important;
+  background: rgba(251, 251, 244, 0.10);
+  color: var(--c-white);
 }
 
 .nav-resume:hover {
@@ -256,8 +258,8 @@ button:focus-visible {
 .nav-resume svg {
   position: relative;
   z-index: 1;
-  width: 1.65rem;
-  height: 1.65rem;
+  width: 1.5rem;
+  height: 1.5rem;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
@@ -2517,22 +2519,24 @@ a.footer-icon-link:hover {
   }
 
   .nav-logo {
-    width: 4.6rem;
-    height: 4.6rem;
-    border-radius: 1.15rem;
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: .85rem;
   }
 
   .nav-resume {
-    min-width: 10.4rem;
+    min-width: 8.2rem;
+    height: 3.4rem;
+    padding: 0 1.2rem;
     flex: 0 0 auto;
     justify-content: center;
     gap: .85rem;
-    font-size: 1.35rem;
+    font-size: 1.2rem;
   }
 
   .nav-resume svg {
-    width: 1.4rem;
-    height: 1.4rem;
+    width: 1.2rem;
+    height: 1.2rem;
   }
 
   .nav-menu {
