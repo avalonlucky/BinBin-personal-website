@@ -1,4 +1,6 @@
 (() => {
+  const appLayer = document.getElementById('maridian-app-layer');
+  const root = document.getElementById('root');
   const desktop = document.querySelector('[data-desktop]');
   const iconGrid = document.querySelector('.os-icons');
   const icons = [...document.querySelectorAll('.os-icons .os-icon[data-open]')];
@@ -17,6 +19,25 @@
   let selected = null;
   let topZ = 100;
   let cascade = 0;
+
+  /* The application layer lives outside the React root, so it must explicitly
+     follow the host OS lifecycle. The desktop root is mounted after boot; the
+     lock layer remains mounted through the unlock transition. Only reveal the
+     launchers once both conditions confirm that the real desktop is active. */
+  function syncDesktopGate() {
+    if (!appLayer || !root) return;
+    const desktopReady = Boolean(root.querySelector('[data-slot="desktop-root"]'));
+    const lockVisible = Boolean(root.querySelector('[class*="z-[var(--z-layer-lock)]"]'));
+    const ready = desktopReady && !lockVisible;
+    appLayer.classList.toggle('is-desktop-ready', ready);
+    appLayer.setAttribute('aria-hidden', String(!ready));
+    appLayer.inert = !ready;
+  }
+
+  syncDesktopGate();
+  if (root) {
+    new MutationObserver(syncDesktopGate).observe(root, { childList: true });
+  }
 
   if (desktop) desktop.hidden = false;
 
