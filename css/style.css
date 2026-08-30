@@ -633,6 +633,9 @@ button:focus-visible {
   gap: 0;
 }
 .about-page .hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-self: center;
   width: min(100%, 960px);
   padding-top: 0;
@@ -647,21 +650,24 @@ button:focus-visible {
   font-size: 1.3rem;
 }
 .about-page .hero-copy h1 {
+  width: auto;
   gap: 9.6px;
   max-width: 960px;
-  font-family: var(--f-cjk);
+  font-family: Inter, 'Inter Fallback', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
   font-weight: 600;
   font-size: clamp(32px, 6.4vw, 68px);
   line-height: 1.15;
   letter-spacing: .02em;
   text-align: center;
 }
+.about-page .hero-copy h1 span { width:auto; }
 .about-page .hero-copy h1 .hero-title-accent { color: var(--c-orange); }
 .about-page .hero-subtitle {
   max-width: 736px;
   margin-top: clamp(25.6px, 3.5vw, 44.8px);
   font-size: clamp(16px, 1.5vw, 18.4px);
   line-height: 1.9;
+  font-family: Inter, 'Inter Fallback', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
   text-wrap: balance;
   text-align: center;
 }
@@ -686,10 +692,10 @@ button:focus-visible {
   gap: 8px;
   padding: 11.2px 20px;
   border-radius: 999px;
-  font-family: var(--f-cjk);
+  font-family: Inter, 'Inter Fallback', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
   font-size: 16px;
   font-weight: 500;
-  line-height: 1;
+  line-height: normal;
   white-space: nowrap;
   user-select: none;
   border: 1px solid rgba(15,21,29,.05);
