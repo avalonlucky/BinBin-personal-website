@@ -229,6 +229,14 @@ button:focus-visible {
   transition: opacity .3s ease;
 }
 .nav-links a:hover { opacity: 1; }
+.nav-links a[aria-current="page"] {
+  padding: .65rem 1rem;
+  border-radius: 999px;
+  background: rgba(255,133,45,.12);
+  color: #d96010;
+  font-weight: 600;
+  opacity: 1;
+}
 
 .nav-resume {
   grid-column: 3;
@@ -626,10 +634,10 @@ button:focus-visible {
   width: min(1280px, calc(100% - 128px));
   height: auto;
   min-height: 100%;
-  padding: clamp(8rem, 12vh, 10rem) 0 clamp(2rem, 5vh, 3rem);
+  padding: 9rem 0 3rem;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
-  align-content: center;
+  align-content: start;
   gap: 0;
 }
 .about-page .hero-copy {
@@ -2232,19 +2240,16 @@ a.footer-icon-link:hover {
    ABOUT PAGE — rotating reading orbit
    ============================================================ */
 .about-page {
-  background: var(--c-n-6);
+  background: var(--c-white);
   color: var(--c-black);
 }
 
 .about-page main.page {
-  background:
-    radial-gradient(circle at 50% 58%, rgba(255,133,45,.18), transparent 32rem),
-    radial-gradient(circle at 22% 18%, rgba(231,230,220,.75), transparent 30rem),
-    var(--c-n-6);
+  background: var(--c-white);
 }
 
 .about-page .page-bg {
-  background: var(--c-n-6);
+  background: var(--c-white);
 }
 
 .about-page main section:not(.s-hero):not(.s-testimonials):not(.s-faq) {
@@ -2269,7 +2274,7 @@ a.footer-icon-link:hover {
   z-index: 80;
   height: 50%;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(244,244,232,0) 0%, var(--c-n-6) 100%);
+  background: linear-gradient(180deg, rgba(251,251,244,0) 0%, var(--c-white) 100%);
 }
 
 .about-reading-glow {
@@ -2480,7 +2485,7 @@ a.footer-icon-link:hover {
 
 .about-reading-notes {
   padding: 4rem var(--gutter) 8rem;
-  background: var(--c-n-6) !important;
+  background: var(--c-white) !important;
 }
 
 .about-notes-heading {
