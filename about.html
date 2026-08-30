@@ -15,6 +15,23 @@
 
   <link rel="stylesheet" href="css/style.css?v=135">
   <link rel="stylesheet" href="css/admin-auth.css?v=4">
+  <style>
+    /* 「关于我」占位区块（murynmukha 参考内容，待替换成自有文字图片） */
+    .about-bio { background: var(--c-white); color: var(--c-black); padding: clamp(4rem, 9vw, 8rem) 0; }
+    .about-bio-inner { max-width: 1200px; margin: 0 auto; padding: 0 var(--gutter); display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+    .about-bio-kicker { font-size: var(--fs-xs); letter-spacing: .16em; text-transform: uppercase; color: var(--c-grey); margin-bottom: 1.2rem; }
+    .about-bio h2 { font-family: var(--f-heading); font-size: var(--fs-2xl); line-height: 1.1; letter-spacing: -.01em; margin-bottom: 1.6rem; }
+    .about-bio-thesis { font-family: var(--f-heading); font-size: var(--fs-md); line-height: 1.6; color: var(--c-black); margin-bottom: 1.6rem; max-width: 32em; }
+    .about-bio-text p { font-size: var(--fs-base); line-height: 1.8; color: rgba(2,2,2,.86); margin-bottom: 1.2rem; max-width: 34em; }
+    .about-bio-text p:last-child { margin-bottom: 0; }
+    .about-bio-photo { margin: 0; position: relative; }
+    .about-bio-photo img { width: 100%; height: auto; display: block; border-radius: 8px; }
+    @media (max-width: 820px) {
+      .about-bio-inner { grid-template-columns: 1fr; }
+      .about-bio h2 { font-size: var(--fs-xl); }
+      .about-bio-text p { font-size: 1.06rem; }
+    }
+  </style>
 </head>
 <body class="about-page">
 <div class="site">
@@ -58,6 +75,29 @@
 
         <div class="hero-scroll-hint">
           <span>Scroll to discover more about me</span>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           关于我 — 占位内容（murynmukha 参考，待替换）
+      ══════════════════════════════════════ -->
+      <section class="about-bio" id="about-me" lang="zh-CN">
+        <div class="about-bio-inner">
+          <div class="about-bio-copy">
+            <p class="about-bio-kicker">About me</p>
+            <h2>关于我</h2>
+            <p class="about-bio-thesis">一名从研发一路做到产品设计与落地、习惯全程负责的设计师。</p>
+            <div class="about-bio-text">
+              <p>我学习的是软件工程和商业分析。最初几年，我主要负责需求分析、流程图绘制，以及在业务和工程之间来回切换。我做过业务分析师、系统分析师、用户体验设计师和研究员。每个角色都涉及软件实际构建过程的不同层面。</p>
+              <p>这条路把我引向了产品设计领域。我参与过产品设计的方方面面：系统架构、产品策略、产品推介材料。包括界面外观的设计以及它为何如此运作。</p>
+              <p>从研发到发布，整个设计流程都由一个人负责。无需担心交接环节，也不会出现沟通不畅导致的细节遗漏。最终交付的产品就是最初设计的样子。我会全程参与最艰难的阶段：调整方向、筹集资金，以及差点夭折的版本发布。</p>
+              <p>工作之余，我喜欢流线型现代主义和构成主义建筑。这些流派在结构与大胆创新之间取得的平衡，正是我对设计的理解。</p>
+              <p>我选择早期阶段，因为在这个阶段，一位设计师可以主导整个产品的设计。团队规模小，拥有完全的自主权，从最初的原型到最终的融资方案，全程参与。</p>
+            </div>
+          </div>
+          <figure class="about-bio-photo">
+            <img src="assets/about/about-hero.png" alt="占位图片，待替换为本人照片" width="1400" height="2720">
+          </figure>
         </div>
       </section>
 
