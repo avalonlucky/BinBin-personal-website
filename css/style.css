@@ -127,7 +127,12 @@ button:focus-visible {
   display: flex;
   justify-content: center;
   pointer-events: none;
+  transform: translateY(0);
+  transition: transform .42s var(--ease);
+  will-change: transform;
 }
+#nav.is-scroll-hidden { transform: translateY(calc(-100% - 1.2rem)); }
+#nav:focus-within { transform: translateY(0); }
 .nav-inner {
   width: calc(100vw - 4.4rem);
   display: grid;
@@ -2507,9 +2512,31 @@ a.footer-icon-link:hover {
   .nav-inner {
     width: calc(100vw - 2rem);
     max-width: calc(100vw - 2rem);
+    grid-template-columns: 1fr 1fr;
+    row-gap: 1rem;
   }
 
-  .nav-links { display: none; }
+  .nav-links {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex;
+    justify-self: stretch;
+    justify-content: flex-start;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    height: 4.4rem;
+    gap: 2.4rem;
+    padding: 0 1.8rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a { flex: 0 0 auto; min-height: 44px; display: inline-flex; align-items: center; scroll-snap-align: start; font-size: 1.4rem; }
+  .nav-links .border-canvas { display: none; }
   .nav-work-menu { display: none; }
 
   .nav-pill {
@@ -2519,12 +2546,15 @@ a.footer-icon-link:hover {
   }
 
   .nav-logo {
+    grid-row: 1;
     width: 3.4rem;
     height: 3.4rem;
     border-radius: .85rem;
   }
 
   .nav-resume {
+    grid-row: 1;
+    grid-column: 2;
     min-width: 8.2rem;
     height: 3.4rem;
     padding: 0 1.2rem;
@@ -2533,6 +2563,8 @@ a.footer-icon-link:hover {
     gap: .85rem;
     font-size: 1.2rem;
   }
+
+  #nav.is-scroll-hidden { transform: translateY(calc(-100% - 1rem)); }
 
   .nav-resume svg {
     width: 1.2rem;
