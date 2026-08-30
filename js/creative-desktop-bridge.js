@@ -20,10 +20,10 @@
   let topZ = 100;
   let cascade = 0;
 
-  /* The application layer lives outside the React root, so it must explicitly
-     follow the host OS lifecycle. The desktop root is mounted after boot; the
-     lock layer remains mounted through the unlock transition. Only reveal the
-     launchers once both conditions confirm that the real desktop is active. */
+  /* Keep the application layer in the desktop plane from the beginning. The
+     host OS boot and lock layers naturally cover it, so its launchers are
+     revealed by the same unlock transition as every other desktop item. Once
+     the lock layer exits, raise the application plane for working modals. */
   function syncDesktopGate() {
     if (!appLayer || !root) return;
     const desktopReady = Boolean(root.querySelector('[data-slot="desktop-root"]'));
