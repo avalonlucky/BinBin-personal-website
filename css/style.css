@@ -2450,10 +2450,6 @@ a.footer-icon-link:hover {
   line-height: 1.8;
 }
 
-.about-page .s-footer {
-  background: var(--c-black) !important;
-}
-
 /* ============================================================
    CANVAS BORDER — animated shimmer on pills & cards
    ============================================================ */
