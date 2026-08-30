@@ -622,7 +622,32 @@ button:focus-visible {
   white-space: nowrap;
 }
 .hero-copy h1 span { position:relative; z-index:1; display:block; width:100%; text-align:center; }
-.about-page .hero-copy h1 { font-size:clamp(3.6rem,4vw,6.2rem); }
+.about-page .hero-layout {
+  grid-template-columns: minmax(0,1.12fr) minmax(0,.88fr);
+  padding-top: 18vh;
+  align-items: start;
+}
+.about-page .hero-copy { padding-top: 0; }
+.about-page .hero-kicker {
+  min-height: 3.55rem;
+  margin-bottom: 1.8rem;
+  padding: .68rem 1.75rem;
+  background: rgba(23,23,20,.055);
+  color: rgba(23,23,20,.72);
+  font-size: 1.15rem;
+}
+.about-page .hero-copy h1 {
+  font-size: clamp(2rem,2.55vw,3.2rem);
+  line-height: 1.12;
+  letter-spacing: -.045em;
+}
+.about-page .hero-subtitle {
+  max-width: 46em;
+  margin-top: 1.7rem;
+  font-size: clamp(1.05rem,1.05vw,1.35rem);
+  line-height: 1.75;
+}
+.about-page .hero-computer { width: min(92%,760px); margin: 0 auto; }
 .hero-title-fluid { position:absolute; z-index:2; inset:0; width:100%; height:100%; pointer-events:none; opacity:0; transition:opacity .35s ease; }
 .hero-copy h1.is-fluid-ready .hero-title-fluid { opacity:1; }
 .hero-copy h1.is-fluid-ready span { color:transparent; }
@@ -2686,7 +2711,11 @@ a.footer-icon-link:hover {
   .hero-copy { padding:0; }
   .hero-kicker { min-height:3.35rem; margin-bottom:1.6rem; padding:.62rem 1.55rem; font-size:1.12rem; }
   .hero-copy h1 { font-size:clamp(3.55rem,12.2vw,5.5rem); line-height:1; white-space:normal; }
-  .about-page .hero-copy h1 { font-size:clamp(2.55rem,9.6vw,3.2rem); white-space:nowrap; }
+  .about-page .hero-layout { min-height:100svh; padding-top:8rem; grid-template-columns:1fr; align-content:start; align-items:start; gap:2rem; }
+  .about-page .hero-kicker { min-height:3rem; margin-bottom:1.35rem; padding:.55rem 1.35rem; font-size:1rem; }
+  .about-page .hero-copy h1 { font-size:clamp(1.35rem,5vw,1.55rem); line-height:1.2; white-space:nowrap; }
+  .about-page .hero-subtitle { max-width:31em; margin-top:1.25rem; font-size:1rem; line-height:1.7; }
+  .about-page .hero-computer { width:min(88%,480px); }
   .hero-subtitle { margin-top:1.6rem; font-size:1.3rem; }
   .hero-computer { width:min(100%,560px); margin:0 auto; }
   .hero-terminal { font-size:clamp(5px,1.25vw,8px); }
