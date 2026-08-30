@@ -627,26 +627,32 @@ button:focus-visible {
   padding-top: 18vh;
   align-items: start;
 }
-.about-page .hero-copy { padding-top: 0; }
+.about-page .hero-copy {
+  justify-self: center;
+  padding-top: 0;
+  text-align: center;
+}
 .about-page .hero-kicker {
-  min-height: 3.55rem;
-  margin-bottom: 1.8rem;
-  padding: .68rem 1.75rem;
+  min-height: 4rem;
+  margin-bottom: 2rem;
+  padding: .75rem 2rem;
   background: rgba(23,23,20,.055);
   color: rgba(23,23,20,.72);
-  font-size: 1.15rem;
+  font-size: 1.3rem;
 }
 .about-page .hero-copy h1 {
-  font-size: clamp(1.7rem,2.2vw,2.8rem);
-  line-height: 1.12;
+  font-size: clamp(2.55rem,3vw,3.6rem);
+  line-height: 1.08;
   letter-spacing: -.045em;
+  text-align: center;
 }
 .about-page .hero-subtitle {
   max-width: 46em;
   margin-top: 1.7rem;
-  font-size: clamp(1.05rem,1.05vw,1.35rem);
+  font-size: clamp(1.18rem,1.18vw,1.5rem);
   line-height: 1.75;
   text-wrap: balance;
+  text-align: center;
 }
 .about-page .hero-computer { margin-top: 0; }
 .hero-title-fluid { position:absolute; z-index:2; inset:0; width:100%; height:100%; pointer-events:none; opacity:0; transition:opacity .35s ease; }
@@ -2713,9 +2719,9 @@ a.footer-icon-link:hover {
   .hero-kicker { min-height:3.35rem; margin-bottom:1.6rem; padding:.62rem 1.55rem; font-size:1.12rem; }
   .hero-copy h1 { font-size:clamp(3.55rem,12.2vw,5.5rem); line-height:1; white-space:normal; }
   .about-page .hero-layout { min-height:100svh; padding-top:8rem; grid-template-columns:1fr; align-content:start; align-items:start; gap:2rem; }
-  .about-page .hero-kicker { min-height:3rem; margin-bottom:1.35rem; padding:.55rem 1.35rem; font-size:1rem; }
-  .about-page .hero-copy h1 { font-size:clamp(1.35rem,5vw,1.55rem); line-height:1.2; white-space:nowrap; }
-  .about-page .hero-subtitle { max-width:31em; margin-top:1.25rem; font-size:1rem; line-height:1.7; }
+  .about-page .hero-kicker { min-height:3.25rem; margin-bottom:1.5rem; padding:.6rem 1.5rem; font-size:1.08rem; }
+  .about-page .hero-copy h1 { font-size:clamp(1.65rem,6.3vw,2rem); line-height:1.12; white-space:nowrap; }
+  .about-page .hero-subtitle { max-width:31em; margin-top:1.35rem; font-size:1.1rem; line-height:1.7; }
   .hero-subtitle { margin-top:1.6rem; font-size:1.3rem; }
   .hero-computer { width:min(100%,560px); margin:0 auto; }
   .hero-terminal { font-size:clamp(5px,1.25vw,8px); }
