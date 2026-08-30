@@ -55,6 +55,34 @@
       .about-intro-copy p:not(.about-kicker),
       .about-story-copy p { font-size: 16px; }
     }
+
+    /* 滚动进场动效（复刻 mr-march 的进入方式：进入视口时上移淡入） */
+    .about-intro-copy,
+    .about-intro-photo,
+    .about-story-chapter,
+    .about-story-group,
+    .about-story-conclusion {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s var(--ease), transform .85s var(--ease);
+    }
+    .about-intro-inner .about-intro-photo { transition-delay: .12s; }
+    .about-story-chapter { transition-delay: .08s; }
+    .about-intro-copy.in-view,
+    .about-intro-photo.in-view,
+    .about-story-chapter.in-view,
+    .about-story-group.in-view,
+    .about-story-conclusion.in-view { opacity: 1; transform: none; }
+    .about-intro-photo img { transition: transform .6s var(--ease); }
+    .about-intro-photo img:hover { transform: scale(1.02); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .about-intro-copy,
+      .about-intro-photo,
+      .about-story-chapter,
+      .about-story-group,
+      .about-story-conclusion { opacity: 1; transform: none; transition: none; }
+    }
   </style>
 </head>
 <body class="about-page">
@@ -255,5 +283,6 @@
 <script src="js/about-capabilities.js?v=1"></script>
 <script src="js/admin-auth.js?v=5"></script>
 <script src="js/site-analytics.js?v=3"></script>
+<script src="js/about-reveal.js?v=1"></script>
 </body>
 </html>
