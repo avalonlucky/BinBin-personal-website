@@ -546,6 +546,9 @@ button:focus-visible {
 }
 .nav-menu:hover { opacity: 1; }
 
+.nav-mobile-toggle,
+.nav-mobile-backdrop { display: none; }
+
 /* Canvas border on nav pills */
 .border-canvas {
   position: absolute;
@@ -2509,29 +2512,48 @@ a.footer-icon-link:hover {
     width: calc(100vw - 2rem);
     max-width: calc(100vw - 2rem);
     grid-template-columns: 1fr 1fr;
-    row-gap: 1rem;
   }
 
   .nav-links {
-    grid-column: 1 / -1;
-    grid-row: 2;
+    position: fixed;
+    z-index: 103;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    grid-column: auto;
+    grid-row: auto;
     display: flex;
-    justify-self: stretch;
-    justify-content: flex-start;
-    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    width: min(86vw, 36rem);
     min-width: 0;
     max-width: none;
-    height: 4.4rem;
-    gap: 2.4rem;
-    padding: 0 1.8rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
+    height: 100dvh;
+    gap: 0;
+    padding: 8rem 2.4rem 10rem;
+    border-radius: 0;
+    background: #f6f5ed !important;
+    color: var(--c-black) !important;
+    overflow-y: auto;
+    transform: translateX(105%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform .42s var(--ease), opacity .25s ease, visibility 0s linear .42s;
+    box-shadow: -2rem 0 5rem rgba(2,2,2,.14);
   }
-  .nav-links::-webkit-scrollbar { display: none; }
-  .nav-links a { flex: 0 0 auto; min-height: 44px; display: inline-flex; align-items: center; scroll-snap-align: start; font-size: 1.4rem; }
+  .nav-links a {
+    flex: 0 0 auto;
+    min-height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(2,2,2,.12);
+    font-size: 2rem;
+    opacity: 1;
+  }
+  .nav-links a::after { content: '↗'; font-size: 1.3rem; opacity: .45; }
+  .nav-links a:not([target="_blank"])::after { content: '→'; }
   .nav-links .border-canvas { display: none; }
   .nav-work-menu { display: none; }
 
@@ -2549,16 +2571,80 @@ a.footer-icon-link:hover {
   }
 
   .nav-resume {
-    grid-row: 1;
-    grid-column: 2;
-    min-width: 8.2rem;
-    height: 3.4rem;
-    padding: 0 1.2rem;
-    flex: 0 0 auto;
-    justify-content: center;
-    gap: .85rem;
-    font-size: 1.2rem;
+    position: fixed;
+    z-index: 104;
+    right: 2.4rem;
+    bottom: 2.4rem;
+    width: calc(min(86vw, 36rem) - 4.8rem);
+    min-width: 0;
+    height: 5rem;
+    padding: 0 1.8rem;
+    justify-content: space-between;
+    font-size: 1.35rem;
+    color: var(--c-white) !important;
+    background: var(--c-black) !important;
+    transform: translateX(calc(100vw + 4rem));
+    opacity: 0;
+    visibility: hidden;
+    transition: transform .42s var(--ease), opacity .25s ease, visibility 0s linear .42s;
   }
+
+  .nav-mobile-toggle {
+    position: relative;
+    z-index: 105;
+    grid-column: 2;
+    justify-self: end;
+    display: flex;
+    width: 4.2rem;
+    height: 4.2rem;
+    padding: 1.15rem 1rem;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 50%;
+    color: var(--c-black);
+    background: rgba(246,245,237,.82);
+    backdrop-filter: blur(1.2rem);
+    -webkit-backdrop-filter: blur(1.2rem);
+    box-shadow: 0 .4rem 1.8rem rgba(2,2,2,.1);
+  }
+  .nav-mobile-toggle span {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform-origin: center;
+    transition: transform .28s var(--ease), opacity .2s ease;
+  }
+  .nav-mobile-backdrop {
+    position: fixed;
+    z-index: 102;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    background: rgba(2,2,2,.46);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .28s ease, visibility 0s linear .28s;
+  }
+  #nav.is-mobile-open { transform: translateY(0); }
+  #nav.is-mobile-open .nav-links,
+  #nav.is-mobile-open .nav-resume {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  #nav.is-mobile-open .nav-mobile-backdrop {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+  #nav.is-mobile-open .nav-mobile-toggle span:nth-child(1) { transform: translateY(.9rem) rotate(45deg); }
+  #nav.is-mobile-open .nav-mobile-toggle span:nth-child(2) { opacity: 0; }
+  #nav.is-mobile-open .nav-mobile-toggle span:nth-child(3) { transform: translateY(-.9rem) rotate(-45deg); }
 
   #nav.is-scroll-hidden { transform: translateY(calc(-100% - 1rem)); }
 
