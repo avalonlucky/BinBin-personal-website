@@ -623,7 +623,7 @@ button:focus-visible {
 }
 .hero-copy h1 span { position:relative; z-index:1; display:block; width:100%; text-align:center; }
 .about-page .hero-layout {
-  width: min(1408px, calc(100% - 4rem));
+  width: min(1280px, calc(100% - 128px));
   height: auto;
   min-height: 100%;
   padding: clamp(8rem, 12vh, 10rem) 0 clamp(2rem, 5vh, 3rem);
@@ -634,7 +634,7 @@ button:focus-visible {
 }
 .about-page .hero-copy {
   justify-self: center;
-  width: min(100%, 70rem);
+  width: min(100%, 960px);
   padding-top: 0;
   text-align: center;
 }
@@ -647,17 +647,20 @@ button:focus-visible {
   font-size: 1.3rem;
 }
 .about-page .hero-copy h1 {
-  gap: .6rem;
-  font-size: clamp(2.55rem, 4.6vw, 4.25rem);
+  gap: 9.6px;
+  max-width: 960px;
+  font-family: var(--f-cjk);
+  font-weight: 600;
+  font-size: clamp(32px, 6.4vw, 68px);
   line-height: 1.15;
   letter-spacing: .02em;
   text-align: center;
 }
 .about-page .hero-copy h1 .hero-title-accent { color: var(--c-orange); }
 .about-page .hero-subtitle {
-  max-width: 46em;
-  margin-top: clamp(1.6rem, 3.5vw, 2.8rem);
-  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  max-width: 736px;
+  margin-top: clamp(25.6px, 3.5vw, 44.8px);
+  font-size: clamp(16px, 1.5vw, 18.4px);
   line-height: 1.9;
   text-wrap: balance;
   text-align: center;
@@ -680,17 +683,20 @@ button:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .5rem;
-  padding: .7rem 1.25rem;
+  gap: 8px;
+  padding: 11.2px 20px;
   border-radius: 999px;
   font-family: var(--f-cjk);
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 500;
   line-height: 1;
   white-space: nowrap;
   user-select: none;
   border: 1px solid rgba(15,21,29,.05);
   box-shadow: 0 6px 16px -8px rgba(15,21,29,.25);
+}
+@media (min-width: 769px) and (max-width: 1023px) {
+  .about-page .hero-layout { width:calc(100% - 96px); }
 }
 .hero-title-fluid { position:absolute; z-index:2; inset:0; width:100%; height:100%; pointer-events:none; opacity:0; transition:opacity .35s ease; }
 .hero-copy h1.is-fluid-ready .hero-title-fluid { opacity:1; }
@@ -2755,12 +2761,12 @@ a.footer-icon-link:hover {
   .hero-copy { padding:0; }
   .hero-kicker { min-height:3.35rem; margin-bottom:1.6rem; padding:.62rem 1.55rem; font-size:1.12rem; }
   .hero-copy h1 { font-size:clamp(3.55rem,12.2vw,5.5rem); line-height:1; white-space:normal; }
-  .about-page .hero-layout { width:calc(100% - 3rem); min-height:100svh; padding:8rem 0 2rem; grid-template-columns:1fr; grid-template-rows:auto auto; align-content:start; align-items:start; gap:0; }
+  .about-page .hero-layout { width:calc(100% - 64px); min-height:100svh; padding:8rem 0 2rem; grid-template-columns:1fr; grid-template-rows:auto auto; align-content:start; align-items:start; gap:0; }
   .about-page .hero-kicker { min-height:3.25rem; margin-bottom:1.5rem; padding:.6rem 1.5rem; font-size:1.08rem; }
-  .about-page .hero-copy h1 { gap:.35rem; font-size:clamp(1.85rem,8.2vw,2.35rem); line-height:1.15; white-space:normal; }
-  .about-page .hero-subtitle { max-width:31em; margin-top:1.6rem; font-size:1rem; line-height:1.9; }
+  .about-page .hero-copy h1 { gap:9.6px; font-size:clamp(32px,6.4vw,68px); line-height:1.15; white-space:normal; }
+  .about-page .hero-subtitle { max-width:736px; margin-top:clamp(25.6px,3.5vw,44.8px); font-size:clamp(16px,1.5vw,18.4px); line-height:1.9; }
   .about-capability-cloud { width:100%; height:300px; margin-top:2rem; }
-  .about-capability-pill { gap:.4rem; padding:.55rem 1.05rem; font-size:10px; }
+  .about-capability-pill { gap:6.4px; padding:8.8px 16.8px; font-size:10px; }
   .hero-subtitle { margin-top:1.6rem; font-size:1.3rem; }
   .hero-computer { width:min(100%,560px); margin:0 auto; }
   .hero-terminal { font-size:clamp(5px,1.25vw,8px); }
